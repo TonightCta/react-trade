@@ -1,0 +1,15 @@
+.App{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    .router-view{
+        flex: 1;
+    }
+    .footer{
+        height: 80px;
+        background-color: #ccc;
+    }
+}
