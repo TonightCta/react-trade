@@ -1,0 +1,311 @@
+.trade-index {
+  .trade-nav {
+    height: 44px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px;
+    border-bottom: 1px solid #eee;
+    .left-oper {
+      display: flex;
+      align-items: center;
+      p {
+        font-size: 17px;
+        font-weight: 500;
+        margin-left: 8px;
+      }
+    }
+    .right-oper {
+      span {
+        display: inline-block;
+        width: 12px;
+      }
+    }
+  }
+  .trade-oper {
+    display: flex;
+    width: 100%;
+    padding: 12px;
+    background-color: white;
+    justify-content: space-between;
+    box-sizing: border-box;
+    .oper-public {
+      width: 48.8%;
+    }
+    .oper-left {
+      .trade-type {
+        display: flex;
+        justify-content: space-between;
+        p {
+          width: 49%;
+          height: 30px;
+          line-height: 30px;
+          border-radius: 4px;
+          font-size: 15px;
+        }
+        .buy-btn {
+          background-color: #3370ff;
+          color: white;
+        }
+        .sell-btn {
+          background-color: #fd7a56;
+          color: white;
+        }
+      }
+      .trade-way {
+        width: 100%;
+        background-color: #eee;
+        margin: 12px 0;
+        padding: 4px 0;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+      .way-result {
+        padding: 8px 0;
+        background-color: #eee;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+      .trade-count {
+        margin-bottom: 12px;
+      }
+      .use-balance {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        p:first-child {
+          color: #999;
+        }
+        p:last-child {
+          color: #333;
+        }
+      }
+      .fast-oper {
+        display: flex;
+        margin-top: 12px;
+        justify-content: space-between;
+        .percent-item {
+          width: 23%;
+          height: 12px;
+          background-color: #eee;
+          border-radius: 4px;
+          margin-bottom: 12px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 36px;
+        }
+        .percent-item::after {
+          // position: absolute;
+          font-size: 12px;
+          transform: translate(3px, 20px);
+        }
+        .percent-25::after {
+          content: "25%";
+        }
+        .percent-50::after {
+          content: "50%";
+        }
+        .percent-75::after {
+          content: "75%";
+        }
+        .percent-100::after {
+          content: "100%";
+        }
+      }
+      .persent-high-25 {
+        .percent-25 {
+          background-color: #3370ff;
+        }
+      }
+      .persent-high-50 {
+        .percent-25 {
+          background-color: #3370ff;
+        }
+        .percent-50 {
+          background-color: #3370ff;
+        }
+      }
+      .persent-high-75 {
+        .percent-25 {
+          background-color: #3370ff;
+        }
+        .percent-50 {
+          background-color: #3370ff;
+        }
+        .percent-75 {
+          background-color: #3370ff;
+        }
+      }
+      .persent-high-100 {
+        .percent-item {
+          background-color: #3370ff;
+        }
+      }
+      .trade-price {
+        text-align: left;
+        font-size: 12px;
+        p {
+          margin-bottom: 8px;
+          color: #999;
+        }
+      }
+      .turn-btn {
+        button {
+          width: 100%;
+        }
+      }
+    }
+    .oper-right {
+      .right-title {
+        display: flex;
+        justify-content: space-between;
+        height: 30px;
+        align-items: center;
+        p {
+          font-size: 12px;
+          color: #666;
+        }
+      }
+      .gain-box {
+        display: flex;
+        flex-direction: column;
+        ul {
+          li {
+            height: 25px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            .el-amount {
+              color: #333;
+              position: relative;
+              z-index: 200;
+              font-weight: bold;
+              box-sizing: border-box;
+              padding-right: 6px;
+            }
+            .el-width {
+              width: 40%;
+              height: 100%;
+              position: absolute;
+              right: 0;
+              bottom: 0;
+              z-index: 100;
+            }
+          }
+        }
+        .now-price {
+          margin: 12px 0;
+          text-align: left;
+          font-size: 14px;
+          font-weight: bold;
+          color: #3370ff;
+        }
+        .up-pain {
+          li {
+            .el-price {
+              color: #ff7858;
+            }
+            .el-width {
+              background-color: #fcefec;
+            }
+          }
+        }
+        .down-pain {
+          li {
+            .el-price {
+              color: #00c087;
+            }
+            .el-width {
+              background-color: #e6f8f5;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.trade-filter-draw {
+  .adm-tabs-header {
+    border-bottom: 0;
+  }
+  .draw-title {
+    height: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px;
+    border-bottom: 1px solid #eee;
+  }
+  .tes-tabs {
+    background-color: white;
+    padding-top: 6px;
+  }
+  .tes-all-list {
+    background-color: white;
+    padding: 16px;
+    padding-top: 0;
+    margin-top: 6px;
+    ul {
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #f8f8f8;
+        padding: 12px 0;
+        .list-public {
+          display: flex;
+          align-items: center;
+        }
+        .coin-msg-hour {
+          text-align: left;
+          font-size: 14px;
+          color: #333;
+          p {
+            font-weight: 500;
+          }
+          p:last-child {
+            margin-top: 4px;
+            color: #c5c5c6;
+          }
+        }
+        .list-price {
+          font-size: 14px;
+          margin-right: 24px;
+        }
+        .list-rate {
+          font-size: 13px;
+          font-weight: 500;
+          padding: 8px 6px;
+          border-radius: 4px;
+        }
+      }
+      li:last-child {
+        border: 0;
+      }
+      .up-color {
+        .list-price {
+          color: #00c087;
+        }
+        .list-rate {
+          background-color: #00c087;
+          color: white;
+        }
+      }
+      .down-color {
+        .list-price {
+          color: #fd7a56;
+        }
+        .list-rate {
+          background-color: #fd7a56;
+          color: white;
+        }
+      }
+    }
+  }
+}

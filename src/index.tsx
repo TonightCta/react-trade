@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './lang/index'
-import 'taro-ui/dist/style/index.scss'
 
 
 ReactDOM.render(

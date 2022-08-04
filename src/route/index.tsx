@@ -12,11 +12,13 @@ const RouteConfig = (): React.ReactElement<ReactNode> => {
                     <Redirect to="/home" />
                 )}></Route>
                 <Route path="/home" component={View.HomeIndex}></Route>
+                <Route path="/quotes" component={View.QuotesIndex}></Route>
                 <Route path="/trade" component={View.TradeIndex}></Route>
                 <Route path="/mine" component={View.MineIndex}></Route>
             </Switch>
         </Router>
     )
 };
+
 
 export default RouteConfig;
