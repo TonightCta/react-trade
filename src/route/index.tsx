@@ -4,7 +4,6 @@ import { ReactElement, ReactNode } from "react";
 import { withRouter, Route, Switch, Redirect, useLocation, Router } from "react-router-dom";
 import PrivateRoute from "./private";
 import { createHashHistory } from "history";
-import AnimatedRouter from "react-animated-router";
 import "./index.css";
 
 const RouteConfig = (): ReactElement<ReactNode> => {
@@ -13,17 +12,15 @@ const RouteConfig = (): ReactElement<ReactNode> => {
   return (
     <Router history={history}>
       <TransitionGroup>
-        <CSSTransition key={location.pathname} timeout={1000}>
+        <CSSTransition key={location.pathname} timeout={1000} classNames="page">
           <Switch location={location}>
-            {/* @ts-ignore */}
-            {/* <AnimatedRouter > */}
             <Route path="/" exact render={() => <Redirect to="/home" />}></Route>
             <Route path="/login" component={View.LoginIndex}></Route>
             <Route path="/home" component={View.HomeIndex}></Route>
             <Route path="/quotes" component={View.QuotesIndex}></Route>
             <Route path="/quotes-detail" component={View.TesDetail}></Route>
             <Route path="/trade" component={View.TradeIndex}></Route>
-            <PrivateRoute children={<View.MineIndex />} path="/mine"></PrivateRoute>
+            <PrivateRoute children={<View.MineIndex/>} path="/mine" location={location}></PrivateRoute>
             <Route path="/trade-order" component={View.TradeOrder}></Route>
             <Route path="/assets-bill" component={View.AssetsBill}></Route>
             <Route path="/assets-lock" component={View.AssetsLock}></Route>
@@ -38,7 +35,6 @@ const RouteConfig = (): ReactElement<ReactNode> => {
             <Route path="/ann" component={View.Ann}></Route>
             <Route path="/about-us" component={View.About}></Route>
             <Route path="/help" component={View.Help}></Route>
-            {/* </AnimatedRouter> */}
           </Switch>
         </CSSTransition>
       </TransitionGroup>
