@@ -18,7 +18,8 @@ import Ann from "./setting/ann/ann";
 import FeedBack from "./setting/feedback/feedback";
 import Help from "./setting/help/help";
 import SetLanguage from "./setting/set_language/set_language";
-
+import RegisterIndex from "./register/index";
+import ForgetIndex from "./forget";
 
 
 export {
@@ -42,4 +43,6 @@ export {
     FeedBack,//意见反馈
     Help,//帮助中心
     SetLanguage,//语言设置
+    RegisterIndex,//注册
+    ForgetIndex,//忘记密码
 }

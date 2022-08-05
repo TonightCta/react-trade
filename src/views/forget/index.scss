@@ -1,4 +1,4 @@
-.login-index {
+.forget-pass {
   width: 100%;
   height: 100vh;
   background-color: white;
@@ -47,18 +47,19 @@
         margin-top: 2px;
         left: 8px;
       }
+      .send-code {
+        position: absolute;
+        font-size: 14px;
+        color: #3070ff;
+        right: 12px;
+        top: 37px;
+      }
+      .gra-btn {
+        filter: grayscale(100%);
+      }
     }
     .login-btn {
       margin-top: 54px;
-    }
-    .register-btn {
-      margin-top: 18px;
-      display: flex;
-      justify-content: space-between;
-      span {
-        color: #3370ff;
-        font-size: 14px;
-      }
     }
   }
 }

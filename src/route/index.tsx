@@ -35,6 +35,8 @@ const RouteConfig = (): ReactElement<ReactNode> => {
             <Route path="/ann" component={View.Ann}></Route>
             <Route path="/about-us" component={View.About}></Route>
             <Route path="/help" component={View.Help}></Route>
+            <Route path="/register" component={View.RegisterIndex}></Route>
+            <Route path="/forget" component={View.ForgetIndex}></Route>
           </Switch>
         </CSSTransition>
       </TransitionGroup>

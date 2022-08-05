@@ -79,7 +79,6 @@ const TradeOper = (): ReactElement<ReactNode> => {
                             '--border': '1px solid #f5f5f5',
                             '--border-inner': 'none',
                             '--height': '36px',
-                            '--input-width': '110px',
                             '--input-background-color': '#ffffff',
                         }}
                         defaultValue={0}

@@ -1,11 +1,9 @@
 import Footer from './components/footer';
 import RouteConfig from './route';
-import { HashRouter, Router } from 'react-router-dom';
-import { createHashHistory } from 'history'
+import { HashRouter } from 'react-router-dom';
 import './App.css';
 import './App.scss'
 import { ReactNode } from 'react';
-const history = createHashHistory();
 
 const App = (): React.ReactElement<ReactNode> => {
 
@@ -13,9 +11,7 @@ const App = (): React.ReactElement<ReactNode> => {
     <HashRouter>
       <div className="App">
         <div className='router-view'>
-          <Router history={history}>
-            <RouteConfig />
-          </Router>
+          <RouteConfig />
         </div>
         <div className='footer'>
           <Footer />

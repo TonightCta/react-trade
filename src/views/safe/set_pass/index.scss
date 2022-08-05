@@ -1,0 +1,29 @@
+.set-pass {
+  .set-lock {
+    padding: 24px;
+    background-color: white;
+    width: 92%;
+    margin: 12px auto;
+    border-radius: 8px;
+    text-align: left;
+    .form-item {
+      margin-bottom: 16px;
+      p {
+        font-size: 14px;
+        color: #999;
+        margin-bottom: 4px;
+      }
+      input {
+        outline: none;
+        border: 0;
+        height: 30px;
+        width: 100%;
+        border-bottom: 1px solid #eee;
+        font-size: 13px;
+      }
+    }
+    button {
+      font-size: 14px;
+    }
+  }
+}

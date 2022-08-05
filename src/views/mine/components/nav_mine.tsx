@@ -13,9 +13,11 @@ const MineNav = (): ReactElement<ReactNode> => {
                     history.push('/setting')
                 }} />
             </div>
-            <div className="account-box">
+            <div className="account-box" onClick={() => {
+                history.push('/login')
+            }}>
                 <p>欢迎来到80年代</p>
-                <p>TonightCta@gmail.com</p>
+                <p>点击登录</p>
             </div>
         </div>
     )
