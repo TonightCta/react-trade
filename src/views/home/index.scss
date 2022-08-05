@@ -68,6 +68,15 @@
             color: #333;
           }
         }
+        li:nth-child(3){
+          img{
+            width: 27px;
+            height: 27px;
+          }
+          p{
+            transform: translateY(-2px);
+          }
+        }
       }
     }
   }

@@ -51,6 +51,11 @@ const Card = (): ReactElement<ReactNode> => {
             title: '客服',
             icon: require('../../../assets/images/home_icon_3.png'),
             url: '',
+        },
+        {
+            title: '设置',
+            icon: require('../../../assets/images/setting_icon.png'),
+            url: '',
         }
     ]
     return (

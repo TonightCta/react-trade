@@ -44,8 +44,8 @@ const MineAssets = (): ReactElement<ReactNode> => {
                     <p>1.5525266447</p>
                 </div>
                 <div className="view-oper">
-                    <Button color="primary">充值</Button>
-                    <Button color="default">提现</Button>
+                    <Button color="primary" onClick={() => { history.push('/recharge') }}>充值</Button>
+                    <Button color="default" onClick={() => { history.push('/withdraw') }}>提现</Button>
                 </div>
             </div>
             <div className="assets-list-box">

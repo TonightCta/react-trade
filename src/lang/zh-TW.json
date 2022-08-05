@@ -1,5 +1,5 @@
 {
-    "public": {
-        "name": "名字"
+    "title":{
+        "language_set":"语言设置"
     }
 }

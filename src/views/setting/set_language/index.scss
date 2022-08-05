@@ -1,0 +1,33 @@
+.set-language {
+  text-align: left;
+  .lang-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+  .lang-list {
+    width: 92%;
+    margin: 0 auto;
+    margin-top: 12px;
+    border-radius: 8px;
+    overflow: hidden;
+    .adm-list-body {
+      border: 0;
+      .adm-list-item-content-prefix {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .adm-list-item-content-main {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+      }
+      .adm-list-item-content-arrow {
+        display: none;
+      }
+    }
+  }
+}

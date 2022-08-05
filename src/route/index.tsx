@@ -20,7 +20,7 @@ const RouteConfig = (): ReactElement<ReactNode> => {
             <Route path="/quotes" component={View.QuotesIndex}></Route>
             <Route path="/quotes-detail" component={View.TesDetail}></Route>
             <Route path="/trade" component={View.TradeIndex}></Route>
-            <PrivateRoute children={<View.MineIndex/>} path="/mine" location={location}></PrivateRoute>
+            <PrivateRoute children={<View.MineIndex />} path="/mine" location={location}></PrivateRoute>
             <Route path="/trade-order" component={View.TradeOrder}></Route>
             <Route path="/assets-bill" component={View.AssetsBill}></Route>
             <Route path="/assets-lock" component={View.AssetsLock}></Route>
@@ -33,10 +33,14 @@ const RouteConfig = (): ReactElement<ReactNode> => {
             <Route path="/set-language" component={View.SetLanguage}></Route>
             <Route path="/feedback" component={View.FeedBack}></Route>
             <Route path="/ann" component={View.Ann}></Route>
+            <Route path="/ann-detail" component={View.AnnDetail}></Route>
             <Route path="/about-us" component={View.About}></Route>
             <Route path="/help" component={View.Help}></Route>
+            <Route path="/help-detail" component={View.HelpDetail}></Route>
             <Route path="/register" component={View.RegisterIndex}></Route>
             <Route path="/forget" component={View.ForgetIndex}></Route>
+            <Route path="/recharge" component={View.RechargeIndex}></Route>
+            <Route path="/withdraw" component={View.WithdrawIndex}></Route>
           </Switch>
         </CSSTransition>
       </TransitionGroup>

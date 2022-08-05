@@ -1,0 +1,23 @@
+.feed-back {
+  padding-bottom: 12px;
+  img {
+    width: 170px;
+    height: 126px;
+    margin-top: 46px;
+  }
+  p {
+    text-align: left;
+    width: 92%;
+    margin: 24px auto;
+  }
+  textarea {
+    width: 92%;
+    height: 188px;
+    resize: none;
+    border-radius: 8px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    border: 0;
+    padding: 12px;
+    outline: none;
+  }
+}

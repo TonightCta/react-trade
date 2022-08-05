@@ -20,6 +20,10 @@ import Help from "./setting/help/help";
 import SetLanguage from "./setting/set_language/set_language";
 import RegisterIndex from "./register/index";
 import ForgetIndex from "./forget";
+import AnnDetail from "./setting/ann/ann_detail/ann_detail";
+import HelpDetail from "./setting/help/help_detail/help_detail";
+import WithdrawIndex from "./mine/mine_assets/withdraw/withdraw";
+import RechargeIndex from "./mine/mine_assets/recharge/recharge";
 
 
 export {
@@ -45,4 +49,8 @@ export {
     SetLanguage,//语言设置
     RegisterIndex,//注册
     ForgetIndex,//忘记密码
+    AnnDetail,//公告详情
+    HelpDetail,//帮助中心详情
+    WithdrawIndex,//提币
+    RechargeIndex,//充币
 }

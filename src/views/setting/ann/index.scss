@@ -1,0 +1,23 @@
+.ann-index {
+  ul {
+    li {
+      width: 92%;
+      margin: 12px auto;
+      background-color: white;
+      border-radius: 8px;
+      padding:18px 12px;
+      text-align: left;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
+      .ann-title {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 12px;
+      }
+      .ann-date{
+        text-align: right;
+        font-size: 14px;
+        color: #999;
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 {
-    "public":{
-        "name":"Name"
+    "title":{
+        "language_set":"Language settings"
     }
 }

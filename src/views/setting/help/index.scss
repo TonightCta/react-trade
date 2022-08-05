@@ -1,0 +1,37 @@
+.help-index {
+  .help-list {
+    .list-con {
+      width: 92%;
+      margin: 12px auto;
+      background-color: white;
+      border-radius: 8px;
+      padding: 16px 12px;
+      text-align: left;
+      .parent-title {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 16px;
+      }
+      ul {
+        li {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 12px;
+          .title-msg {
+            p:first-child {
+              font-size: 14px;
+              font-weight: 500;
+              margin-bottom: 12px;
+            }
+            p:last-child{
+                color: #999;
+                font-size: 13px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
