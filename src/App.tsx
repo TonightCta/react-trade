@@ -3,8 +3,10 @@ import RouteConfig from './route';
 import { HashRouter } from 'react-router-dom';
 import './App.css';
 import './App.scss'
+import { ReactNode } from 'react';
 
-function App() {
+const App = (): React.ReactElement<ReactNode> => {
+  
   return (
     <HashRouter>
       <div className="App">

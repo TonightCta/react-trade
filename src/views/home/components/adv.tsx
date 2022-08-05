@@ -39,22 +39,17 @@ const Card = (): ReactElement<ReactNode> => {
     const list: Array<CardMsg> = [
         {
             title: '邀请',
-            icon: require('../../../assets/images/banner_1.png'),
+            icon: require('../../../assets/images/home_icon_1.png'),
             url: '',
         },
         {
             title: '行情',
-            icon: require('../../../assets/images/banner_2.png'),
-            url: '',
-        },
-        {
-            title: '法币',
-            icon: require('../../../assets/images/banner_3.png'),
+            icon: require('../../../assets/images/home_icon_2.png'),
             url: '',
         },
         {
             title: '客服',
-            icon: require('../../../assets/images/banner_4.png'),
+            icon: require('../../../assets/images/home_icon_3.png'),
             url: '',
         }
     ]

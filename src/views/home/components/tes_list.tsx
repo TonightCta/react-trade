@@ -1,4 +1,5 @@
 import { ReactElement, ReactNode } from "react";
+import { useHistory } from 'react-router-dom'
 
 interface TesMsg {
     coin: string,
@@ -47,6 +48,7 @@ const TesListTwo: Array<TesMsg> = [
 ]
 
 const HomeTeslist = (): ReactElement<ReactNode> => {
+    const history = useHistory();
     return (
         <div className="home-tes-list">
             <p className="list-title">涨幅榜</p>
@@ -54,7 +56,9 @@ const HomeTeslist = (): ReactElement<ReactNode> => {
                 {
                     TesListTwo.map((el: TesMsg, index: number): ReactElement => {
                         return (
-                            <li key={index} className={`${el.type === 1 ? 'up-color' : 'down-color'}`}>
+                            <li key={index} className={`${el.type === 1 ? 'up-color' : 'down-color'}`} onClick={() => {
+                                history.push('/quotes-detail')
+                            }}>
                                 <div className="list-public">
                                     <p className="list-sort">{index + 1}</p>
                                     <div className="coin-msg-hour">

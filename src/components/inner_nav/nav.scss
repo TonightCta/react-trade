@@ -1,0 +1,17 @@
+.inner-nav {
+  height: 44px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  .left-arrow{
+    transform: translateX(12px);
+  }
+  .right-oper{
+    transform: translateX(-12px);
+  }
+}
+.with-border-nav{
+    border-bottom: 1px solid #eee;
+}

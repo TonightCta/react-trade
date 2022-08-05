@@ -2,6 +2,7 @@ import { ReactElement, ReactNode } from "react";
 import { DotLoading, PullToRefresh } from 'antd-mobile';
 import { sleep } from 'antd-mobile/es/utils/sleep';
 import { PullStatus } from 'antd-mobile/es/components/pull-to-refresh';
+import { useHistory } from 'react-router-dom'
 
 type TesMsg = {
     coin: string,
@@ -12,7 +13,7 @@ type TesMsg = {
 }
 interface Props {
     data: Array<TesMsg>,
-    type?:number | string
+    type?: number | string
 }
 
 const statusRecord: Record<PullStatus, ReactElement | string> = {
@@ -22,6 +23,7 @@ const statusRecord: Record<PullStatus, ReactElement | string> = {
     complete: '好啦',
 }
 const TesAllList = (props: Props): ReactElement<ReactNode> => {
+    const history = useHistory();
     return (
         <div className="tes-all-list">
             <PullToRefresh onRefresh={async () => {
@@ -35,7 +37,8 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                         props.data.map((el: TesMsg, index: number): ReactElement => {
                             return (
                                 <li key={index} className={`${el.type === 1 ? 'up-color' : 'down-color'}`} onClick={() => {
-                                    console.log(props.type)
+                                    console.log();
+                                    props.type === 1 && history.push('/quotes-detail')
                                 }}>
                                     <div className="list-public">
                                         <div className="coin-msg-hour">

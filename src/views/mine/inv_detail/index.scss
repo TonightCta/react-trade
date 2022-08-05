@@ -1,0 +1,42 @@
+.inv-detail {
+  overflow: hidden;
+  .white-content {
+    width: 92%;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    padding: 12px;
+    box-sizing: border-box;
+    margin-top: 20px;
+  }
+  .level-title {
+    padding: 20px 0;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+  }
+  .inv-msg {
+    width: 100%;
+    display: flex;
+    background: url('../../../assets/images/mine_bg.png');
+    border-radius: 8px;
+    padding:20px 12px;
+    justify-content: space-between;
+    align-items: center;
+    p {
+      font-size: 14px;
+    }
+    p:last-child {
+      span {
+        font-size: 30px;
+        font-weight: bold;
+      }
+    }
+  }
+  .inv-date {
+    text-align: right;
+    font-size: 14px;
+    margin-top: 12px;
+    color: #666;
+  }
+}

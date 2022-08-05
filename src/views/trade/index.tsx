@@ -1,15 +1,24 @@
-import React,{ ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import TradeNav from "./components/trade_nav";
 import TradeOper from "./components/trade_oper";
-import './index.scss'
+import TradeOrder from "./components/trade_order";
+import './index.scss';
+import { upFooterStatus } from "../../store/app/action_creators";
+import store from "../../store";
 
-const TradeIndex = () : React.ReactElement<ReactNode> => {
+const TradeIndex = (): React.ReactElement<ReactNode> => {
+    useEffect((): void => {
+        const action = upFooterStatus(1);
+        store.dispatch(action)
+    }, []);
     return (
         <div className="trade-index">
             {/* 导航信息 */}
-            <TradeNav/>
+            <TradeNav />
             {/* 交易模块 */}
-            <TradeOper/>
+            <TradeOper />
+            {/* 订单信息 */}
+            <TradeOrder />
         </div>
     )
 };

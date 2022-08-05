@@ -229,6 +229,20 @@
       }
     }
   }
+  .trade_order {
+    background-color: white;
+    padding: 12px 0;
+    box-sizing: border-box;
+    .order-oper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-right: 12px;
+      .adm-tabs-header {
+        border: 0;
+      }
+    }
+  }
 }
 .trade-filter-draw {
   .adm-tabs-header {
@@ -306,6 +320,69 @@
           color: white;
         }
       }
+    }
+  }
+}
+.order-list {
+  background-color: white;
+  ul {
+    li {
+      padding: 18px 12px;
+      border-bottom: 1px solid #eee;
+      box-sizing: border-box;
+      .coin-msg {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .coin-more {
+          display: flex;
+          align-items: center;
+          p {
+            font-size: 14px;
+            font-weight: 500;
+          }
+        }
+        .order-status {
+          font-size: 13px;
+          color: #666;
+        }
+      }
+      .trade-msg-date {
+        display: flex;
+        font-size: 12px;
+        align-items: center;
+        margin-top: 8px;
+        margin-bottom: 16px;
+        p:first-child {
+          padding: 2px 4px;
+          border-radius: 4px;
+        }
+        p:last-child {
+          margin-left: 8px;
+          color: #666;
+        }
+        .buy-color {
+          color: #00c087;
+          background-color: #e6f8f5;
+        }
+        .sell-color {
+          color: #ff7858;
+          background-color: #fcefec;
+        }
+      }
+      .trade-detail {
+        display: flex;
+        margin-top: 12px;
+        p {
+          width: 50%;
+          text-align: left;
+          font-size: 14px;
+          color: #333;
+        }
+      }
+    }
+    li:last-child {
+      border: 0;
     }
   }
 }

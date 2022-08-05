@@ -2,9 +2,10 @@
   padding: 0;
   margin: 0;
   font-family: '微软雅黑',"Poppins","PingFang SC" !important;
+  box-sizing: border-box;
 }
 body{
-  background-color: #eee;
+  background-color: #f8f8f8;
 }
 .App {
   text-align: center;

@@ -1,0 +1,21 @@
+.set-index {
+  text-align: left;
+  .set-list {
+    width: 92%;
+    margin: 12px auto 30px;
+    border-radius: 8px;
+    overflow: hidden;
+    .adm-list-item-content-main {
+      font-size: 14px;
+      padding-left: 8px;
+    }
+    .adm-list-body{
+      border: 0;
+    }
+  }
+  button{
+    width: 92%;
+    margin: 0 auto;
+    font-size: 14px;
+  }
+}

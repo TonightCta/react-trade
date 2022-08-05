@@ -1,0 +1,114 @@
+.assets-bill {
+  .bill-list {
+    margin: 12px;
+    overflow: hidden;
+    ul {
+      li {
+        box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.04);
+        border-bottom: 1px solid #f8f8f8;
+        padding: 18px 12px;
+        position: relative;
+        padding-bottom: 36px;
+        background-color: white;
+        margin-bottom: 12px;
+        border-radius: 8px;
+        .icon-type {
+          position: absolute;
+          padding: 4px 8px;
+          font-size: 13px;
+          background-color: #3370ff;
+          color: white;
+          bottom: 0;
+          right: 0;
+          border-top-left-radius: 8px;
+        }
+        .order-title {
+          display: flex;
+          justify-content: space-between;
+          font-size: 16px;
+          color: #333;
+          font-size: bold;
+          align-items: center;
+          .now-balance {
+            font-size: 18px;
+          }
+          .order-type::before {
+            display: inline-block;
+            content: "";
+            width: 3px;
+            height: 10px;
+            border-radius: 4px;
+            margin-right: 4px;
+          }
+        }
+        .fee-msg {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 12px;
+          p {
+            font-size: 12px;
+          }
+          .fee-and-amount {
+            display: flex;
+            p:first-child {
+              color: #999;
+              margin-right: 4px;
+            }
+          }
+          .order-date {
+            color: #999;
+          }
+        }
+      }
+      .buy-color {
+        .order-type::before {
+          background-color: #26bb9b;
+        }
+        .fee-msg {
+          .fee-and-amount {
+            p:last-child {
+              color: #26bb9b;
+            }
+          }
+        }
+      }
+      .sell-color {
+        .order-type::before {
+          background-color: #FD5656;
+        }
+        .fee-msg {
+          .fee-and-amount {
+            p:last-child {
+              color: #FD5656;
+            }
+          }
+        }
+      }
+      .charged-color {
+        .order-type::before {
+          background-color: #FB9700;
+        }
+        .fee-msg {
+          .fee-and-amount {
+            p:last-child {
+              color: #FB9700;
+            }
+          }
+        }
+      }
+      .withdraw-color {
+        .order-type::before {
+          background-color: #3281EF;
+        }
+        .fee-msg {
+          .fee-and-amount {
+            p:last-child {
+              color: #3281EF;
+            }
+          }
+        }
+      }
+    }
+  }
+}

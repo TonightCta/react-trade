@@ -1,4 +1,4 @@
-import React,{ ReactNode } from "react";
+import React,{ ReactNode, useEffect } from "react";
 // import { useTranslation } from "react-i18next";
 import HomeBanner from "./components/banner";
 import HomeAdv from "./components/adv";
@@ -7,6 +7,8 @@ import HomeAssets from "./components/my_wallet";
 import HomeHelp from "./components/help";
 import HomeTexCard from "./components/tes_card";
 import HomeTeslist from "./components/tes_list";
+import { upFooterStatus } from "../../store/app/action_creators";
+import store from "../../store";
 
 interface Props{
     type?:string
@@ -24,7 +26,10 @@ const NavLogo = () : React.ReactElement<ReactNode> => {
 
 const HomeIndex = (props:Props) : React.ReactElement<ReactNode> => {
     // const { t } = useTranslation();
-    
+    useEffect((): void => {
+        const action = upFooterStatus(1);
+        store.dispatch(action)
+    }, []);
     return (
         <div className="home-index">
             <NavLogo/>
