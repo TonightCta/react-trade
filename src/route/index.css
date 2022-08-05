@@ -1,58 +1,34 @@
-@charset "UTF-8";
-.animated-router {
-  /** START: 自定义进出场动画 **/
-  /** END **/
+.dg-enter {
+    transform: translateX(200px)
 }
-.animated-router-container {
-  /* 动画容器节点 */
-  width: 100%;
-  height: 100%;
+
+.dg-enter-active {
+    transition: 2s;
+    transform: translateX(0px)
 }
-.animated-router-in-transition {
-  /* 页面动画中 */
-  position: relative;
-  width: 100%;
-  overflow: hidden;
+
+.dg-enter-done {
+    transform: translateX(0px)
 }
-.animated-router-forward-enter {
-  transform: translateY(50px);
-  opacity: 0;
+
+/* 出场动画过程 */
+.dg-exit {
+    transform: translateX(0px)
 }
-.animated-router-forward-enter-active {
-  transform: translateY(0);
-  opacity:1;
+
+.dg-exit-active {
+    transition: 2s;
+    transform: translateX(200px)
 }
-.animated-router-forward-exit {
-  transform: translateY(0);
-  opacity:1;
+
+.dg-exit-done {
+    transform: translateX(200px)
 }
-.animated-router-forward-exit-active {
-  transform: translateY(50px);
-  opacity:0;
-}
-.animated-router-backward-enter {
-  transform: translateY(50px);
-  opacity:0;
-}
-.animated-router-backward-enter-active {
-  transform: translateY(0);
-  opacity:1;
-}
-.animated-router-backward-exit {
-  transform: translateY(0);
-  opacity:.3;
-}
-.animated-router-backward-exit-active {
-  transform: translateY(50px);
-  opacity:0;
-}
-.animated-router-forward-enter-active, .animated-router-forward-exit-active, .animated-router-backward-enter-active, .animated-router-backward-exit-active {
-  /* 不同过渡阶段需要的过渡时间与缓动效果 */
-  transition: transform 0.3s linear;
-}
-.animated-router-forward-exit, .animated-router-backward-exit {
-  position: absolute !important;
-  width: 100%;
-  top: 0;
-  left: 0;
+
+.home,
+.user,
+.login,
+.animate {
+    position: absolute;
+    left: calc(50% - 200px)
 }
