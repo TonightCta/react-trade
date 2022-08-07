@@ -3,7 +3,8 @@ import { Tabs } from "antd-mobile";
 import TesAllList from "./tes_all_list";
 
 interface Props{
-    type:string | number,
+    type:number,
+    closeDraw?:() => void,
 }
 type TabsF = {
     name: string,
@@ -91,7 +92,7 @@ const TesTabs = (props:Props): ReactElement<ReactNode> => {
                     })
                 }
             </Tabs>
-            <TesAllList data={TesListTwo} type={props.type} />
+            <TesAllList data={TesListTwo} closeDraw={props.closeDraw} type={Number(props.type)} />
         </div>
     )
 };

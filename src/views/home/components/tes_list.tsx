@@ -1,5 +1,7 @@
 import { ReactElement, ReactNode } from "react";
 import { useHistory } from 'react-router-dom'
+import store from "../../../store";
+import { upCurrency } from "../../../store/app/action_creators";
 
 interface TesMsg {
     coin: string,
@@ -57,6 +59,8 @@ const HomeTeslist = (): ReactElement<ReactNode> => {
                     TesListTwo.map((el: TesMsg, index: number): ReactElement => {
                         return (
                             <li key={index} className={`${el.type === 1 ? 'up-color' : 'down-color'}`} onClick={() => {
+                                const action = upCurrency(el.coin);
+                                store.dispatch(action);
                                 history.push('/quotes-detail')
                             }}>
                                 <div className="list-public">

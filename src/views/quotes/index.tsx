@@ -15,7 +15,7 @@ const QuotesIndex = () : React.ReactElement<ReactNode> => {
             {/* 标题 */}
             <TesNav/>
             {/* Tab切换 */}
-            <TesTabs type="1"/>
+            <TesTabs type={1}/>
         </div>
     )
 };

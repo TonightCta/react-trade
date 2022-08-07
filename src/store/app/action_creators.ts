@@ -14,5 +14,10 @@ export const upFooterStatus = (status: number) => ({
 export const upInvLevel = (level:number) => ({
     type:Type.UP_INV_LEVEL,
     level
-})
+});
+//更新币种队列
+export const upCurrency = (currency:string) => ({
+    type:Type.UP_CURRENCY,
+    currency
+});
 

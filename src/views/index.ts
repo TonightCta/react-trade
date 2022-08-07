@@ -24,6 +24,7 @@ import AnnDetail from "./setting/ann/ann_detail/ann_detail";
 import HelpDetail from "./setting/help/help_detail/help_detail";
 import WithdrawIndex from "./mine/mine_assets/withdraw/withdraw";
 import RechargeIndex from "./mine/mine_assets/recharge/recharge";
+import WithDrawPending from "./mine/mine_assets/withdraw/withdraw_pending/withdraw_pending";
 
 
 export {
@@ -53,4 +54,5 @@ export {
     HelpDetail,//帮助中心详情
     WithdrawIndex,//提币
     RechargeIndex,//充币
+    WithDrawPending,//提币详情
 }

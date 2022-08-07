@@ -103,3 +103,6 @@ table {
 .adm-pull-to-refresh-head-content{
   font-size: 14px;
 }
+input{
+  outline: none;
+}

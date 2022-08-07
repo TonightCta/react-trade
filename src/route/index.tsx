@@ -1,14 +1,23 @@
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import * as View from "../views/index";
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect } from "react";
 import { withRouter, Route, Switch, Redirect, useLocation, Router } from "react-router-dom";
 import PrivateRoute from "./private";
 import { createHashHistory } from "history";
 import "./index.css";
 
 const RouteConfig = (): ReactElement<ReactNode> => {
+  useEffect((): void => {
+    // window.scrollTo(0,0)
+  }, [])
   const location: any = useLocation();
   const history = createHashHistory();
+  history.listen((location: any) => {
+    setTimeout(() => {
+      if (location.action === 'POP') return;
+      window.scrollTo(0, 0);
+    });
+  })
   return (
     <Router history={history}>
       <TransitionGroup>
@@ -41,6 +50,7 @@ const RouteConfig = (): ReactElement<ReactNode> => {
             <Route path="/forget" component={View.ForgetIndex}></Route>
             <Route path="/recharge" component={View.RechargeIndex}></Route>
             <Route path="/withdraw" component={View.WithdrawIndex}></Route>
+            <Route path="/withdraw-detail" component={View.WithDrawPending}></Route>
           </Switch>
         </CSSTransition>
       </TransitionGroup>

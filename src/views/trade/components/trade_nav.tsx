@@ -4,7 +4,7 @@ import { Popup } from 'antd-mobile';
 import TesTabs from "../../quotes/components/tes_tabs";
 
 interface DrawProps {
-    closeDraw: Function
+    closeDraw: () => void,
 }
 const FilterDraw = (props: DrawProps): ReactElement => {
     return (
@@ -15,7 +15,7 @@ const FilterDraw = (props: DrawProps): ReactElement => {
                     props.closeDraw();
                 }}/>
             </div>
-            <TesTabs type="2" />
+            <TesTabs type={2} closeDraw={props.closeDraw}/>
         </div>
     )
 }
@@ -42,7 +42,7 @@ const TradeNav = (): ReactElement<ReactNode> => {
                 }}
                 position='left'
                 bodyStyle={{ minWidth: '80vw' }}>
-                <FilterDraw closeDraw={() => {
+                <FilterDraw closeDraw={() : void => {
                     setDrawStatus(false)
                 }} />
             </Popup>

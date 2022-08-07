@@ -1,6 +1,7 @@
 import { Swiper } from "antd-mobile";
 import React, { ReactElement, ReactNode } from "react";
 import { SoundOutline } from 'antd-mobile-icons'
+import { useHistory } from "react-router-dom";
 
 const advList = [
     '派大星',
@@ -36,6 +37,7 @@ const AdvSwiper = (): ReactElement<ReactNode> => {
 //卡片选项
 
 const Card = (): ReactElement<ReactNode> => {
+    const history = useHistory();
     const list: Array<CardMsg> = [
         {
             title: '邀请',
@@ -55,7 +57,7 @@ const Card = (): ReactElement<ReactNode> => {
         {
             title: '设置',
             icon: require('../../../assets/images/setting_icon.png'),
-            url: '',
+            url: '/setting',
         }
     ]
     return (
@@ -64,7 +66,9 @@ const Card = (): ReactElement<ReactNode> => {
                 {
                     list.map((el, index): ReactElement => {
                         return (
-                            <li key={index}>
+                            <li key={index} onClick={() => {
+                                history.push(el.url)
+                            }}>
                                 <img src={el.icon} alt="" />
                                 <p>{el.title}</p>
                             </li>

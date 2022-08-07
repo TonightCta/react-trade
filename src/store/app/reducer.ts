@@ -1,8 +1,16 @@
 import * as Type from './types';
-const defaultState = {
+
+interface Store {
+    language:string,
+    footerStatus:number,
+    invLevel:number,
+    currency:string,
+}
+const defaultState : Store = {
     language: localStorage.getItem('language') || 'zh-TW',//本地语言环境
-    footerStatus: sessionStorage.getItem('footerStatus') || 1,//底部导航显示状态
-    invLevel: sessionStorage.getItem('invLevel') || 1,
+    footerStatus: Number(sessionStorage.getItem('footerStatus')) || 1,//底部导航显示状态
+    invLevel: Number(sessionStorage.getItem('invLevel')) || 1,//邀请等级
+    currency: sessionStorage.getItem('currency') || 'BTC/USDT',//浏览币种
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
@@ -15,6 +23,9 @@ export default (state = defaultState, action: any) => {
         case Type.UP_INV_LEVEL:
             sessionStorage.setItem('invLevel', action.level);
             return { ...state, invLevel: action.level }
+        case Type.UP_CURRENCY:
+            sessionStorage.setItem('currency', action.currency);
+            return { ...state, currency: action.currency }
         default:
             return state;
     };

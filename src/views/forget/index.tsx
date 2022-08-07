@@ -38,7 +38,6 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
     useEffect((): void => {
         const aciton = upFooterStatus(0);
         store.dispatch(aciton);
-        console.log(props)
     }, [])
     return (
         <div className="forget-pass">
