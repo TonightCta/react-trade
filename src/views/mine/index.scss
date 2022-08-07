@@ -117,3 +117,45 @@
     }
   }
 }
+.modal-content-inv {
+  .close-icon{
+    text-align: right;
+    font-size: 16px;
+    color: #333;
+    position: absolute;
+    right: 18px;
+    top: 12px;
+  }
+  .modal-title-mine{
+    margin-top: 12px;
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+  }
+  .modal-inv-reward{
+    padding: 3px 0;
+    width: 35%;
+    border-radius: 4px;
+    background-color: #F1F2FF;
+    text-align: center;
+    font-size: 12px;
+    margin-top: 8px;
+    color: #666;
+    p{
+      margin-bottom: 2px;
+    }
+    p:last-child{
+      margin-bottom: 0;
+    }
+  }
+  ul {
+    flex-direction: column;
+    li{
+      text-align: left;
+      margin-bottom: 16px;
+      font-size: 12px;
+      color: #666;
+    }
+  }
+}

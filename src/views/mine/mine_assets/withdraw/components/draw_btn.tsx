@@ -6,9 +6,7 @@ import { CloseOutline } from "antd-mobile-icons";
 import { useHistory } from 'react-router-dom';
 import { WithdrawCoinMsg } from '../../../../../utils/types'
 
-interface Props extends WithdrawCoinMsg {
-    network: string | number
-}
+interface Props extends WithdrawCoinMsg {}
 
 interface PropsSafe extends WithdrawCoinMsg {
     closeSafeBox: () => void;
@@ -75,7 +73,7 @@ const SafeAuth = (props: PropsSafe): ReactElement => {
                     props.closeSafeBox();
                     history.push({
                         pathname: '/withdraw-detail',
-                        state:{'data': JSON.stringify({ coin: props.coin, num: props.num })}
+                        search:JSON.stringify({coin:props.coin,num:props.num,address:props.address,fee:props.fee})
                     })
                 }}>确认</Button>
             </p>
@@ -99,7 +97,7 @@ const DrawBtn = (props: Props): ReactElement<ReactNode> => {
             }}>
                 <SafeAuth closeSafeBox={(): void => {
                     setSafeBox(false)
-                }} coin={props.coin} num={props.num} />
+                }} coin={props.coin} num={props.num} address={props.address} fee={props.fee}/>
             </Popup>
             <Button color="primary" onClick={(): void => {
                 setSafeBox(true)

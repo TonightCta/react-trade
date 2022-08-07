@@ -211,7 +211,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                 }} />
             </Popup>
             {/* 提币按钮 */}
-            <DrawBtn coin={currentCoin} num={drawMsg.drawNum} address={drawMsg.drawAddress} network={currentNet}/>
+            <DrawBtn coin={currentCoin} num={drawMsg.drawNum} address={drawMsg.drawAddress} fee={0.2}/>
         </div>
     )
 };

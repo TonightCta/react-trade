@@ -1,5 +1,5 @@
 import { CheckCircleFill } from "antd-mobile-icons";
-import { ReactElement, ReactNode, useEffect } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import InnerNav from '../../../../../components/inner_nav/nav'
 import './index.scss';
 import { WithdrawCoinMsg } from '../../../../../utils/types';
@@ -8,15 +8,18 @@ import { useHistory } from 'react-router-dom'
 const { Step } = Steps;
 
 interface Props extends WithdrawCoinMsg {
-    location: any
+    location: any,
 };
 
 const WithDrawPending = (props: Props): ReactElement<ReactNode> => {
     const history = useHistory();
+    const [coinMsg, setCoinMsg] = useState<Props>()
     useEffect(() => {
-        console.log(props.location.state)
-        console.log(props.location.search)
-        // console.log(JSON.parse(props.location.search))
+        if (!props.location.search) {
+            history.push('/withdraw');
+            return
+        }
+        setCoinMsg(JSON.parse(decodeURI(props.location.search.slice(1))))
     }, [])
     return (
         <div className="with-draw-pending">
@@ -24,7 +27,7 @@ const WithDrawPending = (props: Props): ReactElement<ReactNode> => {
             <div className="pending-con">
                 <CheckCircleFill fontSize={32} color="#3070ff" />
                 <p className="ini-title">提币申请已发起</p>
-                <p className="ini-amount">20.000 USDT</p>
+                <p className="ini-amount">{coinMsg?.num}&nbsp;{coinMsg?.coin}</p>
                 <div className="pending-step">
                     <Steps direction='vertical' current={1}>
                         <Step
@@ -42,11 +45,11 @@ const WithDrawPending = (props: Props): ReactElement<ReactNode> => {
                 <div className="address-msg">
                     <div className="msg-public">
                         <p>提币地址</p>
-                        <p>36456984616496846546</p>
+                        <p>{coinMsg?.address}</p>
                     </div>
                     <div className="msg-public">
                         <p>手续费</p>
-                        <p>0 USDT</p>
+                        <p>{coinMsg?.fee} {coinMsg?.coin}</p>
                     </div>
                 </div>
             </div>
