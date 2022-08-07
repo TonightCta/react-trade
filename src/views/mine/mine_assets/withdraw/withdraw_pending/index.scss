@@ -1,0 +1,71 @@
+.with-draw-pending {
+  .pending-con {
+    margin-top: 2px;
+    background-color: white;
+    padding: 12px;
+    padding-top: 24px;
+    .ini-title {
+      margin: 18px 0;
+      color: #3070ff;
+      font-size: 14px;
+    }
+    .ini-amount {
+      font-size: 28px;
+      color: #333;
+      font-weight: 500;
+    }
+    .pending-step {
+      margin-top: 20px;
+      text-align: left;
+      padding: 16px 12px;
+      background-color: #fafafa;
+      border-radius: 4px;
+      .adm-step-title {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .adm-step-content {
+        margin-bottom: 34px;
+      }
+      .adm-steps {
+        padding: 0;
+      }
+    }
+    .address-msg {
+      background-color: #fafafa;
+      padding: 16px 12px;
+      border-radius: 4px;
+      margin-top: 12px;
+      .msg-public {
+        display: flex;
+        justify-content: space-between;
+        p {
+          font-size: 14px;
+          color: #999;
+        }
+        p:last-child {
+          color: #666;
+        }
+      }
+      .msg-public:last-child {
+        border-top: 1px solid #eee;
+        margin-top: 12px;
+        padding-top: 12px;
+      }
+    }
+  }
+}
+.okey-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+  button {
+    width: 60%;
+    font-size: 16px;
+  }
+  button:last-child{
+    margin-top: 20px;
+  }
+}

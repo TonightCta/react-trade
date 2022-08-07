@@ -75,10 +75,7 @@ const SafeAuth = (props: PropsSafe): ReactElement => {
                     props.closeSafeBox();
                     history.push({
                         pathname: '/withdraw-detail',
-                        state: {
-                            coin: props.coin,
-                            num: props.num
-                        }
+                        state:{'data': JSON.stringify({ coin: props.coin, num: props.num })}
                     })
                 }}>确认</Button>
             </p>
