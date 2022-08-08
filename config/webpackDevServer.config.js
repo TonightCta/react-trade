@@ -103,7 +103,7 @@ module.exports = function (proxy, allowedHost) {
     proxy: {
       ...proxy,
       '/api': {
-        target: '..',
+        target: '...',
         changeOrigin: true,
         logLevel: 'debug',
         pathRewrite: {

@@ -12,23 +12,21 @@ export interface IResponse {
 };
 
 let axiosInstance: AxiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_BASEURL,
+    timeout: 1000 * 60 * 10,
     headers: {
-        Accept: 'application/json',
+        "Accept": 'application/json',
         "Content-Type": "application/json"
     },
-    transformRequest: [
-        (data) => {
-            delete data.Authorization;
-            data = qs.stringify(data);
-            return data
-        }
-    ]
 });
 axiosInstance.interceptors.request.use(
     config => {
         token && (config.headers!.Authorization = token);
-        return token
+        return token || config
     },
+    error => {
+        throw new Error(error)
+    }
 )
 axiosInstance.interceptors.response.use(
     response => {
@@ -46,12 +44,14 @@ axiosInstance.interceptors.response.use(
     },
 
 );
-
+// 'KFC Crazy Thursday Need $50'
 
 export const get = (url: string, params?: any) => {
     return new Promise((resolve, reject): void => {
-        axios.get(url, {
-            params
+        axiosInstance({
+            method:'get',
+            url,
+            data:params
         }).then((response) => {
             resolve(response)
         }).catch((error) => {
@@ -61,7 +61,11 @@ export const get = (url: string, params?: any) => {
 };
 export const post = (url: string, params: any) => {
     return new Promise((resolve, reject): void => {
-        axios.post(url, params).then((response) => {
+        axiosInstance({
+            method:'post',
+            url, 
+            data:params
+        }).then((response) => {
             resolve(response)
         }).catch((error) => {
             reject(error)
