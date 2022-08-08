@@ -34,9 +34,10 @@ axiosInstance.interceptors.response.use(
             switch (response.data.code) {
                 case 100001:
                     Toast.show('Crazy');
+                    response.data.message = 'Crazy'
                     break;
             };
-            return response.data;
+            return response.data.data;
         }
     },
     error => {

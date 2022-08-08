@@ -9,7 +9,7 @@ import { TestApi } from './request/api';
 
 const App = (): React.ReactElement<ReactNode> => {
   const test = async () => {
-    const result = await TestApi({scene:'AdsOrderStatus'});
+    const result = await TestApi({scene:''});
     console.log(result)
   }
   useEffect(() : void => {
