@@ -5,15 +5,16 @@ import './App.css';
 import './App.scss'
 import { ReactNode, useEffect } from 'react';
 import LoadView from './views/load_view/load_view';
+import { TestApi } from './request/api';
 
 const App = (): React.ReactElement<ReactNode> => {
-  // useEffect((): void => {
-    // window.scrollTo(0, 0)
-    // window.scrollTo({
-    //   top: 0,
-    //   behavior: 'smooth'
-    // });
-  // }, [])
+  const test = async () => {
+    const result = await TestApi({scene:'AdsOrderStatus'});
+    console.log(result)
+  }
+  useEffect(() : void => {
+    test()
+  }, [])
   return (
     <HashRouter>
       <div className="App">

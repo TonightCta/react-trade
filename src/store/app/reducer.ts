@@ -1,6 +1,7 @@
 import * as Type from './types';
 
 interface Store {
+    appToken:string,//用户Token
     language:string,//语言
     footerStatus:number,//底部导航显示状态
     invLevel:number,//当前查看邀请等级
@@ -8,6 +9,7 @@ interface Store {
     loadView:number,//启动页显示状态
 }
 const defaultState : Store = {
+    appToken:sessionStorage.getItem('token_1') || '',//设置登录token
     language: localStorage.getItem('language') || 'zh-TW',//本地语言环境
     footerStatus: Number(sessionStorage.getItem('footerStatus')) || 1,//底部导航显示状态
     invLevel: Number(sessionStorage.getItem('invLevel')) || 1,//邀请等级
@@ -16,6 +18,9 @@ const defaultState : Store = {
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
+        case Type.SET_TOKEN:
+            sessionStorage.setItem('token_1',action.token);
+            return { ...state,appToken:action.token }
         case Type.SET_LANGUAGE:
             localStorage.setItem('language', action.language);
             return { ...state, language: action.language }

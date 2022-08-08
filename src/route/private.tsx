@@ -2,7 +2,7 @@ import { ReactElement, ReactNode, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 
 interface Props {
-    children: any,
+    children: ReactElement,
     path: string,
     location?: unknown
 }
