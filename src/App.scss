@@ -18,6 +18,26 @@
 .click-span {
   color: #3070ff;
 }
-.adm-modal{
+.adm-modal {
   z-index: 2020;
+}
+.load-view {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 2400;
+  top: 0;
+  touch-action: none;
+  left: 0;
+  transition: .4s all;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.load-end{
+  opacity: 0;
+}
+.adm-dropdown-nav{
+  border: 0!important;
 }

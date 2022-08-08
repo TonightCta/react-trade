@@ -2,6 +2,7 @@ import { Swiper } from "antd-mobile";
 import React, { ReactElement, ReactNode } from "react";
 import { SoundOutline } from 'antd-mobile-icons'
 import { useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const advList = [
     '派大星',
@@ -13,13 +14,14 @@ interface CardMsg {
     title: string,
     icon: string,
     url: string,
+    outSide:boolean,
 }
 
 // 广告轮播
 const Items = advList.map((el, index): ReactElement<ReactNode> => {
     return (
         <Swiper.Item className="adv-item" key={index}>
-            {el}
+            <NavLink to="/ann-detail">{el}</NavLink>
         </Swiper.Item>
     )
 });
@@ -43,21 +45,25 @@ const Card = (): ReactElement<ReactNode> => {
             title: '邀请',
             icon: require('../../../assets/images/home_icon_1.png'),
             url: '',
+            outSide:false,
         },
         {
             title: '行情',
             icon: require('../../../assets/images/home_icon_2.png'),
-            url: '',
+            url: '/quotes',
+            outSide:false,
         },
         {
             title: '客服',
             icon: require('../../../assets/images/home_icon_3.png'),
-            url: '',
+            url: 'https://www.baidu.com',
+            outSide:true,
         },
         {
             title: '设置',
             icon: require('../../../assets/images/setting_icon.png'),
             url: '/setting',
+            outSide:false,
         }
     ]
     return (
@@ -67,7 +73,7 @@ const Card = (): ReactElement<ReactNode> => {
                     list.map((el, index): ReactElement => {
                         return (
                             <li key={index} onClick={() => {
-                                history.push(el.url)
+                                el.outSide ? window.open(el.url) : history.push(el.url)
                             }}>
                                 <img src={el.icon} alt="" />
                                 <p>{el.title}</p>

@@ -37,7 +37,7 @@ const MineAssets = (): ReactElement<ReactNode> => {
     }, [])
     return (
         <div className="mine-assets">
-            <InnerNav leftArrow title="我的资产" />
+            <InnerNav backMine title="我的资产" />
             <div className="assets-overview">
                 <div className="view-msg">
                     <p>总资产约 (折合USDT)</p>

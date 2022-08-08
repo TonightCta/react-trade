@@ -1,4 +1,4 @@
-import React,{ ReactNode, useEffect } from "react";
+import React, { ReactNode, useCallback, useEffect } from "react";
 // import { useTranslation } from "react-i18next";
 import HomeBanner from "./components/banner";
 import HomeAdv from "./components/adv";
@@ -10,21 +10,21 @@ import HomeTeslist from "./components/tes_list";
 import { upFooterStatus } from "../../store/app/action_creators";
 import store from "../../store";
 
-interface Props{
-    type?:string
+interface Props {
+    type?: string
 }
 
 // Logo
-const NavLogo = () : React.ReactElement<ReactNode> => {
-    return(
+const NavLogo = (): React.ReactElement<ReactNode> => {
+    return (
         <div className="nav-logo">
-            <img src={require('../../assets/images/test.png')} alt="" />
+            <img src={require('../../assets/images/logo.png')} alt="" />
         </div>
     )
 }
 
 
-const HomeIndex = (props:Props) : React.ReactElement<ReactNode> => {
+const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
     // const { t } = useTranslation();
     useEffect((): void => {
         const action = upFooterStatus(1);
@@ -32,23 +32,23 @@ const HomeIndex = (props:Props) : React.ReactElement<ReactNode> => {
     }, []);
     return (
         <div className="home-index">
-            <NavLogo/>
+            <NavLogo />
             {/* 轮播广告 */}
-            <HomeBanner/>
+            <HomeBanner />
             {/* 广告中心 */}
-            <HomeAdv/>
+            <HomeAdv />
             {/* 我的资产 */}
-            <HomeAssets/>
+            <HomeAssets />
             {/* 帮助 & 公告 */}
-            <HomeHelp/>
+            <HomeHelp />
             {/* 行情卡片 */}
-            <HomeTexCard/>
+            <HomeTexCard />
             {/* 涨幅榜 */}
-            <HomeTeslist/>
+            <HomeTeslist />
         </div>
     )
 };
 
-export default React.memo(HomeIndex);
+export default HomeIndex;
 
 

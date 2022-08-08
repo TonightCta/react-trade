@@ -1,5 +1,9 @@
 import * as Type from "./types";
-
+//更新启动页显示状态
+export const setLoadView = (load:number) => ({
+    type:Type.UP_LOAD_VIEW,
+    load
+})
 //设置语言
 export const setLanguage = (language:string) => ({
     type:Type.SET_LANGUAGE,
@@ -20,4 +24,5 @@ export const upCurrency = (currency:string) => ({
     type:Type.UP_CURRENCY,
     currency
 });
+
 

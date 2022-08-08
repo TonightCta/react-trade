@@ -1,13 +1,15 @@
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect } from "react";
 import { PullToRefresh } from 'antd-mobile';
 import { sleep } from 'antd-mobile/es/utils/sleep';
 import React from "react";
 
-interface OrderMsg{
-    type:number,//订单类型 当前 & 历史
-    tradeType?:number,//交易类型
-    tradeQu?:string,//交易队列
-    tradeWay?:number,//交易方式
+interface OrderMsg {
+    type: number,//订单类型 当前 & 历史
+    tradeType?: string,//交易类型
+    tradeQu?: string,//交易队列
+    tradeWay?: string,//交易方式
+    startTime?: string | number,//筛选开始时间
+    endTime?: string | number,//筛选结束时间
 }
 
 const Order = [
@@ -32,7 +34,10 @@ const Order = [
         status: 2,
     },
 ]
-const OrderList = (props:OrderMsg): ReactElement<ReactNode> => {
+const OrderList = (props: OrderMsg): ReactElement<ReactNode> => {
+    useEffect((): void => {
+        console.log(props)
+    }, [props])
     return (
         <div className="order-list">
             <PullToRefresh

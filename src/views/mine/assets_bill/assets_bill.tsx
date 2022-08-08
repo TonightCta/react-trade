@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useEffect } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import InnerNav from '../../../components/inner_nav/nav'
 import store from "../../../store";
 import { upFooterStatus } from "../../../store/app/action_creators";
@@ -42,13 +42,19 @@ const billList = [
 ]
 
 const AssetsBill = (): ReactElement<ReactNode> => {
+    const [searchVal,setSearchVal] = useState<string>('');
     useEffect((): void => {
         const action = upFooterStatus(0);
         store.dispatch(action)
     }, []);
+    useEffect(() : void => {
+        console.log(searchVal)
+    },[searchVal])
     return (
         <div className="assets-bill">
-            <InnerNav title="资金流水" search={true} withBorder leftArrow />
+            <InnerNav title="资金流水" search withBorder leftArrow getSearchVal={(val:string) => {
+                setSearchVal(val)
+            }}/>
             <div className="bill-list">
                 <PullToRefresh onRefresh={async () => {
                     await sleep(1000)

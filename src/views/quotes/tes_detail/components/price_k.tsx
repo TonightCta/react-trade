@@ -254,7 +254,7 @@ const option: any = {
 const convet = (_timestamp: number): string => {
     let year, month, day,hour,min;
     month = new Date(_timestamp).getMonth() + 1;
-    day = new Date(_timestamp).getDay();
+    day = new Date(_timestamp).getDate();
     hour = new Date(_timestamp).getHours();
     min = new Date(_timestamp).getMinutes();
     month = month < 10 ? (month = '0' + month) : month;
