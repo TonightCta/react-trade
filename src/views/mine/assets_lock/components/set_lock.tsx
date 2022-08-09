@@ -1,27 +1,35 @@
 import { ReactElement, ReactNode } from "react";
 import { Button, Toast } from "antd-mobile";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const SetLock = (): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     const history = useHistory();
     return (
         <div className="set-lock">
             <div className="form-item">
-                <p>登录密码</p>
-                <input type="text" placeholder="请输入登录密码" />
+                {/* 登录密码 */}
+                <p>{t('public.login_pass')}</p>
+                <input type="text" placeholder={t('public.enter_login_pass')} />
             </div>
             <div className="form-item">
-                <p>交易密码</p>
-                <input type="text" placeholder="请输入新的交易密码" />
+                {/* 交易密码 */}
+                <p>{t('public.trade_pass')}</p>
+                <input type="text" placeholder={t('public.enter_new_pass')} />
             </div>
             <div className="form-item">
-                <p>确认密码</p>
-                <input type="text" placeholder="请再次输入新的交易密码" />
+                {/* 确认密码 */}
+                <p>{t('public.turn_pass')}</p>
+                <input type="text" placeholder={t('public.type_turn')} />
             </div>
             <Button color='primary' block onClick={() => {
-                Toast.show('修改成功');
+                Toast.show(t('public.edit_success'));
                 history.goBack()
-            }}>确认</Button>
+            }}>
+                {/* 确认 */}
+                {t('public.confirm')}
+            </Button>
         </div>
     )
 };

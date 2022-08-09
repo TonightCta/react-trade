@@ -5,6 +5,7 @@ import { PullStatus } from 'antd-mobile/es/components/pull-to-refresh';
 import { useHistory } from 'react-router-dom'
 import { upCurrency } from "../../../store/app/action_creators";
 import store from "../../../store";
+import { useTranslation } from 'react-i18next';
 
 type TesMsg = {
     coin: string,
@@ -18,15 +19,15 @@ interface Props {
     type?: number,
     closeDraw?: () => void,
 }
-
-const statusRecord: Record<PullStatus, ReactElement | string> = {
-    pulling: '再拉再拉',
-    canRelease: '拉拉得了',
-    refreshing: <DotLoading color='primary' />,
-    complete: '好啦',
-}
 const TesAllList = (props: Props): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     const history = useHistory();
+    const statusRecord: Record<PullStatus, ReactElement | string> = {
+        pulling: t('public.pull_down'),//下拉刷新
+        canRelease: t('public.freed_down'),//释放刷新
+        refreshing: <DotLoading color='primary' />,
+        complete: t('public.down_over'),//刷新完成
+    }
     return (
         <div className="tes-all-list">
             <PullToRefresh onRefresh={async () => {
@@ -50,7 +51,7 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                                     <div className="list-public">
                                         <div className="coin-msg-hour">
                                             <p>{el.coin}</p>
-                                            <p>24H量&nbsp;{el.hourTotal.toFixed(4)}</p>
+                                            <p>24H{t('public.vol')}&nbsp;{el.hourTotal.toFixed(4)}</p>
                                         </div>
                                     </div>
                                     <div className="list-public">

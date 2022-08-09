@@ -10,6 +10,7 @@ interface OrderMsg {
     tradeWay?: string,//交易方式
     startTime?: string | number,//筛选开始时间
     endTime?: string | number,//筛选结束时间
+    t: any,//多语言
 }
 
 const Order = [
@@ -54,19 +55,31 @@ const OrderList = (props: OrderMsg): ReactElement<ReactNode> => {
                                         <div className="coin-more">
                                             <p>{el.coin}</p>
                                         </div>
-                                        <p className="order-status">{el.status === 1 ? "完全成交" : "进行中"}</p>
+                                        <p className="order-status">{el.status === 1 ? props.t('public.deal_all') : props.t('public.proces')}</p>
                                     </div>
                                     <div className="trade-msg-date">
-                                        <p className={`${el.type === 1 ? 'buy-color' : 'sell-color'}`}>{el.type === 1 ? '买入' : '卖出'}</p>
+                                        <p className={`${el.type === 1 ? 'buy-color' : 'sell-color'}`}>{el.type === 1 ? props.t('public.buy_in') : props.t('public.sell_out')}</p>
                                         <p>{el.date}</p>
                                     </div>
                                     <div className="trade-detail">
-                                        <p>委托总量&nbsp;{el.amount}&nbsp;USDT</p>
-                                        <p>委托价格&nbsp;{el.dealType === 1 ? '市价' : '挂单'}</p>
+                                        <p>
+                                            {/* 委托总量 */}
+                                            {props.t('public.mission_total')}
+                                            &nbsp;{el.amount}&nbsp;USDT</p>
+                                        <p>
+                                            {/* 委托价格 */}
+                                            {props.t('public.mission_price')}
+                                            &nbsp;{el.dealType === 1 ? props.t('public.city_price') : props.t('public.limit_price')}</p>
                                     </div>
                                     <div className="trade-detail">
-                                        <p>已成交量&nbsp;{el.dealAmount}&nbsp;TRX</p>
-                                        <p>成交均价&nbsp;{el.dealPrice}&nbsp;USDT</p>
+                                        <p>
+                                            {/* 已成交量 */}
+                                            {props.t('public.deal_total')}
+                                            &nbsp;{el.dealAmount}&nbsp;TRX</p>
+                                        <p>
+                                            {/* 成交均价 */}
+                                            {props.t('public.deal_price')}
+                                            &nbsp;{el.dealPrice}&nbsp;USDT</p>
                                     </div>
                                 </li>
                             )

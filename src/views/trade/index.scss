@@ -43,6 +43,7 @@
           line-height: 30px;
           border-radius: 4px;
           font-size: 15px;
+          transition: .2s all;
         }
         .buy-btn {
           background-color: #3370ff;
@@ -71,7 +72,7 @@
       .trade-count {
         margin-bottom: 12px;
         width: 100%;
-        .adm-stepper{
+        .adm-stepper {
           width: 100%;
         }
       }
@@ -160,6 +161,13 @@
       .turn-btn {
         button {
           width: 100%;
+          transition: .2s all;
+        }
+      }
+      .sell-btn {
+        button {
+          background-color: #fd7a56;
+          border-color: #fd7a56;
         }
       }
     }

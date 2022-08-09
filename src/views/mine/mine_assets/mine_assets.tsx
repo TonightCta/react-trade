@@ -6,6 +6,7 @@ import InnerNav from '../../../components/inner_nav/nav'
 import store from "../../../store";
 import { upFooterStatus } from "../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import './index.scss'
 
 const testList = [
@@ -30,6 +31,7 @@ const testList = [
 ]
 
 const MineAssets = (): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     const history = useHistory();
     useEffect((): void => {
         const action = upFooterStatus(0);
@@ -40,27 +42,39 @@ const MineAssets = (): ReactElement<ReactNode> => {
             <InnerNav backMine title="我的资产" />
             <div className="assets-overview">
                 <div className="view-msg">
-                    <p>总资产约 (折合USDT)</p>
+                    {/* 总资产约 */}
+                    <p>{t('public.assets_total_un')} ({t('public.for_u')}USDT)</p>
                     <p>1.5525266447</p>
                 </div>
                 <div className="view-oper">
-                    <Button color="primary" onClick={() => { history.push('/recharge') }}>充值</Button>
-                    <Button color="default" onClick={() => { history.push('/withdraw') }}>提现</Button>
+                    <Button color="primary" onClick={() => { history.push('/recharge') }}>
+                        {/* 充值 */}
+                        {t('public.recharge_fiat')}
+                    </Button>
+                    <Button color="default" onClick={() => { history.push('/withdraw') }}>
+                        {/* 提现 */}
+                        {t('public.withdraw_fiat')}
+                    </Button>
                 </div>
             </div>
             <div className="assets-list-box">
                 <Tabs style={{ '--title-font-size': '14px' }}>
-                    <Tabs.Tab title="币币账户" key={0}></Tabs.Tab>
-                    <Tabs.Tab title="永续账户" key={1}></Tabs.Tab>
+                    {/* 币币账户 */}
+                    <Tabs.Tab title={t('public.coin_account')} key={0}></Tabs.Tab>
+                    {/* 永续账户 */}
+                    <Tabs.Tab title={t('public.ever_account')} key={1}></Tabs.Tab>
                 </Tabs>
                 <div className="search-oper">
                     <p>
                         <span><SearchOutline color="#999" fontSize={14} /></span>
-                        <input type="text" placeholder="搜索资产" />
+                        <input type="text" placeholder={t('public.search_assets')} />
                     </p>
                     <p>
                         <CheckCircleFill color="#999" fontSize={14} />
-                        <span>隐藏为0的币种</span>
+                        <span>
+                            {/* 隐藏为0的币种 */}
+                            {t('public.hidden_0')}
+                        </span>
                     </p>
                 </div>
                 <div className="list-con">
@@ -85,11 +99,17 @@ const MineAssets = (): ReactElement<ReactNode> => {
                                             </div>
                                             <div className="use-happen">
                                                 <div className="happen-public">
-                                                    <p>可用</p>
+                                                    <p>
+                                                        {/* 可用 */}
+                                                        {t('public.use')}
+                                                    </p>
                                                     <p>{el.use}</p>
                                                 </div>
                                                 <div className="happen-public">
-                                                    <p>冻结</p>
+                                                    <p>
+                                                        {/* 冻结 */}
+                                                        {t('public.freeze')}
+                                                    </p>
                                                     <p>{el.use}</p>
                                                 </div>
                                             </div>

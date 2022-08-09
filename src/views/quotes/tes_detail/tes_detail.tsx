@@ -7,9 +7,11 @@ import TesPriceMsg from "./components/price_msg";
 import TesPriceK from "./components/price_k";
 import TesDealMsg from "./components/deal_msg";
 import TradeBtn from "./components/reade_btn";
+import { useTranslation } from "react-i18next";
 
 
 const TesDetail = (): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     useEffect((): void => {
         const action = upFooterStatus(0);
         store.dispatch(action)
@@ -19,13 +21,13 @@ const TesDetail = (): ReactElement<ReactNode> => {
         <div className="tes-detail">
             <InnerNav leftArrow title={state.currency} withBorder/>
             {/* 价格信息 */}
-            <TesPriceMsg/>
+            <TesPriceMsg t={t}/>
             {/* 价格K线图 */}
-            <TesPriceK/>
+            <TesPriceK t={t}/>
             {/* 成交信息 */}
-            <TesDealMsg/>
+            <TesDealMsg t={t}/>
             {/* 交易按钮 */}
-            <TradeBtn/>
+            <TradeBtn t={t}/>
         </div>
     )
 };

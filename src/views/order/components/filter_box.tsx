@@ -1,7 +1,8 @@
 import { CloseOutline, DownOutline, FilterOutline } from "antd-mobile-icons";
 import { ReactElement, useState, useRef } from "react";
 import { Popup, PickerView, Dropdown, Button, DatePickerView } from "antd-mobile";
-import { DropdownRef } from 'antd-mobile/es/components/dropdown'
+import { DropdownRef } from 'antd-mobile/es/components/dropdown';
+import { useTranslation } from 'react-i18next';
 
 type bol = boolean;
 
@@ -33,8 +34,6 @@ interface Props {
 }
 const now = new Date();
 const coinVol = [['BTC/USDT', 'ETH/USDT']];
-const wayVol = [['买入', '卖出']];
-const typeVol = [['市价委托', '限价委托']];
 
 const ValDate = (_time: Date): string => {
     const date = new Date(_time);
@@ -45,6 +44,9 @@ const ValDate = (_time: Date): string => {
 }
 
 const FilterBox = (props: Props): ReactElement => {
+    const { t } = useTranslation();
+    const wayVol = [[t('public.buy_in'), t('public.sell_out')]];
+    const typeVol = [[t('public.way_city'), t('public.way_limit')]];
     const DrapRef = useRef<DropdownRef>(null);
     //选择器数据
     const [volList, setVollist] = useState<string[][]>([[]]);
@@ -90,54 +92,66 @@ const FilterBox = (props: Props): ReactElement => {
                 <Dropdown.Item key="filter-mine" arrow="" title={<FilterOutline fontSize={16} />}>
                     <div className="filter-drap-box">
                         <div className="drap-box">
-                            <p className="drap-lable">交易对</p>
+                            <p className="drap-lable">
+                                {/* 交易对 */}
+                                {t('public.trade_qu')}
+                            </p>
                             <p className="drap-result" onClick={() => {
                                 showPop('filter');
                                 setVollist(coinVol);
-                                setPopTitle('交易对');
+                                setPopTitle(t('public.trade_qu'));
                             }}>
-                                <span className={`${!visValue.tradeCoin ? 'gray-span' : ''}`}>{visValue.tradeCoin ? visValue.tradeCoin : '请选择交易对'}</span>
+                                <span className={`${!visValue.tradeCoin ? 'gray-span' : ''}`}>{visValue.tradeCoin ? visValue.tradeCoin : t('public.select_qu')}</span>
                                 <DownOutline color="#999" fontSize={14} />
                             </p>
                         </div>
                         <div className="drap-box">
-                            <p className="drap-lable">交易方向</p>
+                            <p className="drap-lable">
+                                {/* 交易方向 */}
+                                {t('public.trade_way')}
+                            </p>
                             <p className="drap-result" onClick={() => {
                                 showPop('filter');
                                 setVollist(wayVol);
-                                setPopTitle('交易方向');
+                                setPopTitle(t('public.trade_way'));
                             }}>
-                                <span className={`${!visValue.tradeWay ? 'gray-span' : ''}`}>{visValue.tradeWay ? visValue.tradeWay : '请选择交易方向'}</span>
+                                <span className={`${!visValue.tradeWay ? 'gray-span' : ''}`}>{visValue.tradeWay ? visValue.tradeWay : t('public.select_way')}</span>
                                 <DownOutline color="#999" fontSize={14} />
                             </p>
                         </div>
                         <div className="drap-box">
-                            <p className="drap-lable">交易类型</p>
+                            <p className="drap-lable">
+                                {/* 交易类型 */}
+                                {t('public.trade_type')}
+                            </p>
                             <p className="drap-result" onClick={() => {
                                 showPop('filter');
                                 setVollist(typeVol);
-                                setPopTitle('交易类型');
+                                setPopTitle(t('public.trade_type'));
                             }}>
-                                <span className={`${!visValue.tradeType ? 'gray-span' : ''}`}>{visValue.tradeType ? visValue.tradeType : '请选择交易类型'}</span>
+                                <span className={`${!visValue.tradeType ? 'gray-span' : ''}`}>{visValue.tradeType ? visValue.tradeType : t('public.select_type')}</span>
                                 <DownOutline color="#999" fontSize={14} />
                             </p>
                         </div>
                         <div className="drap-box">
-                            <p className="drap-lable">起止时间</p>
+                            <p className="drap-lable">
+                                {/* 起止时间 */}
+                                {t('public.filter_time')}
+                            </p>
                             <div className="select-date">
                                 <p className={`se-inp ${!visValue.startTime ? 'gray-span' : ''}`} onClick={() => {
                                     setVisBool({
                                         ...visBool,
                                         startTime: true,
                                     })
-                                }}>{visValue.startTime ? ValDate(visValue.startTime) : '开始时间'}</p>
+                                }}>{visValue.startTime ? ValDate(visValue.startTime) : t('public.start_time')}</p>
                                 <p>-</p>
                                 <p className={`se-inp ${!visValue.endTime ? 'gray-span' : ''}`} onClick={() => {
                                     setVisBool({
                                         ...visBool,
                                         endTime: true,
                                     })
-                                }}>{visValue.endTime ? ValDate(visValue.endTime) : '结束时间'}</p>
+                                }}>{visValue.endTime ? ValDate(visValue.endTime) : t('public.end_time')}</p>
                             </div>
                         </div>
                         <div className="drap-btn">
@@ -150,7 +164,10 @@ const FilterBox = (props: Props): ReactElement => {
                                     startTime: '',
                                     endTime: '',
                                 });
-                            }}>重置</Button>
+                            }}>
+                                {/* 重置 */}
+                                {t('public.reset')}
+                            </Button>
                             <Button color="primary" block onClick={() => {
                                 props.setFilterVal({
                                     coin: visValue.tradeCoin,
@@ -160,7 +177,10 @@ const FilterBox = (props: Props): ReactElement => {
                                     endTime: visValue.endTime
                                 })
                                 DrapRef.current?.close();
-                            }}>确认</Button>
+                            }}>
+                                {/* 确认 */}
+                                {t('public.confirm')}
+                            </Button>
                         </div>
                     </div>
                 </Dropdown.Item>
@@ -185,12 +205,14 @@ const FilterBox = (props: Props): ReactElement => {
                     <p><Button color="primary" block onClick={() => {
                         setVisValue({
                             ...visValue,
-                            tradeCoin: popTitle === '交易对' ? visValue.pickerValue : visValue.tradeCoin,
-                            tradeWay: popTitle === '交易方向' ? visValue.pickerValue : visValue.tradeWay,
-                            tradeType: popTitle === '交易类型' ? visValue.pickerValue : visValue.tradeType,
+                            tradeCoin: popTitle === t('public.trade_qu') ? visValue.pickerValue : visValue.tradeCoin,
+                            tradeWay: popTitle === t('public.trade_way') ? visValue.pickerValue : visValue.tradeWay,
+                            tradeType: popTitle === t('public.trade_type') ? visValue.pickerValue : visValue.tradeType,
                         })
                         closeFilter();
-                    }}>确认</Button></p>
+                    }}>
+                        {/* 确认 */}
+                        {t('public.confirm')}</Button></p>
                 </div>
             </Popup>
             {/* 时间选择 - 开始时间 */}
@@ -199,7 +221,10 @@ const FilterBox = (props: Props): ReactElement => {
             }}>
                 <div className="popup-con-mine">
                     <div className="popup-title-mine">
-                        <p>开始时间</p>
+                        <p>
+                            {/* 开始时间 */}
+                            {t('public.start_time')}
+                        </p>
                         <CloseOutline fontSize={14} color="#999" onClick={() => {
                             closeFilter()
                         }} />
@@ -216,7 +241,9 @@ const FilterBox = (props: Props): ReactElement => {
                             ...visValue,
                             startTime: defaultNow.getTime(),
                         })
-                    }}>确认</Button></p>
+                    }}>
+                        {/* 确认 */}
+                        {t('public.confirm')}</Button></p>
                 </div>
             </Popup>
             {/* 时间选择 - 结束时间 */}
@@ -225,7 +252,10 @@ const FilterBox = (props: Props): ReactElement => {
             }}>
                 <div className="popup-con-mine">
                     <div className="popup-title-mine">
-                        <p>开始时间</p>
+                        <p>
+                            {/* 结束时间 */}
+
+                        </p>
                         <CloseOutline fontSize={14} color="#999" onClick={() => {
                             closeFilter()
                         }} />
@@ -242,7 +272,8 @@ const FilterBox = (props: Props): ReactElement => {
                             endTime: defaultNow.getTime(),
                         })
                         closeFilter()
-                    }}>确认</Button></p>
+                    }}>{/* 确认 */}
+                        {t('public.confirm')}</Button></p>
                 </div>
             </Popup>
         </div>

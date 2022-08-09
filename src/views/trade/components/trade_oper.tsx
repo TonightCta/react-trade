@@ -46,7 +46,7 @@ const downList = [
     }
 ];
 
-const TradeOper = (): ReactElement<ReactNode> => {
+const TradeOper = (props: { t: any }): ReactElement<ReactNode> => {
 
     const [tradeType, setTradeType] = useState<number>(1);
     const [persent, setPersent] = useState<number>(0);
@@ -58,18 +58,27 @@ const TradeOper = (): ReactElement<ReactNode> => {
                 <div className="trade-type">
                     <p className={`${tradeType === 1 ? 'buy-btn' : ''}`} onClick={() => {
                         setTradeType(1)
-                    }}>买入</p>
+                    }}>
+                        {/* 买入 */}
+                        {props.t('public.buy_in')}
+                    </p>
                     <p className={`${tradeType === 2 ? 'sell-btn' : ''}`} onClick={() => {
                         setTradeType(2)
-                    }}>卖出</p>
+                    }}>
+                        {/* 卖出 */}
+                        {props.t('public.sell_out')}
+                    </p>
                 </div>
                 {/* 交易方式 */}
                 <div className="trade-way">
-                    市价委托
+                    {/* 市价委托 */}
+                    {props.t('public.way_city')}
                 </div>
                 {/* 方式二级 */}
                 <div className="way-result">
-                    以最优价格{tradeType === 1 ? '买入' : '卖出'}
+                    {/* 以最优价格 */}
+                    {props.t('public.best_price')}
+                    {tradeType === 1 ? props.t('public.buy_in') : props.t('public.sell_out')}
                 </div>
                 {/* 交易数量 */}
                 <div className="trade-count">
@@ -87,7 +96,10 @@ const TradeOper = (): ReactElement<ReactNode> => {
                 </div>
                 {/* 余额 */}
                 <div className="use-balance">
-                    <p>可用余额</p>
+                    <p>
+                        {/* 可用余额 */}
+                        {props.t('public.use_balance')}
+                    </p>
                     <p>0</p>
                 </div>
                 {/* 快捷操作 */}
@@ -107,18 +119,29 @@ const TradeOper = (): ReactElement<ReactNode> => {
                 </div>
                 {/* 交易价格 */}
                 <div className="trade-price">
-                    <p>交易额</p>
+                    <p>
+                        {/* 交易额 */}
+                        {props.t('public.trade_amount')}
+                    </p>
                     <p>0&nbsp;USDT</p>
                 </div>
                 {/* 交易进行 */}
-                <div className="turn-btn">
-                    <Button color='primary'>买入</Button>
+                <div className={`turn-btn ${tradeType === 2 ? 'sell-btn' : ''}`}>
+                    <Button color='primary'>
+                        {tradeType === 1 ? props.t('public.buy_in') : props.t('public.sell_out')}
+                    </Button>
                 </div>
             </div>
             <div className="oper-right oper-public">
                 <div className="right-title">
-                    <p>价格(USDT)</p>
-                    <p>数量(BTC)</p>
+                    <p>
+                        {/* 价格 */}
+                        {props.t('public.price')}
+                        (USDT)</p>
+                    <p>
+                        {/* 数量 */}
+                        {props.t('public.num')}
+                        (BTC)</p>
                 </div>
                 <div className="gain-box">
                     <ul className="up-pain">

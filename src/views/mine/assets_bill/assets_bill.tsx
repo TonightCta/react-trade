@@ -3,7 +3,8 @@ import InnerNav from '../../../components/inner_nav/nav'
 import store from "../../../store";
 import { upFooterStatus } from "../../../store/app/action_creators";
 import { PullToRefresh } from 'antd-mobile'
-import { sleep } from 'antd-mobile/es/utils/sleep'
+import { sleep } from 'antd-mobile/es/utils/sleep';
+import { useTranslation } from "react-i18next";
 import './index.scss'
 
 const billList = [
@@ -42,19 +43,20 @@ const billList = [
 ]
 
 const AssetsBill = (): ReactElement<ReactNode> => {
-    const [searchVal,setSearchVal] = useState<string>('');
+    const { t } = useTranslation();
+    const [searchVal, setSearchVal] = useState<string>('');
     useEffect((): void => {
         const action = upFooterStatus(0);
         store.dispatch(action)
     }, []);
-    useEffect(() : void => {
+    useEffect((): void => {
         console.log(searchVal)
-    },[searchVal])
+    }, [searchVal])
     return (
         <div className="assets-bill">
-            <InnerNav title="资金流水" search withBorder leftArrow getSearchVal={(val:string) => {
+            <InnerNav title={t('public.bill_list')} search withBorder leftArrow getSearchVal={(val: string) => {
                 setSearchVal(val)
-            }}/>
+            }} />
             <div className="bill-list">
                 <PullToRefresh onRefresh={async () => {
                     await sleep(1000)
@@ -72,17 +74,22 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                         <p className="icon-type">{el.coin}</p>
                                         <div className="order-title">
                                             <p className="order-type">{[
-                                                el.type === 1 && '购买' ||
-                                                el.type === 2 && '售出' ||
-                                                el.type === 3 && '充币' ||
-                                                el.type === 4 && '提币'
+                                                // 购买
+                                                el.type === 1 && t('public.buy') ||
+                                                // 售出
+                                                el.type === 2 && t('public.sell') ||
+                                                // 充币
+                                                el.type === 3 && t('public.recharge') ||
+                                                //提币
+                                                el.type === 4 && t('public.withdraw')
                                             ]}</p>
                                             <p className="now-balance">{el.balance}</p>
                                         </div>
                                         <div className="fee-msg">
                                             <p className="order-date">{el.date}</p>
                                             <div className="fee-and-amount">
-                                                <p>(手续费:&nbsp;{el.fee})</p>
+                                                {/* 手续费 */}
+                                                <p>({t('public.fee')}:&nbsp;{el.fee})</p>
                                                 <p>{el.amount > 0 ? '+' : ''}{el.amount}</p>
                                             </div>
                                         </div>

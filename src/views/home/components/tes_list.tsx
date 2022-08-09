@@ -2,6 +2,7 @@ import { ReactElement, ReactNode } from "react";
 import { useHistory } from 'react-router-dom'
 import store from "../../../store";
 import { upCurrency } from "../../../store/app/action_creators";
+import { useTranslation } from 'react-i18next'
 
 interface TesMsg {
     coin: string,
@@ -50,10 +51,12 @@ const TesListTwo: Array<TesMsg> = [
 ]
 
 const HomeTeslist = (): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     const history = useHistory();
     return (
         <div className="home-tes-list">
-            <p className="list-title">涨幅榜</p>
+            {/* 涨幅榜 */}
+            <p className="list-title">{t('public.up_list')}</p>
             <ul>
                 {
                     TesListTwo.map((el: TesMsg, index: number): ReactElement => {
@@ -67,7 +70,7 @@ const HomeTeslist = (): ReactElement<ReactNode> => {
                                     <p className="list-sort">{index + 1}</p>
                                     <div className="coin-msg-hour">
                                         <p>{el.coin}</p>
-                                        <p>24H量&nbsp;{el.hourTotal.toFixed(4)}</p>
+                                        <p>24H{t('public.vol')}&nbsp;{el.hourTotal.toFixed(4)}</p>
                                     </div>
                                 </div>
                                 <div className="list-public">

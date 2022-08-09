@@ -5,22 +5,23 @@ import TesTabs from "../../quotes/components/tes_tabs";
 
 interface DrawProps {
     closeDraw: () => void,
+    t: any
 }
 const FilterDraw = (props: DrawProps): ReactElement => {
     return (
         <div className="trade-filter-draw">
             <div className="draw-title">
-                <p>商城</p>
+                <p>{props.t('public.shop')}</p>
                 <CloseCircleOutline onClick={() => {
                     props.closeDraw();
-                }}/>
+                }} />
             </div>
-            <TesTabs type={2} closeDraw={props.closeDraw}/>
+            <TesTabs t={props.t} type={2} closeDraw={props.closeDraw} />
         </div>
     )
 }
 
-const TradeNav = (): ReactElement<ReactNode> => {
+const TradeNav = (props: { t: any }): ReactElement<ReactNode> => {
     const [drawStatus, setDrawStatus] = useState<boolean>(false);
     return (
         <div className="trade-nav">
@@ -42,7 +43,7 @@ const TradeNav = (): ReactElement<ReactNode> => {
                 }}
                 position='left'
                 bodyStyle={{ minWidth: '80vw' }}>
-                <FilterDraw closeDraw={() : void => {
+                <FilterDraw t={props.t} closeDraw={(): void => {
                     setDrawStatus(false)
                 }} />
             </Popup>

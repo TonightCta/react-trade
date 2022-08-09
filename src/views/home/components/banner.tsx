@@ -2,9 +2,8 @@ import React, { ReactElement, ReactNode } from "react";
 import { Swiper } from 'antd-mobile'
 
 const colors = [
-    '我是如此古板的山', 
-    '我是如此模糊的雾', 
-    '飞鸟与鱼不同路', 
+    require('../../../assets/images/banner_1.png'),
+    require('../../../assets/images/banner_2.png'),
 ];
 
 const Items = colors.map((con,index): ReactElement<ReactNode> => {
@@ -13,8 +12,8 @@ const Items = colors.map((con,index): ReactElement<ReactNode> => {
             <div
                 className="banner-items"
             >
-                {/* <img src={con} alt="" /> */}
-                <p>{con}</p>
+                <img src={con} alt="" />
+                {/* <p>{con}</p> */}
             </div>
         </Swiper.Item>
     )

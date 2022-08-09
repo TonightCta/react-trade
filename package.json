@@ -83,7 +83,7 @@
   "scripts": {
     "start": "node -r dotenv/config scripts/start.js dotenv_config_path=.env.development",
     "start:test": "node -r dotenv/config scripts/start.js dotenv_config_path=.env.test",
-    "build:test": "node --inspect-brk -r dotenv/config scripts/build.js dotenv_config_path=.env.test",
+    "build:test": "node -r dotenv/config scripts/build.js dotenv_config_path=.env.test",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {

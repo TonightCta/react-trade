@@ -1,6 +1,7 @@
 import { LeftOutline, SearchOutline, SendOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode } from "react";
 import { useHistory, RouteComponentProps, withRouter } from "react-router-dom";
+ import { useTranslation } from "react-i18next"; 
 import './nav.scss'
 
 interface Props extends RouteComponentProps {
@@ -14,6 +15,7 @@ interface Props extends RouteComponentProps {
 }
 
 const InnerNav = (props: Props): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     const history = useHistory();
     return (
         <div className={`inner-nav ${props.withBorder ? 'with-border-nav' : ''}`}>
@@ -28,7 +30,7 @@ const InnerNav = (props: Props): ReactElement<ReactNode> => {
             <div className="nav-title">{props.title}</div>
             <div className="right-oper">
                 {props.share && <SendOutline fontSize={16} />}
-                {props.search && <div className="search-inp"><input placeholder="搜索" onChange={(e) => {
+                {props.search && <div className="search-inp"><input placeholder={t('public.search')} onChange={(e) => {
                     props.getSearchVal && props.getSearchVal(e.target.value)
                 }}/><span><SearchOutline fontSize={16} /></span></div>}
             </div>

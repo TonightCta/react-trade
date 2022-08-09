@@ -4,15 +4,16 @@ import store from "../../../store";
 import { upFooterStatus } from "../../../store/app/action_creators";
 import ResetPass from "./components/re_set";
 import './index.scss'
-
+import { useTranslation } from "react-i18next";
 const SetPass = (): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     useEffect((): void => {
         const action = upFooterStatus(0);
         store.dispatch(action);
     }, [])
     return (
         <div className="set-pass">
-            <InnerNav title="登录密码" leftArrow />
+            <InnerNav title={t('public.login_pass')} leftArrow />
             <ResetPass/>
         </div>
     )

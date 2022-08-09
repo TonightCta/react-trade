@@ -1,32 +1,52 @@
 import { ReactElement, ReactNode } from "react";
 import InnerNav from '../../../../components/inner_nav/nav';
 import { List } from "antd-mobile";
+import { useTranslation } from "react-i18next";
 import './index.scss'
 
 const RechargeIndex = (): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     return (
         <div className="recharge-index">
-            <InnerNav leftArrow title="充币" />
+            {/* 充币 */}
+            <InnerNav leftArrow title={t('public.recharge')} />
             <div className="charge-msg">
                 <List>
-                    <List.Item extra="USDT" onClick={() => { }}>币种</List.Item>
-                    <List.Item extra="USDT-TRC20" onClick={() => { }}>选择充值网络</List.Item>
+                    <List.Item extra="USDT" onClick={() => { }}>
+                        {/* 币种 */}
+                        {t('public.coin')}
+                    </List.Item>
+                    <List.Item extra="USDT-TRC20" onClick={() => { }}>
+                        {/* 选择充值网络 */}
+                        {
+                            t('public.select_net')
+                        }
+                    </List.Item>
                 </List>
             </div>
             <div className="charge-qr">
-                <p className="charge-title">扫二维码，转入USDT</p>
+                <p className="charge-title">
+                    {/* 扫二维码，转入 */}
+                    {t('public.qr_pay')}
+                    USDT</p>
                 <img src={require('../../../../assets/images/test.png')} alt="" />
-                <p className="charge-address-title">充值地址</p>
+                <p className="charge-address-title">
+                    {/* 充值地址 */}
+                    {t('public.recharge_address')}
+                </p>
                 <p className="charge-address">JJJHTFCDRCVGhxbhsyxgu4556cdac</p>
                 <div className="copy-btn">
-                    复制
+                    {/* 复制 */}
+                    {t('public.copy')}
                 </div>
             </div>
             <div className="charge-remark">
-                <p className="remark-title">充值说明：</p>
-                <p className="remark-text">1. 请通过客户端或在线钱包将您需要充值的相应币种(USDT-TRC20)数目发送到该地址，充入其他资产将无法找回。</p>
-                <p className="remark-text">2. 发送完成后，系统会自动在此交易获得相应数量确认后将该笔虚拟币充值到您在本站的账户，相应数量的确认需要3大约0.5到1小时时间，请耐心等待。(确认数为2)</p>
-                <p className="remark-text">3. 同一个地址可多次充值，不影响到账。最小充值金额0.00001。</p>
+                <p className="remark-title">
+                    {/* 充值说明 */}
+                    {t('public.recharge_remark')}:</p>
+                <p className="remark-text">1. {t('public.recharge_remark_1')}(USDT-TRC20){t('public.recharge_remark_1_1')}</p>
+                <p className="remark-text">2. {t('public.recharge_remark_2')}</p>
+                <p className="remark-text">3. {t('public.recharge_remark_3')}</p>
             </div>
         </div>
     )

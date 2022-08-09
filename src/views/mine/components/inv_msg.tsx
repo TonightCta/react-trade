@@ -4,36 +4,17 @@ import store from "../../../store";
 import { upInvLevel } from "../../../store/app/action_creators";
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd-mobile';
+import { useTranslation } from 'react-i18next'
 
 interface Manage {
     title: string,
     icon: string,
     level: number,
 }
-const ManageList: Array<Manage> = [
-    {
-        title: '一级好友',
-        icon: require('../../../assets/images/one.png'),
-        level: 1,
-    },
-    {
-        title: '二级好友',
-        icon: require('../../../assets/images/two.png'),
-        level: 2,
-    },
-    {
-        title: '三级好友',
-        icon: require('../../../assets/images/three.png'),
-        level: 3,
-    },
-    {
-        title: '邀请总数',
-        icon: require('../../../assets/images/all.png'),
-        level: 4,
-    },
-]
+
 
 const ModalContent = (props: { closeModal: () => void }): ReactElement => {
+    const { t } = useTranslation();
     return (
         <div className="modal-content-inv">
             <p className="close-icon" onClick={() => { props.closeModal() }}><CloseOutline /></p>
@@ -41,18 +22,34 @@ const ModalContent = (props: { closeModal: () => void }): ReactElement => {
                 xx推广计划奖励制度
             </p>
             <div className="modal-inv-reward">
-                <p>一代:60%</p>
-                <p>二代:30%</p>
-                <p>三代:10%</p>
+                <p>
+                    {/* 一代:60% */}
+                    {
+                        t('public.percent_one')
+                    }
+                </p>
+                <p>
+                    {/* 二代:30% */}
+                    {
+                        t('public.percent_two')
+                    }
+                </p>
+                <p>
+                    {/* 三代:10% */}
+                    {
+                        t('public.percent_three')
+                    }
+                </p>
             </div>
             <p className="modal-title-mine">
-                推广计划奖励制度详情
+                {/* 推广计划奖励制度详情 */}
+                {t('public.adv_title')}
             </p>
             <ul>
-                <li>若用戶邀請了10名-代好友，他的一代好友分別邀請了2名二代好友，他的二代好友分別邀請了5名三代好友，此用戶就擁有10名一代好友，20名二代好友，100名三代好友如果平均每人交易一-次數字貨幣的金額是1000美金，手續費是1美金，那麼此用戶佣金收入約: 10*10*60%+ 20*10*30%+100*10*10% =220美金。</li>
-                <li>若用戶邀請了100名一代好友，他的一代好友分別邀請了2名二代好友，他的二代好友分別邀請了5名三代好友，此用戶就擁有100名一代好友，200名二代好友，如果平均每人交易一次數字貨幣的金額是1000美金，手續費是8美金，那麼此用戶佣金收入約: 100*10*60% +</li>
-                <li>200*10* 30%+ 1000*10*10% =2200美金。</li>
-                <li>若用戶邀請了1000名一代好友，他的一-代好友分別邀請了2名二代好友，他的二代好友分別邀請了5名三代好友，此用戶就擁有1000名一代好友，2000名二代好友，10000名三代好友如果平均每人交易一次數字貨幣的金額是1000美金，手續費是10美金，那麼此用戶佣金收入約1000* 10*60%+ 2000* 10* 30%+ 10000*10* 10%=22000美金</li>
+                <li>{t('public.adv_remarl_1')}</li>
+                <li>{t('public.adv_remarl_2')}</li>
+                <li>{t('public.adv_remarl_3')}</li>
+                <li>{t('public.adv_remarl_4')}</li>
             </ul>
         </div>
     )
@@ -60,19 +57,59 @@ const ModalContent = (props: { closeModal: () => void }): ReactElement => {
 
 const MineInvMsg = (): ReactElement<ReactNode> => {
     const [msgModal, setMsgModal] = useState<boolean>(false);
+    const { t } = useTranslation();
+    const ManageList: Array<Manage> = [
+        {
+            //一级好友
+            title: t('public.level_one'),
+            icon: require('../../../assets/images/one.png'),
+            level: 1,
+        },
+        {
+            //二级好友
+            title: t('public.level_two'),
+            icon: require('../../../assets/images/two.png'),
+            level: 2,
+        },
+        {
+            //三级好友
+            title: t('public.level_three'),
+            icon: require('../../../assets/images/three.png'),
+            level: 3,
+        },
+        {
+            //邀请总数
+            title: t('public.inv_total'),
+            icon: require('../../../assets/images/all.png'),
+            level: 4,
+        },
+    ]
     const history = useHistory();
     return (
         <div className="mine-assets-manage mine-inv">
             <div className="title-msg">
-                <p className="manage-title">我的邀请</p>
+                <p className="manage-title">
+                    {/* 我的邀请 */}
+                    {t('public.inv_mine')}
+                </p>
                 <div className="title-more-oper">
                     <p onClick={() => {
                         setMsgModal(true)
                     }}>
-                        <span>详细信息</span><UnorderedListOutline fontSize={12} color="#3370ff" />
+                        <span>
+                            {/* 详细信息 */}
+                            {
+                                t('public.detail')
+                            }
+                        </span><UnorderedListOutline fontSize={12} color="#3370ff" />
                     </p>
                     <p>
-                        <span>邀请链接</span><LinkOutline fontSize={12} color="#3370ff" />
+                        <span>
+                            {/* 邀请链接 */}
+                            {
+                                t('public.inv_link')
+                            }
+                        </span><LinkOutline fontSize={12} color="#3370ff" />
                     </p>
                 </div>
             </div>

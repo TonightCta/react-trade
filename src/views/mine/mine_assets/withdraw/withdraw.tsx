@@ -4,6 +4,8 @@ import DrawBtn from "./components/draw_btn";
 import { Popup } from "antd-mobile";
 import './index.scss'
 import { DownFill } from "antd-mobile-icons";
+import { useTranslation } from 'react-i18next'
+import { t } from "i18next";
 
 interface CoinNet {
     name: string,
@@ -21,6 +23,7 @@ interface PropsSelect {
     closeSelect: () => void,
     onSelect: (value: Array<CoinNet>) => void,
     onSelectCoin: (value: string) => void,
+    t: any
 }
 const coinList = [
     {
@@ -78,13 +81,17 @@ const SelectOption = (props: PropsSelect): ReactElement => {
             </ul>
             <div className="close-select" onClick={(): void => {
                 props.closeSelect()
-            }}>取消</div>
+            }}>
+                {/* 取消 */}
+                {props.t('public.cancel')}
+            </div>
         </div>
     )
 };
 
 
 const WithdrawIndex = (): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     //Hooks提供的Api均可带入泛型
     //币种
     const [currentCoin, setCurrentCoin] = useState<string>('USDT');
@@ -116,7 +123,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
     }, []);
     return (
         <div className="with-draw">
-            <InnerNav leftArrow title="提币" />
+            <InnerNav leftArrow title={t('public.withdraw')} />
             <div className="draw-msg">
                 {/* 选择币种 */}
                 <div className="msg-option" onClick={(): void => {
@@ -125,13 +132,19 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                         selectCoin: true,
                     })
                 }}>
-                    <p className="option-lable">币种</p>
-                    <input type="text" disabled value={currentCoin}/>
+                    <p className="option-lable">
+                        {/* 币种 */}
+                        {t('public.coin')}
+                    </p>
+                    <input type="text" disabled value={currentCoin} />
                     <span className="icon-inp"><DownFill /></span>
                 </div>
                 {/* 提币网络 */}
                 <div className="msg-option">
-                    <p className="option-lable un-lable-margin">可用网络</p>
+                    <p className="option-lable un-lable-margin">
+                        {/* 可用网络 */}
+                        {t('public.use_net')}
+                    </p>
                     <ul className="net-list">
                         {
                             coinNet?.map((el: CoinNet, index: number): ReactElement => {
@@ -152,8 +165,11 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                 </div>
                 {/* 提币地址 */}
                 <div className="msg-option">
-                    <p className="option-lable">提币地址</p>
-                    <input type="text" placeholder="输入或长按粘贴提币地址" value={drawMsg?.drawAddress} onChange={(e) => {
+                    <p className="option-lable">
+                        {/* 提币地址 */}
+                        {t('public.withdraw_address')}
+                    </p>
+                    <input type="text" placeholder={t('public.address_paste')} value={drawMsg?.drawAddress} onChange={(e) => {
                         setDrawMsg({
                             ...drawMsg,
                             drawAddress: e.target.value,
@@ -162,8 +178,11 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                 </div>
                 {/* 提币数量 */}
                 <div className="msg-option">
-                    <p className="option-lable">提币数量</p>
-                    <input type="number" placeholder="最少20" value={drawMsg?.drawNum} onChange={(e) => {
+                    <p className="option-lable">
+                        {/* 提币数量 */}
+                        {t('public.withdraw_num')}
+                    </p>
+                    <input type="number" placeholder={`${t('public.min')}20`} value={drawMsg?.drawNum} onChange={(e) => {
                         setDrawMsg({
                             ...drawMsg,
                             drawNum: e.target.value,
@@ -172,18 +191,21 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                     <p className="inp-remark">
                         <span>{currentCoin}</span>
                         <span></span>
-                        <span className="click-span">全部</span>
+                        <span className="click-span">
+                            {/* 全部 */}
+                            {t('public.all')}
+                        </span>
                     </p>
                     <p className="option-remark">
-                        <span>可用余额：10.2546465484 {currentCoin}</span>
-                        <span>手续费：0.0005 {currentCoin}</span>
+                        <span>{t('public.use_balance')}:10.2546465484 {currentCoin}</span>
+                        <span>{t('public.fee')}:0.0005 {currentCoin}</span>
                     </p>
                 </div>
                 <div className="draw-attention">
                     <ul>
-                        <li>提币至本平台地址时可免手续费，费用返回至当前账户。</li>
-                        <li>为保障资金安全，当您发起提币时，平台需进行审核，请耐心等待。</li>
-                        <li>单笔提币数量限额: 10-10,000 {currentCoin}({drawMsg.netWork})。</li>
+                        <li>{t('public.withdraw_remark_1')}</li>
+                        <li>{t('public.withdraw_remark_2')}</li>
+                        <li>{t('public.withdraw_remark_3')}:10-10,000 {currentCoin}({drawMsg.netWork})</li>
                     </ul>
                 </div>
             </div>
@@ -208,10 +230,10 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                     })
                 }} onSelectCoin={(value: string): void => {
                     setCurrentCoin(value)
-                }} />
+                }} t={t} />
             </Popup>
             {/* 提币按钮 */}
-            <DrawBtn coin={currentCoin} num={drawMsg.drawNum} address={drawMsg.drawAddress} fee={0.2}/>
+            <DrawBtn coin={currentCoin} num={drawMsg.drawNum} address={drawMsg.drawAddress} fee={0.2} />
         </div>
     )
 };

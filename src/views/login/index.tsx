@@ -5,11 +5,13 @@ import { useHistory } from "react-router-dom";
 import './index.scss';
 import { CloseOutline, LockOutline, MailOutline } from "antd-mobile-icons";
 import { Button } from "antd-mobile";
+import { useTranslation } from 'react-i18next'
 interface Props {
     from: string
 }
 
 const LoginIndex = (props: Props): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     const history = useHistory();
     useEffect((): void => {
         const aciton = upFooterStatus(0);
@@ -24,24 +26,33 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
                 }} />
                 <img src={require('../../assets/images/language_icon.png')} alt="" />
             </div>
-            <p className="page-remark">欢迎来到80年代</p>
+            <p className="page-remark">
+                {/* 欢迎来到80年代 */}
+                {t('public.welcome')}
+            </p>
             <div className="login-box">
                 <div className="box-public">
-                    <p>邮箱</p>
-                    <input type="text" placeholder="请输入邮箱地址" />
+                    {/* 邮箱 */}
+                    <p>{t('public.email')}</p>
+                    <input type="text" placeholder={t('public.enter_email')} />
                     <span><MailOutline color="#999" fontSize={18} /></span>
                 </div>
                 <div className="box-public">
-                    <p>登录密码</p>
-                    <input type="password" placeholder="请输入登录密码" />
+                    {/* 登录密码 */}
+                    <p>{t('public.login_pass')}</p>
+                    <input type="password" placeholder={t('public.login_pass')} />
                     <span><LockOutline color="#999" fontSize={18} /></span>
                 </div>
                 <p className="login-btn">
-                    <Button color="primary" block>登录</Button>
+                    {/* 登录 */}
+                    <Button color="primary" block>{t('public.login')}</Button>
                 </p>
                 <p className="register-btn">
-                    <span onClick={() => {history.push('/register')}}>立即注册</span>
-                    <span onClick={() => {history.push('/forget')}}>忘记密码？</span>
+                    <span onClick={() => { history.push('/register') }}>
+                        {/* 立即注册 */}
+                        {t('public.regis_now')}
+                    </span>
+                    <span onClick={() => { history.push('/forget') }}>{t('public.forget')}?</span>
                 </p>
             </div>
         </div>

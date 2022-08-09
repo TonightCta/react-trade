@@ -5,6 +5,7 @@ import './index.scss';
 import { WithdrawCoinMsg } from '../../../../../utils/types';
 import { Button, Steps } from 'antd-mobile';
 import { useHistory } from 'react-router-dom'
+import { useTranslation } from "react-i18next";
 const { Step } = Steps;
 
 interface Props extends WithdrawCoinMsg {
@@ -12,6 +13,7 @@ interface Props extends WithdrawCoinMsg {
 };
 
 const WithDrawPending = (props: Props): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     const history = useHistory();
     const [coinMsg, setCoinMsg] = useState<Props>()
     useEffect(() => {
@@ -23,39 +25,54 @@ const WithDrawPending = (props: Props): ReactElement<ReactNode> => {
     }, [])
     return (
         <div className="with-draw-pending">
-            <InnerNav leftArrow title="提币详情" />
+            <InnerNav leftArrow title={t('public.withdraw_detail')} />
             <div className="pending-con">
                 <CheckCircleFill fontSize={32} color="#3070ff" />
-                <p className="ini-title">提币申请已发起</p>
+                <p className="ini-title">
+                    {/* 提币申请已发起 */}
+                    {t('public.withdraw_pending')}
+                </p>
                 <p className="ini-amount">{coinMsg?.num}&nbsp;{coinMsg?.coin}</p>
                 <div className="pending-step">
                     <Steps direction='vertical' current={1}>
                         <Step
-                            title='提币申请已发起'
-                            description='完成时间：2020-12-01 12:30'
+                            title={t('public.withdraw_pending')}
+                            description={`${t('public.over_date')}:2020-12-01 12:30`}
                         />
                         <Step
-                            title='平台审核中'
+                            title={t('public.audit')}
                         />
                         <Step
-                            title='提币完成'
+                            title={t('public.withdraw_done')}
                         />
                     </Steps>
                 </div>
                 <div className="address-msg">
                     <div className="msg-public">
-                        <p>提币地址</p>
+                        <p>
+                            {/* 提币地址 */}
+                            {t('public.withdraw_address')}
+                        </p>
                         <p>{coinMsg?.address}</p>
                     </div>
                     <div className="msg-public">
-                        <p>手续费</p>
+                        <p>
+                            {/* 手续费 */}
+                            {t('public.fee')}
+                        </p>
                         <p>{coinMsg?.fee} {coinMsg?.coin}</p>
                     </div>
                 </div>
             </div>
             <p className="okey-detail">
-                <Button color="primary" onClick={() => { history.push('/mine-assets') }}>好的</Button>
-                <Button color="default" onClick={() => { history.push('/assets-bill') }}>查看资金流水</Button>
+                <Button color="primary" onClick={() => { history.push('/mine-assets') }}>
+                    {/* 好的 */}
+                    {t('public.ok')}
+                </Button>
+                <Button color="default" onClick={() => { history.push('/assets-bill') }}>
+                    {/* 查看资金流水 */}
+                    {t('public.view_bill')}
+                </Button>
             </p>
         </div>
     )

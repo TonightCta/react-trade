@@ -1,8 +1,10 @@
 import { ReactElement, ReactNode } from "react";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 
 const HomeHelp = (): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     const history = useHistory();
     return (
         <div className="home-help">
@@ -11,8 +13,10 @@ const HomeHelp = (): ReactElement<ReactNode> => {
             }}>
                 <img src={require('../../../assets/images/home_icon_5.png')} alt="" />
                 <div className="public-title">
-                    <p>帮助</p>
-                    <p>问题/指南/资料</p>
+                    {/* 帮助 */}
+                    <p>{t('public.help')}</p>
+                    {/* 问题/指南/资料 */}
+                    <p>{t('public.help_more')}</p>
                 </div>
             </div>
             <p className="label-line"></p>
@@ -21,8 +25,10 @@ const HomeHelp = (): ReactElement<ReactNode> => {
             }}>
                 <img src={require('../../../assets/images/home_icon_6.png')} alt="" />
                 <div className="public-title">
-                    <p>公告</p>
-                    <p>新闻/活动/资讯</p>
+                    {/* 公告 */}
+                    <p>{t('public.ann')}</p>
+                    {/* 新闻/活动/资讯 */}
+                    <p>{t('public.ann_more')}</p>
                 </div>
             </div>
         </div>

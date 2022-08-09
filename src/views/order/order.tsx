@@ -1,11 +1,12 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { upFooterStatus } from "../../store/app/action_creators";
-import { Tabs, Dropdown, Popup } from "antd-mobile";
+import { Tabs } from "antd-mobile";
 import store from "../../store";
 import './order.scss'
 import InnerNav from '../../components/inner_nav/nav'
 import OrderList from "../trade/components/order_list";
 import FilterBox from "./components/filter_box";
+import { useTranslation } from 'react-i18next';
 
 type FilterVal = {
     coin: string,
@@ -15,6 +16,7 @@ type FilterVal = {
     endTime: number | string
 }
 const TradeOrder = (): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     const [filterVal, setFilterVal] = useState<FilterVal>({
         coin: '',
         way: '',
@@ -28,11 +30,14 @@ const TradeOrder = (): ReactElement<ReactNode> => {
     }, []);
     return (
         <div className="trade-order">
-            <InnerNav title="我的订单" leftArrow withBorder={true} />
+            {/* 我的订单 */}
+            <InnerNav title={t('public.mine_order')} leftArrow withBorder={true} />
             <div className="trade-type-inner">
                 <Tabs style={{ '--title-font-size': '14px' }}>
-                    <Tabs.Tab title="当前委托" key={1}></Tabs.Tab>
-                    <Tabs.Tab title="历史委托" key={2}></Tabs.Tab>
+                    {/* 当前委托 */}
+                    <Tabs.Tab title={t('public.now_mission')} key={1}></Tabs.Tab>
+                    {/* 历史委托 */}
+                    <Tabs.Tab title={t('public.before_mission')} key={2}></Tabs.Tab>
                 </Tabs>
                 <div className="filter-btn"><FilterBox setFilterVal={(val: FilterVal) => {
                     setFilterVal({
@@ -44,13 +49,15 @@ const TradeOrder = (): ReactElement<ReactNode> => {
                     })
                 }} /></div>
             </div>
-            <OrderList 
-                type={2} 
-                tradeQu={filterVal!.coin} 
-                tradeWay={filterVal!.way} 
-                tradeType={filterVal.type} 
-                startTime={filterVal.startTime} 
-                endTime={filterVal.endTime} />
+            <OrderList
+                type={2}
+                tradeQu={filterVal!.coin}
+                tradeWay={filterVal!.way}
+                tradeType={filterVal.type}
+                startTime={filterVal.startTime}
+                endTime={filterVal.endTime} 
+                t={t}    
+            />
         </div>
     )
 };

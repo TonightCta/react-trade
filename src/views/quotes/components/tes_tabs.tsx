@@ -2,9 +2,10 @@ import { ReactElement, ReactNode, useState } from "react";
 import { Tabs } from "antd-mobile";
 import TesAllList from "./tes_all_list";
 
-interface Props{
-    type:number,
-    closeDraw?:() => void,
+interface Props {
+    type: number,
+    closeDraw?: () => void,
+    t: any
 }
 type TabsF = {
     name: string,
@@ -18,24 +19,6 @@ interface TesMsg {
     rate: number | string,
     type: number
 }
-const TabsList: Array<TabsF> = [
-    {
-        name: '自选',
-        key: 'mine',
-    },
-    {
-        name: 'USDT',
-        key: 'usdt',
-    },
-    {
-        name: 'BTC',
-        key: 'btc',
-    },
-    {
-        name: 'ETH',
-        key: 'eth',
-    },
-];
 const TesListTwo: Array<TesMsg> = [
     {
         coin: 'LINK/USDT',
@@ -74,7 +57,25 @@ const TesListTwo: Array<TesMsg> = [
     },
 ];
 
-const TesTabs = (props:Props): ReactElement<ReactNode> => {
+const TesTabs = (props: Props): ReactElement<ReactNode> => {
+    const TabsList: Array<TabsF> = [
+        {
+            name: props.t('public.optional'),//自选
+            key: 'mine',
+        },
+        {
+            name: 'USDT',
+            key: 'usdt',
+        },
+        {
+            name: 'BTC',
+            key: 'btc',
+        },
+        {
+            name: 'ETH',
+            key: 'eth',
+        },
+    ];
     const [currentTab, setCurrentTab] = useState<string>('usdt');
     const chagngeTab = (val: string) => {
         setCurrentTab(val)

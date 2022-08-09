@@ -4,6 +4,7 @@ import InnerNav from '../../../components/inner_nav/nav'
 import store from "../../../store";
 import { upFooterStatus } from "../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import './index.scss'
 
 const helpList = [
@@ -33,6 +34,7 @@ const helpList = [
 ]
 
 const Help = (): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     const history = useHistory();
     useEffect(() => {
         const action = upFooterStatus(0);
@@ -40,7 +42,7 @@ const Help = (): ReactElement<ReactNode> => {
     }, [])
     return (
         <div className="help-index">
-            <InnerNav leftArrow title="帮助中心" />
+            <InnerNav leftArrow title={t('public.help_center')} />
             <div className="help-list">
                 {
                     helpList.map((el, index): ReactElement => {

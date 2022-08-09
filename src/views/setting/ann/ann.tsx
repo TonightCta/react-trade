@@ -5,6 +5,7 @@ import InnerNav from '../../../components/inner_nav/nav';
 import { PullToRefresh } from 'antd-mobile';
 import { sleep } from 'antd-mobile/es/utils/sleep';
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import './index.scss'
 
 const annList = [
@@ -19,6 +20,7 @@ const annList = [
 ]
 
 const Ann = (): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     const history = useHistory();
     useEffect(() => {
         const action = upFooterStatus(0);
@@ -26,7 +28,7 @@ const Ann = (): ReactElement<ReactNode> => {
     }, [])
     return (
         <div className="ann-index">
-            <InnerNav leftArrow title="公告中心" />
+            <InnerNav leftArrow title={t('public.ann_center')} />
             <PullToRefresh
                 onRefresh={async () => {
                     await sleep(1000)

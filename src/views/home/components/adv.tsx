@@ -3,6 +3,7 @@ import React, { ReactElement, ReactNode } from "react";
 import { SoundOutline } from 'antd-mobile-icons'
 import { useHistory } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const advList = [
     '派大星',
@@ -39,28 +40,29 @@ const AdvSwiper = (): ReactElement<ReactNode> => {
 //卡片选项
 
 const Card = (): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     const history = useHistory();
     const list: Array<CardMsg> = [
         {
-            title: '邀请',
+            title: t('public.inv'),
             icon: require('../../../assets/images/home_icon_1.png'),
             url: '',
             outSide:false,
         },
         {
-            title: '行情',
+            title: t('public.quotes'),
             icon: require('../../../assets/images/home_icon_2.png'),
             url: '/quotes',
             outSide:false,
         },
         {
-            title: '客服',
+            title: t('public.customer'),
             icon: require('../../../assets/images/home_icon_3.png'),
             url: 'https://www.baidu.com',
             outSide:true,
         },
         {
-            title: '设置',
+            title: t('public.set'),
             icon: require('../../../assets/images/setting_icon.png'),
             url: '/setting',
             outSide:false,

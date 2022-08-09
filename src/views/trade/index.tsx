@@ -5,8 +5,10 @@ import TradeOrder from "./components/trade_order";
 import './index.scss';
 import { upFooterStatus } from "../../store/app/action_creators";
 import store from "../../store";
+import { useTranslation } from "react-i18next";
 
 const TradeIndex = (): React.ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     useEffect((): void => {
         const action = upFooterStatus(1);
         store.dispatch(action)
@@ -14,11 +16,11 @@ const TradeIndex = (): React.ReactElement<ReactNode> => {
     return (
         <div className="trade-index">
             {/* 导航信息 */}
-            <TradeNav />
+            <TradeNav t={t}/>
             {/* 交易模块 */}
-            <TradeOper />
+            <TradeOper t={t}/>
             {/* 订单信息 */}
-            <TradeOrder />
+            <TradeOrder t={t}/>
         </div>
     )
 };

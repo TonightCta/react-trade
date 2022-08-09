@@ -45,7 +45,6 @@ axiosInstance.interceptors.response.use(
     },
 
 );
-// 'KFC Crazy Thursday Need $50'
 
 export const get = (url: string, params?: any) => {
     return new Promise((resolve, reject): void => {
