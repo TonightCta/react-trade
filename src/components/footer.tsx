@@ -72,7 +72,7 @@ const Footer = (props: Props): React.ReactElement<ReactNode> => {
         }
     }, [location]);
     //更新导航显示信息
-    const [showNav, setShowNav] = useState<number>(Number(sessionStorage.getItem('footerStatus'))) || 1;
+    const [showNav, setShowNav] = useState<number>(Number(localStorage.getItem('footerStatus'))) || 1;
     store.subscribe((): void => {
         setShowNav(Number(store.getState().footerStatus))
     });

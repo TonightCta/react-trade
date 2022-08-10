@@ -1,20 +1,25 @@
-import { ReactElement, ReactNode, useState } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { ReactElement, ReactNode, } from "react";
+import { Redirect, Route, withRouter,RouteComponentProps } from "react-router-dom";
+import { useAsyncState } from '../utils/hooks'
+import store from '../store/index'
 
-interface Props {
+interface Props extends RouteComponentProps {
     children: ReactElement,
     path: string,
-    location?: unknown
+    locationMine?: any
 }
 const PrivateRoute = (props: Props): ReactElement<ReactNode> => {
-    const [isAuth, setIsAuth] = useState(1);
+    const [appToken, setAppToken] = useAsyncState<string | null>(sessionStorage.getItem('token_1'));
+    store.subscribe((): void => {
+        setAppToken(store.getState().appToken)
+    });
     return (
         <div>
-            <Route path={props.path} render={({ location }) => {
-                return isAuth === 1 ? props.children : <Redirect to={{ pathname: '/login', state: { from: location } }} />
+            <Route key={new Date().getTime()} path={props.path} render={({ location }) => {
+                return appToken ? props.children : <Redirect to={{ pathname: '/login', state: { from: location } }} />
             }} />
         </div>
     )
 };
 
-export default PrivateRoute;
+export default withRouter(PrivateRoute);

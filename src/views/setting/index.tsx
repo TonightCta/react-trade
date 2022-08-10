@@ -54,7 +54,10 @@ const SetIndex = (): ReactElement<ReactNode> => {
                     }
                 </List>
             </div>
-            <Button color="primary" block>
+            <Button color="primary" block onClick={() => {
+                window.sessionStorage.clear();
+                history.push('/')
+            }}>
                 {/* 退出登录 */}
                 {t('public.login_out')}
             </Button>

@@ -174,9 +174,14 @@
         "deal_price":"成交均价",
         "shop":"商城",
         "best_price":"以最优价格",
-        "trade_amount":"交易额"
-
-
+        "trade_amount":"交易额",
+        "last_8":"登录密码至少8位"
+    },
+    "message":{
+        "regis_success":"注册成功,将自动为您转到登录",
+        "reset_success":"重置成功,将自动为您转到登录",
+        "send_code_success":"验证码发送成功",
+        "pass_failed":"两次密码不一致"
     },
     "title": {
         "language_set": "语言设置"

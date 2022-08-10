@@ -23,7 +23,7 @@
         width: 100%;
         height: 100%;
       }
-      p{
+      p {
         line-height: 180px;
       }
     }
@@ -71,12 +71,12 @@
             color: #333;
           }
         }
-        li:nth-child(3){
-          img{
+        li:nth-child(3) {
+          img {
             width: 27px;
             height: 27px;
           }
-          p{
+          p {
             transform: translateY(-2px);
           }
         }
@@ -158,6 +158,7 @@
       width: 100%;
       justify-content: space-around;
       li {
+        width: 30%;
         .coin-qu {
           font-size: 12px;
           color: #333;
@@ -170,8 +171,9 @@
         }
         .coin-rate {
           font-size: 12px;
-          padding: 2px;
+          padding: 2px 8px;
           border-radius: 4px;
+          display: inline-block;
         }
       }
       .up-color {
@@ -246,6 +248,7 @@
           font-size: 13px;
           font-weight: 500;
           padding: 8px 6px;
+          min-width: 60px;
           border-radius: 4px;
         }
       }
@@ -269,4 +272,10 @@
       }
     }
   }
+}
+.load-tes {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

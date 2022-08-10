@@ -1,28 +1,17 @@
 import axios, { AxiosInstance } from 'axios';
-import store from '../store';
-import qs from 'qs';
-import { Toast } from 'antd-mobile';
-
-const token = store.getState().appToken;
-
-export interface IResponse {
-    code: string | number,
-    data: any,
-    message: string
-};
 
 let axiosInstance: AxiosInstance = axios.create({
     baseURL: process.env.REACT_APP_BASEURL,
     timeout: 1000 * 60 * 10,
     headers: {
-        "Accept": 'application/json',
-        "Content-Type": "application/json"
+        "Accept": '*/*',
+        "Content-Type": "application/json",
     },
 });
 axiosInstance.interceptors.request.use(
     config => {
-        token && (config.headers!.Authorization = token);
-        return token || config
+        config.headers!.Authorization = String(sessionStorage.getItem('token_1'))
+        return config
     },
     error => {
         throw new Error(error)
@@ -30,28 +19,30 @@ axiosInstance.interceptors.request.use(
 )
 axiosInstance.interceptors.response.use(
     response => {
+        const data = response.data;
         if (<any>response.status == 200) {
-            switch (response.data.code) {
+            switch (data.code) {
                 case 100001:
-                    Toast.show('Crazy');
-                    response.data.message = 'Crazy'
+                    data.message = 'Crazy'
+                    break;
+                case 10004:
+                    data.message = '账号已存在';
                     break;
             };
-            return response.data.data;
+            return data;
         }
     },
     error => {
-        throw new Error('KFC Crazy Thursday Need $50');
+        throw new Error(error);
     },
 
 );
-
-export const get = (url: string, params?: any) => {
-    return new Promise((resolve, reject): void => {
+export const get = <T>(url: string, params?: any): Promise<T> => {
+    return new Promise((resolve: any, reject: any): void => {
         axiosInstance({
-            method:'get',
+            method: 'get',
             url,
-            data:params
+            data: params
         }).then((response) => {
             resolve(response)
         }).catch((error) => {
@@ -59,12 +50,12 @@ export const get = (url: string, params?: any) => {
         })
     })
 };
-export const post = (url: string, params: any) => {
-    return new Promise((resolve, reject): void => {
+export const post = <T>(url: string, params: any): Promise<T> => {
+    return new Promise((resolve: any, reject: any): void => {
         axiosInstance({
-            method:'post',
-            url, 
-            data:params
+            method: 'post',
+            url,
+            data: params
         }).then((response) => {
             resolve(response)
         }).catch((error) => {
@@ -72,4 +63,11 @@ export const post = (url: string, params: any) => {
         })
     })
 }
+
+// axiosInstance.interceptors.request.use(
+
+//     error => {
+//         throw new Error(error)
+//     }
+// )
 

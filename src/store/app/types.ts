@@ -4,3 +4,6 @@ export const UP_INV_LEVEL = 'up_inv_level';
 export const SET_LANGUAGE = 'set_language';
 export const UP_CURRENCY = 'up_currency';
 export const UP_LOAD_VIEW = 'up_load_view';
+export const STE_ACCOUNT = 'set_account';
+export const SET_ASSETS = 'set_assets';
+export const UP_CURRENT_COIN = 'up_current_coin';

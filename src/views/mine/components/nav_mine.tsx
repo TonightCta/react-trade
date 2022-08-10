@@ -2,11 +2,13 @@ import { SetOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode } from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import store from "../../../store";
 
 
 const MineNav = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const history = useHistory();
+    const account = store.getState().account;
     return (
         <div className="mine-nav">
             <div className="nav-msg">
@@ -18,9 +20,7 @@ const MineNav = (): ReactElement<ReactNode> => {
                     history.push('/setting')
                 }} />
             </div>
-            <div className="account-box" onClick={() => {
-                history.push('/login')
-            }}>
+            <div className="account-box">
                 <p>
                     {/* 欢迎来到80年代 */}
                     {
@@ -29,7 +29,7 @@ const MineNav = (): ReactElement<ReactNode> => {
                 </p>
                 <p>
                     {/* 点击登录 */}
-                    {t('public.click_login')}
+                    {account.email ? account.email : t('public.click_login')}
                 </p>
             </div>
         </div>

@@ -16,7 +16,7 @@ const resources = {
         translation:zhTW
     },
 };
-
+console.log(store.getState().language)
 i18n.use(initReactI18next).init({
     resources,
     lng:store.getState().language,

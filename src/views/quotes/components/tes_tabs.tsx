@@ -1,6 +1,7 @@
-import { ReactElement, ReactNode, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { Tabs } from "antd-mobile";
 import TesAllList from "./tes_all_list";
+import { QUList } from '../../../request/api'
 
 interface Props {
     type: number,
@@ -19,43 +20,6 @@ interface TesMsg {
     rate: number | string,
     type: number
 }
-const TesListTwo: Array<TesMsg> = [
-    {
-        coin: 'LINK/USDT',
-        hourTotal: 117942431.4324,
-        price: 7.5333,
-        rate: 3.42,
-        type: 1,
-    },
-    {
-        coin: 'OMG/USDT',
-        hourTotal: 74054191.9941,
-        price: 2.2122,
-        rate: 1.99,
-        type: 1,
-    },
-    {
-        coin: 'XMR/USDT',
-        hourTotal: 973129.6788,
-        price: 161.201,
-        rate: 1.68,
-        type: 0,
-    },
-    {
-        coin: 'EOS/USDT',
-        hourTotal: 114702681.3521,
-        price: 136.65,
-        rate: 1.66,
-        type: 1,
-    },
-    {
-        coin: 'NEO/USDT',
-        hourTotal: 125181923.0395,
-        price: 0.507001,
-        rate: 1.33,
-        type: 1,
-    },
-];
 
 const TesTabs = (props: Props): ReactElement<ReactNode> => {
     const TabsList: Array<TabsF> = [
@@ -65,25 +29,46 @@ const TesTabs = (props: Props): ReactElement<ReactNode> => {
         },
         {
             name: 'USDT',
-            key: 'usdt',
+            key: 'USDT',
         },
         {
             name: 'BTC',
-            key: 'btc',
+            key: 'BTC',
         },
         {
             name: 'ETH',
-            key: 'eth',
+            key: 'ETH',
         },
     ];
-    const [currentTab, setCurrentTab] = useState<string>('usdt');
-    const chagngeTab = (val: string) => {
-        setCurrentTab(val)
-    }
+    const [currentTab, setCurrentTab] = useState<string>('USDT')
+    const [TesListTwo, setTesListTwo] = useState<TesMsg[]>([]);
+    const [dataTotal, setDataTotal] = useState<number>(1);
+    const DataList = async (_val?: string) => {
+        const result = await QUList(_val ? _val : currentTab);
+        const arr = [];
+        for (let i in result.data.list) {
+            arr.push(result.data.list[i])
+        };
+        setDataTotal(result.data.total);
+        setTesListTwo(arr.map(item => {
+            const rate = (item.price - item.yesterday_price) / item.yesterday_price * 100
+            return {
+                ...item,
+                coin: `${item.base}/${item.target}`,
+                hourTotal: item.yesterday_volume.toFixed(2),
+                rate: rate.toFixed(2),
+                type: rate > 0 ? 1 : 0,
+            }
+        }));
+    };
+    useEffect(() => {
+        DataList()
+    }, [])
     return (
         <div className="tes-tabs">
             <Tabs activeKey={currentTab} onChange={(val: string) => {
-                chagngeTab(val)
+                setCurrentTab(val);
+                DataList(val);
             }} style={{ '--title-font-size': '14px' }}>
                 {
                     TabsList.map((el): ReactElement => {
@@ -93,7 +78,7 @@ const TesTabs = (props: Props): ReactElement<ReactNode> => {
                     })
                 }
             </Tabs>
-            <TesAllList data={TesListTwo} closeDraw={props.closeDraw} type={Number(props.type)} />
+            <TesAllList data={TesListTwo} total={dataTotal} closeDraw={props.closeDraw} type={Number(props.type)} />
         </div>
     )
 };

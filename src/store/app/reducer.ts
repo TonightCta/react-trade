@@ -1,31 +1,46 @@
 import * as Type from './types';
 
-interface Store {
-    appToken:string,//用户Token
-    language:string,//语言
-    footerStatus:number,//底部导航显示状态
-    invLevel:number,//当前查看邀请等级
-    currency:string,//币种队列
-    loadView:number,//启动页显示状态
+interface UMsg{
+    email?:string,
 }
-const defaultState : Store = {
-    appToken:sessionStorage.getItem('token_1') || '',//设置登录token
-    language: localStorage.getItem('language') || 'zh-TW',//本地语言环境
-    footerStatus: Number(sessionStorage.getItem('footerStatus')) || 1,//底部导航显示状态
+interface Store {
+    account: UMsg,//用户信息
+    assets: number,//用户资产
+    appToken: string,//用户Token
+    language: string,//语言
+    footerStatus: number,//底部导航显示状态
+    invLevel: number,//当前查看邀请等级
+    currency: string,//币种队列
+    loadView: number,//启动页显示状态
+    currentCoin:any,//选中队列
+}
+const defaultState: Store = {
+    account: JSON.parse(sessionStorage.getItem('account') || '{}'),
+    assets: Number(sessionStorage.getItem('assets')) || 0,
+    appToken: sessionStorage.getItem('token_1') || '',//设置登录token
+    language: localStorage.getItem('language') || 'zh_TW',//本地语言环境
+    footerStatus: Number(localStorage.getItem('footerStatus')) || 1,//底部导航显示状态
     invLevel: Number(sessionStorage.getItem('invLevel')) || 1,//邀请等级
     currency: sessionStorage.getItem('currency') || 'BTC/USDT',//浏览币种
-    loadView:Number(sessionStorage.getItem('loadView')) || 0,//启动页显示状态
+    loadView: Number(sessionStorage.getItem('loadView')) || 0,//启动页显示状态
+    currentCoin:JSON.parse(sessionStorage.getItem('currentCoin') || '{}'),
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
         case Type.SET_TOKEN:
-            sessionStorage.setItem('token_1',action.token);
-            return { ...state,appToken:action.token }
+            sessionStorage.setItem('token_1', action.token);
+            return { ...state, appToken: action.token }
+        case Type.STE_ACCOUNT:
+            sessionStorage.setItem('account', JSON.stringify(action.account));
+            return { ...state, account: action.account }
+        case Type.SET_ASSETS:
+            sessionStorage.setItem('assets', action.assets);
+            return { ...state, assets: action.assets }
         case Type.SET_LANGUAGE:
             localStorage.setItem('language', action.language);
             return { ...state, language: action.language }
         case Type.UP_FOOTER_STATUS:
-            sessionStorage.setItem('footerStatus', action.status);
+            localStorage.setItem('footerStatus', action.status);
             return { ...state, footerStatus: action.status }
         case Type.UP_INV_LEVEL:
             sessionStorage.setItem('invLevel', action.level);
@@ -34,8 +49,11 @@ export default (state = defaultState, action: any) => {
             sessionStorage.setItem('currency', action.currency);
             return { ...state, currency: action.currency }
         case Type.UP_LOAD_VIEW:
-            sessionStorage.setItem('loadView',action.load);
-            return { ...state,loadView:action.load }
+            sessionStorage.setItem('loadView', action.load);
+            return { ...state, loadView: action.load }
+        case Type.UP_CURRENT_COIN:
+            sessionStorage.setItem('currentCoin',JSON.stringify(action.currentCoin));
+            return { ...state,currentCoin:action.currentCoin }
         default:
             return state;
     };

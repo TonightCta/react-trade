@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 const { Step } = Steps;
 
 interface Props extends WithdrawCoinMsg {
-    location: any,
+    location?: any,
 };
 
 const WithDrawPending = (props: Props): ReactElement<ReactNode> => {

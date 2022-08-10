@@ -1,39 +1,41 @@
 import { ReactElement, ReactNode, useEffect, useRef } from "react";
 import { Tabs } from "antd-mobile";
-import dock from './test.json';
 import * as echarts from 'echarts';
+import React from "react";
 
+interface Props {
+    upKMsg: {
+        k: any
+    },
+    t: any
+}
 
 const KTabs = [
     {
-        title: 'Time',
-        type: 1
-    },
-    {
         title: 'M1',
-        type: 2
+        type: '1m',
+        sec: 60,
     },
     {
         title: 'M5',
-        type: 3
+        type: '5m',
+        sec: 300,
     },
     {
         title: 'M30',
-        type: 4
+        type: '30m',
+        sec: 1800,
     },
     {
         title: 'H1',
-        type: 5
-    },
-    {
-        title: 'D1',
-        type: 6
+        type: '1h',
+        sec: 3600
     },
 ];
 
 
 const convet = (_timestamp: number): string => {
-    let year, month, day, hour, min;
+    let month, day, hour, min;
     month = new Date(_timestamp).getMonth() + 1;
     day = new Date(_timestamp).getDate();
     hour = new Date(_timestamp).getHours();
@@ -58,7 +60,7 @@ const calculateMA = (dayCount: number, data: string[][]) => {
     };
     return result;
 }
-const TesPriceK = (props: { t: any }): ReactElement<ReactNode> => {
+const TesPriceK = (props: Props): ReactElement<ReactNode> => {
     const option: any = {
         height: 300,
         legend: {
@@ -83,12 +85,17 @@ const TesPriceK = (props: { t: any }): ReactElement<ReactNode> => {
                 type: 'category',
                 data: [],
                 boundaryGap: false,
-                axisLine: { onZero: false },
+                axisLine: { onZero: false,lineStyle:{
+                    color:'#eee'
+                } },
                 splitLine: { show: false },
                 min: 'dataMin',
                 max: 'dataMax',
                 axisPointer: {
                     z: 100
+                },
+                axisLabel:{
+                    color:'#333',
                 }
             },
             {
@@ -96,12 +103,14 @@ const TesPriceK = (props: { t: any }): ReactElement<ReactNode> => {
                 gridIndex: 1,
                 data: [],
                 boundaryGap: false,
-                axisLine: { onZero: false },
+                axisLine: { onZero: false,lineStyle:{
+                    color:'#eee'
+                } },
                 axisTick: { show: false },
                 splitLine: { show: false },
                 axisLabel: { show: false },
                 min: 'dataMin',
-                max: 'dataMax'
+                max: 'dataMax',
             }
         ],
         tooltip: {
@@ -110,7 +119,7 @@ const TesPriceK = (props: { t: any }): ReactElement<ReactNode> => {
                 type: 'cross',
                 label: {
                     backgroundColor: '#3070ff',
-                    fontWeight: 'bold'
+                    fontWeight: '500'
                 }
             },
             formatter: function (param: any) {
@@ -130,7 +139,6 @@ const TesPriceK = (props: { t: any }): ReactElement<ReactNode> => {
                 position: "right",
                 scale: true,
                 splitNumber: 5,
-
                 splitLine: {
                     show: false,
                     lineStyle: {
@@ -138,14 +146,19 @@ const TesPriceK = (props: { t: any }): ReactElement<ReactNode> => {
                     }
                 },
                 axisLine: {
+                    show: true,
                     lineStyle: {
-                        color: '#637e9d'
+                        color: '#eee'
                     }
+                },
+                axisTick: {
+                    show: true
                 },
                 axisLabel: {
                     show: true,
                     showMinLabel: false,
                     showMaxLabel: false,
+                    color:'#333',
                     formatter: (value: number, index: number): number | string => {
                         return value.toFixed(2)
                     }
@@ -158,7 +171,6 @@ const TesPriceK = (props: { t: any }): ReactElement<ReactNode> => {
                 scale: true,
                 splitNumber: 3,
                 boundaryGap: false,
-                splitLine: { show: false },
                 axisLine: {
                     show: false,
                     onZero: true,
@@ -278,28 +290,30 @@ const TesPriceK = (props: { t: any }): ReactElement<ReactNode> => {
             },
 
         ]
-    }
+    };
     useEffect((): void => {
-        const date = dock.k.map(item => {
-            return convet(item.t)
-        });
-        const data = dock.k.map(item => {
-            return [item.o, item.c, item.l, item.h, item.v]
-        });
-        let volume: any = data.map((item, i) => {
-            return [i, item[4], item[0] > item[1] ? -1 : 1]
-        });
-        option.xAxis[0].data = date;
-        option.xAxis[1].data = date;
-        option.series[0].data = data;
-        option.series[1].data = calculateMA(5, data)
-        option.series[2].data = calculateMA(10, data)
-        option.series[3].data = calculateMA(20, data)
-        option.series[4].data = calculateMA(30, data);
-        option.series[5].data = volume;
-        const test = echarts.init(document.getElementById('echarts-box') as HTMLElement);
-        test.setOption(option);
-    }, [])
+        if (props.upKMsg.k) {
+            const date = props.upKMsg.k!.map((item: any) => {
+                return convet(item.t)
+            });
+            const data = props.upKMsg.k!.map((item: any) => {
+                return [item.o, item.c, item.l, item.h, item.v]
+            });
+            let volume: any = data!.map((item: any, i: number) => {
+                return [i, item[4], item[0] > item[1] ? -1 : 1]
+            });
+            option.xAxis[0].data = date;
+            option.xAxis[1].data = date;
+            option.series[0].data = data;
+            option.series[1].data = calculateMA(5, data)
+            option.series[2].data = calculateMA(10, data)
+            option.series[3].data = calculateMA(20, data)
+            option.series[4].data = calculateMA(30, data);
+            option.series[5].data = volume;
+            const test = echarts.init(document.getElementById('echarts-box') as HTMLElement);
+            test.setOption(option);
+        }
+    }, [props])
     return (
         <div className="tes-price-k">
             <Tabs style={{ '--title-font-size': '14px' }}>
@@ -318,4 +332,4 @@ const TesPriceK = (props: { t: any }): ReactElement<ReactNode> => {
     )
 };
 
-export default TesPriceK;
+export default React.memo(TesPriceK);

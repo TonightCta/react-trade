@@ -1,18 +1,30 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import store from "../../store";
 import { upFooterStatus } from "../../store/app/action_creators";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import './index.scss';
 import { CheckShieldOutline, CloseOutline, LockOutline, MailOutline } from "antd-mobile-icons";
-import { Button } from "antd-mobile";
-import { useTranslation } from 'react-i18next'
+import { Button, Toast } from "antd-mobile";
+import { useTranslation } from 'react-i18next';
+import { SendCodeApi, RegisterApi } from '../../request/api';
+
 interface Props {
     from: string
+}
+interface InpMsg {
+    email: string,
+    code: string | number,
+    password: string,
 }
 
 const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const [count, setCount] = useState<number>(60);
+    const [inpMsg, setInpMsg] = useState<InpMsg>({
+        email: '',
+        code: '',
+        password: ''
+    })
     const cbSaver: any = useRef();
     const timer = useRef<NodeJS.Timer>();
     cbSaver.current = () => {
@@ -49,7 +61,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                 <CloseOutline fontSize={24} color="#333" onClick={() => {
                     history.goBack()
                 }} />
-                <img src={require('../../assets/images/language_icon.png')} alt="" />
+                <NavLink to="/set-language"><img src={require('../../assets/images/language_icon.png')} alt="" /></NavLink>
             </div>
             <p className="page-remark">
                 {/* 注册80年代 */}
@@ -61,7 +73,12 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         {/* 邮箱 */}
                         {t('public.email')}
                     </p>
-                    <input type="text" placeholder={t('public.enter_email')} />
+                    <input type="text" value={inpMsg.email} onChange={(e) => {
+                        setInpMsg({
+                            ...inpMsg,
+                            email: e.target.value
+                        })
+                    }} placeholder={t('public.enter_email')} />
                     <span><MailOutline color="#999" fontSize={18} /></span>
                 </div>
                 <div className="box-public">
@@ -69,9 +86,26 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         {/* 邮箱验证码 */}
                         {t('public.email_code')}
                     </p>
-                    <input type="text" placeholder={t('public.enter_code')} />
+                    <input type="text" value={inpMsg.code} onChange={(e) => {
+                        setInpMsg({
+                            ...inpMsg,
+                            code: e.target.value
+                        })
+                    }} placeholder={t('public.enter_code')} />
                     <span><CheckShieldOutline color="#999" fontSize={18} /></span>
-                    <p className={`send-code ${count === 60 ? '' : 'gra-btn'}`} onClick={count === 60 ? () => {
+                    <p className={`send-code ${count === 60 ? '' : 'gra-btn'}`} onClick={count === 60 ? async () => {
+                        if (!inpMsg.email) {
+                            Toast.show(t('public.enter_email'));
+                            return;
+                        };
+                        const result = await SendCodeApi({ email: inpMsg.email, scene: 1, type: 2 });
+                        console.log(result);
+                        const { code } = result;
+                        if (code != 200) {
+                            Toast.show(result.message);
+                            return;
+                        };
+                        Toast.show(t('message.send_code_success'));
                         countDown()
                     } : () => { }}>
                         {count === 60 ? t('public.send_code') : `${count}s${t('public.send_code')}`}
@@ -82,11 +116,48 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         {/* 登录密码 */}
                         {t('public.login_pass')}
                     </p>
-                    <input type="password" placeholder={t('public.enter_pass')} />
+                    <input type="password" value={inpMsg.password} onChange={(e) => {
+                        setInpMsg({
+                            ...inpMsg,
+                            password: e.target.value
+                        })
+                    }} placeholder={t('public.enter_pass')} />
                     <span><LockOutline color="#999" fontSize={18} /></span>
                 </div>
                 <p className="login-btn">
-                    <Button color="primary" block>
+                    <Button color="primary" block onClick={async () => {
+                        if (!inpMsg.email) {
+                            Toast.show(t('public.enter_email'));
+                            return;
+                        }
+                        if (!inpMsg.code) {
+                            Toast.show(t('public.enter_code'));
+                            return;
+                        }
+                        if (!inpMsg.password) {
+                            Toast.show(t('public.enter_pass'));
+                            return;
+                        };
+                        if (inpMsg.password.length < 8) {
+                            Toast.show(t('public.last_8'));
+                            return;
+                        };
+                        const params = {
+                            type: 2,
+                            email: inpMsg.email,
+                            password: inpMsg.password,
+                            password_confirmation:inpMsg.password,
+                            code: inpMsg.code
+                        };
+                        const result = await RegisterApi(params);
+                        const { code } = result;
+                        if(code != 200){
+                            Toast.show(result.message);
+                            return;
+                        };
+                        Toast.show(t('message.regis_success'));
+                        history.push('/login')
+                    }}>
                         {/* 立即注册 */}
                         {t('public.regis_now')}
                     </Button>

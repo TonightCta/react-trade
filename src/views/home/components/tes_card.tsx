@@ -1,82 +1,54 @@
-import { ReactElement, ReactNode } from "react";
-import { Swiper } from "antd-mobile";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { DotLoading, Swiper } from "antd-mobile";
 
-const TesList = [
-    {
-        msg: [
-            {
-                coin: 'BTC/USDT',
-                price: "23133.835",
-                type: 1,
-                rate: '0.83',
-            },
-            {
-                coin: 'BCH/USDT',
-                price: "134.71",
-                type: 1,
-                rate: '0.07',
-            },
-            {
-                coin: 'BSV/USDT',
-                price: "61.2182",
-                type: 0,
-                rate: '0.87',
-            }
-        ]
-    },
-    {
-        msg: [
-            {
-                coin: 'ETH/USDT',
-                price: "1637.835",
-                type: 1,
-                rate: '0.53',
-            },
-            {
-                coin: 'ETC/USDT',
-                price: "36.7361",
-                type: 0,
-                rate: '0.35',
-            },
-            {
-                coin: 'TRX/USDT',
-                price: "0.0686",
-                type: 0,
-                rate: '0.32',
-            }
-        ]
-    },
-];
+interface TesL {
+    type: number,
+    coin: string,
+    price: number,
+    rate: number,
+    symbol?: string
+}
 
-const Items = TesList.map((el, index): ReactElement => {
-    return (
-        <Swiper.Item key={index}>
-            <ul>
-                {
-                    el.msg.map((msg, indexS): ReactElement => {
-                        return (
-                            <li key={indexS} className={`${msg.type === 1 ? 'up-color' : 'down-color'}`}>
-                                <p className="coin-qu">{msg.coin}</p>
-                                <p className="coin-price">{msg.price}</p>
-                                <p className="coin-rate">
-                                    {msg.type === 1 ? '+' : '-'}
-                                    {msg.rate}%
-                                </p>
-                            </li>
-                        )
-                    })
-                }
-            </ul>
-        </Swiper.Item>
-    )
-})
-
-const HomeTexCard = (): ReactElement<ReactNode> => {
+const HomeTexCard = (props: { wsData: any }): ReactElement<ReactNode> => {
+    const [TesList, setTesList] = useState<{ msg: TesL[] }[]>([]);
+    useEffect(() => {
+        QUVal()
+    }, [props])
+    const QUVal = async () => {
+        const chunk = (arr: TesL[], size: number): TesL[][] => {
+            return Array.from({ length: Math.ceil(arr.length / size) }, (v, i) => arr.slice(i * size, i * size + size));
+        }
+        setTesList(chunk(props.wsData, 3).map(item => { return { msg: item } }));
+    };
+    const Items = TesList.map((el: any, index): ReactElement => {
+        return (
+            <Swiper.Item key={index}>
+                <ul>
+                    {
+                        el?.msg.map((msg: TesL, indexS: number): ReactElement => {
+                            return (
+                                <li key={indexS} className={`${msg.type === 1 ? 'up-color' : 'down-color'}`}>
+                                    <p className="coin-qu">{msg.coin}</p>
+                                    <p className="coin-price">{Number(msg.price).toFixed(4)}</p>
+                                    <p className="coin-rate">
+                                        {msg.type === 1 ? '+' : ''}
+                                        {msg.rate.toFixed(2)}%
+                                    </p>
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
+            </Swiper.Item>
+        )
+    })
     return (
         <div className="home-tex-card" >
-            <Swiper style={{
-              '--track-padding': ' 0 0 28px',
-            }}>{Items}</Swiper>
+            {TesList.length > 0 ? <Swiper style={{
+                '--track-padding': ' 0 0 28px',
+            }}>{Items}</Swiper> : <div className="load-tes">
+                <DotLoading color="#3370ff" />
+            </div>}
         </div>
     )
 };

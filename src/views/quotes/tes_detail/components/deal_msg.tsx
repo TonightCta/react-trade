@@ -1,9 +1,33 @@
 import { t } from "i18next";
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 
+import { DealMsg } from '../../../../utils/types'
 
-const dealList: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 12, 13, 14, 15, 16, 17, 18, 19, 19];
-const TesDealMsg = (props: { t: any }): ReactElement<ReactNode> => {
+interface Props {
+    t: any,
+    dealData: DealMsg,
+}
+
+const TesDealMsg = (props: Props): ReactElement<ReactNode> => {
+    const ValDate = (_time: number): string => {
+        const date = new Date(_time);
+        const hour = date.getHours();
+        const min = date.getMinutes() < 10 ? ('0' + date.getMinutes()) : date.getMinutes() + 1;
+        const sec = date.getSeconds() < 10 ? ('0' + date.getSeconds()) : date.getSeconds();
+        return `${hour}:${min}:${sec}`
+    }
+    const [dealT, setDealT] = useState<DealMsg[]>([]);
+    useEffect(() => {
+        if (dealT.length >= 30) {
+            dealT.pop();
+        };
+        setDealT([props.dealData,...dealT])
+    }, [props]);
+    useEffect(() => {
+        return () => {
+            setDealT([])
+        }
+    }, [])
     return (
         <div className="tes-deal-msg">
             <p className="deal-title">
@@ -34,17 +58,17 @@ const TesDealMsg = (props: { t: any }): ReactElement<ReactNode> => {
             </ul>
             <ul>
                 {
-                    dealList.map((el, index): ReactElement => {
+                    dealT.map((el: DealMsg, index): ReactElement => {
                         return (
                             <li key={index}>
-                                <p className="deal-date">15:25:12</p>
+                                <p className="deal-date">{ValDate(el.dt)}</p>
                                 <div className="deal-cen">
-                                    <p className={`cen-type ${el % 2 === 0 ? 'buy-color' : 'sell-color'}`}>
-                                        {el % 2 === 0 ? props.t('public.buy_in') : props.t('public.sell_out')}
+                                    <p className={`cen-type ${el.dc === 'BUY' ? 'buy-color' : 'sell-color'}`}>
+                                        {el.dc === 'BUY' ? props.t('public.buy_in') : props.t('public.sell_out')}
                                     </p>
-                                    <p>140.43</p>
+                                    <p>{Number(el.p).toFixed(2)}</p>
                                 </div>
-                                <p className="deal-num">199.434248</p>
+                                <p className="deal-num">{Number(el.q).toFixed(6)}</p>
                             </li>
                         )
                     })

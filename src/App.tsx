@@ -1,25 +1,21 @@
 import Footer from './components/footer';
 import RouteConfig from './route';
-import { HashRouter } from 'react-router-dom';
+import { HashRouter, withRouter } from 'react-router-dom';
 import './App.css';
 import './App.scss'
 import { ReactNode, useEffect } from 'react';
 import LoadView from './views/load_view/load_view';
-import { TestApi } from './request/api';
+import { createWS } from './utils/ws'
 
 const App = (): React.ReactElement<ReactNode> => {
-  const test = async () => {
-    const result = await TestApi({scene:''});
-    console.log(result)
-  }
-  useEffect(() : void => {
-    test()
+  useEffect(() => {
+    createWS();
   }, [])
   return (
     <HashRouter>
       <div className="App">
         {/* 启动页 */}
-        <LoadView/>
+        <LoadView />
         <div className='router-view'>
           <RouteConfig />
         </div>
@@ -28,7 +24,6 @@ const App = (): React.ReactElement<ReactNode> => {
         </div>
       </div>
     </HashRouter>
-
   );
 }
 
