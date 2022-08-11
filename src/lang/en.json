@@ -75,7 +75,7 @@
         "recharge_remark_1": "Please send the corresponding currency you need to recharge through the client or online wallet",
         "recharge_remark_1_1": "If the amount is sent to this address, other assets will not be recovered.",
         "recharge_remark_2": "After the sending is completed, the system will automatically recharge the virtual currency to your account on this site after obtaining the corresponding amount of confirmation in this transaction. The corresponding amount of confirmation will take about 0.5 to 1 hour. Please wait patiently. (confirmation number is 2)",
-        "recharge_remark_3": "The same address can be recharged multiple times without affecting the account. The minimum recharge amount is 0.00001.",
+        "recharge_remark_3": "The same address can be recharged multiple times without affecting the account. The minimum recharge amount is ",
         "safe_auth": "Security verification",
         "enter_tarde_pass": "Please enter the transaction password",
         "code": "Verification Code",

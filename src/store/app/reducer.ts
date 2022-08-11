@@ -1,7 +1,7 @@
 import * as Type from './types';
 
-interface UMsg{
-    email?:string,
+interface UMsg {
+    email?: string,
 }
 interface Store {
     account: UMsg,//用户信息
@@ -12,7 +12,10 @@ interface Store {
     invLevel: number,//当前查看邀请等级
     currency: string,//币种队列
     loadView: number,//启动页显示状态
-    currentCoin:any,//选中队列
+    currentCoin: any,//选中队列
+    currentBalance: number,//USDT余额
+    defaultCoin: string,
+    defaultBaseCoin: string,
 }
 const defaultState: Store = {
     account: JSON.parse(sessionStorage.getItem('account') || '{}'),
@@ -23,7 +26,10 @@ const defaultState: Store = {
     invLevel: Number(sessionStorage.getItem('invLevel')) || 1,//邀请等级
     currency: sessionStorage.getItem('currency') || 'BTC/USDT',//浏览币种
     loadView: Number(sessionStorage.getItem('loadView')) || 0,//启动页显示状态
-    currentCoin:JSON.parse(sessionStorage.getItem('currentCoin') || '{}'),
+    currentCoin: JSON.parse(sessionStorage.getItem('currentCoin') || '{}'),
+    currentBalance: Number(sessionStorage.getItem('currentBalance')) || 0,
+    defaultCoin: sessionStorage.getItem("defaultCoin") || 'BTC/USDT',
+    defaultBaseCoin: sessionStorage.getItem('defaultBaseCoin') || 'BTCUSDT'
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
@@ -52,8 +58,17 @@ export default (state = defaultState, action: any) => {
             sessionStorage.setItem('loadView', action.load);
             return { ...state, loadView: action.load }
         case Type.UP_CURRENT_COIN:
-            sessionStorage.setItem('currentCoin',JSON.stringify(action.currentCoin));
-            return { ...state,currentCoin:action.currentCoin }
+            sessionStorage.setItem('currentCoin', JSON.stringify(action.currentCoin));
+            return { ...state, currentCoin: action.currentCoin }
+        case Type.SET_BALANCE:
+            sessionStorage.setItem('currentBalance', action.balance);
+            return { ...state, currentBalance: action.balance }
+        case Type.DEFAULT_COIN:
+            sessionStorage.setItem('defaultCoin', action.coin);
+            return { ...state, defaultCoin: action.coin }
+        case Type.DEFAULT_CASE_COIN:
+            sessionStorage.setItem('defaultBaseCoin', action.coin);
+            return { ...state, defaultBaseCoin: action.coin }
         default:
             return state;
     };

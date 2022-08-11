@@ -10,7 +10,7 @@ import './index.scss'
 const MineIndex = () : React.ReactElement<ReactNode> => {
     useEffect((): void => {
         const action = upFooterStatus(1);
-        store.dispatch(action)
+        store.dispatch(action);
     }, []);
     return (
         <div className="mine-index">

@@ -13,7 +13,12 @@ const HomeTexCard = (props: { wsData: any }): ReactElement<ReactNode> => {
     const [TesList, setTesList] = useState<{ msg: TesL[] }[]>([]);
     useEffect(() => {
         QUVal()
-    }, [props])
+    }, [props]);
+    useEffect(() => {
+        return () => {
+            setTesList([])
+        }
+    }, [])
     const QUVal = async () => {
         const chunk = (arr: TesL[], size: number): TesL[][] => {
             return Array.from({ length: Math.ceil(arr.length / size) }, (v, i) => arr.slice(i * size, i * size + size));

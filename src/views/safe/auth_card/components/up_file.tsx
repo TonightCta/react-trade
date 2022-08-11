@@ -1,5 +1,5 @@
 import { Button } from "antd-mobile";
-import { ReactElement, ReactNode, useRef, useState } from "react";
+import { ReactElement, ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 
@@ -28,7 +28,7 @@ const UpFile = (): ReactElement<ReactNode> => {
                 <div className="text-public">
                     <p>
                         {/* 身份证号码 */}
-                        {t('public.card_numer')}
+                        {t('public.card_num')}
                     </p>
                     <input type="text" placeholder={t('public.enter_card')} />
                 </div>

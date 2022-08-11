@@ -1,42 +1,83 @@
 import { Button, Tabs, PullToRefresh } from "antd-mobile";
 import { sleep } from 'antd-mobile/es/utils/sleep'
 import { CheckCircleFill, RightOutline, SearchOutline } from "antd-mobile-icons";
-import { ReactElement, ReactNode, useEffect } from "react";
+import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import InnerNav from '../../../components/inner_nav/nav'
 import store from "../../../store";
 import { upFooterStatus } from "../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { UserAssetsApi } from '../../../request/api'
 import './index.scss'
 
-const testList = [
-    {
-        coin: 'USDT',
-        logo: require('../../../assets/images/test.png'),
-        use: 1.2541122,
-        freeze: 0.123323,
-    },
-    {
-        coin: 'ETH',
-        logo: require('../../../assets/images/test.png'),
-        use: 1.2541122,
-        freeze: 0.123323,
-    },
-    {
-        coin: 'BTC',
-        logo: require('../../../assets/images/test.png'),
-        use: 1.2541122,
-        freeze: 0.123323,
-    },
-]
+interface Data {
+    coin: string,
+    logo: string,
+    available: number,
+    freeze: number
+}
 
 const MineAssets = (): ReactElement<ReactNode> => {
+    const [assetsList, setAssetsList] = useState<Data[]>([]);
+    const [localUse, selocalUse] = useState<Data[]>([]);
+    const [isZroe, setIsZroe] = useState<number>(0);
+    const getAssetsList = useCallback(async () => {
+        const result = await UserAssetsApi();
+        const arr = [];
+        for (let i in result.data) {
+            arr.push(result.data[i])
+        };
+        assetsList.length < 1 && setAssetsList(arr.map(item => { return item }))
+        selocalUse(arr.map(item => { return item }))
+    }, []);
+    const name = 1;
+    const assets = store.getState().assets;
+    //搜索值
+    const [searchCoin, setSearchCoin] = useState<any>();
+    // 筛选币种
+    useEffect(() => {
+        const startFilter = () => {
+            const arr = assetsList;
+            const filterL: Data[] = [];
+            arr.map((item: Data) => {
+                if (item.coin.toLocaleLowerCase().search(searchCoin) != -1) {
+                    filterL.push(item)
+                }
+            });
+            setAssetsList(filterL)
+        }
+        searchCoin ? startFilter() : setAssetsList(localUse)
+    }, [searchCoin]);
+    //隐藏0币种
+    useEffect(() => {
+        const startFilter = () => {
+            const arr = assetsList;
+            const filterL: Data[] = [];
+            arr.map(item => {
+                if (item.available !== 0) {
+                    filterL.push(item)
+                }
+            });
+            setAssetsList(filterL);
+        }
+        isZroe == 1 ? startFilter() : setAssetsList(localUse)
+    }, [isZroe]);
+
     const { t } = useTranslation();
+
     const history = useHistory();
-    useEffect((): void => {
+
+    useEffect(() => {
         const action = upFooterStatus(0);
-        store.dispatch(action)
-    }, [])
+        store.dispatch(action);
+        getAssetsList();
+        return () => {
+            setAssetsList([]);
+            selocalUse([]);
+            setIsZroe(0)
+        }
+    }, []);
+
     return (
         <div className="mine-assets">
             <InnerNav backMine title="我的资产" />
@@ -44,7 +85,7 @@ const MineAssets = (): ReactElement<ReactNode> => {
                 <div className="view-msg">
                     {/* 总资产约 */}
                     <p>{t('public.assets_total_un')} ({t('public.for_u')}USDT)</p>
-                    <p>1.5525266447</p>
+                    <p>{assets}</p>
                 </div>
                 <div className="view-oper">
                     <Button color="primary" onClick={() => { history.push('/recharge') }}>
@@ -58,19 +99,23 @@ const MineAssets = (): ReactElement<ReactNode> => {
                 </div>
             </div>
             <div className="assets-list-box">
-                <Tabs style={{ '--title-font-size': '14px' }}>
-                    {/* 币币账户 */}
+                {/* <Tabs style={{ '--title-font-size': '14px' }}>
+                    币币账户
                     <Tabs.Tab title={t('public.coin_account')} key={0}></Tabs.Tab>
-                    {/* 永续账户 */}
+                    永续账户
                     <Tabs.Tab title={t('public.ever_account')} key={1}></Tabs.Tab>
-                </Tabs>
+                </Tabs> */}
                 <div className="search-oper">
                     <p>
                         <span><SearchOutline color="#999" fontSize={14} /></span>
-                        <input type="text" placeholder={t('public.search_assets')} />
+                        <input type="text" value={searchCoin} onChange={(e) => {
+                            setSearchCoin(e.target.value)
+                        }} placeholder={t('public.search_assets')} />
                     </p>
-                    <p>
-                        <CheckCircleFill color="#999" fontSize={14} />
+                    <p onClick={() => {
+                        setIsZroe(isZroe == 0 ? 1 : 0)
+                    }}>
+                        <CheckCircleFill color={isZroe == 0 ? '#999' : '#3070ff'} fontSize={14} />
                         <span>
                             {/* 隐藏为0的币种 */}
                             {t('public.hidden_0')}
@@ -85,7 +130,7 @@ const MineAssets = (): ReactElement<ReactNode> => {
                     >
                         <ul>
                             {
-                                testList.map((el, index): ReactElement => {
+                                assetsList.map((el: Data, index: number): ReactElement => {
                                     return (
                                         <li key={index} onClick={() => {
                                             history.push('/assets-bill')
@@ -103,14 +148,14 @@ const MineAssets = (): ReactElement<ReactNode> => {
                                                         {/* 可用 */}
                                                         {t('public.use')}
                                                     </p>
-                                                    <p>{el.use}</p>
+                                                    <p>{el.available?.toFixed(4)}</p>
                                                 </div>
                                                 <div className="happen-public">
                                                     <p>
                                                         {/* 冻结 */}
                                                         {t('public.freeze')}
                                                     </p>
-                                                    <p>{el.use}</p>
+                                                    <p>{el.freeze?.toFixed(4)}</p>
                                                 </div>
                                             </div>
                                         </li>

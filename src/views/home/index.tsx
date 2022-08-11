@@ -11,7 +11,7 @@ import { upFooterStatus } from "../../store/app/action_creators";
 import store from "../../store";
 import { upUserAssets } from '../../store/app/action_fn'
 import { QUList } from "../../request/api";
-import { sendWs,getMessage } from '../../utils/ws'
+import { sendWs, getMessage } from '../../utils/ws'
 interface Props {
     type?: string
 }
@@ -28,12 +28,12 @@ const NavLogo = (): React.ReactElement<ReactNode> => {
 
 const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
     const [wsList, setWsList] = useState<any>([]);
-    const [token,setToken] = useState<string | null>(sessionStorage.getItem('token_1'));
+    const [token, setToken] = useState<string | null>(sessionStorage.getItem('token_1'));
     store.subscribe(() => {
         setToken(store.getState().appToken)
     })
     // const { t } = useTranslation();
-    
+
     const UpView = async () => {
         const result = await QUList();
         let arr: any[] = [];
@@ -70,13 +70,16 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
             setWsList(arrVal);
         });
     };
-    useEffect((): void => {
+    useEffect(() => {
         const action = upFooterStatus(1);
         store.dispatch(action);
         token && upUserAssets();
         setTimeout(() => {
             UpView()
-        }, 500)
+        }, 500);
+        return () => {
+            setWsList([])
+        }
     }, []);
     const cancelWS = async () => {
         const result = await QUList();

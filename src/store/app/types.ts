@@ -7,3 +7,6 @@ export const UP_LOAD_VIEW = 'up_load_view';
 export const STE_ACCOUNT = 'set_account';
 export const SET_ASSETS = 'set_assets';
 export const UP_CURRENT_COIN = 'up_current_coin';
+export const SET_BALANCE = 'set_balance';
+export const DEFAULT_COIN = "default_coin";
+export const DEFAULT_CASE_COIN = "default_base_coin";

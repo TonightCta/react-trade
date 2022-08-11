@@ -101,7 +101,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         const result = await SendCodeApi({ email: inpMsg.email, scene: 1, type: 2 });
                         console.log(result);
                         const { code } = result;
-                        if (code != 200) {
+                        if (code !== 200) {
                             Toast.show(result.message);
                             return;
                         };
@@ -151,7 +151,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         };
                         const result = await RegisterApi(params);
                         const { code } = result;
-                        if(code != 200){
+                        if(code !== 200){
                             Toast.show(result.message);
                             return;
                         };

@@ -46,7 +46,11 @@ const downList = [
     }
 ];
 
-const TradeOper = (props: { t: any }): ReactElement<ReactNode> => {
+interface Props{
+    coinPrice:number,
+    t:any
+}
+const TradeOper = (props: Props): ReactElement<ReactNode> => {
 
     const [tradeType, setTradeType] = useState<number>(1);
     const [persent, setPersent] = useState<number>(0);
@@ -157,7 +161,7 @@ const TradeOper = (props: { t: any }): ReactElement<ReactNode> => {
                             })
                         }
                     </ul>
-                    <p className="now-price">23062.602187</p>
+                    <p className="now-price">{props.coinPrice.toFixed(4)}</p>
                     <ul className="down-pain">
                         {
                             downList.map((el, index): ReactElement => {

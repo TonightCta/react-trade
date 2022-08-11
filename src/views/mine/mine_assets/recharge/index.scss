@@ -68,3 +68,20 @@
     }
   }
 }
+.select-coin-popup {
+  text-align: center;
+  ul{
+    li{
+      line-height: 40px;
+      border-bottom: 1px solid #f8f8f8;
+    }
+    li:last-child{
+      border: 0;
+    }
+  }
+  .cancel-popup{
+    border-top: 1px solid #eee;
+    height: 40px;
+    line-height: 40px;
+  }
+}

@@ -4,7 +4,8 @@ export interface WithdrawCoinMsg {
     coin?: string,
     num?: string | number,
     address?: string,
-    fee?: number
+    fee?: number,
+    network?:string | number
 }
 
 export interface IResponse {

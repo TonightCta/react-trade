@@ -43,6 +43,20 @@ export const upCurrency = (currency:string) => ({
 export const upCurrentCoin = (currentCoin:{}) => ({
     type:Type.UP_CURRENT_COIN,
     currentCoin
+});
+//设置默认余额
+export const setBalance = (balance:number) => ({
+    type:Type.SET_BALANCE,
+    balance
+});
+//设置币种
+export const upDefaultCoin = (coin:string) => ({
+    type:Type.DEFAULT_COIN,
+    coin
+})
+export const upDefaultBaseCoin = (coin:string) => ({
+    type:Type.DEFAULT_CASE_COIN,
+    coin
 })
 
 

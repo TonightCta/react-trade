@@ -3,22 +3,25 @@ import { DotLoading, Empty, PullToRefresh } from 'antd-mobile';
 import { sleep } from 'antd-mobile/es/utils/sleep';
 import { PullStatus } from 'antd-mobile/es/components/pull-to-refresh';
 import { useHistory } from 'react-router-dom'
-import { upCurrency, upCurrentCoin } from "../../../store/app/action_creators";
+import { upCurrency, upCurrentCoin, upDefaultBaseCoin, upDefaultCoin } from "../../../store/app/action_creators";
 import store from "../../../store";
 import { useTranslation } from 'react-i18next';
+import { sendWs } from "../../../utils/ws";
 
 type TesMsg = {
     coin: string,
     hourTotal: number,
     price: number,
     rate: number | string,
-    type: number
+    type: number,
+    symbol?: string,
 }
 interface Props {
     data: Array<TesMsg>,
     type?: number,
     closeDraw?: () => void,
-    total: number
+    total: number,
+    base?: string,
 }
 const TesAllList = (props: Props): ReactElement<ReactNode> => {
     const { t } = useTranslation();
@@ -48,11 +51,35 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                                             const action = upCurrency(el.coin);
                                             store.dispatch(action);
                                             const viewQu = (): void => {
-                                                const action = upCurrentCoin(el);
-                                                store.dispatch(action);
+                                                const actiton = upCurrentCoin(el);
+                                                store.dispatch(actiton);
                                                 history.push('/quotes-detail');
+                                            };
+                                            const viewTrade = (): void => {
+                                                const action = upDefaultCoin(`${el.coin}`);
+                                                const actionBase = upDefaultBaseCoin(`${el.symbol}`);
+                                                store.dispatch(action)
+                                                store.dispatch(actionBase);
+                                                props.closeDraw!()
+                                                // console.log(props.base)
+                                                sendWs({
+                                                    e: 'unsubscribe',
+                                                    d: {
+                                                        symbol: String(props.base),
+                                                        interval: "1m"
+                                                    }
+                                                });
+                                                setTimeout(() => {
+                                                    sendWs({
+                                                        e: 'subscribe',
+                                                        d: {
+                                                            symbol: String(el.symbol),
+                                                            interval: "1m"
+                                                        }
+                                                    });
+                                                })
                                             }
-                                            props.type === 1 ? viewQu() : props.closeDraw!();
+                                            props.type === 1 ? viewQu() : viewTrade();
                                         }}>
                                             <div className="list-public">
                                                 <div className="coin-msg-hour">

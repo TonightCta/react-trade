@@ -6,7 +6,8 @@ import { QUList } from '../../../request/api'
 interface Props {
     type: number,
     closeDraw?: () => void,
-    t: any
+    t: any,
+    base?:string
 }
 type TabsF = {
     name: string,
@@ -18,7 +19,7 @@ interface TesMsg {
     hourTotal: number,
     price: number,
     rate: number | string,
-    type: number
+    type: number,
 }
 
 const TesTabs = (props: Props): ReactElement<ReactNode> => {
@@ -78,7 +79,7 @@ const TesTabs = (props: Props): ReactElement<ReactNode> => {
                     })
                 }
             </Tabs>
-            <TesAllList data={TesListTwo} total={dataTotal} closeDraw={props.closeDraw} type={Number(props.type)} />
+            <TesAllList data={TesListTwo} base={props.base} total={dataTotal} closeDraw={props.closeDraw} type={Number(props.type)} />
         </div>
     )
 };

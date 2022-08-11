@@ -15,13 +15,13 @@ const TradeBtn = (props: { t: any }): ReactElement<ReactNode> => {
                 {/* 卖出 */}
                 {props.t('public.sell_out')}
             </Button>
-            <div className="star-box" onClick={() => { setIsStar(isStar == 0 ? 1 : 0) }}>
+            <div className="star-box" onClick={() => { setIsStar(isStar === 0 ? 1 : 0) }}>
                 <p>
                     {
-                        isStar == 0 ? <StarOutline /> : <StarFill color="#3070ff" />
+                        isStar === 0 ? <StarOutline /> : <StarFill color="#3070ff" />
                     }
                 </p>
-                <p>{isStar == 0 ? props.t('public.push_op') : props.t('public.move_op')}</p>
+                <p>{isStar === 0 ? props.t('public.push_op') : props.t('public.move_op')}</p>
             </div>
         </div>
     )

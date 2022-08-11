@@ -1,16 +1,13 @@
-import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 import InnerNav from '../../../../components/inner_nav/nav';
 import DrawBtn from "./components/draw_btn";
 import { Popup } from "antd-mobile";
 import './index.scss'
 import { DownFill } from "antd-mobile-icons";
 import { useTranslation } from 'react-i18next'
-import { t } from "i18next";
+import { CoinsListApi, UserAssetsApi } from '../../../../request/api';
+import store from "../../../../store";
 
-interface CoinNet {
-    name: string,
-    key: number
-}
 
 interface TypeMsg {
     drawAddress: string,
@@ -19,62 +16,28 @@ interface TypeMsg {
     netWork: string
 }
 
+
 interface PropsSelect {
     closeSelect: () => void,
-    onSelect: (value: Array<CoinNet>) => void,
+    onSelect: (value: string[]) => void,
     onSelectCoin: (value: string) => void,
-    t: any
+    t: any,
+    coinList: any[],
 }
-const coinList = [
-    {
-        name: 'USDT',
-        net: [
-            {
-                name: 'ERC20',
-                key: 1,
-            },
-            {
-                name: 'TRC20',
-                key: 2,
-            },
-        ]
-    },
-    {
-        name: 'ETH',
-        net: [
-            {
-                name: 'E-Network',
-                key: 1,
-            },
-        ]
-    },
-    {
-        name: 'BTC',
-        net: [
-            {
-                name: 'B-Network',
-                key: 1,
-            },
-            {
-                name: 'OMNL',
-                key: 2,
-            },
-        ]
-    },
-]
+
 
 const SelectOption = (props: PropsSelect): ReactElement => {
     return (
         <div className="select-coin">
             <ul>
                 {
-                    coinList.map((el, index): ReactElement => {
+                    props.coinList.map((el: any, index): ReactElement => {
                         return (
                             <li key={index} onClick={(): void => {
-                                props.onSelect(el.net);
-                                props.onSelectCoin(el.name);
+                                props.onSelect(el.protocol_list);
+                                props.onSelectCoin(el.coin);
                                 props.closeSelect();
-                            }}>{el.name}</li>
+                            }}>{el.coin}</li>
                         )
                     })
                 }
@@ -91,35 +54,47 @@ const SelectOption = (props: PropsSelect): ReactElement => {
 
 
 const WithdrawIndex = (): ReactElement<ReactNode> => {
+    const [coinList, setCoinList] = useState<any>([]);
     const { t } = useTranslation();
     //Hooks提供的Api均可带入泛型
     //币种
     const [currentCoin, setCurrentCoin] = useState<string>('USDT');
     //币种支持网络
-    const [coinNet, setCoinNet] = useState<CoinNet[]>();
+    const [coinNet, setCoinNet] = useState<string[]>();
     //选择网络
-    const [currentNet, setCurrentNet] = useState<number>(1);
+    const [currentNet, setCurrentNet] = useState<string>('ERC20');
+    //当前币种余额
+    const [currentBalance, setCurrentBalance] = useState<number>(store.getState().currentBalance)
     const [drawMsg, setDrawMsg] = useState<TypeMsg>({
         drawAddress: '',//充值地址
         drawNum: '',//充值数量
         selectCoin: false,//选择币种弹出层
         netWork: 'ERC20',//网络名称
     });
-    // useEffect 第一个参数为函数，第二个参数为空数组时对应Vue的Created()周期，数组内传值则为监听值变化执行第一个参数(函数)逻辑，可传多个值同时监听
-    // useEffect 第二个参数传空数组，第一个参数(函数)内return一个值或者函数对应Vue的Destory()周期
-    // 与useEffect同功能但性能较好的是useMemo,对应Vue的computed
-    //详细例子看./components/draw_btn.tsx
-    useEffect((): void => {
-        setCoinNet([
-            {
-                name: 'ERC20',
-                key: 1
-            },
-            {
-                name: 'TRC20',
-                key: 2
-            },
-        ])
+    //获取币种列表
+    const getCoinList = useCallback(async () => {
+        const result = await CoinsListApi();
+        const arr = [];
+        for (let i in result.data.coins) {
+            arr.push(result.data.coins[i][0]);
+        };
+        setCoinList(arr);
+    }, []);
+    useEffect(() => {
+        setCoinNet(['ERC20', 'TRC20'])
+        getCoinList();
+        return () => {
+            setCurrentBalance(store.getState().currentBalance);
+            setCoinList([]);
+        }
+    }, []);
+    const getBalance = useCallback(async (_val: string) => {
+        const result = await UserAssetsApi();
+        for (let i in result.data) {
+            if (result.data[i].coin === _val) {
+                setCurrentBalance(result.data[i].available)
+            }
+        }
     }, []);
     return (
         <div className="with-draw">
@@ -147,16 +122,16 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                     </p>
                     <ul className="net-list">
                         {
-                            coinNet?.map((el: CoinNet, index: number): ReactElement => {
+                            coinNet?.map((el: any, index: number): ReactElement => {
                                 return (
-                                    <li key={index} className={`${currentNet === el.key ? 'active-network' : ''}`} onClick={() => {
-                                        setCurrentNet(el.key);
+                                    <li key={index} className={`${currentNet === el ? 'active-network' : ''}`} onClick={() => {
+                                        setCurrentNet(el);
                                         setDrawMsg({
                                             ...drawMsg,
-                                            netWork: el.name,
+                                            netWork: el,
                                         })
                                     }}>
-                                        {el.name}
+                                        {el}
                                     </li>
                                 )
                             })
@@ -191,13 +166,18 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                     <p className="inp-remark">
                         <span>{currentCoin}</span>
                         <span></span>
-                        <span className="click-span">
+                        <span className="click-span" onClick={() => {
+                            setDrawMsg({
+                                ...drawMsg,
+                                drawNum: currentBalance
+                            })
+                        }}>
                             {/* 全部 */}
                             {t('public.all')}
                         </span>
                     </p>
                     <p className="option-remark">
-                        <span>{t('public.use_balance')}:10.2546465484 {currentCoin}</span>
+                        <span>{t('public.use_balance')}:{currentBalance.toFixed(4)} {currentCoin}</span>
                         <span>{t('public.fee')}:0.0005 {currentCoin}</span>
                     </p>
                 </div>
@@ -216,24 +196,25 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                     selectCoin: false,
                 })
             }}>
-                <SelectOption closeSelect={(): void => {
+                <SelectOption coinList={coinList} closeSelect={(): void => {
                     setDrawMsg({
                         ...drawMsg,
                         selectCoin: false,
                     })
-                }} onSelect={(value: Array<CoinNet>): void => {
+                }} onSelect={(value: string[]): void => {
                     setCoinNet(value);
-                    setCurrentNet(1);
+                    setCurrentNet(value[0]);
                     setDrawMsg({
                         ...drawMsg,
-                        netWork: value[0]!.name,
+                        netWork: value[0],
                     })
                 }} onSelectCoin={(value: string): void => {
-                    setCurrentCoin(value)
+                    setCurrentCoin(value);
+                    getBalance(value)
                 }} t={t} />
             </Popup>
             {/* 提币按钮 */}
-            <DrawBtn coin={currentCoin} num={drawMsg.drawNum} address={drawMsg.drawAddress} fee={0.2} />
+            <DrawBtn coin={currentCoin} network={currentNet} num={drawMsg.drawNum} address={drawMsg.drawAddress} fee={0.2} />
         </div>
     )
 };

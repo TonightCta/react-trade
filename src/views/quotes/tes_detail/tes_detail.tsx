@@ -88,10 +88,12 @@ const TesDetail = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     useEffect((): void => {
         const action = upFooterStatus(0);
-        store.dispatch(action);
+        setTimeout(() => {
+            store.dispatch(action);
+        })
         setTimeout(() => {
             getDetailData();
-        }, 1500);
+        }, 2500);
     }, []);
     const cancelWS = () => {
         sendWs({
