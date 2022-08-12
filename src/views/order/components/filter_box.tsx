@@ -3,6 +3,7 @@ import { ReactElement, useState, useRef } from "react";
 import { Popup, PickerView, Dropdown, Button, DatePickerView } from "antd-mobile";
 import { DropdownRef } from 'antd-mobile/es/components/dropdown';
 import { useTranslation } from 'react-i18next';
+import { QUList } from '../../../request/api'
 
 type bol = boolean;
 
@@ -33,7 +34,15 @@ interface Props {
     setFilterVal: (val: EmitMsg) => void,
 }
 const now = new Date();
-const coinVol = [['BTC/USDT', 'ETH/USDT']];
+const coinVol : string[][] = [[]];
+
+const getCoinList = async () => {
+    const result = await QUList();
+    for(let i in result.data.list){
+        coinVol[0].push(`${result.data.list[i].base}/${result.data.list[i].target}`)
+    };
+};
+getCoinList();
 
 const ValDate = (_time: Date): string => {
     const date = new Date(_time);

@@ -15,7 +15,7 @@ const PrivateRoute = (props: Props): ReactElement<ReactNode> => {
     });
     return (
         <div>
-            <Route key={new Date().getTime()} path={props.path} render={({ location }) => {
+            <Route path={props.path} render={({ location }) => {
                 return appToken ? props.children : <Redirect to={{ pathname: '/login', state: { from: location } }} />
             }} />
         </div>

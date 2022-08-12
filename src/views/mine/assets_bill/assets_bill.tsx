@@ -49,9 +49,9 @@ const AssetsBill = (): ReactElement<ReactNode> => {
         const action = upFooterStatus(0);
         store.dispatch(action)
     }, []);
-    useEffect((): void => {
-        console.log(searchVal)
-    }, [searchVal])
+    // useEffect((): void => {
+    //     console.log(searchVal)
+    // }, [searchVal])
     return (
         <div className="assets-bill">
             <InnerNav title={t('public.bill_list')} search withBorder leftArrow getSearchVal={(val: string) => {

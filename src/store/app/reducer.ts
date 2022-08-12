@@ -1,9 +1,10 @@
+import { stat } from 'fs';
 import * as Type from './types';
 
 interface UMsg {
     email?: string,
 }
-interface Store {
+export interface Store {
     account: UMsg,//用户信息
     assets: number,//用户资产
     appToken: string,//用户Token
@@ -14,8 +15,12 @@ interface Store {
     loadView: number,//启动页显示状态
     currentCoin: any,//选中队列
     currentBalance: number,//USDT余额
-    defaultCoin: string,
-    defaultBaseCoin: string,
+    defaultCoin: string,//交易默认队列
+    defaultBaseCoin: string,//交易默认订阅队列
+    wsStatus: number,//ws服务连接状态
+    kData: { second: number, type: string },
+    tradeFromCoin: string,
+    tradeToCoin: string,
 }
 const defaultState: Store = {
     account: JSON.parse(sessionStorage.getItem('account') || '{}'),
@@ -29,7 +34,11 @@ const defaultState: Store = {
     currentCoin: JSON.parse(sessionStorage.getItem('currentCoin') || '{}'),
     currentBalance: Number(sessionStorage.getItem('currentBalance')) || 0,
     defaultCoin: sessionStorage.getItem("defaultCoin") || 'BTC/USDT',
-    defaultBaseCoin: sessionStorage.getItem('defaultBaseCoin') || 'BTCUSDT'
+    defaultBaseCoin: sessionStorage.getItem('defaultBaseCoin') || 'BTCUSDT',
+    wsStatus: 0,//ws服务连接状态
+    kData: JSON.parse(sessionStorage.getItem('kData') || '{ "second": 60, "type": "1m" }'),
+    tradeFromCoin: sessionStorage.getItem('tradeFromCoin') || 'USDT',
+    tradeToCoin: sessionStorage.getItem('tradeToCoin') || 'BTC',
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
@@ -69,6 +78,17 @@ export default (state = defaultState, action: any) => {
         case Type.DEFAULT_CASE_COIN:
             sessionStorage.setItem('defaultBaseCoin', action.coin);
             return { ...state, defaultBaseCoin: action.coin }
+        case Type.WS_STATUS:
+            return { ...state, wsStatus: action.status }
+        case Type.SET_KDATA:
+            sessionStorage.setItem('kData', action.data);
+            return { ...state, kData: JSON.parse(action.data) }
+        case Type.SET_TRADE_FROM:
+            sessionStorage.setItem('tradeFromCoin', action.coin);
+            return { ...state, tradeFromCoin: action.coin }
+        case Type.SET_TRADE_TO:
+            sessionStorage.setItem('tradeToCoin', action.coin);
+            return { ...state, tradeToCoin: action.coin }
         default:
             return state;
     };

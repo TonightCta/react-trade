@@ -18,10 +18,16 @@ interface PMsg {
     price: number,
     rate: number
 }
+interface KData{
+    second:number,
+    type:string
+}
 
 
 const TesDetail = (): ReactElement<ReactNode> => {
     const currentCoin = store.getState().currentCoin;
+    const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus);
+    const [kfilterData,setFilterKData] = useState<KData>(store.getState().kData)
     const [priceMsg, setPriceMsg] = useState<PMsg>({
         price: 0,
         type: 1,
@@ -38,13 +44,17 @@ const TesDetail = (): ReactElement<ReactNode> => {
         p: '',
         q: ''
     });
+    store.subscribe(() => {
+        setWsStatus(store.getState().wsStatus);
+        setFilterKData(store.getState().kData);
+    })
     const getDetailData = () => {
         sendWs({
             e: 'kline',
             d: {
                 symbol: currentCoin.symbol,
                 interval: '5m',
-                start: new Date().getTime() - 5 * 60 * 1000 * 150,
+                start: new Date().getTime() - 5 * 60 * 1000 * 100,
                 end: new Date().getTime(),
             }
         });
@@ -75,6 +85,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
                 }
                 if (data.e === 'kline') {
                     setkData(data);
+                    // console.log(data)
                 };
                 if (data.e === 'subscribe-deal') {
                     setDealData(data.d);
@@ -84,17 +95,24 @@ const TesDetail = (): ReactElement<ReactNode> => {
             }
 
         });
-    }
+    };
+    useEffect(() => {
+        setTimeout(() => {
+            wsStatus === 1 && getDetailData();
+        }, 2000);
+    }, [wsStatus])
     const { t } = useTranslation();
-    useEffect((): void => {
-        const action = upFooterStatus(0);
-        setTimeout(() => {
-            store.dispatch(action);
-        })
-        setTimeout(() => {
-            getDetailData();
-        }, 2500);
-    }, []);
+    useEffect(() => {
+        sendWs({
+            e: 'kline',
+            d: {
+                symbol: currentCoin.symbol,
+                interval: kfilterData.type,
+                start:new Date().getTime() - kfilterData.second  * 1000 * 100,
+                end:new Date().getTime(),
+            }
+        });
+    },[kfilterData])
     const cancelWS = () => {
         sendWs({
             e: 'unsubscribe',
@@ -111,6 +129,10 @@ const TesDetail = (): ReactElement<ReactNode> => {
         });
     };
     useEffect(() => {
+        const action = upFooterStatus(0);
+        setTimeout(() => {
+            store.dispatch(action);
+        })
         return () => {
             cancelWS();
         }

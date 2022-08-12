@@ -50,7 +50,6 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
             Toast.show('登录异常，请稍后再试');
             return;
         };
-        console.log(info);
         Toast.show('登录成功')
         history.push('/')
     }

@@ -25,3 +25,9 @@ export const RechargeAddressApi = (p: { coin: string, protocol: string }) => get
 export const TradePassApi = (p: o) => post<IResponse>('/security/changePayPassword', p);
 //重置登录密码
 export const ResetPassApi = (p: o) => post<IResponse>('/security/changePassword', p);
+//币币交易
+export const PlaceCoinOrderApi = (p:o) => post<IResponse>("/spot/order/place",p);
+//订单列表
+export const OderListApi = (p:o) => post<IResponse>("/order/spot/list",p);
+//取消委托
+export const CancelOrderApi = (p:string) => get<IResponse>(`/spot/order/cancel/${p}`)

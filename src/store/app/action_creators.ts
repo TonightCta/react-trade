@@ -53,9 +53,30 @@ export const setBalance = (balance:number) => ({
 export const upDefaultCoin = (coin:string) => ({
     type:Type.DEFAULT_COIN,
     coin
-})
+});
+//设置订阅币种
 export const upDefaultBaseCoin = (coin:string) => ({
     type:Type.DEFAULT_CASE_COIN,
+    coin
+});
+//设置ws服务连接状态
+export const upWSStatus = (status:number) => ({
+    type:Type.WS_STATUS,
+    status
+});
+//设置k选筛选
+export const setKData = (data:string) => ({
+    type:Type.SET_KDATA,
+    data
+});
+//设置交易From币种
+export const setTradeFrom = (coin:string) => ({
+    type:Type.SET_TRADE_FROM,
+    coin
+})
+//设置交易To币种
+export const setTradeTo = (coin:string) => ({
+    type:Type.SET_TRADE_TO,
     coin
 })
 

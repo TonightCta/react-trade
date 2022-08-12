@@ -56,7 +56,7 @@ const TesTabs = (props: Props): ReactElement<ReactNode> => {
             return {
                 ...item,
                 coin: `${item.base}/${item.target}`,
-                hourTotal: item.yesterday_volume.toFixed(2),
+                hourTotal: Number(item.yesterday_volume).toFixed(2),
                 rate: rate.toFixed(2),
                 type: rate > 0 ? 1 : 0,
             }

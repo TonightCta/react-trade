@@ -10,3 +10,7 @@ export const UP_CURRENT_COIN = 'up_current_coin';
 export const SET_BALANCE = 'set_balance';
 export const DEFAULT_COIN = "default_coin";
 export const DEFAULT_CASE_COIN = "default_base_coin";
+export const WS_STATUS = 'ws_status';
+export const SET_KDATA = 'set_kdata';
+export const SET_TRADE_FROM = 'set_trade_from';
+export const SET_TRADE_TO ='set_trade_to';

@@ -24,20 +24,20 @@ const RouteConfig = (): ReactElement<ReactNode> => {
         <CSSTransition key={location.pathname} timeout={1000} classNames="page">
           <Switch location={location}>
             <Route path="/" exact render={() => <Redirect to="/home" />}></Route>
-            <Route path="/login" key={new Date().getTime()} component={View.LoginIndex}></Route>
-            <Route path="/home" key={new Date().getTime()} component={View.HomeIndex}></Route>
-            <Route path="/quotes" key={new Date().getTime()} component={View.QuotesIndex}></Route>
-            <Route path="/quotes-detail" key={new Date().getTime()} component={View.TesDetail}></Route>
-            <Route path="/setting" key={new Date().getTime()} component={View.SetIndex}></Route>
-            <Route path="/set-language" key={new Date().getTime()} component={View.SetLanguage}></Route>
-            <Route path="/feedback"  key={new Date().getTime()} component={View.FeedBack}></Route>
-            <Route path="/ann" key={new Date().getTime()} component={View.Ann}></Route>
-            <Route path="/ann-detail" key={new Date().getTime()} component={View.AnnDetail}></Route>
-            <Route path="/about-us" key={new Date().getTime()} component={View.About}></Route>
-            <Route path="/help" key={new Date().getTime()} component={View.Help}></Route>
-            <Route path="/help-detail" key={new Date().getTime()} component={View.HelpDetail}></Route>
-            <Route path="/register" key={new Date().getTime()} component={View.RegisterIndex}></Route>
-            <Route path="/forget" key={new Date().getTime()} component={View.ForgetIndex}></Route>
+            <Route path="/login" component={View.LoginIndex}></Route>
+            <Route path="/home" component={View.HomeIndex}></Route>
+            <Route path="/quotes" component={View.QuotesIndex}></Route>
+            <Route path="/quotes-detail" component={View.TesDetail}></Route>
+            <Route path="/setting" component={View.SetIndex}></Route>
+            <Route path="/set-language" component={View.SetLanguage}></Route>
+            <Route path="/feedback" component={View.FeedBack}></Route>
+            <Route path="/ann" component={View.Ann}></Route>
+            <Route path="/ann-detail" component={View.AnnDetail}></Route>
+            <Route path="/about-us" component={View.About}></Route>
+            <Route path="/help" component={View.Help}></Route>
+            <Route path="/help-detail" component={View.HelpDetail}></Route>
+            <Route path="/register" component={View.RegisterIndex}></Route>
+            <Route path="/forget" component={View.ForgetIndex}></Route>
             <PrivateRoute children={<View.TradeIndex />} path="/trade" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.MineIndex />} path="/mine" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.TradeOrder />} path="/trade-order" locationMine={location}></PrivateRoute>

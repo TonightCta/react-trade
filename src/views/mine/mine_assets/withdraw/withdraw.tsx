@@ -84,8 +84,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
         setCoinNet(['ERC20', 'TRC20'])
         getCoinList();
         return () => {
-            setCurrentBalance(store.getState().currentBalance);
-            setCoinList([]);
+            getCoinList();
         }
     }, []);
     const getBalance = useCallback(async (_val: string) => {

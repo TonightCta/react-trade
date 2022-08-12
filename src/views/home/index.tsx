@@ -12,6 +12,7 @@ import store from "../../store";
 import { upUserAssets } from '../../store/app/action_fn'
 import { QUList } from "../../request/api";
 import { sendWs, getMessage } from '../../utils/ws'
+import { useHistory } from 'react-router-dom'
 interface Props {
     type?: string
 }
@@ -29,9 +30,12 @@ const NavLogo = (): React.ReactElement<ReactNode> => {
 const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
     const [wsList, setWsList] = useState<any>([]);
     const [token, setToken] = useState<string | null>(sessionStorage.getItem('token_1'));
+    const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus);
     store.subscribe(() => {
-        setToken(store.getState().appToken)
+        setToken(store.getState().appToken);
+        setWsStatus(store.getState().wsStatus)
     })
+    const history = useHistory();
     // const { t } = useTranslation();
 
     const UpView = async () => {
@@ -52,7 +56,6 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
         getMessage().message.onmessage = ((e: any) => {
             const wsData = JSON.parse(e.data)
             let arrVal: any[] = arr;
-
             arrVal.forEach(item => {
                 if (wsData.s === item.symbol) {
                     item.price = wsData.k.c;
@@ -71,16 +74,20 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
         });
     };
     useEffect(() => {
-        const action = upFooterStatus(1);
-        store.dispatch(action);
-        token && upUserAssets();
         setTimeout(() => {
-            UpView()
-        }, 500);
-        return () => {
-            setWsList([])
+            wsStatus === 1 && UpView()
+        }, 2000);
+    }, [wsStatus])
+    useEffect(() => {
+        if (history.location.pathname === '/home') {
+            const action = upFooterStatus(1);
+            store.dispatch(action);
+            token && upUserAssets();
+            return () => {
+                setWsList([])
+            }
         }
-    }, []);
+    }, [history.location]);
     const cancelWS = async () => {
         const result = await QUList();
         for (let i in result.data.list) {

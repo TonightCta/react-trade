@@ -28,7 +28,6 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
     const cbSaver: any = useRef();
     const timer = useRef<NodeJS.Timer>();
     cbSaver.current = () => {
-        console.log(count)
         setCount(count - 1);
     };
     const countDown = useCallback((): void => {
@@ -99,7 +98,6 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             return;
                         };
                         const result = await SendCodeApi({ email: inpMsg.email, scene: 1, type: 2 });
-                        console.log(result);
                         const { code } = result;
                         if (code !== 200) {
                             Toast.show(result.message);

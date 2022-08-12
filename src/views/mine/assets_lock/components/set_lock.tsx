@@ -45,7 +45,6 @@ const SetLock = (): ReactElement<ReactNode> => {
             password_confirmation: inpMsg.turnPass
         };
         const result = await TradePassApi(params);
-        console.log(result);
         const { code } = result;
         if(code !== 200){
             Toast.show(result.message);

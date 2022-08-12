@@ -24,13 +24,13 @@ export const upUserAssets = async (): Promise<void> => {
             assets.push(result.data[i])
         }
     };
-    const val = assets.map((item,i) => {
-        return item.available * QResult.data.list[item.coin].price
+    const val = assets.map((item) => {
+        return item.available * QResult.data.list[item.symbol].price
     });
     const num = val.reduce((prev, curr) => { return prev + curr }) + result.data['USDT'].available;
     const action = setAssets(num.toFixed(4));
     const balance = setBalance(result.data['USDT'].available);
     store.dispatch(action);
-    store.dispatch(balance)
+    store.dispatch(balance);
 }
 

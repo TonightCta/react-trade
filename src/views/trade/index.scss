@@ -43,7 +43,7 @@
           line-height: 30px;
           border-radius: 4px;
           font-size: 15px;
-          transition: .2s all;
+          transition: 0.2s all;
         }
         .buy-btn {
           background-color: #3370ff;
@@ -68,6 +68,12 @@
         border-radius: 4px;
         font-size: 14px;
         margin-bottom: 12px;
+      }
+      .limit-price-inp {
+        margin-bottom: 12px;
+        .adm-stepper {
+          width: 100%;
+        }
       }
       .trade-count {
         margin-bottom: 12px;
@@ -161,7 +167,7 @@
       .turn-btn {
         button {
           width: 100%;
-          transition: .2s all;
+          transition: 0.2s all;
         }
       }
       .sell-btn {
@@ -357,6 +363,14 @@
         .order-status {
           font-size: 13px;
           color: #666;
+          .cancel-order {
+            font-size: 13px;
+            display: inline-block;
+            padding: 4px 6px;
+            background-color: #3070ff;
+            color: white;
+            border-radius: 4px;
+          }
         }
       }
       .trade-msg-date {
@@ -396,5 +410,22 @@
     li:last-child {
       border: 0;
     }
+  }
+}
+.select-trade-way {
+  text-align: center;
+  ul {
+    padding: 12px 0;
+    li {
+      border-bottom: 1px solid #f8f8f8;
+      line-height: 40px;
+    }
+    li:last-child {
+      border: 0;
+    }
+  }
+  .cancel-popup {
+    border-top: 2px solid #eee;
+    padding: 12px 0;
   }
 }

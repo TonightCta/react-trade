@@ -51,8 +51,8 @@ const RechargeIndex = (props:any): ReactElement<ReactNode> => {
         getCoins();
         getAddress();
         return () => {
-            setCoinList([]);
-            setProtocolList(['ERC20', 'TRC20'])
+            getCoins();
+            getAddress();
         }
     }, [props]);
     useEffect(() => {

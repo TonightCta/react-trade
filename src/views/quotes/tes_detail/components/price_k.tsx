@@ -2,12 +2,15 @@ import { ReactElement, ReactNode, useEffect, useRef } from "react";
 import { Tabs } from "antd-mobile";
 import * as echarts from 'echarts';
 import React from "react";
+import { setKData } from "../../../../store/app/action_creators";
+import store from "../../../../store";
 
 interface Props {
     upKMsg: {
         k: any
     },
-    t: any
+    t: any,
+    // setLineDataMine: (second: number, type: string) => void,
 }
 
 const KTabs = [
@@ -85,17 +88,19 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
                 type: 'category',
                 data: [],
                 boundaryGap: false,
-                axisLine: { onZero: false,lineStyle:{
-                    color:'#eee'
-                } },
+                axisLine: {
+                    onZero: false, lineStyle: {
+                        color: '#eee'
+                    }
+                },
                 splitLine: { show: false },
                 min: 'dataMin',
                 max: 'dataMax',
                 axisPointer: {
                     z: 100
                 },
-                axisLabel:{
-                    color:'#333',
+                axisLabel: {
+                    color: '#333',
                 }
             },
             {
@@ -103,9 +108,11 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
                 gridIndex: 1,
                 data: [],
                 boundaryGap: false,
-                axisLine: { onZero: false,lineStyle:{
-                    color:'#eee'
-                } },
+                axisLine: {
+                    onZero: false, lineStyle: {
+                        color: '#eee'
+                    }
+                },
                 axisTick: { show: false },
                 splitLine: { show: false },
                 axisLabel: { show: false },
@@ -158,7 +165,7 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
                     show: true,
                     showMinLabel: false,
                     showMaxLabel: false,
-                    color:'#333',
+                    color: '#333',
                     formatter: (value: number, index: number): number | string => {
                         return value.toFixed(2)
                     }
@@ -310,13 +317,26 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
             option.series[3].data = calculateMA(20, data)
             option.series[4].data = calculateMA(30, data);
             option.series[5].data = volume;
-            const test = echarts.init(document.getElementById('echarts-box') as HTMLElement);
+            let test = echarts.getInstanceByDom(document.getElementById('echarts-box') as HTMLElement);
+            if (!test) {
+                test = echarts.init(document.getElementById('echarts-box') as HTMLElement);
+            }
             test.setOption(option);
         }
     }, [props])
     return (
         <div className="tes-price-k">
-            <Tabs style={{ '--title-font-size': '14px' }}>
+            <Tabs style={{ '--title-font-size': '14px' }} onChange={(type) => {
+                KTabs.forEach(e => {
+                    if (e.type === type) {
+                        const action = setKData(JSON.stringify({
+                            "second": e.sec,
+                            "type": type
+                        }));
+                        store.dispatch(action)
+                    }
+                })
+            }}>
                 {
                     KTabs.map((el): ReactElement => {
                         return (
@@ -328,7 +348,7 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
             <div className="echarts-box" id="echarts-box">
 
             </div>
-        </div>
+        </div >
     )
 };
 

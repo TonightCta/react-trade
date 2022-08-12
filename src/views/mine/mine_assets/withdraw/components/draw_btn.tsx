@@ -121,7 +121,6 @@ const DrawBtn = (props: Props): ReactElement<ReactNode> => {
             </Popup>
             <Button color="primary" onClick={(): void => {
                 setSafeBox(true)
-                console.log(props)
             }}>
                 {/* 提币 */}
                 {

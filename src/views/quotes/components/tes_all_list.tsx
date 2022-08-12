@@ -3,7 +3,7 @@ import { DotLoading, Empty, PullToRefresh } from 'antd-mobile';
 import { sleep } from 'antd-mobile/es/utils/sleep';
 import { PullStatus } from 'antd-mobile/es/components/pull-to-refresh';
 import { useHistory } from 'react-router-dom'
-import { upCurrency, upCurrentCoin, upDefaultBaseCoin, upDefaultCoin } from "../../../store/app/action_creators";
+import { setTradeFrom, setTradeTo, upCurrency, upCurrentCoin, upDefaultBaseCoin, upDefaultCoin } from "../../../store/app/action_creators";
 import store from "../../../store";
 import { useTranslation } from 'react-i18next';
 import { sendWs } from "../../../utils/ws";
@@ -15,6 +15,8 @@ type TesMsg = {
     rate: number | string,
     type: number,
     symbol?: string,
+    target?:string,
+    base?:string
 }
 interface Props {
     data: Array<TesMsg>,
@@ -39,7 +41,6 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                     ? <Empty description='暂无数据' />
                     : <PullToRefresh onRefresh={async () => {
                         await sleep(3000)
-                        console.log('刷新了')
                     }} renderText={status => {
                         return <div>{statusRecord[status]}</div>
                     }}>
@@ -58,8 +59,12 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                                             const viewTrade = (): void => {
                                                 const action = upDefaultCoin(`${el.coin}`);
                                                 const actionBase = upDefaultBaseCoin(`${el.symbol}`);
+                                                const actionFrom = setTradeFrom(String(el.target));
+                                                const actionTo = setTradeTo(String(el.base));
                                                 store.dispatch(action)
                                                 store.dispatch(actionBase);
+                                                store.dispatch(actionFrom);
+                                                store.dispatch(actionTo);
                                                 props.closeDraw!()
                                                 // console.log(props.base)
                                                 sendWs({
@@ -69,12 +74,24 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                                                         interval: "1m"
                                                     }
                                                 });
+                                                sendWs({
+                                                    e: 'unsubscribe-depth',
+                                                    d: {
+                                                        symbol: String(props.base),
+                                                    }
+                                                });
                                                 setTimeout(() => {
                                                     sendWs({
                                                         e: 'subscribe',
                                                         d: {
                                                             symbol: String(el.symbol),
                                                             interval: "1m"
+                                                        }
+                                                    });
+                                                    sendWs({
+                                                        e: 'subscribe-depth',
+                                                        d: {
+                                                            symbol: String(el.symbol),
                                                         }
                                                     });
                                                 })

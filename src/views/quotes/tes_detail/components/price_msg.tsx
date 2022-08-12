@@ -27,18 +27,18 @@ const TesPriceMsg = (props: Props): ReactElement<ReactNode> => {
                         {/* 高 */}
                         {props.t('public.high')}
                     </p>
-                    <p>{currentCoin.yesterday_high.toFixed(4)}</p>
+                    <p>{Number(currentCoin.yesterday_high).toFixed(4)}</p>
                 </div>
                 <div className="high-public">
                     <p>
                         {/* 低 */}
                         {props.t('public.low')}
                     </p>
-                    <p>{currentCoin.yesterday_low.toFixed(4)}</p>
+                    <p>{Number(currentCoin.yesterday_low).toFixed(4)}</p>
                 </div>
                 <div className="high-public">
                     <p>24H{props.t('public.vol')}</p>
-                    <p>{currentCoin.yesterday_volume.toFixed(4)}</p>
+                    <p>{Number(currentCoin.yesterday_volume).toFixed(4)}</p>
                 </div>
             </div>
         </div>
