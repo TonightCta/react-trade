@@ -14,3 +14,7 @@ export const WS_STATUS = 'ws_status';
 export const SET_KDATA = 'set_kdata';
 export const SET_TRADE_FROM = 'set_trade_from';
 export const SET_TRADE_TO ='set_trade_to';
+export const LOAD_ORDER = 'load_order';
+export const UP_ANN_ID = 'up_ann_id';
+export const SET_BILL_COIN = "set_bill_coin";
+export const SET_INV_BOX = 'set_inv_box';

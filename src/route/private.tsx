@@ -1,5 +1,5 @@
-import { ReactElement, ReactNode, } from "react";
-import { Redirect, Route, withRouter,RouteComponentProps } from "react-router-dom";
+import { ReactElement, ReactNode, useEffect, } from "react";
+import { Redirect, Route, withRouter, RouteComponentProps } from "react-router-dom";
 import { useAsyncState } from '../utils/hooks'
 import store from '../store/index'
 
@@ -10,9 +10,17 @@ interface Props extends RouteComponentProps {
 }
 const PrivateRoute = (props: Props): ReactElement<ReactNode> => {
     const [appToken, setAppToken] = useAsyncState<string | null>(sessionStorage.getItem('token_1'));
-    store.subscribe((): void => {
-        setAppToken(store.getState().appToken)
-    });
+    const storeChange = () => {
+        store.subscribe((): void => {
+            setAppToken(store.getState().appToken)
+        });
+    };
+    useEffect(() => {
+        storeChange()
+        return () => {
+            storeChange()
+        };
+    },[])
     return (
         <div>
             <Route path={props.path} render={({ location }) => {

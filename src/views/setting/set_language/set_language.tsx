@@ -28,12 +28,18 @@ const langList = [
 
 const SetLanguage = (): ReactElement<ReactNode> => {
     const [lang, setLang] = useState<string>(localStorage.getItem('language') || 'zh-TW');
-    store.subscribe(() => {
-        setLang(store.getState().language)
-    });
-    useEffect((): void => {
+    const storeChange = () => {
+        store.subscribe(() => {
+            setLang(store.getState().language)
+        });
+    };
+    useEffect(() => {
+        storeChange()
         const action = upFooterStatus(0);
         store.dispatch(action);
+        return () => {
+            storeChange()
+        }
     }, []);
     const { t } = useTranslation();
     return (

@@ -79,5 +79,24 @@ export const setTradeTo = (coin:string) => ({
     type:Type.SET_TRADE_TO,
     coin
 })
+//设置订单刷新时机
+export const setReloadOrder = (timestamp:number) => ({
+    type:Type.LOAD_ORDER,
+    timestamp
+});
+//设置公告ID
+export const upAnnID = (id:number) => ({
+    type:Type.UP_ANN_ID,
+    id
+})
+//设置币种账单
+export const upBillCoin = (coin:string) => ({
+    type:Type.SET_BILL_COIN,
+    coin
+});
+export const setInvBox = (status:number) => ({
+    type:Type.SET_INV_BOX,
+    status
+})
 
 

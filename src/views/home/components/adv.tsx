@@ -1,37 +1,53 @@
 import { Swiper } from "antd-mobile";
-import React, { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { SoundOutline } from 'antd-mobile-icons'
 import { useHistory } from "react-router-dom";
-import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { AdvListApi } from '../../../request/api'
+import { setInvBox, upAnnID } from "../../../store/app/action_creators";
+import store from "../../../store";
+import { ADV } from '../../../utils/types'
 
-const advList = [
-    '派大星',
-    '海绵宝宝',
-    '章鱼哥'
-];
+
+
 
 interface CardMsg {
     title: string,
     icon: string,
     url: string,
-    outSide:boolean,
+    outSide: boolean,
+    inner: boolean
 }
 
-// 广告轮播
-const Items = advList.map((el, index): ReactElement<ReactNode> => {
-    return (
-        <Swiper.Item className="adv-item" key={index}>
-            <NavLink to="/ann-detail">{el}</NavLink>
-        </Swiper.Item>
-    )
-});
 
-const AdvSwiper = (): ReactElement<ReactNode> => {
+const AdvSwiper = (props: { history: any }): ReactElement<ReactNode> => {
+    const [advList, setAdvList] = useState<ADV[]>([]);
+    const getAdvList = async () => {
+        const result = await AdvListApi(3);
+        setAdvList(result.data.lists);
+    };
+    useEffect(() => {
+        getAdvList();
+        return () => {
+            getAdvList();
+        }
+    }, [])
     return (
         <div className="adv-banner">
             <Swiper loop autoplay direction='vertical' style={{ '--height': '34px' }}>
-                {Items}
+                {
+                    advList.map((el, index): ReactElement<ReactNode> => {
+                        return (
+                            <Swiper.Item className="adv-item" key={index}>
+                                <p onClick={() => {
+                                    const action = upAnnID(el.id);
+                                    store.dispatch(action);
+                                    props.history.push('/ann-detail')
+                                }}>{el.title}</p>
+                            </Swiper.Item>
+                        )
+                    })
+                }
             </Swiper>
         </div>
     )
@@ -39,33 +55,37 @@ const AdvSwiper = (): ReactElement<ReactNode> => {
 
 //卡片选项
 
-const Card = (): ReactElement<ReactNode> => {
+const Card = (props: { history: any }): ReactElement<ReactNode> => {
     const { t } = useTranslation();
-    const history = useHistory();
+
     const list: Array<CardMsg> = [
         {
             title: t('public.inv'),
             icon: require('../../../assets/images/home_icon_1.png'),
             url: '',
-            outSide:false,
+            outSide: false,
+            inner: true,
         },
         {
             title: t('public.quotes'),
             icon: require('../../../assets/images/home_icon_2.png'),
             url: '/quotes',
-            outSide:false,
+            outSide: false,
+            inner: false,
         },
         {
             title: t('public.customer'),
             icon: require('../../../assets/images/home_icon_3.png'),
             url: 'https://www.baidu.com',
-            outSide:true,
+            outSide: true,
+            inner: false,
         },
         {
             title: t('public.set'),
             icon: require('../../../assets/images/setting_icon.png'),
             url: '/setting',
-            outSide:false,
+            outSide: false,
+            inner: false,
         }
     ]
     return (
@@ -75,7 +95,12 @@ const Card = (): ReactElement<ReactNode> => {
                     list.map((el, index): ReactElement => {
                         return (
                             <li key={index} onClick={() => {
-                                el.outSide ? window.open(el.url) : history.push(el.url)
+                                if (el.inner) {
+                                    const action = setInvBox(1);
+                                    store.dispatch(action)
+                                    return
+                                }
+                                el.outSide ? window.open(el.url) : props.history.push(el.url)
                             }}>
                                 <img src={el.icon} alt="" />
                                 <p>{el.title}</p>
@@ -89,13 +114,14 @@ const Card = (): ReactElement<ReactNode> => {
 }
 
 const HomeAdv = (): ReactElement<ReactNode> => {
+    const history = useHistory();
     return (
         <div className="home-adv-card">
             <div className="home-adv">
                 <SoundOutline fontSize={16} />
-                <AdvSwiper />
+                <AdvSwiper history={history} />
             </div>
-            <Card />
+            <Card history={history} />
         </div>
     )
 };

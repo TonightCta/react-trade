@@ -5,7 +5,7 @@ export interface WithdrawCoinMsg {
     num?: string | number,
     address?: string,
     fee?: number,
-    network?:string | number
+    network?: string | number
 }
 
 export interface IResponse {
@@ -14,9 +14,14 @@ export interface IResponse {
     message: string
 }
 
-export interface DealMsg{
-    dc:string,
-    dt:number,
-    p:string,
-    q:string
+export interface DealMsg {
+    dc: string,
+    dt: number,
+    p: string,
+    q: string
+}
+export interface ADV {
+    title: string,
+    id: number,
+    updated_at: string
 }

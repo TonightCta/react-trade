@@ -28,7 +28,7 @@ export const createWS = async () => {
 
 };
 export const sendWs = (params: WS) => {
-    ws.send(JSON.stringify(params))
+    ws?.send(JSON.stringify(params))
 };
 
 export const getMessage = () => {

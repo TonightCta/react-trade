@@ -30,4 +30,16 @@ export const PlaceCoinOrderApi = (p:o) => post<IResponse>("/spot/order/place",p)
 //订单列表
 export const OderListApi = (p:o) => post<IResponse>("/order/spot/list",p);
 //取消委托
-export const CancelOrderApi = (p:string) => get<IResponse>(`/spot/order/cancel/${p}`)
+export const CancelOrderApi = (p:string) => get<IResponse>(`/spot/order/cancel/${p}`);
+//实名认证
+export const AuthCardApi = (p:o) => post<IResponse>('/security/bindKyc',p);
+//公告列表
+export const AdvListApi = (p?:number) => get<IResponse>(`/cms/noticesList/${p}`);
+//公告详情
+export const AdvDetailApi = (p:number) => get<IResponse>(`/cms/notices/${p}`);
+//资产流水
+export const AssetsBillApi = (p:o) => post<IResponse>('/assets/account/list/spot',p);
+//地区支持列表
+export const CountryListApi = () => get<IResponse>('/user/country');
+//邀请信息
+export const InvInfoApi = () => get<IResponse>('/user/inviteInfo')

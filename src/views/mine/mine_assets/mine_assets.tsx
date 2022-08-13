@@ -4,7 +4,7 @@ import { CheckCircleFill, RightOutline, SearchOutline } from "antd-mobile-icons"
 import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import InnerNav from '../../../components/inner_nav/nav'
 import store from "../../../store";
-import { upFooterStatus } from "../../../store/app/action_creators";
+import { upBillCoin, upFooterStatus } from "../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { UserAssetsApi } from '../../../request/api'
@@ -125,7 +125,7 @@ const MineAssets = (): ReactElement<ReactNode> => {
                 <div className="list-con">
                     <PullToRefresh
                         onRefresh={async () => {
-                            await sleep(1000)
+                            await getAssetsList()
                         }}
                     >
                         <ul>
@@ -133,6 +133,8 @@ const MineAssets = (): ReactElement<ReactNode> => {
                                 assetsList.map((el: Data, index: number): ReactElement => {
                                     return (
                                         <li key={index} onClick={() => {
+                                            const action = upBillCoin(el.coin);
+                                            store.dispatch(action);
                                             history.push('/assets-bill')
                                         }}>
                                             <div className="coin-msg">

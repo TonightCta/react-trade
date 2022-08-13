@@ -1,7 +1,7 @@
 import { CloseOutline, LinkOutline, UnorderedListOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useState } from "react";
 import store from "../../../store";
-import { upInvLevel } from "../../../store/app/action_creators";
+import { setInvBox, upInvLevel } from "../../../store/app/action_creators";
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd-mobile';
 import { useTranslation } from 'react-i18next'
@@ -103,7 +103,10 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
                             }
                         </span><UnorderedListOutline fontSize={12} color="#3370ff" />
                     </p>
-                    <p>
+                    <p onClick={() => {
+                        const action = setInvBox(1);
+                        store.dispatch(action)
+                    }}>
                         <span>
                             {/* 邀请链接 */}
                             {

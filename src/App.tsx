@@ -6,6 +6,7 @@ import './App.scss'
 import { ReactNode, useEffect } from 'react';
 import LoadView from './views/load_view/load_view';
 import { createWS } from './utils/ws'
+import InvBox from './components/inv/inv';
 
 const App = (): React.ReactElement<ReactNode> => {
   useEffect(() => {
@@ -16,6 +17,8 @@ const App = (): React.ReactElement<ReactNode> => {
       <div className="App">
         {/* 启动页 */}
         <LoadView />
+        {/* 邀请链接 */}
+        <InvBox/>
         <div className='router-view'>
           <RouteConfig />
         </div>

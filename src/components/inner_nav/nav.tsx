@@ -30,7 +30,7 @@ const InnerNav = (props: Props): ReactElement<ReactNode> => {
             <div className="nav-title">{props.title}</div>
             <div className="right-oper">
                 {props.share && <SendOutline fontSize={16} />}
-                {props.search && <div className="search-inp"><input placeholder={t('public.search')} onChange={(e) => {
+                {props.search && <div className="search-inp"><input placeholder='币种' onChange={(e) => {
                     props.getSearchVal && props.getSearchVal(e.target.value)
                 }}/><span><SearchOutline fontSize={16} /></span></div>}
             </div>

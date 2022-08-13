@@ -1,11 +1,13 @@
-import { ReactElement, ReactNode, useEffect } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import store from "../../../store";
-import { upFooterStatus } from "../../../store/app/action_creators";
+import { upAnnID, upFooterStatus } from "../../../store/app/action_creators";
 import InnerNav from '../../../components/inner_nav/nav';
 import { PullToRefresh } from 'antd-mobile';
 import { sleep } from 'antd-mobile/es/utils/sleep';
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { ADV } from '../../../utils/types';
+import { AdvListApi } from '../../../request/api'
 import './index.scss'
 
 const annList = [
@@ -21,10 +23,19 @@ const annList = [
 
 const Ann = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
+    const [annList, setAnnList] = useState<ADV[]>([]);
+    const getAnnListSet = async () => {
+        const result = await AdvListApi(100);
+        setAnnList(result.data.lists)
+    }
     const history = useHistory();
     useEffect(() => {
         const action = upFooterStatus(0);
-        store.dispatch(action)
+        store.dispatch(action);
+        getAnnListSet();
+        return () => {
+            getAnnListSet()
+        }
     }, [])
     return (
         <div className="ann-index">
@@ -39,10 +50,12 @@ const Ann = (): ReactElement<ReactNode> => {
                         annList.map((el, index): ReactElement => {
                             return (
                                 <li key={index} onClick={() => {
+                                    const action = upAnnID(el.id);
+                                    store.dispatch(action);
                                     history.push('/ann-detail')
                                 }}>
                                     <p className="ann-title">{el.title}</p>
-                                    <p className="ann-date">{el.date}</p>
+                                    <p className="ann-date">{el.updated_at}</p>
                                 </li>
                             )
                         })

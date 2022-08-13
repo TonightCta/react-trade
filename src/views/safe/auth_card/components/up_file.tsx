@@ -1,10 +1,24 @@
-import { Button } from "antd-mobile";
+import { Button, Toast } from "antd-mobile";
+import { RedoOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
+import { AuthCardApi } from '../../../../request/api'
+import { upUserInfo } from "../../../../store/app/action_fn";
 
+interface Card {
+    name: string,
+    id: string
+}
 
 const UpFile = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
+    const [cardMsg, setCardMsg] = useState<Card>({
+        name: '',
+        id: ''
+    });
+    const history = useHistory();
+    const [loading, setLoading] = useState<boolean>(false);
     //正面
     const [frontCard, setFrontCard] = useState<File>();
     const [frontView, setFrontView] = useState<string>();
@@ -14,6 +28,52 @@ const UpFile = (): ReactElement<ReactNode> => {
     //人像
     const [faceCard, setFaceCard] = useState<File>();
     const [faceView, setFaceView] = useState<string>();
+
+    const submitAuthCard = async () => {
+        if (!cardMsg.name) {
+            Toast.show('请输入真实姓名');
+            return;
+        };
+        if (!cardMsg.id) {
+            Toast.show('请输入证件号码');
+            return;
+        };
+        if (!frontCard) {
+            Toast.show('请上传证件正面照片');
+            return;
+        }
+        if (!backCard) {
+            Toast.show('请上传证件反面照片');
+            return;
+        }
+        if (!faceCard) {
+            Toast.show('请上传人像照片');
+            return;
+        };
+        setLoading(true);
+        const formdata = new FormData();
+        formdata.append('real_name', cardMsg.name);
+        formdata.append('id_card_no', cardMsg.id);
+        formdata.append('card_front', frontCard);
+        formdata.append('card_back', backCard);
+        formdata.append('card_hand', faceCard);
+        const result = await AuthCardApi(formdata);
+        const { code } = result;
+        if (code !== 200) {
+            Toast.show(result.message);
+            setLoading(false);
+            return;
+        };
+        const info = await upUserInfo();
+        if (info.code !== 200) {
+            Toast.show(info.message);
+            setLoading(false);
+            return;
+        };
+        Toast.show('提交成功，请等待审核');
+        setLoading(false);
+        history.goBack();
+    };
     return (
         <div className="up-file">
             <div className="card-text">
@@ -22,7 +82,12 @@ const UpFile = (): ReactElement<ReactNode> => {
                         {/* 真实姓名 */}
                         {t('public.real_name')}
                     </p>
-                    <input type="text" placeholder={t('public.enter_real')} />
+                    <input type="text" value={cardMsg.name} onChange={(e) => {
+                        setCardMsg({
+                            ...cardMsg,
+                            name: e.target.value
+                        })
+                    }} placeholder={t('public.enter_real')} />
                 </div>
                 <p className="label-line"></p>
                 <div className="text-public">
@@ -30,7 +95,12 @@ const UpFile = (): ReactElement<ReactNode> => {
                         {/* 身份证号码 */}
                         {t('public.card_num')}
                     </p>
-                    <input type="text" placeholder={t('public.enter_card')} />
+                    <input type="text" value={cardMsg.id} onChange={(e) => {
+                        setCardMsg({
+                            ...cardMsg,
+                            id: e.target.value
+                        })
+                    }} placeholder={t('public.enter_card')} />
                 </div>
             </div>
             <div className="card-file">
@@ -47,13 +117,18 @@ const UpFile = (): ReactElement<ReactNode> => {
                                 setFrontView(view);
                             }} />
                             {
-                                frontCard ? <img className="view-img" src={frontView} alt="" /> : <>
-                                    <img src={require('../../../../assets/images/file_icon.png')} className="icon-img" alt="" />
-                                    <p>
-                                        {/* 上传身份证人像面 */}
-                                        {t('public.up_face_card')}
-                                    </p>
-                                </>
+                                frontCard
+                                    ? <div className="view-img-box">
+                                        <img className="view-img" src={frontView} alt="" />
+                                        <p><RedoOutline fontSize={20} /><span>重新上传</span></p>
+                                    </div>
+                                    : <>
+                                        <img src={require('../../../../assets/images/file_icon.png')} className="icon-img" alt="" />
+                                        <p>
+                                            {/* 上传身份证人像面 */}
+                                            {t('public.up_face_card')}
+                                        </p>
+                                    </>
                             }
                         </div>
                         <div className="inp-box">
@@ -63,13 +138,18 @@ const UpFile = (): ReactElement<ReactNode> => {
                                 setBackView(view);
                             }} />
                             {
-                                backCard ? <img className="view-img" src={backView} alt="" /> : <>
-                                    <img src={require('../../../../assets/images/file_icon.png')} className="icon-img" alt="" />
-                                    <p>
-                                        {/* 上传身份证国徽面 */}
-                                        {t('public.up_back_card')}
-                                    </p>
-                                </>
+                                backCard
+                                    ? <div className="view-img-box">
+                                        <img className="view-img" src={backView} alt="" />
+                                        <p><RedoOutline fontSize={20} /><span>重新上传</span></p>
+                                    </div>
+                                    : <>
+                                        <img src={require('../../../../assets/images/file_icon.png')} className="icon-img" alt="" />
+                                        <p>
+                                            {/* 上传身份证国徽面 */}
+                                            {t('public.up_back_card')}
+                                        </p>
+                                    </>
                             }
                         </div>
                     </div>
@@ -87,20 +167,27 @@ const UpFile = (): ReactElement<ReactNode> => {
                                 setFaceView(view);
                             }} />
                             {
-                                faceCard ? <img className="view-img" src={faceView} alt="" /> : <>
-                                    <img src={require('../../../../assets/images/file_icon.png')} className="icon-img" alt="" />
-                                    <p>
-                                        {/* 上传脸部照片 */}
-                                        {t('public.up_face_pic')}
-                                    </p>
-                                </>
+                                faceCard
+                                    ? <div className="view-img-box">
+                                        <img className="view-img" src={faceView} alt="" />
+                                        <p><RedoOutline fontSize={20} /><span>重新上传</span></p>
+                                    </div>
+                                    : <>
+                                        <img src={require('../../../../assets/images/file_icon.png')} className="icon-img" alt="" />
+                                        <p>
+                                            {/* 上传脸部照片 */}
+                                            {t('public.up_face_pic')}
+                                        </p>
+                                    </>
                             }
                         </div>
                     </div>
                 </div>
             </div>
             <p className="submit-btn">
-                <Button color="primary" block>
+                <Button color="primary" loading={loading} disabled={loading} onClick={() => {
+                    submitAuthCard()
+                }} block>
                     {/* 提交 */}
                     {t('public.submit')}
                 </Button>

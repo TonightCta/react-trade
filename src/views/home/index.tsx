@@ -31,10 +31,12 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
     const [wsList, setWsList] = useState<any>([]);
     const [token, setToken] = useState<string | null>(sessionStorage.getItem('token_1'));
     const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus);
-    store.subscribe(() => {
-        setToken(store.getState().appToken);
-        setWsStatus(store.getState().wsStatus)
-    })
+    const storeChange = () => {
+        store.subscribe(() => {
+            setToken(store.getState().appToken);
+            setWsStatus(store.getState().wsStatus)
+        })
+    }
     const history = useHistory();
     // const { t } = useTranslation();
 
@@ -101,8 +103,10 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
         }
     };
     useEffect(() => {
+        storeChange()
         return () => {
-            cancelWS()
+            cancelWS();
+            storeChange();
         }
     }, [])
     return (

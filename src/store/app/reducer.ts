@@ -3,6 +3,9 @@ import * as Type from './types';
 
 interface UMsg {
     email?: string,
+    security?: {
+        kyc?: number
+    }
 }
 export interface Store {
     account: UMsg,//用户信息
@@ -19,8 +22,12 @@ export interface Store {
     defaultBaseCoin: string,//交易默认订阅队列
     wsStatus: number,//ws服务连接状态
     kData: { second: number, type: string },
-    tradeFromCoin: string,
-    tradeToCoin: string,
+    tradeFromCoin: string,//交易From币种
+    tradeToCoin: string,//交易To币种
+    upLoadOrder: number,//刷新订单时机
+    annID: number,//公告ID
+    billCoin: string,//币种账单
+    invBox:number,//邀请弹框
 }
 const defaultState: Store = {
     account: JSON.parse(sessionStorage.getItem('account') || '{}'),
@@ -39,6 +46,10 @@ const defaultState: Store = {
     kData: JSON.parse(sessionStorage.getItem('kData') || '{ "second": 60, "type": "1m" }'),
     tradeFromCoin: sessionStorage.getItem('tradeFromCoin') || 'USDT',
     tradeToCoin: sessionStorage.getItem('tradeToCoin') || 'BTC',
+    upLoadOrder: 0,
+    annID: Number(sessionStorage.getItem('annID')) || 999,
+    billCoin: sessionStorage.getItem('billCoin') || '',
+    invBox:Number(sessionStorage.getItem('invBox')) || 0,
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
@@ -89,6 +100,17 @@ export default (state = defaultState, action: any) => {
         case Type.SET_TRADE_TO:
             sessionStorage.setItem('tradeToCoin', action.coin);
             return { ...state, tradeToCoin: action.coin }
+        case Type.LOAD_ORDER:
+            return { ...state, upLoadOrder: action.timestamp }
+        case Type.UP_ANN_ID:
+            sessionStorage.setItem('annID', action.id);
+            return { ...state, annID: action.id }
+        case Type.SET_BILL_COIN:
+            sessionStorage.setItem('billCoin', action.coin);
+            return { ...state, billCoin: action.coin }
+        case Type.SET_INV_BOX:
+            sessionStorage.setItem('invBox',action.status);
+            return { ...state,invBox:action.status }
         default:
             return state;
     };

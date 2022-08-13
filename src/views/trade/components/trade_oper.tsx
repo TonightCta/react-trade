@@ -5,6 +5,7 @@ import store from "../../../store";
 import { QuireBalance } from '../../../utils'
 import React from "react";
 import { PlaceCoinOrderApi } from '../../../request/api';
+import { setReloadOrder } from "../../../store/app/action_creators";
 
 interface Depch {
     Price: number | string,
@@ -17,7 +18,7 @@ interface Props {
     t: any,
     sellQUList: Depch[],
     buyQUList: Depch[],
-    reloadOrder:() => void,
+    reloadOrder: () => void,
 }
 const TradeOper = (props: Props): ReactElement<ReactNode> => {
     //交易类型 1 - 买入 2 - 卖出
@@ -96,21 +97,28 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
         };
         const result = await PlaceCoinOrderApi(params);
         const { code } = result;
-        if(code !== 200){
+        if (code !== 200) {
             Toast.show('交易成功');
             return;
         };
+        const action = setReloadOrder(new Date().getTime());
+        store.dispatch(action);
         getBalance();
     }
+    const storeChange = () => {
+        store.subscribe(() => {
+            setState(store.getState())
+        });
+    };
     useEffect(() => {
-        getBalance()
+        getBalance();
+        storeChange();
         return () => {
             getBalance()
+            storeChange();
         }
     }, [])
-    store.subscribe(() => {
-        setState(store.getState())
-    });
+
     const colosePopip = () => {
         setSelectWayBox(false);
     }

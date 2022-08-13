@@ -81,6 +81,26 @@
               width: 100%;
               height: 100%;
             }
+            .view-img-box{
+              position: relative;
+              p{
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,.3);
+                top:-6px;
+                left: 0;
+                position: absolute;
+                line-height: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 24px;
+                color: white;
+                span{
+                  margin-top: 8px;
+                }
+              }
+            }
           }
         }
       }

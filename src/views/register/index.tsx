@@ -3,10 +3,10 @@ import store from "../../store";
 import { upFooterStatus } from "../../store/app/action_creators";
 import { NavLink, useHistory } from "react-router-dom";
 import './index.scss';
-import { CheckShieldOutline, CloseOutline, LockOutline, MailOutline } from "antd-mobile-icons";
-import { Button, Toast } from "antd-mobile";
+import { CheckShieldOutline, CloseOutline, DownOutline, LockOutline, MailOutline } from "antd-mobile-icons";
+import { Button, PickerView, Popup, Toast } from "antd-mobile";
 import { useTranslation } from 'react-i18next';
-import { SendCodeApi, RegisterApi } from '../../request/api';
+import { SendCodeApi, RegisterApi, CountryListApi } from '../../request/api';
 
 interface Props {
     from: string
@@ -16,6 +16,30 @@ interface InpMsg {
     code: string | number,
     password: string,
 }
+let columns: any[][];
+let defaultCountry: any;
+let country: any[] = [];
+CountryListApi().then(res => {
+    defaultCountry = res.data.list[0].country;
+    const arr: any[] = [];
+    country = res.data.list;
+    res.data.list.forEach((e: any) => {
+        arr.push(e.country);
+    });
+    columns = [[...arr]]
+});
+
+const getCountryCode = (_country: string): string => {
+    let code: string = '';
+    country.forEach((e) => {
+        if (_country === e.country) {
+            code = e.country_iso;
+        }
+    })
+    return code
+}
+
+// const columns = [['Singapore', 'Malaysia', 'Bahasa Indonesia', 'हिन्दी', 'เมืองไทย', 'Tiếng Vi', 'Tagalog']]
 
 const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
     const { t } = useTranslation();
@@ -35,7 +59,8 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
             cbSaver.current();
         }, 1000);
     }, []);
-
+    const [country, setCountry] = useState<any[]>([defaultCountry]);
+    const [selectCountry, setSelectCountry] = useState<string>('');
     useEffect(() => {
         if (count < 0) {
             clearInterval(timer.current);
@@ -54,6 +79,8 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
         const aciton = upFooterStatus(0);
         store.dispatch(aciton);
     }, []);
+
+    const [selectCountryBox, setSelectCountryBox] = useState<boolean>(false);
     return (
         <div className="register-index">
             <div className="close-page">
@@ -67,6 +94,15 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                 {t('public.regis_welcome')}
             </p>
             <div className="login-box">
+                <div className="box-public select-country">
+                    <p>
+                        {/* 邮箱 */}
+                        国家
+                    </p>
+                    <input type="text" value={selectCountry} onChange={() => { }} placeholder="请选择国家地区" />
+                    <p className="mask-select" onClick={() => { setSelectCountryBox(true) }}></p>
+                    <span><DownOutline fontSize={18} color="#999" /></span>
+                </div>
                 <div className="box-public">
                     <p>
                         {/* 邮箱 */}
@@ -124,6 +160,10 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                 </div>
                 <p className="login-btn">
                     <Button color="primary" block onClick={async () => {
+                        if (!getCountryCode(selectCountry)) {
+                            Toast.show('请选择国家地区');
+                            return
+                        }
                         if (!inpMsg.email) {
                             Toast.show(t('public.enter_email'));
                             return;
@@ -144,12 +184,13 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             type: 2,
                             email: inpMsg.email,
                             password: inpMsg.password,
-                            password_confirmation:inpMsg.password,
-                            code: inpMsg.code
+                            password_confirmation: inpMsg.password,
+                            code: inpMsg.code,
+                            country:getCountryCode(selectCountry)
                         };
                         const result = await RegisterApi(params);
                         const { code } = result;
-                        if(code !== 200){
+                        if (code !== 200) {
                             Toast.show(result.message);
                             return;
                         };
@@ -161,6 +202,25 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                     </Button>
                 </p>
             </div>
+            {/* 选择国家地区 */}
+            <Popup visible={selectCountryBox} onMaskClick={() => {
+                setSelectCountryBox(false)
+            }}>
+                <div className="select-country-popup">
+                    <p onClick={() => { setSelectCountryBox(false) }}>
+                        <CloseOutline color="#666" />
+                    </p>
+                    <PickerView value={country} onChange={(e) => {
+                        setCountry(e);
+                    }} columns={columns} />
+                    <div>
+                        <Button color="primary" block onClick={() => {
+                            setSelectCountry(country[0])
+                            setSelectCountryBox(false);
+                        }}>确认</Button>
+                    </div>
+                </div>
+            </Popup>
         </div>
     )
 };
