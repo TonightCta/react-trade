@@ -103,6 +103,8 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
         };
         const action = setReloadOrder(new Date().getTime());
         store.dispatch(action);
+        setTradeAmount(0);
+        setPersent(0);
         getBalance();
     }
     const storeChange = () => {

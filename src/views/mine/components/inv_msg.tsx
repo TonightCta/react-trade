@@ -1,10 +1,11 @@
 import { CloseOutline, LinkOutline, UnorderedListOutline } from "antd-mobile-icons";
-import { ReactElement, ReactNode, useState } from "react";
+import { ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 import store from "../../../store";
 import { setInvBox, upInvLevel } from "../../../store/app/action_creators";
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd-mobile';
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
+import { InvInfoApi } from '../../../request/api'
 
 interface Manage {
     title: string,
@@ -15,42 +16,66 @@ interface Manage {
 
 const ModalContent = (props: { closeModal: () => void }): ReactElement => {
     const { t } = useTranslation();
+    const [invInfo, setInvInfo] = useState<any>({
+        article: {
+            title: '',
+            content: "",
+        },
+        levels: [
+            { reward: '' },
+            { reward: '' },
+            { reward: '' },
+        ]
+    });
+    const getInvInfo = useCallback(async () => {
+        const result = await InvInfoApi();
+        setInvInfo(result.data);
+    }, [])
+    useEffect(() => {
+        getInvInfo();
+        return () => {
+            getInvInfo();
+        }
+    }, [])
     return (
         <div className="modal-content-inv">
             <p className="close-icon" onClick={() => { props.closeModal() }}><CloseOutline /></p>
             <p className="modal-title-mine">
-                xx推广计划奖励制度
+                奖励规则
             </p>
             <div className="modal-inv-reward">
                 <p>
                     {/* 一代:60% */}
+                    Level 1 :
                     {
-                        t('public.percent_one')
+                        invInfo?.levels[0].reward
                     }
+                    %
                 </p>
                 <p>
                     {/* 二代:30% */}
+                    Level 2 :
                     {
-                        t('public.percent_two')
+                        invInfo?.levels[1].reward
                     }
+                    %
                 </p>
                 <p>
                     {/* 三代:10% */}
+                    Level 3 :
                     {
-                        t('public.percent_three')
+                        invInfo?.levels[2].reward
                     }
+                    %
                 </p>
             </div>
             <p className="modal-title-mine">
                 {/* 推广计划奖励制度详情 */}
-                {t('public.adv_title')}
+                {
+                    invInfo.article.title
+                }
             </p>
-            <ul>
-                <li>{t('public.adv_remarl_1')}</li>
-                <li>{t('public.adv_remarl_2')}</li>
-                <li>{t('public.adv_remarl_3')}</li>
-                <li>{t('public.adv_remarl_4')}</li>
-            </ul>
+            <div className="content-box" dangerouslySetInnerHTML={{ __html: invInfo.article.content }}></div>
         </div>
     )
 };

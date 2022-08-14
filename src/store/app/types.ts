@@ -18,3 +18,4 @@ export const LOAD_ORDER = 'load_order';
 export const UP_ANN_ID = 'up_ann_id';
 export const SET_BILL_COIN = "set_bill_coin";
 export const SET_INV_BOX = 'set_inv_box';
+export const UP_WITHDRAW = 'up_withdraw'

@@ -1,75 +1,52 @@
 import { RightOutline } from "antd-mobile-icons";
-import { ReactElement, ReactNode, useEffect } from "react";
+import { ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 import InnerNav from '../../../components/inner_nav/nav'
 import store from "../../../store";
-import { upFooterStatus } from "../../../store/app/action_creators";
+import { upAnnID, upFooterStatus } from "../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { HelpListApi } from '../../../request/api'
 import './index.scss'
-
-const helpList = [
-    {
-        title: '新手指南',
-        list: [
-            {
-                title: '如何保障资金安全',
-                date: '2018-01-15 15:15:15'
-            },
-        ]
-    },
-    {
-        title: '交易指南',
-        list: [
-            {
-                title: '什么是限价交易',
-                date: '2018-01-15 15:15:15'
-            },
-            {
-                title: '什么是市价交易',
-                date: '2018-01-15 15:15:15'
-            },
-        ]
-    },
-
-]
 
 const Help = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const history = useHistory();
+    const [helpList, setHelpList] = useState<any[]>([]);
+    const getHelpList = useCallback(async () => {
+        const result = await HelpListApi();
+        setHelpList(result.data)
+    }, [])
     useEffect(() => {
         const action = upFooterStatus(0);
-        store.dispatch(action)
-    }, [])
+        store.dispatch(action);
+        getHelpList();
+        return () => {
+            getHelpList();
+        }
+    }, [window.location.href]);
     return (
         <div className="help-index">
             <InnerNav leftArrow title={t('public.help_center')} />
             <div className="help-list">
-                {
-                    helpList.map((el, index): ReactElement => {
-                        return (
-                            <div className="list-con" key={index}>
-                                <p className="parent-title">{el.title}</p>
-                                <ul>
-                                    {
-                                        el.list.map((item, index): ReactElement => {
-                                            return (
-                                                <li key={`item-${index}`} onClick={(): void => {
-                                                    history.push('/help-detail')
-                                                }}>
-                                                    <div className="title-msg">
-                                                        <p>{item.title}</p>
-                                                        <p>{item.date}</p>
-                                                    </div>
-                                                    <RightOutline color="#999" fontSize={16} />
-                                                </li>
-                                            )
-                                        })
-                                    }
-                                </ul>
-                            </div>
-                        )
-                    })
-                }
+                <ul>
+                    {
+                        helpList.map((item, index): ReactElement => {
+                            return (
+                                <li key={`item-${index}`} onClick={(): void => {
+                                    const action = upAnnID(item.id);
+                                    store.dispatch(action);
+                                    history.push('/help-detail')
+                                }}>
+                                    <div className="title-msg">
+                                        <p>{item.title}</p>
+                                        <p>{item.updated_at}</p>
+                                    </div>
+                                    <RightOutline color="#999" fontSize={16} />
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
             </div>
         </div>
     )

@@ -2,7 +2,8 @@ import { ReactElement, ReactNode, useState } from "react";
 import { Button, Toast } from "antd-mobile";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { TradePassApi } from '../../../../request/api'
+import { TradePassApi } from '../../../../request/api';
+import { upUserInfo } from '../../../../store/app/action_fn'
 
 interface Inp {
     loginPassword: string,
@@ -49,7 +50,8 @@ const SetLock = (): ReactElement<ReactNode> => {
         if(code !== 200){
             Toast.show(result.message);
             return
-        }
+        };
+        await upUserInfo();
         Toast.show(t('public.edit_success'));
         history.goBack()
     }

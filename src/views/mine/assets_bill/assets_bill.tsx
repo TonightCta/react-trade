@@ -88,7 +88,8 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                             ${el.type === 2 && 'buy-color' ||
                                                     el.type === 3 && 'sell-color' ||
                                                     el.type === 1 && 'charged-color' ||
-                                                    el.type === 4 && 'withdraw-color'
+                                                    el.type === 4 && 'withdraw-color' ||
+                                                    el.type === 98 && 'withdraw-freeze'
                                                     }`}>
                                                     <p className="icon-type">{el.coin}</p>
                                                     <div className="order-title">
@@ -100,7 +101,8 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                             // 充币
                                                             el.type === 1 && t('public.recharge') ||
                                                             //提币
-                                                            el.type === 4 && t('public.withdraw')
+                                                            el.type === 4 && t('public.withdraw') ||
+                                                            el.type === 98 && '提币冻结'
                                                         ]}</p>
                                                         <p className="now-balance">{el.balance}</p>
                                                     </div>
@@ -109,7 +111,7 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                         <div className="fee-and-amount">
                                                             {/* 手续费 */}
                                                             <p>({t('public.fee')}:&nbsp;{Number(el.fee).toFixed(4)})</p>
-                                                            <p>{el.amount > 0 ? '+' : ''}{el.amount}</p>
+                                                            <p>{el.amount > 0 ? '+' : ''}{el.true_amount}</p>
                                                         </div>
                                                     </div>
                                                 </li>

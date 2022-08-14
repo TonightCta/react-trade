@@ -1,16 +1,24 @@
-import { Button } from "antd-mobile";
+import { Button, Toast } from "antd-mobile";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ReactElement, ReactNode } from "react";
 import { Popup } from 'antd-mobile'
 import { CloseOutline } from "antd-mobile-icons";
 import { useHistory } from 'react-router-dom';
 import { WithdrawCoinMsg } from '../../../../../utils/types';
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
+import { SendCodeApi, WithDrawApi } from '../../../../../request/api'
+import store from "../../../../../store";
+import { UpWithdraw } from "../../../../../store/app/action_creators";
 
-interface Props extends WithdrawCoinMsg { }
+interface Props extends WithdrawCoinMsg {
+}
 
 interface PropsSafe extends WithdrawCoinMsg {
     closeSafeBox: () => void;
+}
+interface Safe {
+    password: string,
+    code: string | number
 }
 
 const SafeAuth = (props: PropsSafe): ReactElement => {
@@ -43,7 +51,25 @@ const SafeAuth = (props: PropsSafe): ReactElement => {
             clearInterval(timer.current);
         }
     }, []);
-
+    // 校验信息
+    const [drawSafe, setDrawSafe] = useState<Safe>({
+        password: '',
+        code: ''
+    });
+    const sendCodeEv = async () => {
+        const result = await SendCodeApi({
+            type: 2,
+            scene: 5,
+            email: store.getState().account.email
+        });
+        const { code } = result;
+        if (code !== 200) {
+            Toast.show(result.message);
+            return;
+        };
+        Toast.show('验证码发送成功');
+        countDown()
+    }
     //useHistory() 等同于Vue的this.$router
     const history = useHistory();
     return (
@@ -62,9 +88,14 @@ const SafeAuth = (props: PropsSafe): ReactElement => {
                         {/* 交易密码 */}
                         {(t('public.trade_pass'))}
                     </span>
-                    <span className="click-span" onClick={() => { props.closeSafeBox(); history.push('/forget') }}>{t('public.forget')}?</span>
+                    <span className="click-span" onClick={() => { props.closeSafeBox(); history.push('/assets-lock') }}>{t('public.forget')}?</span>
                 </p>
-                <input type="text" placeholder={t('public.enter_tarde_pass')} />
+                <input type="password" value={drawSafe.password} onChange={(e) => {
+                    setDrawSafe({
+                        ...drawSafe,
+                        password: e.target.value
+                    })
+                }} placeholder={t('public.enter_tarde_pass')} />
             </div>
             {/* 邮箱验证码 */}
             <div className="auth-inp-box">
@@ -74,17 +105,47 @@ const SafeAuth = (props: PropsSafe): ReactElement => {
                         {t('public.code')}
                     </span>
                 </p>
-                <input type="number" placeholder={t('public.enter_code')} />
+                <input type="number" value={drawSafe.code} onChange={(e) => {
+                    setDrawSafe({
+                        ...drawSafe,
+                        code: e.target.value
+                    })
+                }} placeholder={t('public.enter_code')} />
                 <p onClick={() => {
-                    count === 60 ? countDown() : console.log(1)
+                    count === 60 ? sendCodeEv() : console.log(1)
                 }} className={`send-code ${count !== 60 ? 'un-send' : ''}`}>{count === 60 ? t('public.send_code') : `${count}s${t('public.send_code')}`}</p>
             </div>
             <p className="submit-auth">
-                <Button color="primary" block onClick={() => {
+                <Button color="primary" block onClick={async () => {
+                    if (!drawSafe.password) {
+                        Toast.show('请输入交易密码');
+                        return;
+                    };
+                    if (!drawSafe.code) {
+                        Toast.show('请输入邮箱验证码');
+                        return;
+                    };
+                    const params = {
+                        coin: props.coin,
+                        protocol: props.network,
+                        address: props.address,
+                        amount: props.num,
+                        pay_password: drawSafe.password,
+                        email_code: drawSafe.code
+                    };
+                    const result = await WithDrawApi(params);
+                    console.log(result);
+                    const { code } = result;
+                    if (code !== 200) {
+                        Toast.show(result.message);
+                        return;
+                    };
+                    Toast.show('提币申请成功');
                     props.closeSafeBox();
+                    const action = UpWithdraw({ coin: String(props.coin), num: Number(props.num), address: String(props.address), fee: Number(props.fee) });
+                    store.dispatch(action)
                     history.push({
                         pathname: '/withdraw-detail',
-                        search: JSON.stringify({ coin: props.coin, num: props.num, address: props.address, fee: props.fee })
                     })
                 }}>
                     {/* 确认 */}
@@ -108,7 +169,8 @@ const DrawBtn = (props: Props): ReactElement<ReactNode> => {
                     }
                 </p>
                 <p>
-                    <span>0.0000</span>
+                    {/* @ts-ignore */}
+                    <span>{props.num > 0 ? (props.num - props.fee).toFixed(4) : '0.0000'}</span>
                     <span>{props.coin}</span>
                 </p>
             </div>
@@ -117,10 +179,23 @@ const DrawBtn = (props: Props): ReactElement<ReactNode> => {
             }}>
                 <SafeAuth closeSafeBox={(): void => {
                     setSafeBox(false)
-                }} coin={props.coin} num={props.num} address={props.address} fee={props.fee} />
+                }} coin={props.coin} network={props.network} num={props.num} address={props.address} fee={props.fee}/>
             </Popup>
             <Button color="primary" onClick={(): void => {
-                setSafeBox(true)
+                if (!props.address) {
+                    Toast.show('请输入提币地址');
+                    return;
+                };
+                if (!props.num) {
+                    Toast.show('请输入提币金额');
+                    return;
+                };
+                /* @ts-ignore */
+                if (props.num < props.min) {
+                    Toast.show('未满足最少提币数量');
+                    return;
+                }
+                setSafeBox(true);
             }}>
                 {/* 提币 */}
                 {

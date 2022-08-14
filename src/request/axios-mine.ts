@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import store from '../store';
 
 let axiosInstance: AxiosInstance = axios.create({
     baseURL: process.env.REACT_APP_BASEURL,
@@ -11,6 +12,7 @@ let axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     config => {
         config.headers!.Authorization = String(sessionStorage.getItem('token_1'))
+        config.headers!.Lang = store.getState().language || String(localStorage.getItem('language'))
         return config
     },
     error => {

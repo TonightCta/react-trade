@@ -75,36 +75,48 @@
       }
       .sell-color {
         .order-type::before {
-          background-color: #FD5656;
+          background-color: #fd5656;
         }
         .fee-msg {
           .fee-and-amount {
             p:last-child {
-              color: #FD5656;
+              color: #fd5656;
             }
           }
         }
       }
       .charged-color {
         .order-type::before {
-          background-color: #FB9700;
+          background-color: #fb9700;
         }
         .fee-msg {
           .fee-and-amount {
             p:last-child {
-              color: #FB9700;
+              color: #fb9700;
             }
           }
         }
       }
       .withdraw-color {
         .order-type::before {
-          background-color: #3281EF;
+          background-color: #3281ef;
         }
         .fee-msg {
           .fee-and-amount {
             p:last-child {
-              color: #3281EF;
+              color: #3281ef;
+            }
+          }
+        }
+      }
+      .withdraw-freeze {
+        .order-type::before {
+          background-color: #1d5098;
+        }
+        .fee-msg {
+          .fee-and-amount {
+            p:last-child {
+              color: #1d5098;
             }
           }
         }

@@ -7,6 +7,7 @@ import { CheckShieldOutline, CloseOutline, DownOutline, LockOutline, MailOutline
 import { Button, PickerView, Popup, Toast } from "antd-mobile";
 import { useTranslation } from 'react-i18next';
 import { SendCodeApi, RegisterApi, CountryListApi } from '../../request/api';
+import { GetUrlKey } from "../../utils";
 
 interface Props {
     from: string
@@ -186,7 +187,8 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             password: inpMsg.password,
                             password_confirmation: inpMsg.password,
                             code: inpMsg.code,
-                            country:getCountryCode(selectCountry)
+                            country:getCountryCode(selectCountry),
+                            invite_code:GetUrlKey('code',window.location.href) || null
                         };
                         const result = await RegisterApi(params);
                         const { code } = result;

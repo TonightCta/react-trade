@@ -1,4 +1,5 @@
 import * as Type from "./types";
+import { WithDraw } from './reducer'
 //设置Token
 export const setToken = (token:string) => ({
     type:Type.SET_TOKEN,
@@ -97,6 +98,10 @@ export const upBillCoin = (coin:string) => ({
 export const setInvBox = (status:number) => ({
     type:Type.SET_INV_BOX,
     status
+});
+export const UpWithdraw = (msg:WithDraw) => ({
+    type:Type.UP_WITHDRAW,
+    msg
 })
 
 

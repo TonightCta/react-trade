@@ -118,7 +118,7 @@
   }
 }
 .modal-content-inv {
-  .close-icon{
+  .close-icon {
     text-align: right;
     font-size: 16px;
     color: #333;
@@ -126,36 +126,29 @@
     right: 18px;
     top: 12px;
   }
-  .modal-title-mine{
+  .modal-title-mine {
     margin-top: 12px;
     text-align: left;
     font-size: 14px;
     color: #333;
     font-weight: 500;
   }
-  .modal-inv-reward{
-    padding: 3px 0;
-    width: 35%;
+  .modal-inv-reward {
+    padding: 6px 0;
     border-radius: 4px;
-    background-color: #F1F2FF;
+    background-color: #f1f2ff;
     text-align: center;
     font-size: 12px;
     margin-top: 8px;
     color: #666;
-    p{
-      margin-bottom: 2px;
+    p {
+      margin-bottom: 8px;
     }
-    p:last-child{
+    p:last-child {
       margin-bottom: 0;
     }
   }
-  ul {
-    flex-direction: column;
-    li{
-      text-align: left;
-      margin-bottom: 16px;
-      font-size: 12px;
-      color: #666;
-    }
+  .content-box {
+    margin-top: 24px;
   }
 }

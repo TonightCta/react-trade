@@ -219,3 +219,24 @@
     margin-top: 24px;
   }
 }
+.select-popup-mine {
+  padding: 12px;
+  p {
+    text-align: right;
+  }
+}
+.un-bind-pay {
+  text-align: left;
+  p{
+    font-size: 14px;
+  }
+  p:last-child{
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-around;
+    button{
+      font-size: 14px;
+      width: 30%;
+    }
+  }
+}

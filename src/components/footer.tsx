@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import './footer.scss';
 import {
     AppOutline,
-    MessageOutline,
+    HistogramOutline,
     UnorderedListOutline,
     UserOutline,
 } from 'antd-mobile-icons'
@@ -34,7 +34,7 @@ const Footer = (props: Props): React.ReactElement<ReactNode> => {
         {
             key: 'quotes',
             title: t('public.quotes'),
-            icon: <MessageOutline />,
+            icon: <HistogramOutline />,
             url: '/quotes'
         },
         {

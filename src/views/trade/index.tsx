@@ -64,7 +64,7 @@ const TradeIndex = (): React.ReactElement<ReactNode> => {
                     setSellQUlist(data.d.bids);
                 }
             }
-        }, 2000)
+        }, 1500)
     };
     useEffect(() => {
         wsStatus === 1 && sendSub();

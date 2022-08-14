@@ -9,3 +9,14 @@ export const QuireBalance = async (_coin: string): Promise<number> => {
     }
     return balance
 }
+//获取地址栏参数
+export const GetUrlKey = (name: string, url: string): string | null => {
+    return (
+        decodeURIComponent(
+            /* @ts-ignore */
+            (new RegExp("[?|&]" + name + "=" + "([^&;]+?)(&|#|;|$)").exec(
+                url
+            ) || [, ""])[1].replace(/\+/g, "%20")
+        ) || null
+    );
+}

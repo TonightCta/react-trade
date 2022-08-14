@@ -6,6 +6,7 @@ import { WithdrawCoinMsg } from '../../../../../utils/types';
 import { Button, Steps } from 'antd-mobile';
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from "react-i18next";
+import store from "../../../../../store";
 const { Step } = Steps;
 
 interface Props extends WithdrawCoinMsg {
@@ -15,14 +16,7 @@ interface Props extends WithdrawCoinMsg {
 const WithDrawPending = (props: Props): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const history = useHistory();
-    const [coinMsg, setCoinMsg] = useState<Props>()
-    useEffect(() => {
-        if (!props.location.search) {
-            history.push('/withdraw');
-            return
-        }
-        setCoinMsg(JSON.parse(decodeURI(props.location.search.slice(1))))
-    }, [])
+    const [coinMsg, setCoinMsg] = useState<Props>(store.getState().withDrawMsg);
     return (
         <div className="with-draw-pending">
             <InnerNav leftArrow title={t('public.withdraw_detail')} />
@@ -60,7 +54,7 @@ const WithDrawPending = (props: Props): ReactElement<ReactNode> => {
                             {/* 手续费 */}
                             {t('public.fee')}
                         </p>
-                        <p>{coinMsg?.fee} {coinMsg?.coin}</p>
+                        <p>{coinMsg.fee} {coinMsg?.coin}</p>
                     </div>
                 </div>
             </div>

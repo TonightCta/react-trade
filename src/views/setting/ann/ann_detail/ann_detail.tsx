@@ -22,7 +22,7 @@ const AnnDetail = (): ReactElement<ReactNode> => {
         return () => {
             getDetail();
         }
-    }, [])
+    }, [window.location.href])
     return (
         <div className="ann-detail">
             <InnerNav leftArrow title={t('public.ann_detail')} />

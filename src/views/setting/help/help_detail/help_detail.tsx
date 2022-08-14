@@ -1,23 +1,42 @@
-import { ReactElement, ReactNode, useEffect } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import InnerNav from '../../../../components/inner_nav/nav';
 import store from "../../../../store";
 import { upFooterStatus } from "../../../../store/app/action_creators";
 import { useTranslation } from "react-i18next";
 import './index.scss'
+import { HelpDetailApi } from "../../../../request/api";
+import { DotLoading } from "antd-mobile";
 
 
 const HelpDetail = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
+    const AnnID = store.getState().annID;
+    const [content, setContent] = useState<string | null>('');
+    const getDetail = async () => {
+        const result = await HelpDetailApi(AnnID);
+        setContent(result.data.content);
+    }
     useEffect(() => {
+        getDetail();
         const action = upFooterStatus(0);
-        store.dispatch(action)
-    }, [])
+        store.dispatch(action);
+        return () => {
+            getDetail();
+        }
+    }, [window.location.href]);
     return (
         <div className="help-detail">
             <InnerNav leftArrow title={t('public.help_detail')} />
-            <div className="help-con">
-                帮助中心详情
-            </div>
+            {
+                !!content
+                    ?
+                    <div className="detail-box">
+                        <div dangerouslySetInnerHTML={{ __html: content }}></div>
+                    </div>
+                    :
+                    <div className="load-data">
+                        <DotLoading color='primary' />
+                    </div>}
         </div>
     )
 };

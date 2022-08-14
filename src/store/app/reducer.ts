@@ -4,8 +4,15 @@ import * as Type from './types';
 interface UMsg {
     email?: string,
     security?: {
-        kyc?: number
+        kyc?: number,
+        pay_password?:number
     }
+}
+export interface WithDraw{
+    coin: string, 
+    num: number, 
+    address: string, 
+    fee: number
 }
 export interface Store {
     account: UMsg,//用户信息
@@ -28,6 +35,7 @@ export interface Store {
     annID: number,//公告ID
     billCoin: string,//币种账单
     invBox:number,//邀请弹框
+    withDrawMsg:WithDraw,
 }
 const defaultState: Store = {
     account: JSON.parse(sessionStorage.getItem('account') || '{}'),
@@ -50,6 +58,7 @@ const defaultState: Store = {
     annID: Number(sessionStorage.getItem('annID')) || 999,
     billCoin: sessionStorage.getItem('billCoin') || '',
     invBox:Number(sessionStorage.getItem('invBox')) || 0,
+    withDrawMsg:JSON.parse(sessionStorage.getItem('withDrawMsg') || '{}'),
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
@@ -111,6 +120,10 @@ export default (state = defaultState, action: any) => {
         case Type.SET_INV_BOX:
             sessionStorage.setItem('invBox',action.status);
             return { ...state,invBox:action.status }
+        case Type.UP_WITHDRAW:
+            sessionStorage.setItem('withDrawMsg',JSON.stringify(action.msg));
+            return { ...state,withDrawMsg:action.msg }
+
         default:
             return state;
     };

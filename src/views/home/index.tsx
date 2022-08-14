@@ -78,7 +78,7 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
     useEffect(() => {
         setTimeout(() => {
             wsStatus === 1 && UpView()
-        }, 2000);
+        }, 1500);
     }, [wsStatus])
     useEffect(() => {
         if (history.location.pathname === '/home') {

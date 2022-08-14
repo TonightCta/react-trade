@@ -1,14 +1,16 @@
-import { ReactElement, ReactNode, useEffect } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import store from "../../../store";
 import { upFooterStatus } from "../../../store/app/action_creators";
 import InnerNav from '../../../components/inner_nav/nav'
 import './index.scss'
-import { Button } from "antd-mobile";
+import { Button, Toast } from "antd-mobile";
 import { useTranslation } from "react-i18next";
+import { FeedBackApi } from '../../../request/api'
 
 
 const FeedBack = (): ReactElement<ReactNode> => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
+    const [feed, setFeed] = useState<string>('');
     useEffect(() => {
         const action = upFooterStatus(0);
         store.dispatch(action);
@@ -21,9 +23,25 @@ const FeedBack = (): ReactElement<ReactNode> => {
                 {/* 反馈内容 */}
                 {t('public.feed_con')}
             </p>
-            <textarea placeholder={t('public.feed_remark')}></textarea>
+            <textarea value={feed} onChange={(e) => {
+                setFeed(e.target.value)
+            }} placeholder={t('public.feed_remark')}></textarea>
             <p>
-                <Button color="primary" block>
+                <Button color="primary" block onClick={async () => {
+                    if (!feed) {
+                        Toast.show('请输入反馈内容');
+                        return;
+                    }
+                    const result = await FeedBackApi({ content: feed });
+                    console.log(result);
+                    const { code } = result;
+                    if (code !== 200) {
+                        Toast.show(result.message);
+                        return;
+                    };
+                    Toast.show('反馈成功');
+                    setFeed('')
+                }}>
                     {/* 提交 */}
                     {t('public.submit')}
                 </Button>

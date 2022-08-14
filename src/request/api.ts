@@ -20,7 +20,7 @@ export const QUList = (p?: o) => get<IResponse>(`/quotation/list/${p ? p : ''}`)
 //币种列表
 export const CoinsListApi = () => get<IResponse>('/assets/coins');
 //充值地址
-export const RechargeAddressApi = (p: { coin: string, protocol: string }) => get<IResponse>(`/assets/address/${p.coin}/${p.protocol}`);
+export const RechargeAddressApi = (p: { coin: string | null, protocol: string | null}) => get<IResponse>(`/assets/address/${p.coin}/${p.protocol}`);
 //交易密码
 export const TradePassApi = (p: o) => post<IResponse>('/security/changePayPassword', p);
 //重置登录密码
@@ -42,4 +42,12 @@ export const AssetsBillApi = (p:o) => post<IResponse>('/assets/account/list/spot
 //地区支持列表
 export const CountryListApi = () => get<IResponse>('/user/country');
 //邀请信息
-export const InvInfoApi = () => get<IResponse>('/user/inviteInfo')
+export const InvInfoApi = () => get<IResponse>('/user/inviteInfo');
+//意见反馈
+export const FeedBackApi = (p:o) => post<IResponse>('/user/feedback',p);
+//帮助中心
+export const HelpListApi = () => get<IResponse>('/cms/help');
+//帮助详情
+export const HelpDetailApi = (p:number) => get<IResponse>(`/cms/article/${p}`);
+//提币发起
+export const WithDrawApi = (p:o) => post<IResponse>('/assets/withdraw',p);

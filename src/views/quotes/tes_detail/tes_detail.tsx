@@ -99,7 +99,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
     useEffect(() => {
         setTimeout(() => {
             wsStatus === 1 && getDetailData();
-        }, 2000);
+        }, 1500);
     }, [wsStatus])
     const { t } = useTranslation();
     useEffect(() => {
