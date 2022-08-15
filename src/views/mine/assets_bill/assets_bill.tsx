@@ -2,34 +2,38 @@ import { ReactElement, ReactNode, useEffect, useState } from "react";
 import InnerNav from '../../../components/inner_nav/nav'
 import store from "../../../store";
 import { upBillCoin, upFooterStatus } from "../../../store/app/action_creators";
-import { List, PullToRefresh, InfiniteScroll, Empty } from 'antd-mobile'
+import { List, PullToRefresh, InfiniteScroll, Empty, DotLoading, Button } from 'antd-mobile'
 import { useTranslation } from "react-i18next";
 import { AssetsBillApi } from '../../../request/api'
 import './index.scss'
+import { sleep } from "antd-mobile/es/utils/sleep";
 
 
 const AssetsBill = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const [searchVal, setSearchVal] = useState<string>('');
-    const [page, setPage] = useState<number>(0);
+    const [page, setPage] = useState<number>(1);
     const [billList, setBillList] = useState<any[]>([]);
     const [sourceBill, setSourceList] = useState<any[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [dataTotal, setDataTotal] = useState<number>(1);
+    const [isLoading,setIsLoading] = useState<boolean>(true);
     const getBillList = async () => {
+        setIsLoading(true);
         const params = {
             page: page,
-            limit: 10,
+            limit: 15,
             search: {
                 coin: store.getState().billCoin
             }
         }
         const result = await AssetsBillApi(params);
+        setIsLoading(false);
         if (result.data.last_page === page) {
             setHasMore(false);
         };
         setDataTotal(result.data.total);
-        if (page !== 1 && page !== 0) {
+        if (page !== 1) {
             setBillList([...billList, ...result.data.list]);
             setSourceList([...billList, ...result.data.list]);
         } else {
@@ -38,8 +42,8 @@ const AssetsBill = (): ReactElement<ReactNode> => {
         }
     };
     const loadMore = async () => {
-        setPage(page + 1)
-        await getBillList();
+        // setPage(page + 1)
+        // await getBillList();
     }
     useEffect(() => {
         const action = upFooterStatus(0);
@@ -52,6 +56,9 @@ const AssetsBill = (): ReactElement<ReactNode> => {
             loadMore();
         }
     }, []);
+    useEffect(() => {
+        getBillList()
+    },[page])
     useEffect((): void => {
         const startFilter = () => {
             const arr = billList;
@@ -75,9 +82,7 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                     dataTotal === 0
                         ? <Empty description='暂无流水' />
                         : <PullToRefresh onRefresh={async () => {
-                            setPage(0);
-                            setHasMore(true);
-                            await getBillList()
+                            await sleep(1500)
                         }}>
                             <List>
                                 <ul>
@@ -89,7 +94,8 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                     el.type === 3 && 'sell-color' ||
                                                     el.type === 1 && 'charged-color' ||
                                                     el.type === 4 && 'withdraw-color' ||
-                                                    el.type === 98 && 'withdraw-freeze'
+                                                    el.type === 98 && 'withdraw-freeze' ||
+                                                    el.type === 9 && 'admin-color'
                                                     }`}>
                                                     <p className="icon-type">{el.coin}</p>
                                                     <div className="order-title">
@@ -102,7 +108,10 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                             el.type === 1 && t('public.recharge') ||
                                                             //提币
                                                             el.type === 4 && t('public.withdraw') ||
-                                                            el.type === 98 && '提币冻结'
+                                                            //冻结
+                                                            el.type === 98 && '提币冻结' ||
+                                                            // Admin
+                                                            el.type === 9 && 'Admin'
                                                         ]}</p>
                                                         <p className="now-balance">{el.balance}</p>
                                                     </div>
@@ -118,9 +127,18 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                             )
                                         })
                                     }
+                                    <li className="load-more-btn">
+                                        <div>
+                                            {isLoading && <div><DotLoading color='primary' /></div>}
+                                            {hasMore && !isLoading && <p><Button size="small" color="default" onClick={() => {
+                                                setPage(page + 1)
+                                            }}>加载更多</Button></p>}
+                                            {!hasMore && !isLoading && <p style={{ fontSize: '14px', color: '#999' }} className="no-more-data">没有更多了</p>}
+                                        </div>
+                                    </li>
                                 </ul>
                             </List>
-                            <InfiniteScroll loadMore={loadMore} hasMore={hasMore} />
+                            {/* <InfiniteScroll loadMore={loadMore} hasMore={hasMore} /> */}
                         </PullToRefresh>
                 }
 

@@ -1,11 +1,12 @@
-import { ReactElement, ReactNode, useImperativeHandle, useEffect, useState } from "react";
-import { Empty, InfiniteScroll, List, PullToRefresh, Toast } from 'antd-mobile';
+import { ReactElement, useImperativeHandle, useEffect, useState } from "react";
+import { Button, DotLoading, Empty, List, PullToRefresh, Toast } from 'antd-mobile';
 import { OderListApi, CancelOrderApi } from '../../../request/api';
 import React from "react";
 import store from "../../../store";
+import { sleep } from "antd-mobile/es/utils/sleep";
 
 interface OrderMsg {
-    type: number,//订单类型 当前 & 历史
+    type?: number,//订单类型 当前 & 历史
     tradeType?: string,//交易类型
     tradeQu?: string,//交易队列
     tradeWay?: string,//交易方式
@@ -14,11 +15,13 @@ interface OrderMsg {
     limit?: number,//条数
     t: any,//多语言
 }
-const OrderList = React.forwardRef<ReactElement, OrderMsg>((props, ref) => {
+const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
     const [orderList, setOrderList] = useState<any[]>([]);
     const [dataTotal, setDataTotal] = useState<number>(1);
+    const [dataType, setDateType] = useState<any>(1)
     const [upTime, setUpTime] = useState<number>(0);
-    const [page, setPage] = useState<number>(0);
+    const [page, setPage] = useState<number>(1);
+    const [isLoading, setIsLoading] = useState<boolean>(true)
     // 加载更多
     const [hasMore, setHasMore] = useState<boolean>(true);
     const storeChange = () => {
@@ -26,14 +29,15 @@ const OrderList = React.forwardRef<ReactElement, OrderMsg>((props, ref) => {
             setUpTime(store.getState().upLoadOrder)
         });
     };
-    const getOrderList = async () => {
+    const getOrderList = async (_type?: number) => {
+        setIsLoading(true)
         const order_type: string = props.tradeWay && props.tradeWay !== '' ? props.tradeWay === props.t('public.buy_in') ? 'IN' : 'OUT' : ''
         const trade_type: string = props.tradeType && props.tradeType !== '' ? props.tradeType === props.t('public.way_city') ? 'MARKET' : 'LIMIT' : ''
         const params = {
             page: page,
             limit: props.limit ? props.limit : 8,
             search: {
-                group_status: props.type,
+                group_status: _type ? Number(_type) : 1,
                 symbol: props.tradeQu?.replace('/', ''),
                 direction: order_type,
                 trade_type: trade_type,
@@ -42,47 +46,57 @@ const OrderList = React.forwardRef<ReactElement, OrderMsg>((props, ref) => {
             }
         };
         const result = await OderListApi(params);
+        setIsLoading(false)
         if (result.data.last_page === page) {
             setHasMore(false);
         };
         setDataTotal(result.data.total);
-        if (page !== 1 && page !== 0) {
+        if (page !== 1) {
             setOrderList([...orderList, ...result.data.list])
         } else {
-            console.log(456)
             setOrderList(result.data.list)
         }
     };
     const loadMore = async () => {
         setPage(page + 1);
-        await getOrderList();
+        await getOrderList(dataType);
     }
     useEffect(() => {
-        setPage(0);
+        setPage(1);
         setOrderList([]);
         setHasMore(true);
     }, [props, upTime])
     useEffect(() => {
-        storeChange()
+        getOrderList(dataType);
+    }, [page])
+    useEffect(() => {
+        storeChange();
+        getOrderList();
         return () => {
             getOrderList();
             storeChange();
             loadMore();
         }
     }, []);
-    // useImperativeHandle(ref,() => ({
-    // uploadOrder:getOrderList()
-    // }));
+    const selectOrderType = (_type: number) => {
+        setPage(1);
+        setOrderList([]);
+        setDateType(Number(_type));
+        setHasMore(true);
+        getOrderList(_type)
+    }
+    useImperativeHandle(ref, () => ({
+        uploadOrder: selectOrderType
+    }))
     return (
         <div className="order-list">
             {
                 dataTotal === 0
                     ? <Empty description='暂无委托' />
-                    : <PullToRefresh
+                    :
+                    <PullToRefresh
                         onRefresh={async () => {
-                            setPage(0);
-                            // setOrderList([]);
-                            setHasMore(true);
+                            await sleep(1500)
                         }}
                     >
                         <List>
@@ -137,9 +151,18 @@ const OrderList = React.forwardRef<ReactElement, OrderMsg>((props, ref) => {
                                         )
                                     })
                                 }
+                                <li className="load-more-btn">
+                                    <div>
+                                        {isLoading && <div><DotLoading color='primary' /></div>}
+                                        {hasMore && !isLoading && <p><Button size="small" color="default" onClick={() => {
+                                            setPage(page + 1)
+                                        }}>加载更多</Button></p>}
+                                        {!hasMore && !isLoading && <p style={{ fontSize: '14px', color: '#999' }} className="no-more-data">没有更多了</p>}
+                                    </div>
+                                </li>
                             </ul>
                         </List>
-                        <InfiniteScroll loadMore={loadMore} hasMore={hasMore} />
+                        {/* <InfiniteScroll loadMore={loadMore} hasMore={hasMore} /> */}
                     </PullToRefresh>
             }
         </div>

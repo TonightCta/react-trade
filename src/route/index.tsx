@@ -27,7 +27,7 @@ const RouteConfig = (): ReactElement<ReactNode> => {
             <Route path="/login" component={View.LoginIndex}></Route>
             <Route path="/home" component={View.HomeIndex}></Route>
             <Route path="/quotes" component={View.QuotesIndex}></Route>
-            <Route path="/quotes-detail" component={View.TesDetail}></Route>
+            <Route path="/quotes-detail" key={new Date().getTime()} component={View.TesDetail}></Route>
             <Route path="/setting" component={View.SetIndex}></Route>
             <Route path="/set-language" component={View.SetLanguage}></Route>
             <Route path="/feedback" component={View.FeedBack}></Route>

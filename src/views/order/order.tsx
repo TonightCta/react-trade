@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useRef, useState } from "react";
 import { upFooterStatus } from "../../store/app/action_creators";
 import { Tabs } from "antd-mobile";
 import store from "../../store";
@@ -17,7 +17,8 @@ type FilterVal = {
 }
 const TradeOrder = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
-    const [orderType,setOrderType] = useState<number>(1);
+    const testRef: any = useRef(null)
+    const [orderType, setOrderType] = useState<number>(1);
     const [filterVal, setFilterVal] = useState<FilterVal>({
         coin: '',
         way: '',
@@ -35,7 +36,8 @@ const TradeOrder = (): ReactElement<ReactNode> => {
             <InnerNav title={t('public.mine_order')} leftArrow withBorder={true} />
             <div className="trade-type-inner">
                 <Tabs style={{ '--title-font-size': '14px' }} onChange={(e) => {
-                    setOrderType(Number(e))
+                    // setOrderType(Number(e));
+                    testRef.current.uploadOrder(e)
                 }}>
                     {/* 当前委托 */}
                     <Tabs.Tab title={t('public.now_mission')} key={1}></Tabs.Tab>
@@ -53,12 +55,12 @@ const TradeOrder = (): ReactElement<ReactNode> => {
                 }} /></div>
             </div>
             <OrderList
-                type={orderType}
                 tradeQu={filterVal!.coin}
                 tradeWay={filterVal!.way}
                 tradeType={filterVal.type}
                 startTime={filterVal.startTime}
-                endTime={filterVal.endTime} 
+                endTime={filterVal.endTime}
+                ref={testRef}
                 t={t}
             />
         </div>

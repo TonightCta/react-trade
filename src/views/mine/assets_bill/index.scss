@@ -121,6 +121,18 @@
           }
         }
       }
+      .admin-color {
+        .order-type::before {
+          background-color: #bf29df;
+        }
+        .fee-msg {
+          .fee-and-amount {
+            p:last-child {
+              color: #bf29df;
+            }
+          }
+        }
+      }
     }
   }
 }
