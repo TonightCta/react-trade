@@ -9,7 +9,7 @@ import './index.scss'
 
 
 const AddressManage = (): ReactElement<ReactNode> => {
-    const [addressList, setAddress] = useState<any[]>([1, 2, 3, 4]);
+    const [addressList, setAddress] = useState<any[]>([1, 2, 3, 4,5]);
     const [addBox, setAddBox] = useState<boolean>(false);
     const [defaultNet, setDefaultNet] = useState<string>('ERC20');
     const [netList, setNetlist] = useState<string[]>(['ERC20', 'OMNI'])
