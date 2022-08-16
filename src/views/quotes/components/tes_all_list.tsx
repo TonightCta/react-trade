@@ -3,7 +3,7 @@ import { DotLoading, Empty, PullToRefresh } from 'antd-mobile';
 import { sleep } from 'antd-mobile/es/utils/sleep';
 import { PullStatus } from 'antd-mobile/es/components/pull-to-refresh';
 import { useHistory } from 'react-router-dom'
-import { setTradeFrom, setTradeTo, upCurrency, upCurrentCoin, upDefaultBaseCoin, upDefaultCoin } from "../../../store/app/action_creators";
+import { setTradeFrom, setTradeTo, upCurrency, upCurrentCoin, upDefaultBaseCoin, upDefaultCoin, upDefaultPriceCoin } from "../../../store/app/action_creators";
 import store from "../../../store";
 import { useTranslation } from 'react-i18next';
 import { sendWs } from "../../../utils/ws";
@@ -61,10 +61,12 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                                                 const actionBase = upDefaultBaseCoin(`${el.symbol}`);
                                                 const actionFrom = setTradeFrom(String(el.target));
                                                 const actionTo = setTradeTo(String(el.base));
+                                                const actionPrice = upDefaultPriceCoin(el.price);
                                                 store.dispatch(action)
                                                 store.dispatch(actionBase);
                                                 store.dispatch(actionFrom);
                                                 store.dispatch(actionTo);
+                                                store.dispatch(actionPrice);
                                                 props.closeDraw!()
                                                 // console.log(props.base)
                                                 sendWs({
@@ -94,7 +96,7 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                                                             symbol: String(el.symbol),
                                                         }
                                                     });
-                                                })
+                                                },100)
                                             }
                                             props.type === 1 ? viewQu() : viewTrade();
                                         }}>
@@ -107,7 +109,7 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                                             <div className="list-public">
                                                 <p className="list-price">{Number(el.price).toFixed(4)}</p>
                                                 <p className="list-rate">
-                                                    {el.type === 1 ? '+' : '-'}
+                                                    {el.type === 1 ? '+' : ''}
                                                     {el.rate}%
                                                 </p>
                                             </div>

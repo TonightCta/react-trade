@@ -141,6 +141,10 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             return;
                         };
                         Toast.show(t('message.send_code_success'));
+                        setInpMsg({
+                            ...inpMsg,
+                            code:result.data.code
+                        })
                         countDown()
                     } : () => { }}>
                         {count === 60 ? t('public.send_code') : `${count}s${t('public.send_code')}`}

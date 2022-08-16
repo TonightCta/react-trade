@@ -72,6 +72,10 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
             Toast.show(result.message);
             return;
         };
+        setInpMsg({
+            ...inpMsg,
+            code:result.data.code
+        })
         Toast.show(t('message.send_code_success'));
         countDown();
     };

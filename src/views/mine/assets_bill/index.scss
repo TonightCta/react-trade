@@ -8,7 +8,6 @@
         border-bottom: 1px solid #f8f8f8;
         padding: 18px 12px;
         position: relative;
-        padding-bottom: 36px;
         background-color: white;
         margin-bottom: 12px;
         border-radius: 8px;
@@ -65,72 +64,48 @@
         .order-type::before {
           background-color: #26bb9b;
         }
-        .fee-msg {
-          .fee-and-amount {
-            p:last-child {
-              color: #26bb9b;
-            }
-          }
+        .now-balance{
+          color: #26bb9b;
         }
       }
       .sell-color {
         .order-type::before {
           background-color: #fd5656;
         }
-        .fee-msg {
-          .fee-and-amount {
-            p:last-child {
-              color: #fd5656;
-            }
-          }
+        .now-balance{
+          color: #fd5656;
         }
       }
       .charged-color {
         .order-type::before {
           background-color: #fb9700;
         }
-        .fee-msg {
-          .fee-and-amount {
-            p:last-child {
-              color: #fb9700;
-            }
-          }
+        .now-balance{
+          color: #fb9700;
         }
       }
       .withdraw-color {
         .order-type::before {
           background-color: #3281ef;
         }
-        .fee-msg {
-          .fee-and-amount {
-            p:last-child {
-              color: #3281ef;
-            }
-          }
+        .now-balance{
+          color: #3281ef;
         }
       }
       .withdraw-freeze {
         .order-type::before {
           background-color: #1d5098;
         }
-        .fee-msg {
-          .fee-and-amount {
-            p:last-child {
-              color: #1d5098;
-            }
-          }
+        .now-balance{
+          color: #1d5098;
         }
       }
       .admin-color {
         .order-type::before {
           background-color: #bf29df;
         }
-        .fee-msg {
-          .fee-and-amount {
-            p:last-child {
-              color: #bf29df;
-            }
-          }
+        .now-balance{
+          color: #bf29df;
         }
       }
     }

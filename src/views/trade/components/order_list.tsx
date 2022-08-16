@@ -70,6 +70,8 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
         getOrderList(dataType);
     }, [page])
     useEffect(() => {
+        const win : any = window;
+        win.getOrderList = getOrderList;
         storeChange();
         getOrderList();
         return () => {

@@ -1,3 +1,4 @@
+import { DownOutline, UpOutline } from "antd-mobile-icons";
 import { t } from "i18next";
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 
@@ -17,12 +18,16 @@ const TesDealMsg = (props: Props): ReactElement<ReactNode> => {
         return `${hour}:${min}:${sec}`
     }
     const [dealT, setDealT] = useState<DealMsg[]>([]);
+    const [showMore,setShowMore] = useState<number>(10);
     useEffect(() => {
-        if (dealT.length >= 30) {
+        if (dealT.length >= showMore) {
             dealT.pop();
         };
-        setDealT([props.dealData,...dealT])
-    }, [props]);
+        setDealT([props.dealData, ...dealT])
+    }, [props,showMore]);
+    useEffect(() => {
+        showMore === 10 && setDealT(dealT.slice(0,dealT.length - 20));
+    },[showMore])
     useEffect(() => {
         return () => {
             setDealT([])
@@ -73,6 +78,12 @@ const TesDealMsg = (props: Props): ReactElement<ReactNode> => {
                         )
                     })
                 }
+                <li className="show-more" onClick={() => {
+                    setShowMore(showMore === 10 ? 30 : 10);
+                }}>
+                    {showMore === 10 ? '展开' : '收起' }更多
+                    {showMore === 10 ? <DownOutline /> : <UpOutline />}
+                </li>
             </ul>
         </div>
     )

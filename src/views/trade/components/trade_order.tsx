@@ -1,23 +1,27 @@
 import { FileOutline } from "antd-mobile-icons";
 import { Tabs } from "antd-mobile";
-import { ReactElement, ReactNode, useRef, useState } from "react";
+import { useImperativeHandle, useRef, useState } from "react";
 import OrderList from "./order_list";
 import { withRouter, useHistory } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
+import React from "react";
 
 interface Props extends RouteComponentProps {
     t: any
 }
 
-const TradeOrder = (props: Props): ReactElement<ReactNode> => {
+const TradeOrder = React.forwardRef((props: Props,ref:any) => {
     const [orderType, setOrderType] = useState<number>(1);
     const order_list: any = useRef(null);
     const history = useHistory();
+    useImperativeHandle(ref,() => ({
+        test:123
+    }));
     return (
         <div className="trade_order">
             <div className="order-oper">
                 <Tabs style={{ '--title-font-size': '14px' }} onChange={(e) => {
-                    // setOrderType(Number(e))
+                    setOrderType(Number(e))
                     order_list.current.uploadOrder(e)
                 }}>
                     {/* 当前委托 */}
@@ -32,6 +36,6 @@ const TradeOrder = (props: Props): ReactElement<ReactNode> => {
             <OrderList ref={order_list} limit={5} t={props.t} />
         </div>
     )
-};
+});
 
 export default withRouter(TradeOrder);

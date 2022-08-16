@@ -5,13 +5,13 @@ interface UMsg {
     email?: string,
     security?: {
         kyc?: number,
-        pay_password?:number
+        pay_password?: number
     }
 }
-export interface WithDraw{
-    coin: string, 
-    num: number, 
-    address: string, 
+export interface WithDraw {
+    coin: string,
+    num: number,
+    address: string,
     fee: number
 }
 export interface Store {
@@ -27,6 +27,7 @@ export interface Store {
     currentBalance: number,//USDT余额
     defaultCoin: string,//交易默认队列
     defaultBaseCoin: string,//交易默认订阅队列
+    defaultPriceCoin:number,//交易默认币种价格
     wsStatus: number,//ws服务连接状态
     kData: { second: number, type: string },
     tradeFromCoin: string,//交易From币种
@@ -34,8 +35,10 @@ export interface Store {
     upLoadOrder: number,//刷新订单时机
     annID: number,//公告ID
     billCoin: string,//币种账单
-    invBox:number,//邀请弹框
-    withDrawMsg:WithDraw,
+    invBox: number,//邀请弹框
+    withDrawMsg: WithDraw,
+    homeData: any[],
+    unSubscribeCoin:string
 }
 const defaultState: Store = {
     account: JSON.parse(sessionStorage.getItem('account') || '{}'),
@@ -50,6 +53,7 @@ const defaultState: Store = {
     currentBalance: Number(sessionStorage.getItem('currentBalance')) || 0,
     defaultCoin: sessionStorage.getItem("defaultCoin") || 'BTC/USDT',
     defaultBaseCoin: sessionStorage.getItem('defaultBaseCoin') || 'BTCUSDT',
+    defaultPriceCoin:Number(sessionStorage.getItem('defaultPriceCoin')) || 0,
     wsStatus: 0,//ws服务连接状态
     kData: JSON.parse(sessionStorage.getItem('kData') || '{ "second": 60, "type": "1m" }'),
     tradeFromCoin: sessionStorage.getItem('tradeFromCoin') || 'USDT',
@@ -57,8 +61,11 @@ const defaultState: Store = {
     upLoadOrder: 0,
     annID: Number(sessionStorage.getItem('annID')) || 999,
     billCoin: sessionStorage.getItem('billCoin') || '',
-    invBox:Number(sessionStorage.getItem('invBox')) || 0,
-    withDrawMsg:JSON.parse(sessionStorage.getItem('withDrawMsg') || '{}'),
+    invBox: Number(sessionStorage.getItem('invBox')) || 0,
+    withDrawMsg: JSON.parse(sessionStorage.getItem('withDrawMsg') || '{}'),
+    homeData: JSON.parse(sessionStorage.getItem('homeData') || '[]'),//首页数据缓存
+    unSubscribeCoin:sessionStorage.getItem('unSubscribeCoin') || '',//无需取消的订阅队列
+    
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
@@ -118,12 +125,20 @@ export default (state = defaultState, action: any) => {
             sessionStorage.setItem('billCoin', action.coin);
             return { ...state, billCoin: action.coin }
         case Type.SET_INV_BOX:
-            sessionStorage.setItem('invBox',action.status);
-            return { ...state,invBox:action.status }
+            sessionStorage.setItem('invBox', action.status);
+            return { ...state, invBox: action.status }
         case Type.UP_WITHDRAW:
-            sessionStorage.setItem('withDrawMsg',JSON.stringify(action.msg));
-            return { ...state,withDrawMsg:action.msg }
-
+            sessionStorage.setItem('withDrawMsg', JSON.stringify(action.msg));
+            return { ...state, withDrawMsg: action.msg }
+        case Type.SET_HOME_DATA:
+            sessionStorage.setItem('homeData', JSON.stringify(action.data));
+            return { ...state, homeData: action.data }
+        case Type.SET_UN_COIN:
+            sessionStorage.setItem('unSubscribeCoin',action.coin);
+            return { ...state,unSubscribeCoin:action.coin }
+        case Type.DEFAULT_PRICE_COIN:
+            sessionStorage.setItem('defaultPriceCoin',action.price);
+            return { ...state,defaultPriceCoin:action.price }
         default:
             return state;
     };

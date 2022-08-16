@@ -67,6 +67,10 @@ const SafeAuth = (props: PropsSafe): ReactElement => {
             Toast.show(result.message);
             return;
         };
+        setDrawSafe({
+            ...drawSafe,
+            code:result.data.code
+        })
         Toast.show('验证码发送成功');
         countDown()
     }

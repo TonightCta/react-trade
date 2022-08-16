@@ -51,3 +51,5 @@ export const HelpListApi = () => get<IResponse>('/cms/help');
 export const HelpDetailApi = (p:number) => get<IResponse>(`/cms/article/${p}`);
 //提币发起
 export const WithDrawApi = (p:o) => post<IResponse>('/assets/withdraw',p);
+//获取广告图
+export const BannerListApi = () => get<IResponse>('/cms/banner');

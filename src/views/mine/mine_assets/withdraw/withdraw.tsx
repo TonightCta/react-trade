@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 import InnerNav from '../../../../components/inner_nav/nav';
-import { CloseOutline } from 'antd-mobile-icons'
+import { CloseOutline, FileOutline } from 'antd-mobile-icons'
 import DrawBtn from "./components/draw_btn";
 import { Button, Modal, PickerView, Popup } from "antd-mobile";
 import './index.scss'
@@ -190,6 +190,9 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                             drawAddress: e.target.value,
                         })
                     }} />
+                    <span className="oper-icon" onClick={() => {
+                        history.push('/address-mange')
+                    }}><FileOutline fontSize={18} color="#666"/></span>
                 </div>
                 {/* 提币数量 */}
                 <div className="msg-option">

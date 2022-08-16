@@ -4,7 +4,7 @@ import { Popup } from 'antd-mobile';
 import TesTabs from "../../quotes/components/tes_tabs";
 import store from '../../../store/index'
 import { QUList } from '../../../request/api'
-import { upCurrency, upCurrentCoin } from "../../../store/app/action_creators";
+import { setUnCoin, upCurrency, upCurrentCoin } from "../../../store/app/action_creators";
 import { useHistory } from 'react-router-dom';
 import { sendWs } from '../../../utils/ws'
 
@@ -60,8 +60,10 @@ const TradeNav = (props: Props): ReactElement<ReactNode> => {
                         if (props.coinMsg.base === result.data.list[i].symbol) {
                             const action = upCurrentCoin(result.data.list[i]);
                             const actionC = upCurrency(store.getState().defaultCoin);
+                            const actionUn = setUnCoin(sessionStorage.getItem('defaultBaseCoin') || '');
                             store.dispatch(action);
                             store.dispatch(actionC);
+                            store.dispatch(actionUn);
                             history.push('/quotes-detail')
                         }
                     }

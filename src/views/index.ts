@@ -25,6 +25,7 @@ import HelpDetail from "./setting/help/help_detail/help_detail";
 import WithdrawIndex from "./mine/mine_assets/withdraw/withdraw";
 import RechargeIndex from "./mine/mine_assets/recharge/recharge";
 import WithDrawPending from "./mine/mine_assets/withdraw/withdraw_pending/withdraw_pending";
+import AddressManage from "./mine/mine_assets/address_manage/address_mange";
 
 
 export {
@@ -55,4 +56,5 @@ export {
     WithdrawIndex,//提币
     RechargeIndex,//充币
     WithDrawPending,//提币详情
+    AddressManage,//地址管理
 }

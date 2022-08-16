@@ -15,9 +15,9 @@ export const upUserInfo = async (): Promise<IResponse> => {
 };
 //更新用户资产
 export const upUserAssets = async (): Promise<void> => {
+    //10s 刷新
     const result = await api.UserAssetsApi();
     const QResult = await api.QUList();
-    // console.log(QResult)
     let assets = [];
     for (let i in result.data) {
         if (i !== 'USDT') {

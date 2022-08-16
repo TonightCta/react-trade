@@ -7,9 +7,9 @@ import HomeAssets from "./components/my_wallet";
 import HomeHelp from "./components/help";
 import HomeTexCard from "./components/tes_card";
 import HomeTeslist from "./components/tes_list";
-import { upFooterStatus } from "../../store/app/action_creators";
+import { setHomeData, upDefaultPriceCoin, upFooterStatus } from "../../store/app/action_creators";
 import store from "../../store";
-import { upUserAssets } from '../../store/app/action_fn'
+// import { upUserAssets } from '../../store/app/action_fn'
 import { QUList } from "../../request/api";
 import { sendWs, getMessage } from '../../utils/ws'
 import { useHistory } from 'react-router-dom'
@@ -29,11 +29,11 @@ const NavLogo = (): React.ReactElement<ReactNode> => {
 
 const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
     const [wsList, setWsList] = useState<any>([]);
-    const [token, setToken] = useState<string | null>(sessionStorage.getItem('token_1'));
+    // const [token, setToken] = useState<string | null>(sessionStorage.getItem('token_1'));
     const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus);
     const storeChange = () => {
         store.subscribe(() => {
-            setToken(store.getState().appToken);
+            // setToken(store.getState().appToken);
             setWsStatus(store.getState().wsStatus)
         })
     }
@@ -41,10 +41,14 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
     // const { t } = useTranslation();
 
     const UpView = async () => {
-        const result = await QUList();
         let arr: any[] = [];
+        const result = await QUList()
         for (let i in result.data.list) {
-            arr.push(result.data.list[i])
+            arr.push(result.data.list[i]);
+            if(result.data.list[i].symbol === "BTCUSDT"){
+                const action = upDefaultPriceCoin(result.data.list[i].price);
+                store.dispatch(action);
+            }
         };
         arr.forEach(e => {
             sendWs({
@@ -73,33 +77,38 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
                 }
             });
             setWsList(arrVal);
+            const action = setHomeData(arrVal);
+            store.dispatch(action);
         });
     };
     useEffect(() => {
         setTimeout(() => {
             wsStatus === 1 && UpView()
-        }, 1500);
+        }, 100);
     }, [wsStatus])
     useEffect(() => {
         if (history.location.pathname === '/home') {
             const action = upFooterStatus(1);
             store.dispatch(action);
-            token && upUserAssets();
+            // token && upUserAssets();
             return () => {
                 setWsList([])
             }
         }
     }, [history.location]);
-    const cancelWS = async () => {
-        const result = await QUList();
-        for (let i in result.data.list) {
-            sendWs({
-                e: 'unsubscribe',
-                d: {
-                    symbol: result.data.list[i].symbol,
-                    interval: '1m'
-                }
-            });
+    const cancelWS = () => {
+        const result = JSON.parse(sessionStorage.getItem('homeData') || '[]');
+        console.log(sessionStorage.getItem('unSubscribeCoin'))
+        for (let i in result) {
+            if (sessionStorage.getItem('unSubscribeCoin') !== result[i].symbol && sessionStorage.getItem('defaultBaseCoin') !== result[i].symbol) {
+                sendWs({
+                    e: 'unsubscribe',
+                    d: {
+                        symbol: result[i].symbol,
+                        interval: '1m'
+                    }
+                });
+            }
         }
     };
     useEffect(() => {

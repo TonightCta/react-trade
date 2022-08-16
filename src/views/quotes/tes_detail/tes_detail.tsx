@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import store from "../../../store";
-import { upFooterStatus } from "../../../store/app/action_creators";
+import { setUnCoin, upFooterStatus } from "../../../store/app/action_creators";
 import InnerNav from '../../../components/inner_nav/nav';
 import './index.scss'
 import TesPriceMsg from "./components/price_msg";
@@ -53,18 +53,18 @@ const TesDetail = (): ReactElement<ReactNode> => {
             e: 'kline',
             d: {
                 symbol: currentCoin.symbol,
-                interval: '5m',
-                start: new Date().getTime() - 5 * 60 * 1000 * 100,
+                interval: '1m',
+                start: new Date().getTime() - 60 * 1000 * 100,
                 end: new Date().getTime(),
             }
         });
-        sendWs({
-            e: 'subscribe',
-            d: {
-                symbol: currentCoin.symbol,
-                interval: '1m',
-            }
-        });
+        // sendWs({
+        //     e: 'subscribe',
+        //     d: {
+        //         symbol: currentCoin.symbol,
+        //         interval: '1m',
+        //     }
+        // });
         sendWs({
             e: 'subscribe-deal',
             d: {
@@ -75,7 +75,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
             try {
                 JSON.parse(item.data);
                 const data = JSON.parse(item.data);
-                if (data.e === 'subscribe') {
+                if (data.e === 'subscribe' && data.s === JSON.parse(sessionStorage.getItem('currentCoin') || '{}').symbol) {
                     const rate = (Number(data.k.c) - Number(currentCoin.yesterday_price)) / Number(currentCoin.yesterday_price) * 100
                     setPriceMsg({
                         price: Number(data.k.c),
@@ -97,9 +97,14 @@ const TesDetail = (): ReactElement<ReactNode> => {
         });
     };
     useEffect(() => {
-        setTimeout(() => {
-            wsStatus === 1 && getDetailData();
-        }, 1500);
+        const coinMsg = JSON.parse(sessionStorage.getItem('currentCoin') || '{}');
+        const rate = (Number(coinMsg.price) - Number(coinMsg.yesterday_price)) / Number(coinMsg.yesterday_price) * 100
+        setPriceMsg({
+            price: Number(coinMsg.price),
+            rate: Number(rate),
+            type: rate > 0 ? 1 : 0,
+        });
+        wsStatus === 1 && getDetailData();
     }, [wsStatus])
     const { t } = useTranslation();
     useEffect(() => {
@@ -134,6 +139,8 @@ const TesDetail = (): ReactElement<ReactNode> => {
             store.dispatch(action);
         })
         return () => {
+            const action = setUnCoin('');
+            store.dispatch(action);
             cancelWS();
         }
     }, []);

@@ -17,7 +17,7 @@ const AssetsBill = (): ReactElement<ReactNode> => {
     const [sourceBill, setSourceList] = useState<any[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [dataTotal, setDataTotal] = useState<number>(1);
-    const [isLoading,setIsLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const getBillList = async () => {
         setIsLoading(true);
         const params = {
@@ -58,7 +58,7 @@ const AssetsBill = (): ReactElement<ReactNode> => {
     }, []);
     useEffect(() => {
         getBillList()
-    },[page])
+    }, [page])
     useEffect((): void => {
         const startFilter = () => {
             const arr = billList;
@@ -97,9 +97,50 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                     el.type === 98 && 'withdraw-freeze' ||
                                                     el.type === 9 && 'admin-color'
                                                     }`}>
-                                                    <p className="icon-type">{el.coin}</p>
+                                                    {/* <p className="icon-type">{el.coin}</p> */}
                                                     <div className="order-title">
-                                                        <p className="order-type">{[
+                                                        {/* <p className="order-type">{[
+                                                            // 购买
+                                                            el.type === 2 && t('public.buy') ||
+                                                            // 售出
+                                                            el.type === 3 && t('public.sell') ||
+                                                            // 充币
+                                                            el.type === 1 && t('public.recharge') ||
+                                                            //提币
+                                                            el.type === 4 && t('public.withdraw') ||
+                                                            //冻结
+                                                            el.type === 98 && '提币冻结' ||
+                                                            // Admin
+                                                            el.type === 9 && 'Admin'
+                                                        ]}</p> */}
+                                                        <p className="order-type">
+                                                            {el.coin}&nbsp;{[
+                                                                // 购买
+                                                                el.type === 2 && t('public.buy') ||
+                                                                // 售出
+                                                                el.type === 3 && t('public.sell') ||
+                                                                // 充币
+                                                                el.type === 1 && t('public.recharge') ||
+                                                                //提币
+                                                                el.type === 4 && t('public.withdraw') ||
+                                                                //冻结
+                                                                el.type === 98 && '提币冻结' ||
+                                                                // Admin
+                                                                el.type === 9 && 'Admin'
+                                                            ]}
+                                                        </p>
+                                                        <p className="now-balance">{el.amount > 0 ? '+' : ''}{el.true_amount}</p>
+                                                    </div>
+                                                    <div className="fee-msg">
+                                                        <p className="order-date">{el.time}</p>
+                                                        <div className="fee-and-amount">
+                                                            {/* 手续费 */}
+                                                            <p>{t('public.fee')}&nbsp;{Number(el.fee).toFixed(4)}</p>
+                                                            {/* <p>{el.amount > 0 ? '+' : ''}{el.true_amount}</p> */}
+                                                        </div>
+                                                    </div>
+                                                    <div className="fee-msg">
+                                                        <p className="order-date">类型:{[
                                                             // 购买
                                                             el.type === 2 && t('public.buy') ||
                                                             // 售出
@@ -113,14 +154,9 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                             // Admin
                                                             el.type === 9 && 'Admin'
                                                         ]}</p>
-                                                        <p className="now-balance">{el.balance}</p>
-                                                    </div>
-                                                    <div className="fee-msg">
-                                                        <p className="order-date">{el.time}</p>
                                                         <div className="fee-and-amount">
-                                                            {/* 手续费 */}
-                                                            <p>({t('public.fee')}:&nbsp;{Number(el.fee).toFixed(4)})</p>
-                                                            <p>{el.amount > 0 ? '+' : ''}{el.true_amount}</p>
+                                                            {/* 余额 */}
+                                                            <p>余额&nbsp;{Number(el.balance).toFixed(4)}</p>
                                                         </div>
                                                     </div>
                                                 </li>

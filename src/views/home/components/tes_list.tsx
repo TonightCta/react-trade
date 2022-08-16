@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom'
 import store from "../../../store";
-import { upCurrency, upCurrentCoin } from "../../../store/app/action_creators";
+import { setUnCoin, upCurrency, upCurrentCoin } from "../../../store/app/action_creators";
 import { useTranslation } from 'react-i18next';
 import { DotLoading } from "antd-mobile";
 
@@ -10,20 +10,33 @@ interface TesMsg {
     price: number,
     rate: number,
     type: number,
-    yesterday_volume: number
+    yesterday_volume: number,
+    symbol:string
 }
 
 const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
     const [TesListTwo, setEtsListTwo] = useState<TesMsg[]>([]);
-    const UpView = async () => {
+    const UpView = () => {
         props.wsData.sort((a: TesMsg, b: TesMsg) => {
             return b.rate - a.rate
         });
         setEtsListTwo(props.wsData);
     };
     useEffect(() => {
-        UpView()
-    },[props])
+        if (props.wsData.length > 0) {
+            UpView()
+        }
+    }, [props]);
+
+    useEffect(() => {
+        if (JSON.parse(sessionStorage.getItem('homeData') || '[]').length > 0) {
+            JSON.parse(sessionStorage.getItem('homeData') || '[]').sort((a: TesMsg, b: TesMsg) => {
+                return b.rate - a.rate
+            });
+            setEtsListTwo(JSON.parse(sessionStorage.getItem('homeData') || '[]'));
+        }
+    }, []);
+
     const { t } = useTranslation();
     const history = useHistory();
     return (
@@ -39,6 +52,9 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
                                 const actionCurrent = upCurrentCoin(el);
                                 store.dispatch(actionCurrent);
                                 store.dispatch(action);
+                                const unaction = setUnCoin(el.symbol);
+                                store.dispatch(unaction);
+                                // set 队列
                                 history.push('/quotes-detail')
                             }}>
                                 <div className="list-public">

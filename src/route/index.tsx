@@ -51,6 +51,7 @@ const RouteConfig = (): ReactElement<ReactNode> => {
             <PrivateRoute children={<View.RechargeIndex />} path="/recharge" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.WithdrawIndex />} path="/withdraw" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.WithDrawPending />} path="/withdraw-detail" locationMine={location}></PrivateRoute>
+            <PrivateRoute children={<View.AddressManage />} path="/address-mange" locationMine={location}></PrivateRoute>
           </Switch>
         </CSSTransition>
       </TransitionGroup>

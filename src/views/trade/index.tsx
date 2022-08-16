@@ -19,10 +19,10 @@ interface Depch {
 }
 
 
-const TradeIndex = (): React.ReactElement<ReactNode> => {
+const TradeIndex = React.forwardRef((props: any, ref: any) => {
     const { t } = useTranslation();
     const [coinPrice, setCoinPrice] = useState<number>(0);
-    const test = useRef(null);
+    const orderList: any = useRef(null);
     // ws服务连接状态
     const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus)
     const [coinMsg, setCoinMsg] = useState<Coin>({
@@ -34,7 +34,7 @@ const TradeIndex = (): React.ReactElement<ReactNode> => {
             coin: store.getState().defaultCoin,
             base: store.getState().defaultBaseCoin
         });
-        setCoinPrice(0);
+        setCoinPrice(Number(sessionStorage.getItem('defaultPriceCoin')));
         setWsStatus(store.getState().wsStatus)
     });
     const [sellQUList, setSellQUlist] = useState<Depch[]>([]);
@@ -67,16 +67,19 @@ const TradeIndex = (): React.ReactElement<ReactNode> => {
         }, 1500)
     };
     useEffect(() => {
+        setCoinPrice(Number(sessionStorage.getItem('defaultPriceCoin')));
         wsStatus === 1 && sendSub();
     }, [wsStatus]);
     const unSendWS = () => {
-        sendWs({
-            e: 'unsubscribe',
-            d: {
-                symbol: coinMsg.base,
-                interval: "1m"
-            }
-        });
+        if (sessionStorage.getItem('unSubscribeCoin') !== coinMsg.base) {
+            sendWs({
+                e: 'unsubscribe',
+                d: {
+                    symbol: coinMsg.base,
+                    interval: "1m"
+                }
+            });
+        }
         sendWs({
             e: 'unsubscribe-depth',
             d: {
@@ -97,14 +100,12 @@ const TradeIndex = (): React.ReactElement<ReactNode> => {
             {/* 导航信息 */}
             <TradeNav coinMsg={coinMsg} t={t} />
             {/* 交易模块 */}
-            <TradeOper reloadOrder={() => {
-                console.log(test)
-            }} t={t} sellQUList={sellQUList} buyQUList={buyQUList} coinPrice={coinPrice} />
+            <TradeOper t={t} sellQUList={sellQUList} buyQUList={buyQUList} coinPrice={coinPrice} />
             {/* 订单信息 */}
             <TradeOrder t={t} />
             {coinPrice === 0 && <LoadData />}
         </div>
     )
-};
+});
 
 export default TradeIndex;

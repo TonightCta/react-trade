@@ -1,0 +1,111 @@
+.address-manage {
+  .address-list {
+    padding: 12px;
+    background-color: white;
+    .list-content {
+      border-bottom: 1px solid #eee;
+    }
+    .list-content:last-child {
+      border-bottom: 0;
+    }
+    .address-content {
+      padding: 15px 0;
+      .address-remark {
+        display: flex;
+        justify-content: flex-start;
+        font-size: 14px;
+        color: #333;
+        font-weight: 500;
+        align-items: center;
+        .remark-tag {
+          font-size: 12px;
+          color: #666;
+          margin-left: 10px;
+          padding: 1px 6px;
+          background-color: #f2f2f2;
+          border-radius: 2px;
+        }
+      }
+      .address-text {
+        text-align: left;
+        margin-top: 8px;
+        font-size: 14px;
+        color: #666;
+      }
+    }
+  }
+  .add-address {
+    padding: 12px;
+  }
+}
+.add-content {
+  padding: 12px;
+  padding-top: 24px;
+  .add-title {
+    font-size: 17px;
+    color: #333;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    span {
+      font-size: 16px;
+      color: #666;
+    }
+  }
+  .inp-box {
+    font-size: 14px;
+    .inp-title {
+      margin-bottom: 12px;
+      span {
+        margin-left: 4px;
+        color: #999;
+        display: inline-block;
+        transform: translateY(1px);
+      }
+    }
+    .net-list {
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        li {
+          padding: 8px 12px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 13px;
+          margin-right: 12px;
+          margin-bottom: 12px;
+          transition: 0.2s all;
+        }
+        .select-net {
+          border-color: #5b69ff;
+          color: #5b69ff;
+          background-color: rgba(91, 105, 255, 0.06);
+        }
+      }
+    }
+    .inp-list {
+      margin-bottom: 24px;
+      .inp-label {
+        font-size: 13px;
+        color: #333;
+        margin-bottom: 8px;
+      }
+      input {
+        width: 100%;
+        height: 40px;
+        padding-left: 12px;
+        border: 0;
+        background-color: #eee;
+        border-radius: 4px;
+        color: #333;
+      }
+    }
+  }
+  .submit-address {
+    button {
+      font-size: 14px;
+    }
+  }
+}

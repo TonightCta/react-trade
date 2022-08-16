@@ -60,6 +60,11 @@ export const upDefaultBaseCoin = (coin:string) => ({
     type:Type.DEFAULT_CASE_COIN,
     coin
 });
+//设置默认交易币种价格
+export const upDefaultPriceCoin = (price:number) => ({
+    type:Type.DEFAULT_PRICE_COIN,
+    price
+})
 //设置ws服务连接状态
 export const upWSStatus = (status:number) => ({
     type:Type.WS_STATUS,
@@ -102,6 +107,16 @@ export const setInvBox = (status:number) => ({
 export const UpWithdraw = (msg:WithDraw) => ({
     type:Type.UP_WITHDRAW,
     msg
-})
+});
+//设置首页缓存数据
+export const setHomeData = (data:any[]) => ({
+    type:Type.SET_HOME_DATA,
+    data
+});
+//设置无需取消队列
+export const setUnCoin = (coin:string) => ({
+    type:Type.SET_UN_COIN,
+    coin
+});
 
 

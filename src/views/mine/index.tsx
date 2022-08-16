@@ -5,13 +5,15 @@ import MineAssetsManage from "./components/assets_manage";
 import MineInvMsg from "./components/inv_msg";
 import MineNav from "./components/nav_mine";
 import MineOperBar from "./components/oper_bar";
+import { upUserAssets } from '../../store/app/action_fn'
 import './index.scss'
 
 const MineIndex = () : React.ReactElement<ReactNode> => {
     useEffect((): void => {
+        upUserAssets();
         const action = upFooterStatus(1);
         store.dispatch(action);
-    }, []);
+    }, [window.location.href]);
     return (
         <div className="mine-index">
             {/* 头部信息 */}

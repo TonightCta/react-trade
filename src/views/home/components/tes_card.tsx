@@ -11,8 +11,18 @@ interface TesL {
 
 const HomeTexCard = (props: { wsData: any }): ReactElement<ReactNode> => {
     const [TesList, setTesList] = useState<{ msg: TesL[] }[]>([]);
+    const chunk = (arr: TesL[], size: number): TesL[][] => {
+        return Array.from({ length: Math.ceil(arr.length / size) }, (v, i) => arr.slice(i * size, i * size + size));
+    }
     useEffect(() => {
-        QUVal()
+        if (JSON.parse(sessionStorage.getItem('homeData') || '[]').length > 0) {
+            setTesList(chunk(JSON.parse(sessionStorage.getItem('homeData') || '[]'), 3).map(item => { return { msg: item } }));
+        }
+    }, [])
+    useEffect(() => {
+        if (props.wsData.length > 0) {
+            QUVal()
+        }
     }, [props]);
     useEffect(() => {
         return () => {
@@ -20,9 +30,6 @@ const HomeTexCard = (props: { wsData: any }): ReactElement<ReactNode> => {
         }
     }, [])
     const QUVal = async () => {
-        const chunk = (arr: TesL[], size: number): TesL[][] => {
-            return Array.from({ length: Math.ceil(arr.length / size) }, (v, i) => arr.slice(i * size, i * size + size));
-        }
         setTesList(chunk(props.wsData, 3).map(item => { return { msg: item } }));
     };
     const Items = TesList.map((el: any, index): ReactElement => {
@@ -37,7 +44,7 @@ const HomeTexCard = (props: { wsData: any }): ReactElement<ReactNode> => {
                                     <p className="coin-price">{Number(msg.price).toFixed(4)}</p>
                                     <p className="coin-rate">
                                         {msg.type === 1 ? '+' : ''}
-                                        {msg.rate.toFixed(2)}%
+                                        {Number(msg.rate).toFixed(2)}%
                                     </p>
                                 </li>
                             )

@@ -13,7 +13,7 @@ const LoadView: React.FC = (): ReactElement<ReactNode> => {
                 setShowload('load-end');
                 const action = setLoadView(1);
                 store.dispatch(action)
-            }, 1500);
+            }, 100);
         }
     }, []);
     return (

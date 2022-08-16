@@ -1,4 +1,4 @@
-import { Button, Tabs, PullToRefresh } from "antd-mobile";
+import { Button, Tabs, PullToRefresh, DotLoading } from "antd-mobile";
 import { sleep } from 'antd-mobile/es/utils/sleep'
 import { CheckCircleFill, RightOutline, SearchOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
@@ -123,49 +123,54 @@ const MineAssets = (): ReactElement<ReactNode> => {
                     </p>
                 </div>
                 <div className="list-con">
-                    <PullToRefresh
-                        onRefresh={async () => {
-                            await getAssetsList()
-                        }}
-                    >
-                        <ul>
-                            {
-                                assetsList.map((el: Data, index: number): ReactElement => {
-                                    return (
-                                        <li key={index} onClick={() => {
-                                            const action = upBillCoin(el.coin);
-                                            store.dispatch(action);
-                                            history.push('/assets-bill')
-                                        }}>
-                                            <div className="coin-msg">
-                                                <p>
-                                                    <img src={el.logo} alt="" />
-                                                    <span>{el.coin}</span>
-                                                </p>
-                                                <RightOutline color="#999" />
-                                            </div>
-                                            <div className="use-happen">
-                                                <div className="happen-public">
+                    {assetsList.length > 0
+                        ? <PullToRefresh
+                            onRefresh={async () => {
+                                await getAssetsList()
+                            }}
+                        >
+                            <ul>
+                                {
+                                    assetsList.map((el: Data, index: number): ReactElement => {
+                                        return (
+                                            <li key={index} onClick={() => {
+                                                const action = upBillCoin(el.coin);
+                                                store.dispatch(action);
+                                                history.push('/assets-bill')
+                                            }}>
+                                                <div className="coin-msg">
                                                     <p>
-                                                        {/* 可用 */}
-                                                        {t('public.use')}
+                                                        <img src={el.logo} alt="" />
+                                                        <span>{el.coin}</span>
                                                     </p>
-                                                    <p>{el.available?.toFixed(4)}</p>
+                                                    <RightOutline color="#999" />
                                                 </div>
-                                                <div className="happen-public">
-                                                    <p>
-                                                        {/* 冻结 */}
-                                                        {t('public.freeze')}
-                                                    </p>
-                                                    <p>{el.freeze?.toFixed(4)}</p>
+                                                <div className="use-happen">
+                                                    <div className="happen-public">
+                                                        <p>
+                                                            {/* 可用 */}
+                                                            {t('public.use')}
+                                                        </p>
+                                                        <p>{el.available?.toFixed(4)}</p>
+                                                    </div>
+                                                    <div className="happen-public">
+                                                        <p>
+                                                            {/* 冻结 */}
+                                                            {t('public.freeze')}
+                                                        </p>
+                                                        <p>{el.freeze?.toFixed(4)}</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </li>
-                                    )
-                                })
-                            }
-                        </ul>
-                    </PullToRefresh>
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </PullToRefresh>
+                        : <div className="load-list">
+                            <DotLoading color='primary' />
+                        </div>
+                    }
 
                 </div>
             </div>

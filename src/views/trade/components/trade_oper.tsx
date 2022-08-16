@@ -18,7 +18,6 @@ interface Props {
     t: any,
     sellQUList: Depch[],
     buyQUList: Depch[],
-    reloadOrder: () => void,
 }
 const TradeOper = (props: Props): ReactElement<ReactNode> => {
     //交易类型 1 - 买入 2 - 卖出
@@ -35,11 +34,55 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
         setToBalance(await QuireBalance(state.tradeToCoin))
     };
     // 交易深度信息
-    const [upList, setUpList] = useState<Depch[]>([]);
-    const [downList, setDownList] = useState<Depch[]>([]);
+    const [upList, setUpList] = useState<Depch[]>([
+        {
+            Price: '',
+            Quantity: '',
+        },
+        {
+            Price: '',
+            Quantity: '',
+        },
+        {
+            Price: '',
+            Quantity: '',
+        },
+        {
+            Price: '',
+            Quantity: '',
+        },
+        {
+            Price: '',
+            Quantity: '',
+        }
+    ]);
+    const [downList, setDownList] = useState<Depch[]>([
+        {
+            Price: '',
+            Quantity: '',
+        },
+        {
+            Price: '',
+            Quantity: '',
+        },
+        {
+            Price: '',
+            Quantity: '',
+        },
+        {
+            Price: '',
+            Quantity: '',
+        },
+        {
+            Price: '',
+            Quantity: '',
+        }
+    ]);
     useEffect(() => {
-        setUpList(props.sellQUList.slice(props.sellQUList.length - 5, props.sellQUList.length));
-        setDownList(props.buyQUList.slice(props.buyQUList.length - 5, props.buyQUList.length));
+        if (props.sellQUList.length > 0) {
+            setUpList(props.sellQUList.slice(props.sellQUList.length - 5, props.sellQUList.length));
+            setDownList(props.buyQUList.slice(props.buyQUList.length - 5, props.buyQUList.length));
+        }
     }, [props]);
     //交易金额
     const [tradeAmount, setTradeAmount] = useState<number>(0);
@@ -98,11 +141,15 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
         const result = await PlaceCoinOrderApi(params);
         const { code } = result;
         if (code !== 200) {
-            Toast.show('交易成功');
+            Toast.show(result.message);
             return;
         };
-        const action = setReloadOrder(new Date().getTime());
-        store.dispatch(action);
+        Toast.show('交易成功');
+        // const action = setReloadOrder(new Date().getTime());
+        // store.dispatch(action);
+        console.log(window);
+        const win: any = window;
+        win.getOrderList()
         setTradeAmount(0);
         setPersent(0);
         getBalance();
@@ -256,8 +303,8 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
                             upList.map((el, index): ReactElement => {
                                 return (
                                     <li key={index}>
-                                        <p className="el-price">{Number(el.Price).toFixed(4)}</p>
-                                        <p className="el-amount">{Number(el.Quantity).toFixed(6)}</p>
+                                        <p className="el-price">{el.Price ? Number(el.Price).toFixed(4) : '-'}</p>
+                                        <p className="el-amount">{el.Quantity ? Number(el.Quantity).toFixed(6) : '-'}</p>
                                         {/* <div className="el-width"></div> */}
                                     </li>
                                 )
@@ -270,8 +317,8 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
                             downList.map((el, index): ReactElement => {
                                 return (
                                     <li key={index}>
-                                        <p className="el-price">{Number(el.Price).toFixed(4)}</p>
-                                        <p className="el-amount">{Number(el.Quantity).toFixed(6)}</p>
+                                        <p className="el-price">{el.Price ? Number(el.Price).toFixed(4) : '-'}</p>
+                                        <p className="el-amount">{el.Quantity ? Number(el.Quantity).toFixed(6) : '-'}</p>
                                         {/* <div className="el-width"></div> */}
                                     </li>
                                 )
