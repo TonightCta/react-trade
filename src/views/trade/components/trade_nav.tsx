@@ -11,7 +11,7 @@ import { sendWs } from '../../../utils/ws'
 interface DrawProps {
     closeDraw: () => void,
     t: any,
-    base:string
+    base: string
 
 };
 
@@ -54,11 +54,11 @@ const TradeNav = (props: Props): ReactElement<ReactNode> => {
             <div className="right-oper">
                 <StarOutline fontSize={22} />
                 <span></span>
-                <HistogramOutline onClick={async () => {
-                    const result = await QUList();
-                    for (let i in result.data.list) {
-                        if (props.coinMsg.base === result.data.list[i].symbol) {
-                            const action = upCurrentCoin(result.data.list[i]);
+                <HistogramOutline onClick={() => {
+                    const result = store.getState().quList;
+                    result.forEach(e => {
+                        if (props.coinMsg.base == e.symbol) {
+                            const action = upCurrentCoin(e);
                             const actionC = upCurrency(store.getState().defaultCoin);
                             const actionUn = setUnCoin(sessionStorage.getItem('defaultBaseCoin') || '');
                             store.dispatch(action);
@@ -66,7 +66,9 @@ const TradeNav = (props: Props): ReactElement<ReactNode> => {
                             store.dispatch(actionUn);
                             history.push('/quotes-detail')
                         }
-                    }
+                    })
+                    // history.push('/quotes-detail')
+                    // console.log(123)
                 }} fontSize={22} />
             </div>
             {/* 选项弹出层 */}

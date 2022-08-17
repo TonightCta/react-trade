@@ -118,5 +118,10 @@ export const setUnCoin = (coin:string) => ({
     type:Type.SET_UN_COIN,
     coin
 });
+//更新行情
+export const setQU = (qu:any[]) => ({
+    type:Type.SET_QU,
+    qu
+})
 
 

@@ -22,3 +22,4 @@ export const SET_INV_BOX = 'set_inv_box';
 export const UP_WITHDRAW = 'up_withdraw';
 export const SET_HOME_DATA = 'set_home_data';
 export const SET_UN_COIN = 'set_un_coin';
+export const SET_QU = 'set_qu'

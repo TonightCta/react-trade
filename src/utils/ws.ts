@@ -13,18 +13,30 @@ interface WS {
 }
 
 let ws: any;
+let wsStatusInner: number = 0;
 
 export const createWS = async () => {
     const result = await UserInfoApi();
-    if(ws){
-        return
-    }
+    // result.data.quotation.wss_url
     ws = new WebSocket(result.data.quotation.wss_url);
     ws.onopen = (e: any) => {
         const action = upWSStatus(1);
-        store.dispatch(action)
+        wsStatusInner = 1;
+        store.dispatch(action);
     };
-    // ws.onclose = reconnect();
+    ws.onclose = (e: any) => {
+        const action = upWSStatus(0);
+        store.dispatch(action);
+        wsStatusInner = 0;
+        if (wsStatusInner === 0) {
+            setTimeout(() => {
+                ws = null;
+                createWS();
+            }, 3000)
+        } else {
+            wsStatusInner = 1;
+        }
+    };
 
 };
 export const sendWs = (params: WS) => {
@@ -38,6 +50,18 @@ export const getMessage = () => {
 };
 
 export const reconnect = () => {
+    // if()
+    const webs = setInterval(() => {
+        const action = upWSStatus(0);
+        store.dispatch(action);
+        if (store.getState().wsStatus === 0) {
+            console.log('开始重连')
+            createWS();
+        } else {
+            console.log('重连成功')
+            clearInterval(webs)
+        }
+    }, 3000);
     // setTimeout(() => {
     //     ws = null;
     //     createWS();

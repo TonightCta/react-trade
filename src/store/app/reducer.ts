@@ -38,7 +38,8 @@ export interface Store {
     invBox: number,//邀请弹框
     withDrawMsg: WithDraw,
     homeData: any[],
-    unSubscribeCoin:string
+    unSubscribeCoin:string,
+    quList:any[],//行情
 }
 const defaultState: Store = {
     account: JSON.parse(sessionStorage.getItem('account') || '{}'),
@@ -65,6 +66,7 @@ const defaultState: Store = {
     withDrawMsg: JSON.parse(sessionStorage.getItem('withDrawMsg') || '{}'),
     homeData: JSON.parse(sessionStorage.getItem('homeData') || '[]'),//首页数据缓存
     unSubscribeCoin:sessionStorage.getItem('unSubscribeCoin') || '',//无需取消的订阅队列
+    quList:JSON.parse(sessionStorage.getItem('quList') || '[]'),
     
 };
 export default (state = defaultState, action: any) => {
@@ -139,6 +141,9 @@ export default (state = defaultState, action: any) => {
         case Type.DEFAULT_PRICE_COIN:
             sessionStorage.setItem('defaultPriceCoin',action.price);
             return { ...state,defaultPriceCoin:action.price }
+        case Type.SET_QU:
+            sessionStorage.setItem('quList',JSON.stringify(action.qu));
+            return { ...state,quList:action.qu }
         default:
             return state;
     };

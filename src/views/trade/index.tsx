@@ -41,13 +41,13 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
     const [buyQUList, setBuyQUList] = useState<Depch[]>([]);
     const sendSub = () => {
         setTimeout(() => {
-            sendWs({
-                e: 'subscribe',
-                d: {
-                    symbol: coinMsg.base,
-                    interval: "1m"
-                }
-            });
+            // sendWs({
+            //     e: 'subscribe',
+            //     d: {
+            //         symbol: coinMsg.base,
+            //         interval: "1m"
+            //     }
+            // });
             sendWs({
                 e: 'subscribe-depth',
                 d: {
@@ -55,13 +55,18 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
                 }
             });
             getMessage().message.onmessage = (e: any) => {
-                const data = JSON.parse(e.data);
-                if (data.e === "subscribe") {
-                    setCoinPrice(Number(data.k.c))
-                };
-                if (data.e === 'subscribe-depth') {
-                    setBuyQUList(data.d.asks);
-                    setSellQUlist(data.d.bids);
+                try {
+                    const data = JSON.parse(e.data);
+
+                    if (data.e === "subscribe" && data.s === store.getState().defaultBaseCoin) {
+                        setCoinPrice(Number(data.k.c))
+                    };
+                    if (data.e === 'subscribe-depth') {
+                        setBuyQUList(data.d.asks);
+                        setSellQUlist(data.d.bids);
+                    }
+                } catch (err) {
+                    console.log(err)
                 }
             }
         }, 1500)
@@ -71,15 +76,15 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
         wsStatus === 1 && sendSub();
     }, [wsStatus]);
     const unSendWS = () => {
-        if (sessionStorage.getItem('unSubscribeCoin') !== coinMsg.base) {
-            sendWs({
-                e: 'unsubscribe',
-                d: {
-                    symbol: coinMsg.base,
-                    interval: "1m"
-                }
-            });
-        }
+        // if (sessionStorage.getItem('unSubscribeCoin') !== coinMsg.base) {
+        //     sendWs({
+        //         e: 'unsubscribe',
+        //         d: {
+        //             symbol: coinMsg.base,
+        //             interval: "1m"
+        //         }
+        //     });
+        // }
         sendWs({
             e: 'unsubscribe-depth',
             d: {

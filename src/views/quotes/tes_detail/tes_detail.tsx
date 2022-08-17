@@ -75,7 +75,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
             try {
                 JSON.parse(item.data);
                 const data = JSON.parse(item.data);
-                if (data.e === 'subscribe' && data.s === JSON.parse(sessionStorage.getItem('currentCoin') || '{}').symbol) {
+                if (data.e === 'subscribe' && data.s === store.getState().currentCoin.symbol) {
                     const rate = (Number(data.k.c) - Number(currentCoin.yesterday_price)) / Number(currentCoin.yesterday_price) * 100
                     setPriceMsg({
                         price: Number(data.k.c),
@@ -119,13 +119,13 @@ const TesDetail = (): ReactElement<ReactNode> => {
         });
     },[kfilterData])
     const cancelWS = () => {
-        sendWs({
-            e: 'unsubscribe',
-            d: {
-                symbol: currentCoin.symbol,
-                interval: '1m',
-            }
-        });
+        // sendWs({
+        //     e: 'unsubscribe',
+        //     d: {
+        //         symbol: currentCoin.symbol,
+        //         interval: '1m',
+        //     }
+        // });
         sendWs({
             e: 'unsubscribe-deal',
             d: {

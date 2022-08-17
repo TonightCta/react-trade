@@ -45,40 +45,35 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
         const result = await QUList()
         for (let i in result.data.list) {
             arr.push(result.data.list[i]);
-            if(result.data.list[i].symbol === "BTCUSDT"){
+            if (result.data.list[i].symbol === "BTCUSDT") {
                 const action = upDefaultPriceCoin(result.data.list[i].price);
                 store.dispatch(action);
             }
         };
-        arr.forEach(e => {
-            sendWs({
-                e: 'subscribe',
-                d: {
-                    symbol: e.symbol,
-                    interval: '1m'
-                }
-            });
-        });
         getMessage().message.onmessage = ((e: any) => {
-            const wsData = JSON.parse(e.data)
-            let arrVal: any[] = arr;
-            arrVal.forEach(item => {
-                if (wsData.s === item.symbol) {
-                    item.price = wsData.k.c;
-                }
-            });
-            arrVal = arrVal.map(item => {
-                const rate = (item.price - item.yesterday_price) / item.yesterday_price * 100
-                return {
-                    ...item,
-                    rate: rate,
-                    type: rate > 0 ? 1 : 0,
-                    coin: `${item.base}/${item.target}`
-                }
-            });
-            setWsList(arrVal);
-            const action = setHomeData(arrVal);
-            store.dispatch(action);
+            try {
+                const wsData = JSON.parse(e.data)
+                let arrVal: any[] = arr;
+                arrVal.forEach(item => {
+                    if (wsData.s === item.symbol) {
+                        item.price = wsData.k.c;
+                    }
+                });
+                arrVal = arrVal.map(item => {
+                    const rate = (item.price - item.yesterday_price) / item.yesterday_price * 100
+                    return {
+                        ...item,
+                        rate: rate,
+                        type: rate > 0 ? 1 : 0,
+                        coin: `${item.base}/${item.target}`
+                    }
+                });
+                setWsList(arrVal);
+                const action = setHomeData(arrVal);
+                store.dispatch(action);
+            } catch (err) {
+                console.log(err)
+            }
         });
     };
     useEffect(() => {
@@ -90,7 +85,6 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
         if (history.location.pathname === '/home') {
             const action = upFooterStatus(1);
             store.dispatch(action);
-            // token && upUserAssets();
             return () => {
                 setWsList([])
             }
@@ -114,7 +108,7 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
     useEffect(() => {
         storeChange()
         return () => {
-            cancelWS();
+            // cancelWS();
             storeChange();
         }
     }, [])
