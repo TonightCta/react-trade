@@ -21,23 +21,28 @@ const SetLock = (): ReactElement<ReactNode> => {
     });
     const submitSetTradePass = async () => {
         if (!inpMsg.loginPassword) {
-            Toast.show('请输入登录密码');
+            //请输入登录密码
+            Toast.show(t('public.enter_login_pass'));
             return;
         }
         if (!inpMsg.tradePass) {
-            Toast.show('请输入交易密码');
+            // 请输入交易密码
+            Toast.show(t('public.enter_tarde_pass'));
             return;
         }
         if (inpMsg.tradePass.length < 8) {
-            Toast.show('交易密码最少8位');
+            // 交易密码至少8位
+            Toast.show(t('public.last_trade_8'));
             return;
         }
         if (!inpMsg.turnPass) {
-            Toast.show('请再次输入交易密码');
+            //请再次输入交易密码
+            Toast.show(t('public.type_turn_trade'));
             return;
         }
         if (inpMsg.tradePass !== inpMsg.turnPass) {
-            Toast.show('两次密码不一致');
+            //两次密码不一致
+            Toast.show(t('message.pass_faild'));
             return;
         };
         const params = {
@@ -47,7 +52,7 @@ const SetLock = (): ReactElement<ReactNode> => {
         };
         const result = await TradePassApi(params);
         const { code } = result;
-        if(code !== 200){
+        if (code !== 200) {
             Toast.show(result.message);
             return
         };

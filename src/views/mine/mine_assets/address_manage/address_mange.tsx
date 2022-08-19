@@ -1,69 +1,130 @@
-import { Button, Popover } from "antd-mobile";
-import { CloseOutline, DeleteOutline, QuestionCircleOutline } from "antd-mobile-icons";
+import { Button, DotLoading, Empty, Popover, Toast } from "antd-mobile";
+import { CloseOutline, QuestionCircleOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import InnerNav from '../../../../components/inner_nav/nav';
 import store from "../../../../store";
 import { upFooterStatus } from "../../../../store/app/action_creators";
 import { SwipeAction, Popup } from 'antd-mobile';
-import './index.scss'
+import { useTranslation } from "react-i18next";
+import { AddressListApi, AddAddressApi, RemoveAddressApi } from '../../../../request/api';
+import { useHistory } from "react-router-dom";
+import './index.scss';
+
+interface upMsg {
+    address: string,
+    remark: string
+}
 
 
 const AddressManage = (): ReactElement<ReactNode> => {
-    const [addressList, setAddress] = useState<any[]>([1, 2, 3, 4,5]);
+    const [addressList, setAddress] = useState<any[]>([]);
     const [addBox, setAddBox] = useState<boolean>(false);
-    const [defaultNet, setDefaultNet] = useState<string>('ERC20');
-    const [netList, setNetlist] = useState<string[]>(['ERC20', 'OMNI'])
-    useEffect(() => {
-        const action = upFooterStatus(0);
-        store.dispatch(action)
-    }, []);
+    const [defaultNet, setDefaultNet] = useState<string>(store.getState().chainMsg.protocol);
+    const [netList, setNetlist] = useState<string[]>([store.getState().chainMsg.protocol]);
+    const [dataTotal, setDataTotal] = useState<number>(1);
+    const [inpMsg, setInpMsg] = useState<upMsg>({
+        address: "",
+        remark: ""
+    })
+    const { t } = useTranslation();
     const closePop = () => {
         setAddBox(false)
-    }
+    };
+    const getAdList = async () => {
+        const params = {
+            page:1,
+            limit:200,
+            search:{
+                coin:store.getState().chainMsg.coin,
+                protocol:store.getState().chainMsg.protocol
+            }
+        }
+        const result = await AddressListApi(params);
+        setDataTotal(result.data.total);
+        setAddress(result.data.list);
+    };
+    useEffect(() => {
+        const action = upFooterStatus(0);
+        store.dispatch(action);
+        getAdList();
+        return () => {
+            getAdList();
+            setAddress([])
+        }
+    }, []);
+    const history = useHistory();
     return (
         <div className="address-manage">
-            <InnerNav leftArrow title="地址管理" />
-            <div className="address-list">
-                {
-                    addressList.map((item: any, index: number): ReactElement => {
-                        return (
-                            <div className="list-content">
-                                <SwipeAction key={index} rightActions={[
-                                    {
-                                        key: 'delete',
-                                        text: '删除',
-                                        color: 'danger',
-                                    },
-                                ]}>
-                                    <div className="address-content">
-                                        <div className="address-remark">
-                                            <p className="remark-text">
-                                                这里是备注
-                                            </p>
-                                            <p className="remark-tag">
-                                                ERC20
-                                            </p>
+            <InnerNav leftArrow title={`${store.getState().chainMsg.coin}${t('public.address_manage')}`} />
+            {
+                dataTotal === 0
+                    ? <Empty description='暂无地址' />
+                    : addressList.length > 0
+                        ? <div className="address-list">
+                            {
+                                addressList.map((item: any, index: number): ReactElement => {
+                                    return (
+                                        <div className="list-content" key={index} onClick={() => {
+                                            sessionStorage.setItem('selectAddress',item.address);
+                                            history.goBack();
+                                        }}>
+                                            <SwipeAction rightActions={[
+                                                {
+                                                    key: 'delete',
+                                                    text: t('public.delete'),
+                                                    color: 'danger',
+                                                },
+                                            ]} onAction={async () => {
+                                                console.log(item);
+                                                const result = await RemoveAddressApi(item.id);
+                                                const { code } = result;
+                                                if (code !== 200) {
+                                                    Toast.show(result.message);
+                                                    return;
+                                                };
+                                                Toast.show('删除成功');
+                                                getAdList();
+                                            }}>
+                                                <div className="address-content">
+                                                    <div className="address-remark">
+                                                        <p className="remark-text">
+                                                            {item.comment}
+                                                        </p>
+                                                        <p className="remark-tag">
+                                                            {item.protocol}
+                                                        </p>
+                                                    </div>
+                                                    <p className="address-text">{item.address}</p>
+                                                </div>
+                                            </SwipeAction>
                                         </div>
-                                        <p className="address-text">TESuqEdPXAviVusYf6deBjKMprRBZa6yqE</p>
-                                    </div>
-                                </SwipeAction>
-                            </div>
-                        )
-                    })
-                }
-            </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        : <div className="load-list">
+                            <DotLoading color='primary' />
+                        </div>
+            }
+
+
             <div className="add-address" onClick={() => { setAddBox(true) }}>
-                <Button color="primary" block>添加地址</Button>
+                <Button color="primary" block>
+                    {/* 添加地址 */}
+                    {t('public.add_address')}
+                </Button>
             </div>
             <Popup visible={addBox} onMaskClick={() => { closePop() }}>
                 <div className="add-content">
                     <p className="add-title">
-                        添加地址
-                        <span onClick={() => {closePop()}}><CloseOutline /></span>
+                        {/* 添加地址 */}
+                        {t('public.add_address')}
+                        <span onClick={() => { closePop() }}><CloseOutline /></span>
                     </p>
                     <div className="inp-box">
                         <p className="inp-title">
-                            可用网络
+                            {/* 可用网络 */}
+                            {t('public.use_network')}
                             <Popover
                                 content='Hello World'
                                 trigger='click'
@@ -89,16 +150,59 @@ const AddressManage = (): ReactElement<ReactNode> => {
                             </ul>
                         </div>
                         <div className="inp-list">
-                            <p className="inp-label">地址</p>
-                            <input type="text" placeholder="输入或长按粘贴地址" />
+                            <p className="inp-label">
+                                {/* 地址 */}
+                                {t('public.address')}
+                            </p>
+                            <input type="text" value={inpMsg.address} onChange={(e) => {
+                                setInpMsg({
+                                    ...inpMsg,
+                                    address: e.target.value
+                                });
+                            }} placeholder={t('public.type_address')} />
                         </div>
                         <div className="inp-list">
-                            <p className="inp-label">备注</p>
-                            <input type="text" placeholder="输入该地址备注" />
+                            <p className="inp-label">
+                                {/* 备注 */}
+                                {t('public.remark')}
+                            </p>
+                            <input type="text" value={inpMsg.remark} onChange={(e) => {
+                                setInpMsg({
+                                    ...inpMsg,
+                                    remark: e.target.value
+                                });
+                            }} placeholder={t('public.type_address_remark')} />
                         </div>
                     </div>
                     <div className="submit-address">
-                        <Button color="primary" block>保存</Button>
+                        <Button color="primary" block onClick={async () => {
+                            if (!inpMsg.address) {
+                                Toast.show('请输入地址');
+                                return
+                            }
+                            if (!inpMsg.remark) {
+                                Toast.show('请输入地址备注');
+                                return;
+                            };
+                            const params = {
+                                coin: store.getState().chainMsg.coin,
+                                protocol: store.getState().chainMsg.protocol,
+                                address: inpMsg.address,
+                                comment: inpMsg.remark
+                            };
+                            const result = await AddAddressApi(params);
+                            const { code } = result;
+                            if(code !== 200){
+                                Toast.show(result.message);
+                                return;
+                            };
+                            Toast.show('保存成功');
+                            closePop();
+                            getAdList();
+                        }}>
+                            {/* 保存 */}
+                            {t('public.save')}
+                        </Button>
                     </div>
                 </div>
             </Popup>

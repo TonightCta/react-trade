@@ -18,11 +18,12 @@
   .inv-msg {
     width: 100%;
     display: flex;
-    background: url('../../../assets/images/mine_bg.png');
+    background: #eee;
     border-radius: 8px;
     padding:20px 12px;
     justify-content: space-between;
     align-items: center;
+    margin-top: 12px;
     p {
       font-size: 14px;
     }

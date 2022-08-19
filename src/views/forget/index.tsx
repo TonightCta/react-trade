@@ -101,9 +101,9 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
             return;
         };
         if (inpMsg.repeatPass !== inpMsg.newPass) {
-            Toast.show(t('message.pass_failed'));
+            Toast.show(t('message.pass_faild'));
             return;
-        };
+        }; 
         const params = {
             type: 2,
             email: inpMsg.email,

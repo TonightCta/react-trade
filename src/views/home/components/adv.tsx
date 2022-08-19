@@ -30,6 +30,7 @@ const AdvSwiper = (props: { history: any }): ReactElement<ReactNode> => {
         getAdvList();
         return () => {
             getAdvList();
+            setAdvList([]);
         }
     }, [])
     return (

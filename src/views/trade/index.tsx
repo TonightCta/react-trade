@@ -22,19 +22,19 @@ interface Depch {
 const TradeIndex = React.forwardRef((props: any, ref: any) => {
     const { t } = useTranslation();
     const [coinPrice, setCoinPrice] = useState<number>(0);
-    const orderList: any = useRef(null);
+    // const orderList: any = useRef(null);
     // ws服务连接状态
     const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus)
     const [coinMsg, setCoinMsg] = useState<Coin>({
-        coin: store.getState().defaultCoin,
-        base: store.getState().defaultBaseCoin
+        coin: `${store.getState().currentCoin.base}/${store.getState().currentCoin.target}`,
+        base: store.getState().currentCoin.symbol
     });
     store.subscribe(() => {
         setCoinMsg({
-            coin: store.getState().defaultCoin,
-            base: store.getState().defaultBaseCoin
+            coin: `${store.getState().currentCoin.base}/${store.getState().currentCoin.target}`,
+            base: store.getState().currentCoin.symbol
         });
-        setCoinPrice(Number(sessionStorage.getItem('defaultPriceCoin')));
+        setCoinPrice(Number(JSON.parse(sessionStorage.getItem('currentCoin') || '{}').price));
         setWsStatus(store.getState().wsStatus)
     });
     const [sellQUList, setSellQUlist] = useState<Depch[]>([]);
@@ -58,7 +58,7 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
                 try {
                     const data = JSON.parse(e.data);
 
-                    if (data.e === "subscribe" && data.s === store.getState().defaultBaseCoin) {
+                    if (data.e === "subscribe" && data.s === store.getState().currentCoin.symbol) {
                         setCoinPrice(Number(data.k.c))
                     };
                     if (data.e === 'subscribe-depth') {
@@ -72,7 +72,7 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
         }, 1500)
     };
     useEffect(() => {
-        setCoinPrice(Number(sessionStorage.getItem('defaultPriceCoin')));
+        setCoinPrice(Number(JSON.parse(sessionStorage.getItem('currentCoin') || '{}').price));
         wsStatus === 1 && sendSub();
     }, [wsStatus]);
     const unSendWS = () => {

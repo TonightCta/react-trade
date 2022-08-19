@@ -5,6 +5,7 @@ import { withRouter, Route, Switch, Redirect, useLocation, Router } from "react-
 import PrivateRoute from "./private";
 import { createHashHistory } from "history";
 import "./index.css";
+import { upUserAssets } from "../store/app/action_fn";
 
 const RouteConfig = (): ReactElement<ReactNode> => {
   useEffect((): void => {
@@ -14,6 +15,7 @@ const RouteConfig = (): ReactElement<ReactNode> => {
   const history = createHashHistory();
   history.listen((location: any) => {
     setTimeout(() => {
+      // upUserAssets()
       if (location.action === 'POP') return;
       window.scrollTo(0, 0);
     });
@@ -23,9 +25,9 @@ const RouteConfig = (): ReactElement<ReactNode> => {
       <TransitionGroup>
         <CSSTransition key={location.pathname} timeout={1000} classNames="page">
           <Switch location={location}>
-            <Route path="/" exact render={() => <Redirect to="/home" />}></Route>
+            <Route path="/"  exact render={() => <Redirect to="/home" />}></Route>
             <Route path="/login" component={View.LoginIndex}></Route>
-            <Route path="/home" component={View.HomeIndex}></Route>
+            <Route path={`/home`} component={View.HomeIndex}></Route>
             <Route path="/quotes" component={View.QuotesIndex}></Route>
             <Route path="/quotes-detail" key={new Date().getTime()} component={View.TesDetail}></Route>
             <Route path="/setting" component={View.SetIndex}></Route>

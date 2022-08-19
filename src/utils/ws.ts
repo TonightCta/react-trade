@@ -48,24 +48,3 @@ export const getMessage = () => {
         message: ws
     };
 };
-
-export const reconnect = () => {
-    // if()
-    const webs = setInterval(() => {
-        const action = upWSStatus(0);
-        store.dispatch(action);
-        if (store.getState().wsStatus === 0) {
-            console.log('开始重连')
-            createWS();
-        } else {
-            console.log('重连成功')
-            clearInterval(webs)
-        }
-    }, 3000);
-    // setTimeout(() => {
-    //     ws = null;
-    //     createWS();
-    // }, 3000)
-}
-
-

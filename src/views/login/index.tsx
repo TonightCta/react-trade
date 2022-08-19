@@ -47,10 +47,12 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
 
         const info = await upUserInfo();
         if (info.code !== 200) {
-            Toast.show('登录异常，请稍后再试');
+            //登录异常，请稍后再试
+            Toast.show(t('message.login_faild'));
             return;
         };
-        Toast.show('登录成功')
+        //登录成功
+        Toast.show(t('message.login_success'))
         history.push('/')
     }
     return (

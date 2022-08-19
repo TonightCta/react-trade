@@ -7,6 +7,7 @@ import store from "../../../store";
 import { upBillCoin, upFooterStatus } from "../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { upUserAssets } from "../../../store/app/action_fn";
 import { UserAssetsApi } from '../../../request/api'
 import './index.scss'
 
@@ -30,8 +31,12 @@ const MineAssets = (): ReactElement<ReactNode> => {
         assetsList.length < 1 && setAssetsList(arr.map(item => { return item }))
         selocalUse(arr.map(item => { return item }))
     }, []);
-    const name = 1;
-    const assets = store.getState().assets;
+    const [assets, setAssets] = useState<number>(store.getState().assets);
+    const storeChange = () => {
+        store.subscribe(() => {
+            setAssets(store.getState().assets)
+        })
+    }
     //搜索值
     const [searchCoin, setSearchCoin] = useState<any>();
     // 筛选币种
@@ -71,16 +76,20 @@ const MineAssets = (): ReactElement<ReactNode> => {
         const action = upFooterStatus(0);
         store.dispatch(action);
         getAssetsList();
+        upUserAssets();
+        storeChange()
         return () => {
             setAssetsList([]);
             selocalUse([]);
             setIsZroe(0)
+            upUserAssets();
+            storeChange();
         }
     }, []);
 
     return (
         <div className="mine-assets">
-            <InnerNav backMine title="我的资产" />
+            <InnerNav backMine title={t('public.assets')} />
             <div className="assets-overview">
                 <div className="view-msg">
                     {/* 总资产约 */}

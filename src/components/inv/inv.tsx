@@ -4,15 +4,17 @@ import { ReactElement, ReactNode, useEffect, useState } from "react";
 import store from "../../store";
 import { setInvBox } from "../../store/app/action_creators";
 import copy from 'copy-to-clipboard';
-import { InvInfoApi } from '../../request/api'
+import { InvInfoApi } from '../../request/api';
+import { useTranslation } from "react-i18next";
 import './index.scss'
 
 
 
 const InvBox = (): ReactElement<ReactNode> => {
+    const { t } = useTranslation();
     const [invBox, setInvBoxInner] = useState<boolean>(false);
     const [openStatus, setOpenStstus] = useState<number>(store.getState().invBox);
-    const [link,setLink] = useState<string>('');
+    const [link, setLink] = useState<string>('');
     const storeChange = () => {
         store.subscribe(() => {
             setOpenStstus(store.getState().invBox)
@@ -42,20 +44,26 @@ const InvBox = (): ReactElement<ReactNode> => {
             <Popup visible={invBox} onMaskClick={() => { closeInvBox() }}>
                 <div className="inv-inner">
                     <div className="inv-title">
-                        <p>更多分享方式</p>
-                        <p onClick={() => {closeInvBox()}}>
+                        <p>
+                            {/* 更多分享方式 */}
+                            {t('public.more_share')}
+                        </p>
+                        <p onClick={() => { closeInvBox() }}>
                             <CloseOutline />
                         </p>
                     </div>
                     <div className="inv-content">
-                        <p>邀请链接</p>
+                        <p>
+                            {/* 邀请链接 */}
+                            {t('public.share_link')}
+                        </p>
                         <p>
                             <span>{link}</span>
                             <span>
                                 <VideoOutline onClick={() => {
                                     copy(link);
-                                    Toast.show({content:'Copy成功',position: 'bottom',})
-                                }}/>
+                                    Toast.show({ content: t('message.copy_success'), position: 'bottom', })
+                                }} />
                             </span>
                         </p>
                     </div>

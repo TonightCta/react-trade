@@ -98,9 +98,9 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                 <div className="box-public select-country">
                     <p>
                         {/* 邮箱 */}
-                        国家
+                        {t('public.country')}
                     </p>
-                    <input type="text" value={selectCountry} onChange={() => { }} placeholder="请选择国家地区" />
+                    <input type="text" value={selectCountry} onChange={() => { }} placeholder={t('public.type_country')} />
                     <p className="mask-select" onClick={() => { setSelectCountryBox(true) }}></p>
                     <span><DownOutline fontSize={18} color="#999" /></span>
                 </div>
@@ -143,7 +143,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         Toast.show(t('message.send_code_success'));
                         setInpMsg({
                             ...inpMsg,
-                            code:result.data.code
+                            code: result.data.code
                         })
                         countDown()
                     } : () => { }}>
@@ -166,7 +166,8 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                 <p className="login-btn">
                     <Button color="primary" block onClick={async () => {
                         if (!getCountryCode(selectCountry)) {
-                            Toast.show('请选择国家地区');
+                            //请选择国家地区
+                            Toast.show(t('message.type_country'));
                             return
                         }
                         if (!inpMsg.email) {
@@ -191,8 +192,8 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             password: inpMsg.password,
                             password_confirmation: inpMsg.password,
                             code: inpMsg.code,
-                            country:getCountryCode(selectCountry),
-                            invite_code:GetUrlKey('code',window.location.href) || null
+                            country: getCountryCode(selectCountry),
+                            invite_code: GetUrlKey('code', window.location.href) || null
                         };
                         const result = await RegisterApi(params);
                         const { code } = result;
@@ -223,7 +224,9 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         <Button color="primary" block onClick={() => {
                             setSelectCountry(country[0])
                             setSelectCountryBox(false);
-                        }}>确认</Button>
+                        }}>
+                            {t('public.confirm')}
+                        </Button>
                     </div>
                 </div>
             </Popup>

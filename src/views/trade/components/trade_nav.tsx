@@ -1,12 +1,15 @@
-import { CloseCircleOutline, FilterOutline, HistogramOutline, StarOutline } from "antd-mobile-icons";
-import { ReactElement, ReactNode, useState } from "react";
-import { Popup } from 'antd-mobile';
+import { CloseCircleOutline, FilterOutline, HistogramOutline, StarFill, StarOutline } from "antd-mobile-icons";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { Popup, Toast } from 'antd-mobile';
 import TesTabs from "../../quotes/components/tes_tabs";
+import { Store } from '../../../store/app/reducer'
 import store from '../../../store/index'
-import { QUList } from '../../../request/api'
-import { setUnCoin, upCurrency, upCurrentCoin } from "../../../store/app/action_creators";
+// import { QUList } from '../../../request/api'
+// import { setUnCoin, upCurrency, upCurrentCoin } from "../../../store/app/action_creators";
 import { useHistory } from 'react-router-dom';
-import { sendWs } from '../../../utils/ws'
+import { AddOptionalApi, QUList } from '../../../request/api'
+import { setQU, upCurrentCoin } from "../../../store/app/action_creators";
+// import { sendWs } from '../../../utils/ws'
 
 interface DrawProps {
     closeDraw: () => void,
@@ -42,7 +45,49 @@ const TradeNav = (props: Props): ReactElement<ReactNode> => {
     const history = useHistory();
 
     const [drawStatus, setDrawStatus] = useState<boolean>(false);
-
+    const [state, setState] = useState<Store>(store.getState());
+    const storeChange = () => {
+        store.subscribe(() => {
+            setState(store.getState())
+        })
+    };
+    useEffect(() => {
+        storeChange();
+        return () => {
+            storeChange();
+        }
+    }, []);
+    //添加 ｜ 取消 自选
+    const addOptional = async (_id: number, _type: string) => {
+        const params = {
+            qid: _id,
+            type: _type
+        }
+        const result = await AddOptionalApi(params);
+        const { code } = result;
+        if (code !== 200) {
+            Toast.show(result.message);
+            return;
+        };
+        if (_type === 'IN') {
+            Toast.show('添加自选成功');
+        } else {
+            Toast.show('取消自选成功');
+        };
+        const list = await QUList();
+        const arr: any[] = [];
+        for (let i in list.data.list) {
+            arr.push(list.data.list[i]);
+        };
+        const actionQU = setQU(arr);
+        arr.forEach((e) => {
+            if (e.symbol === state.currentCoin.symbol) {
+                const action = upCurrentCoin(e);
+                store.dispatch(action)
+            }
+        })
+        store.dispatch(actionQU)
+    }
     return (
         <div className="trade-nav">
             <div className="left-oper">
@@ -52,18 +97,26 @@ const TradeNav = (props: Props): ReactElement<ReactNode> => {
                 <p>{props.coinMsg.coin}</p>
             </div>
             <div className="right-oper">
-                <StarOutline fontSize={22} />
+                {state.currentCoin.collect != null
+                    ? <StarFill fontSize={22} color="#FFD94F" onClick={() => {
+                        addOptional(state.currentCoin.id, 'OUT')
+                    }} />
+                    : <StarOutline fontSize={22} onClick={async () => {
+                        // console.log(store.getState().defaultCoinID);
+                        addOptional(state.currentCoin.id, 'IN')
+                    }} />
+                }
                 <span></span>
                 <HistogramOutline onClick={() => {
                     const result = store.getState().quList;
                     result.forEach(e => {
                         if (props.coinMsg.base == e.symbol) {
-                            const action = upCurrentCoin(e);
-                            const actionC = upCurrency(store.getState().defaultCoin);
-                            const actionUn = setUnCoin(sessionStorage.getItem('defaultBaseCoin') || '');
-                            store.dispatch(action);
-                            store.dispatch(actionC);
-                            store.dispatch(actionUn);
+                            // const action = upCurrentCoin(e);
+                            // const actionC = upCurrency(store.getState().defaultCoin);
+                            // const actionUn = setUnCoin(sessionStorage.getItem('defaultBaseCoin') || '');
+                            // store.dispatch(action);
+                            // store.dispatch(actionC);
+                            // store.dispatch(actionUn);
                             history.push('/quotes-detail')
                         }
                     })

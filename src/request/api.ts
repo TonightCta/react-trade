@@ -20,36 +20,44 @@ export const QUList = (p?: o) => get<IResponse>(`/quotation/list/${p ? p : ''}`)
 //币种列表
 export const CoinsListApi = () => get<IResponse>('/assets/coins');
 //充值地址
-export const RechargeAddressApi = (p: { coin: string | null, protocol: string | null}) => get<IResponse>(`/assets/address/${p.coin}/${p.protocol}`);
+export const RechargeAddressApi = (p: { coin: string | null, protocol: string | null }) => get<IResponse>(`/assets/address/${p.coin}/${p.protocol}`);
 //交易密码
 export const TradePassApi = (p: o) => post<IResponse>('/security/changePayPassword', p);
 //重置登录密码
 export const ResetPassApi = (p: o) => post<IResponse>('/security/changePassword', p);
 //币币交易
-export const PlaceCoinOrderApi = (p:o) => post<IResponse>("/spot/order/place",p);
+export const PlaceCoinOrderApi = (p: o) => post<IResponse>("/spot/order/place", p);
 //订单列表
-export const OderListApi = (p:o) => post<IResponse>("/order/spot/list",p);
+export const OderListApi = (p: o) => post<IResponse>("/order/spot/list", p);
 //取消委托
-export const CancelOrderApi = (p:string) => get<IResponse>(`/spot/order/cancel/${p}`);
+export const CancelOrderApi = (p: string) => get<IResponse>(`/spot/order/cancel/${p}`);
 //实名认证
-export const AuthCardApi = (p:o) => post<IResponse>('/security/bindKyc',p);
+export const AuthCardApi = (p: o) => post<IResponse>('/security/bindKyc', p);
 //公告列表
-export const AdvListApi = (p?:number) => get<IResponse>(`/cms/noticesList/${p}`);
+export const AdvListApi = (p?: number) => get<IResponse>(`/cms/noticesList/${p}`);
 //公告详情
-export const AdvDetailApi = (p:number) => get<IResponse>(`/cms/notices/${p}`);
+export const AdvDetailApi = (p: number) => get<IResponse>(`/cms/notices/${p}`);
 //资产流水
-export const AssetsBillApi = (p:o) => post<IResponse>('/assets/account/list/spot',p);
+export const AssetsBillApi = (p: o) => post<IResponse>('/assets/account/list/spot', p);
 //地区支持列表
 export const CountryListApi = () => get<IResponse>('/user/country');
 //邀请信息
 export const InvInfoApi = () => get<IResponse>('/user/inviteInfo');
 //意见反馈
-export const FeedBackApi = (p:o) => post<IResponse>('/user/feedback',p);
+export const FeedBackApi = (p: o) => post<IResponse>('/user/feedback', p);
 //帮助中心
 export const HelpListApi = () => get<IResponse>('/cms/help');
 //帮助详情
-export const HelpDetailApi = (p:number) => get<IResponse>(`/cms/article/${p}`);
+export const HelpDetailApi = (p: number) => get<IResponse>(`/cms/article/${p}`);
 //提币发起
-export const WithDrawApi = (p:o) => post<IResponse>('/assets/withdraw',p);
+export const WithDrawApi = (p: o) => post<IResponse>('/assets/withdraw', p);
 //获取广告图
 export const BannerListApi = () => get<IResponse>('/cms/banner');
+//添加自选
+export const AddOptionalApi = (p: o) => post<IResponse>('/quotation/collect', p);
+//地址列表
+export const AddressListApi = (p:o) => post<IResponse>('/assets/book/list',p);
+//新增地址
+export const AddAddressApi = (p:o) => post<IResponse>('/assets/book/create',p);
+//删除地址
+export const RemoveAddressApi = (p:string | number) => get<IResponse>(`/assets/book/delete/${p}`) 

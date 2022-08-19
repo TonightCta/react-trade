@@ -36,7 +36,7 @@ const SafeIndex = (): ReactElement<ReactNode> => {
                 title: t('public.verify_card'),//实名认证
                 url: '/auth-card',
                 isGo: accountMsg?.security?.kyc === 0 ? true : false,
-                extra: accountMsg?.security?.kyc === 0 && '未认证' || accountMsg?.security?.kyc === 1 && '已认证' || accountMsg?.security?.kyc === 2 && '审核中' || ''
+                extra: accountMsg?.security?.kyc === 0 && t('public.un_auth') || accountMsg?.security?.kyc === 1 && t('public.had_auth') || accountMsg?.security?.kyc === 2 && t('public.auth_processing') || ''
             },
             {
                 title: t('public.edit_login_pass'),//修改登录密码

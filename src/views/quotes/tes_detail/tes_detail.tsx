@@ -18,16 +18,16 @@ interface PMsg {
     price: number,
     rate: number
 }
-interface KData{
-    second:number,
-    type:string
+interface KData {
+    second: number,
+    type: string
 }
 
 
 const TesDetail = (): ReactElement<ReactNode> => {
     const currentCoin = store.getState().currentCoin;
     const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus);
-    const [kfilterData,setFilterKData] = useState<KData>(store.getState().kData)
+    const [kfilterData, setFilterKData] = useState<KData>(store.getState().kData)
     const [priceMsg, setPriceMsg] = useState<PMsg>({
         price: 0,
         type: 1,
@@ -75,18 +75,29 @@ const TesDetail = (): ReactElement<ReactNode> => {
             try {
                 JSON.parse(item.data);
                 const data = JSON.parse(item.data);
+                if (data.e === 'kline') {
+                    setkData(data);
+                    // console.log(data)
+                };
                 if (data.e === 'subscribe' && data.s === store.getState().currentCoin.symbol) {
                     const rate = (Number(data.k.c) - Number(currentCoin.yesterday_price)) / Number(currentCoin.yesterday_price) * 100
                     setPriceMsg({
                         price: Number(data.k.c),
                         rate: Number(rate),
                         type: rate > 0 ? 1 : 0,
-                    });
+                    }); 
+                    if (data.k.t >= kData.k[kData.k.length - 1].t) {
+                        sendWs({
+                            e: 'kline',
+                            d: {
+                                symbol: currentCoin.symbol,
+                                interval: kfilterData.type,
+                                start: new Date().getTime() - kfilterData.second * 1000 * 100,
+                                end: new Date().getTime(),
+                            }
+                        });
+                    }
                 }
-                if (data.e === 'kline') {
-                    setkData(data);
-                    // console.log(data)
-                };
                 if (data.e === 'subscribe-deal') {
                     setDealData(data.d);
                 }
@@ -113,11 +124,11 @@ const TesDetail = (): ReactElement<ReactNode> => {
             d: {
                 symbol: currentCoin.symbol,
                 interval: kfilterData.type,
-                start:new Date().getTime() - kfilterData.second  * 1000 * 100,
-                end:new Date().getTime(),
+                start: new Date().getTime() - kfilterData.second * 1000 * 100,
+                end: new Date().getTime(),
             }
         });
-    },[kfilterData])
+    }, [kfilterData])
     const cancelWS = () => {
         // sendWs({
         //     e: 'unsubscribe',

@@ -20,23 +20,28 @@ const ResetPass = (): ReactElement<ReactNode> => {
     });
     const submitResetPass = async () => {
         if (!inpMsg.oldPass) {
-            Toast.show('请输入原密码');
+            //请输入原密码
+            Toast.show(t('message.type_old_pass'));
             return
         }
         if (!inpMsg.password) {
-            Toast.show('请输入新密码');
+            //请输入新密码
+            Toast.show(t('public.enter_new_pass'));
             return
         }
         if (inpMsg.password.length < 8) {
-            Toast.show('登录密码最少8位');
+            //登录密码最少8位
+            Toast.show(t('public.last_8'));
             return
         }
         if (!inpMsg.turnPass) {
-            Toast.show('请再次输入新密码');
+            //请再次输入新密码
+            Toast.show(t('public.type_turn'));
             return
         }
         if (inpMsg.turnPass !== inpMsg.password) {
-            Toast.show('两次密码不一致');
+            //两次密码不一致
+            Toast.show(t('message.pass_faild'));
             return
         };
         const params = {
@@ -50,7 +55,8 @@ const ResetPass = (): ReactElement<ReactNode> => {
             Toast.show(result.message);
             return;
         };
-        Toast.show('修改成功，请重新登录');
+        //修改成功，请重新登录
+        Toast.show(t('message.re_login'));
         history.push('/login')
     }
     return (

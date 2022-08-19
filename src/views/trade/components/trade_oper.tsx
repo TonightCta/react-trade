@@ -5,7 +5,6 @@ import store from "../../../store";
 import { QuireBalance } from '../../../utils'
 import React from "react";
 import { PlaceCoinOrderApi } from '../../../request/api';
-import { setReloadOrder } from "../../../store/app/action_creators";
 
 interface Depch {
     Price: number | string,
@@ -134,7 +133,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
             tradeType === 2 && tradeWay === 2 && 'SELL_LIMIT'
         const params = {
             type: type,
-            symbol: state.defaultBaseCoin,
+            symbol: state.currentCoin.symbol,
             price: limitPrice,
             amount: tradeAmount
         };
@@ -144,10 +143,10 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
             Toast.show(result.message);
             return;
         };
-        Toast.show('交易成功');
+        //交易成功
+        Toast.show(props.t('message.trade_success'));
         // const action = setReloadOrder(new Date().getTime());
         // store.dispatch(action);
-        console.log(window);
         const win: any = window;
         win.getOrderList()
         setTradeAmount(0);
@@ -165,9 +164,13 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
         return () => {
             getBalance()
             storeChange();
+            setUpList([]);
+            setDownList([]);
         }
     }, [])
-
+    useEffect(() => {
+        getBalance();
+    },[state.currentCoin])
     const colosePopip = () => {
         setSelectWayBox(false);
     }
@@ -194,7 +197,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
                     setSelectWayBox(true)
                 }}>
                     {/* 市价委托 */}
-                    {tradeWay === 1 ? props.t('public.way_city') : '限价委托'}
+                    {tradeWay === 1 ? props.t('public.way_city') : props.t('public.entrust_limit')}
                 </div>
                 {/* 方式二级 */}
                 {
@@ -332,14 +335,23 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
             }}>
                 <div className="select-trade-way">
                     <ul>
-                        <li onClick={() => { setTradeWay(1); colosePopip() }}>市价委托</li>
+                        <li onClick={() => { setTradeWay(1); colosePopip() }}>
+                            {/* 市价委托 */}
+                            {props.t('public.entrust_market')}
+                        </li>
                         <li onClick={() => {
                             setTradeWay(2);
                             setLimitPrice(props.coinPrice);
                             colosePopip();
-                        }}>限价委托</li>
+                        }}>
+                            {/* 限价委托 */}
+                            {props.t('public.entrust_limit')}
+                        </li>
                     </ul>
-                    <div className="cancel-popup" onClick={() => { colosePopip(); }}>取消</div>
+                    <div className="cancel-popup" onClick={() => { colosePopip(); }}>
+                        {/* 取消 */}
+                        {props.t('public.cancel')}
+                    </div>
                 </div>
             </Popup>
         </div>

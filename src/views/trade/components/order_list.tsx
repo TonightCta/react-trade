@@ -1,9 +1,10 @@
-import { ReactElement, useImperativeHandle, useEffect, useState } from "react";
+import { ReactElement, useImperativeHandle, useEffect, useState, useCallback } from "react";
 import { Button, DotLoading, Empty, List, PullToRefresh, Toast } from 'antd-mobile';
 import { OderListApi, CancelOrderApi } from '../../../request/api';
 import React from "react";
 import store from "../../../store";
 import { sleep } from "antd-mobile/es/utils/sleep";
+import { t } from "i18next";
 
 interface OrderMsg {
     type?: number,//订单类型 当前 & 历史
@@ -29,7 +30,7 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
             setUpTime(store.getState().upLoadOrder)
         });
     };
-    const getOrderList = async (_type?: number) => {
+    const getOrderList = useCallback(async (_type?: number) => {
         setIsLoading(true)
         const order_type: string = props.tradeWay && props.tradeWay !== '' ? props.tradeWay === props.t('public.buy_in') ? 'IN' : 'OUT' : ''
         const trade_type: string = props.tradeType && props.tradeType !== '' ? props.tradeType === props.t('public.way_city') ? 'MARKET' : 'LIMIT' : ''
@@ -37,7 +38,7 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
             page: page,
             limit: props.limit ? props.limit : 8,
             search: {
-                group_status: _type ? Number(_type) : 1,
+                group_status: dataType,
                 symbol: props.tradeQu?.replace('/', ''),
                 direction: order_type,
                 trade_type: trade_type,
@@ -56,7 +57,7 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
         } else {
             setOrderList(result.data.list)
         }
-    };
+    }, [])
     const loadMore = async () => {
         setPage(page + 1);
         await getOrderList(dataType);
@@ -70,7 +71,7 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
         getOrderList(dataType);
     }, [page])
     useEffect(() => {
-        const win : any = window;
+        const win: any = window;
         win.getOrderList = getOrderList;
         storeChange();
         getOrderList();
@@ -94,7 +95,7 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
         <div className="order-list">
             {
                 dataTotal === 0
-                    ? <Empty description='暂无委托' />
+                    ? <Empty description={props.t('public.has_no_entrust')} />
                     :
                     <PullToRefresh
                         onRefresh={async () => {
@@ -109,20 +110,29 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
                                             <li key={index}>
                                                 <div className="coin-msg">
                                                     <div className="coin-more">
-                                                        <p>{el.deal_amount_symbol}/{el.order_amount_symbol}</p>
+                                                        {
+                                                            el.direction === 'IN'
+                                                                ? <p>{el.deal_amount_symbol}/{el.order_amount_symbol}</p>
+                                                                : <p>{el.order_amount_symbol}/{el.deal_amount_symbol}</p>
+                                                        }
                                                     </div>
                                                     <p className="order-status">
-                                                        {el.status === 1 ? props.t('public.deal_all') : <span className="cancel-order" onClick={async () => {
+                                                        {el.status === 1 && props.t('public.deal_all')}
+                                                        {el.status === -1 && props.t('public.trade_cancel')}
+                                                        {el.status === 0 && <span className="cancel-order" onClick={async () => {
                                                             const result = await CancelOrderApi(el.id);
-                                                            console.log(result);
                                                             const { code } = result;
                                                             if (code !== 200) {
                                                                 Toast.show(result.message);
                                                                 return;
                                                             };
-                                                            Toast.show('取消委托成功');
+                                                            //取消委托成功
+                                                            Toast.show(props.t('message.cancel_entrust'));
                                                             getOrderList();
-                                                        }}>取消委托</span>}
+                                                        }}>
+                                                            {/* 取消委托 */}
+                                                            {props.t('public.cancel_entrust')}
+                                                        </span>}
                                                     </p>
                                                 </div>
                                                 <div className="trade-msg-date">
@@ -133,21 +143,21 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
                                                     <p>
                                                         {/* 委托总量 */}
                                                         {props.t('public.mission_total')}
-                                                        &nbsp;{el.order_price}&nbsp;{el.order_amount_symbol}</p>
+                                                        &nbsp;{el.order_amount.toFixed(4)}&nbsp;{el.order_amount_symbol}</p>
                                                     <p>
                                                         {/* 委托价格 */}
                                                         {props.t('public.mission_price')}
-                                                        &nbsp;{el.type === 'BUY' && '市价买入' || el.type === 'BUY_LIMIT' && '限价买入' || el.type === 'SELL' && '市价卖出' || el.type === 'SELL_LIMIT' && '限价卖出'}</p>
+                                                        &nbsp;{el.type === 'BUY' && props.t('public.buy_market') || el.type === 'BUY_LIMIT' && props.t('public.buy_limit') || el.type === 'SELL' && props.t('public.sell_market') || el.type === 'SELL_LIMIT' && t('public.sell_limit')}</p>
                                                 </div>
                                                 <div className="trade-detail">
                                                     <p>
                                                         {/* 已成交量 */}
-                                                        {props.t('public.deal_total')}
-                                                        &nbsp;{el.deal_amount}&nbsp;{el.deal_amount_symbol}</p>
+                                                        {el.status !== 1 ? props.t('public.pre_deal') : props.t('public.deal_total')}
+                                                        &nbsp;{el.deal_amount.toFixed(4)}&nbsp;{el.deal_amount_symbol}</p>
                                                     <p>
                                                         {/* 成交均价 */}
                                                         {props.t('public.deal_price')}
-                                                        &nbsp;{el.deal_price}&nbsp;{el.order_amount_symbol}</p>
+                                                        &nbsp;{el.deal_price}&nbsp;{el.direction === 'IN' ? el.order_amount_symbol : el.deal_amount_symbol}</p>
                                                 </div>
                                             </li>
                                         )
@@ -158,8 +168,14 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
                                         {isLoading && <div><DotLoading color='primary' /></div>}
                                         {hasMore && !isLoading && <p><Button size="small" color="default" onClick={() => {
                                             setPage(page + 1)
-                                        }}>加载更多</Button></p>}
-                                        {!hasMore && !isLoading && <p style={{ fontSize: '14px', color: '#999' }} className="no-more-data">没有更多了</p>}
+                                        }}>
+                                            {/* 加载更多 */}
+                                            {props.t('public.load_more')}
+                                        </Button></p>}
+                                        {!hasMore && !isLoading && <p style={{ fontSize: '14px', color: '#999' }} className="no-more-data">
+                                            {/* 没有更多了 */}
+                                            {props.t('public.no_more')}
+                                        </p>}
                                     </div>
                                 </li>
                             </ul>

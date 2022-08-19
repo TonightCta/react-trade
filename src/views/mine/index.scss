@@ -1,46 +1,89 @@
 .mine-index {
   .mine-nav {
     width: 100%;
-    height: 116px;
+    height: 242px;
     background: url("../../assets/images/mine_bg.png");
     background-size: 100% 100%;
     position: relative;
     .nav-msg {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       padding: 12px 4%;
       color: white;
       align-items: center;
+      position: relative;
       p {
         font-size: 20px;
         font-weight: 500;
         color: #333;
       }
+      span{
+        position: absolute;
+        right:12px;
+        top:9px;
+      }
     }
     .account-box {
-      position: absolute;
-      width: 92%;
-      height: 104px;
-      box-shadow: 0 0 15px #eee;
-      border-radius: 8px;
-      left: 50%;
-      margin-left: -46%;
-      bottom: -50px;
-      background-color: white;
-      padding: 24px 24px;
-      box-sizing: border-box;
-      text-align: left;
-      p:first-child {
-        margin-bottom: 16px;
-        color: #999;
+      padding: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .account-left {
+        display: flex;
+        .avatar-box {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          overflow: hidden;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          img {
+            height: 100%;
+          }
+        }
+        .account-msg {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          text-align: left;
+          padding-left: 14px;
+          p:first-child {
+            font-size: 16px;
+            color: #333;
+            font-weight: 500;
+          }
+          p:last-child {
+            font-size: 13px;
+            color: #999;
+            margin-top: 6px;
+          }
+        }
       }
-      p:last-child {
-        font-weight: 500;
-        color: #333;
+      .account-right {
+        display: flex;
+        padding: 8px 6px;
+        border: 1px solid #6471ff;
+        border-radius: 4px;
+        align-items: center;
+        img:first-child {
+          width: 14px;
+          height: 14px;
+        }
+        p {
+          font-size: 12px;
+          color: #6471ff;
+          margin: 0 3px;
+        }
+        img:last-child{
+          width: 11px;
+          height: 8px;
+        }
       }
     }
   }
   .mine-assets-manage {
+    // transform: translateY(-100px);
     width: 92%;
     box-shadow: 0 0 15px #eee;
     border-radius: 8px;
@@ -48,7 +91,9 @@
     padding: 16px;
     box-sizing: border-box;
     background-color: white;
-    margin-top: 64px;
+    margin-top: -100px;
+    z-index: 100;
+    position: relative;
     .manage-title {
       text-align: left;
       font-size: 16px;
@@ -104,6 +149,7 @@
     }
   }
   .mine-oper-bar {
+    // transform: translateY(-100px);
     width: 92%;
     margin: 0 auto;
     border-radius: 8px;

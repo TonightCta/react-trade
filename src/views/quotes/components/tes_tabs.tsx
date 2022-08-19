@@ -26,7 +26,7 @@ const TesTabs = (props: Props): ReactElement<ReactNode> => {
     const TabsList: Array<TabsF> = [
         {
             name: props.t('public.optional'),//自选
-            key: 'mine',
+            key: 'COLLECTION',
         },
         {
             name: 'USDT',

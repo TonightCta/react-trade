@@ -210,25 +210,31 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
             pieces: [
                 {
                     value: 1,
-                    color: '#d04c62'
+                    color: '#00c087'
                 },
                 {
                     value: -1,
-                    color: '#06ac8f'
+                    color: 'rgb(226,5,4)'
                 }
             ],
             tooltip: { show: false }
         },
+
         series: [
+
             {
                 name: 'K',
                 type: 'candlestick',
                 data: [],
                 itemStyle: {
-                    color: '#d04c62',
-                    color0: '#06ac8f',
-                    borderColor: '#d04c62',
-                    borderColor0: '#06ac8f'
+                    color: '#00c087',
+                    color0: 'rgb(226,5,4)',
+                    borderColor: '#00c087',
+                    borderColor0: 'rgb(226,5,4)'
+                },
+                label: {
+                    show: true,
+                    position: 'top'
                 },
             },
 

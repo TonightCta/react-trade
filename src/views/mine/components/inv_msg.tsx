@@ -41,7 +41,8 @@ const ModalContent = (props: { closeModal: () => void }): ReactElement => {
         <div className="modal-content-inv">
             <p className="close-icon" onClick={() => { props.closeModal() }}><CloseOutline /></p>
             <p className="modal-title-mine">
-                奖励规则
+                {/* 奖励规则 */}
+                {t('public.reward_rule')}
             </p>
             <div className="modal-inv-reward">
                 <p>

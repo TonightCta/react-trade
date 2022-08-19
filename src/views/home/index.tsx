@@ -7,7 +7,7 @@ import HomeAssets from "./components/my_wallet";
 import HomeHelp from "./components/help";
 import HomeTexCard from "./components/tes_card";
 import HomeTeslist from "./components/tes_list";
-import { setHomeData, upDefaultPriceCoin, upFooterStatus } from "../../store/app/action_creators";
+import { setHomeData, upFooterStatus } from "../../store/app/action_creators";
 import store from "../../store";
 // import { upUserAssets } from '../../store/app/action_fn'
 import { QUList } from "../../request/api";
@@ -45,10 +45,10 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
         const result = await QUList()
         for (let i in result.data.list) {
             arr.push(result.data.list[i]);
-            if (result.data.list[i].symbol === "BTCUSDT") {
-                const action = upDefaultPriceCoin(result.data.list[i].price);
-                store.dispatch(action);
-            }
+            // if (result.data.list[i].symbol === "BTCUSDT") {
+            //     const action = upDefaultPriceCoin(result.data.list[i].price);
+            //     store.dispatch(action);
+            // }
         };
         getMessage().message.onmessage = ((e: any) => {
             try {
@@ -85,31 +85,28 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
         if (history.location.pathname === '/home') {
             const action = upFooterStatus(1);
             store.dispatch(action);
-            return () => {
-                setWsList([])
-            }
         }
     }, [history.location]);
-    const cancelWS = () => {
-        const result = JSON.parse(sessionStorage.getItem('homeData') || '[]');
-        console.log(sessionStorage.getItem('unSubscribeCoin'))
-        for (let i in result) {
-            if (sessionStorage.getItem('unSubscribeCoin') !== result[i].symbol && sessionStorage.getItem('defaultBaseCoin') !== result[i].symbol) {
-                sendWs({
-                    e: 'unsubscribe',
-                    d: {
-                        symbol: result[i].symbol,
-                        interval: '1m'
-                    }
-                });
-            }
-        }
-    };
+    // const cancelWS = () => {
+    //     const result = JSON.parse(sessionStorage.getItem('homeData') || '[]');
+    //     for (let i in result) {
+    //         if (sessionStorage.getItem('unSubscribeCoin') !== result[i].symbol && sessionStorage.getItem('defaultBaseCoin') !== result[i].symbol) {
+    //             sendWs({
+    //                 e: 'unsubscribe',
+    //                 d: {
+    //                     symbol: result[i].symbol,
+    //                     interval: '1m'
+    //                 }
+    //             });
+    //         }
+    //     }
+    // };
     useEffect(() => {
         storeChange()
         return () => {
             // cancelWS();
             storeChange();
+            setWsList([]);
         }
     }, [])
     return (

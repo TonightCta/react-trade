@@ -8,7 +8,7 @@ import { DownFill } from "antd-mobile-icons";
 import { useTranslation } from 'react-i18next'
 import { CoinsListApi, UserAssetsApi } from '../../../../request/api';
 import store from "../../../../store";
-import { upFooterStatus } from "../../../../store/app/action_creators";
+import { setChainMsg, upFooterStatus } from "../../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
 
 
@@ -43,16 +43,16 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
     //币种支持网络
     const [coinNet, setCoinNet] = useState<string[]>();
     //选择网络
-    const [currentNet, setCurrentNet] = useState<string>('ERC20');
+    const [currentNet, setCurrentNet] = useState<string>('TRC20');
     //当前币种余额
     const [currentBalance, setCurrentBalance] = useState<number>(store.getState().currentBalance);
     //是否设置交易密码
     const [isPayPass, setIsPayPass] = useState<boolean>(false);
     const [drawMsg, setDrawMsg] = useState<TypeMsg>({
-        drawAddress: '',//充值地址
+        drawAddress: sessionStorage.getItem('selectAddress') || '',//充值地址
         drawNum: '',//充值数量
         selectCoin: false,//选择币种弹出层
-        netWork: 'ERC20',//网络名称
+        netWork: 'TRC20',//网络名称
         fee: 6,//手续费
         withdraw_min: 10,//限额
         withdraw_max: 9999,//限额
@@ -118,7 +118,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
         })
     }
     useEffect(() => {
-        setCoinNet(['ERC20', 'TRC20'])
+        setCoinNet(['TRC20', 'ERC20'])
         getCoinList();
         const action = upFooterStatus(0);
         store.dispatch(action);
@@ -127,6 +127,9 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
             getCoinList();
             getBalance('USDT');
             storeChange();
+            setSourceCoin([]);
+            setCoinList([]);
+            sessionStorage.removeItem('selectAddress');
         }
     }, []);
     const closePopup = () => {
@@ -184,15 +187,21 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                         {/* 提币地址 */}
                         {t('public.withdraw_address')}
                     </p>
-                    <input type="text" placeholder={t('public.address_paste')} value={drawMsg?.drawAddress} onChange={(e) => {
+                    <input type="text" style={{fontSize:'12px'}} placeholder={t('public.address_paste')} value={drawMsg?.drawAddress} onChange={(e) => {
                         setDrawMsg({
                             ...drawMsg,
                             drawAddress: e.target.value,
                         })
                     }} />
                     <span className="oper-icon" onClick={() => {
+                        const params = {
+                            coin: currentCoin,
+                            protocol: drawMsg.netWork
+                        };
+                        const action = setChainMsg(params);
+                        store.dispatch(action);
                         history.push('/address-mange')
-                    }}><FileOutline fontSize={18} color="#666"/></span>
+                    }}><img src={require('../../../../assets/images/book_icon.png')} /></span>
                 </div>
                 {/* 提币数量 */}
                 <div className="msg-option">
@@ -252,14 +261,23 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
             <DrawBtn coin={currentCoin} network={currentNet} num={Number(drawMsg.drawNum)} address={drawMsg.drawAddress} min={drawMsg.withdraw_min} fee={drawMsg.fee} />
             {/* 是否设置了交易密码 */}
             <Modal visible={isPayPass} title="提示" content={<div className="un-bind-pay">
-                <p>此功能需要设置交易密码才能继续使用，是否立即前往?</p>
+                <p>
+                    {/* 此功能需要设置交易密码才能继续使用，是否立即前往? */}
+                    {t('message.need_trade_pass')}
+                </p>
                 <p>
                     <Button color="default" onClick={() => {
                         history.goBack()
-                    }}>取消</Button>
+                    }}>
+                        {/* 取消 */}
+                        {t('public.cancel')}
+                    </Button>
                     <Button color="primary" onClick={() => {
                         history.push('/assets-lock')
-                    }}>确认</Button>
+                    }}>
+                        {/* 确认  */}
+                        {t('public.confirm')}
+                    </Button>
                 </p>
             </div>}></Modal>
         </div>

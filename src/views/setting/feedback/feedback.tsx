@@ -29,7 +29,8 @@ const FeedBack = (): ReactElement<ReactNode> => {
             <p>
                 <Button color="primary" block onClick={async () => {
                     if (!feed) {
-                        Toast.show('请输入反馈内容');
+                        //请输入反馈内容
+                        Toast.show(t('message.type_feedback'));
                         return;
                     }
                     const result = await FeedBackApi({ content: feed });
@@ -39,7 +40,8 @@ const FeedBack = (): ReactElement<ReactNode> => {
                         Toast.show(result.message);
                         return;
                     };
-                    Toast.show('反馈成功');
+                    //反馈成功
+                    Toast.show(t('message.feed_success'));
                     setFeed('')
                 }}>
                     {/* 提交 */}

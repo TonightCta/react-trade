@@ -18,7 +18,7 @@ type FilterVal = {
 const TradeOrder = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const testRef: any = useRef(null)
-    const [orderType, setOrderType] = useState<number>(1);
+    // const [orderType, setOrderType] = useState<number>(1);
     const [filterVal, setFilterVal] = useState<FilterVal>({
         coin: '',
         way: '',

@@ -16,7 +16,8 @@ const HomeBanner = (): React.ReactElement<ReactNode> => {
     useEffect(() => {
         getBannerList();
         return () => {
-            getBannerList()
+            getBannerList();
+            setColors([]);
         }
     }, [])
     return (

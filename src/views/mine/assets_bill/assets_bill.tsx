@@ -80,7 +80,8 @@ const AssetsBill = (): ReactElement<ReactNode> => {
             <div className="bill-list">
                 {
                     dataTotal === 0
-                        ? <Empty description='暂无流水' />
+                        //暂无流水
+                        ? <Empty description={t('public.has_no_bill')} />
                         : <PullToRefresh onRefresh={async () => {
                             await sleep(1500)
                         }}>
@@ -124,7 +125,7 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                                 //提币
                                                                 el.type === 4 && t('public.withdraw') ||
                                                                 //冻结
-                                                                el.type === 98 && '提币冻结' ||
+                                                                el.type === 98 && t('public.freeze_coin') ||
                                                                 // Admin
                                                                 el.type === 9 && 'Admin'
                                                             ]}
@@ -140,7 +141,7 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                         </div>
                                                     </div>
                                                     <div className="fee-msg">
-                                                        <p className="order-date">类型:{[
+                                                        <p className="order-date">{t('public.type')}:{[
                                                             // 购买
                                                             el.type === 2 && t('public.buy') ||
                                                             // 售出
@@ -150,13 +151,13 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                             //提币
                                                             el.type === 4 && t('public.withdraw') ||
                                                             //冻结
-                                                            el.type === 98 && '提币冻结' ||
+                                                            el.type === 98 && t('public.freeze_coin') ||
                                                             // Admin
                                                             el.type === 9 && 'Admin'
                                                         ]}</p>
                                                         <div className="fee-and-amount">
                                                             {/* 余额 */}
-                                                            <p>余额&nbsp;{Number(el.balance).toFixed(4)}</p>
+                                                            <p>{t('public.balance')}&nbsp;{Number(el.balance).toFixed(4)}</p>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -168,8 +169,14 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                             {isLoading && <div><DotLoading color='primary' /></div>}
                                             {hasMore && !isLoading && <p><Button size="small" color="default" onClick={() => {
                                                 setPage(page + 1)
-                                            }}>加载更多</Button></p>}
-                                            {!hasMore && !isLoading && <p style={{ fontSize: '14px', color: '#999' }} className="no-more-data">没有更多了</p>}
+                                            }}>
+                                                {/* 加载更多 */}
+                                                {t('public.load_more')}
+                                            </Button></p>}
+                                            {!hasMore && !isLoading && <p style={{ fontSize: '14px', color: '#999' }} className="no-more-data">
+                                                {/* 没有更多了 */}
+                                                {t('public.no_more')}
+                                            </p>}
                                         </div>
                                     </li>
                                 </ul>

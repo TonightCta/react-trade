@@ -14,7 +14,7 @@ const HomeHelp = (): ReactElement<ReactNode> => {
                 <img src={require('../../../assets/images/home_icon_5.png')} alt="" />
                 <div className="public-title">
                     {/* 帮助 */}
-                    <p>{t('public.help')}</p>
+                    <p>{t('public.home_help')}</p>
                     {/* 问题/指南/资料 */}
                     <p>{t('public.help_more')}</p>
                 </div>
@@ -26,7 +26,7 @@ const HomeHelp = (): ReactElement<ReactNode> => {
                 <img src={require('../../../assets/images/home_icon_6.png')} alt="" />
                 <div className="public-title">
                     {/* 公告 */}
-                    <p>{t('public.ann')}</p>
+                    <p>{t('public.home_ann')}</p>
                     {/* 新闻/活动/资讯 */}
                     <p>{t('public.ann_more')}</p>
                 </div>

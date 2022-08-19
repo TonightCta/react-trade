@@ -3,7 +3,7 @@ import { DotLoading, Empty, PullToRefresh } from 'antd-mobile';
 import { sleep } from 'antd-mobile/es/utils/sleep';
 import { PullStatus } from 'antd-mobile/es/components/pull-to-refresh';
 import { useHistory } from 'react-router-dom'
-import { setTradeFrom, setTradeTo, upCurrency, upCurrentCoin, upDefaultBaseCoin, upDefaultCoin, upDefaultPriceCoin } from "../../../store/app/action_creators";
+import { setTradeFrom, setTradeTo, upCurrency, upCurrentCoin } from "../../../store/app/action_creators";
 import store from "../../../store";
 import { useTranslation } from 'react-i18next';
 import { sendWs } from "../../../utils/ws";
@@ -15,8 +15,9 @@ type TesMsg = {
     rate: number | string,
     type: number,
     symbol?: string,
-    target?:string,
-    base?:string
+    target?: string,
+    base?: string,
+    id?:any,
 }
 interface Props {
     data: Array<TesMsg>,
@@ -51,31 +52,25 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                                         <li key={index} className={`${el.type === 1 ? 'up-color' : 'down-color'}`} onClick={() => {
                                             const action = upCurrency(el.coin);
                                             store.dispatch(action);
+                                            const actiton = upCurrentCoin(el);
+                                            store.dispatch(actiton);
                                             const viewQu = (): void => {
-                                                const actiton = upCurrentCoin(el);
-                                                store.dispatch(actiton);
                                                 history.push('/quotes-detail');
                                             };
                                             const viewTrade = (): void => {
-                                                const action = upDefaultCoin(`${el.coin}`);
-                                                const actionBase = upDefaultBaseCoin(`${el.symbol}`);
                                                 const actionFrom = setTradeFrom(String(el.target));
                                                 const actionTo = setTradeTo(String(el.base));
-                                                const actionPrice = upDefaultPriceCoin(el.price);
-                                                store.dispatch(action)
-                                                store.dispatch(actionBase);
                                                 store.dispatch(actionFrom);
                                                 store.dispatch(actionTo);
-                                                store.dispatch(actionPrice);
                                                 props.closeDraw!()
                                                 // console.log(props.base)
-                                                sendWs({
-                                                    e: 'unsubscribe',
-                                                    d: {
-                                                        symbol: String(props.base),
-                                                        interval: "1m"
-                                                    }
-                                                });
+                                                // sendWs({
+                                                //     e: 'unsubscribe',
+                                                //     d: {
+                                                //         symbol: String(props.base),
+                                                //         interval: "1m"
+                                                //     }
+                                                // });
                                                 sendWs({
                                                     e: 'unsubscribe-depth',
                                                     d: {
@@ -83,20 +78,20 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                                                     }
                                                 });
                                                 setTimeout(() => {
-                                                    sendWs({
-                                                        e: 'subscribe',
-                                                        d: {
-                                                            symbol: String(el.symbol),
-                                                            interval: "1m"
-                                                        }
-                                                    });
+                                                    // sendWs({
+                                                    //     e: 'subscribe',
+                                                    //     d: {
+                                                    //         symbol: String(el.symbol),
+                                                    //         interval: "1m"
+                                                    //     }
+                                                    // });
                                                     sendWs({
                                                         e: 'subscribe-depth',
                                                         d: {
                                                             symbol: String(el.symbol),
                                                         }
                                                     });
-                                                },100)
+                                                }, 100)
                                             }
                                             props.type === 1 ? viewQu() : viewTrade();
                                         }}>

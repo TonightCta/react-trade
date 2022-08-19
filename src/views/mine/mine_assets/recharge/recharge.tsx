@@ -61,10 +61,12 @@ const RechargeIndex = (props: any): ReactElement<ReactNode> => {
         return () => {
             getCoins();
             getAddress();
+            setSourceCoin([]);
+            setCoinList([]);
+            setProtocolList([]);
         }
     }, [props]);
     useEffect(() => {
-        console.log(selectCoin, defaultNet)
         getAddress();
     }, [defaultNet]);
     const closeProBox = () => {
@@ -106,7 +108,8 @@ const RechargeIndex = (props: any): ReactElement<ReactNode> => {
                 <p className="charge-address">{selectCoinMsg.address}</p>
                 <div className="copy-btn" onClick={() => {
                     copy(selectCoinMsg.address);
-                    Toast.show('地址复制成功')
+                    //地址复制成功
+                    Toast.show(t('message_copy_address'))
                 }}>
                     {/* 复制 */}
                     {t('public.copy')}

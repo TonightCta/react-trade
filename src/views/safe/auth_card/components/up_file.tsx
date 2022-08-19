@@ -31,23 +31,28 @@ const UpFile = (): ReactElement<ReactNode> => {
 
     const submitAuthCard = async () => {
         if (!cardMsg.name) {
-            Toast.show('请输入真实姓名');
+            //请输入真实姓名
+            Toast.show(t('message.type_real_name'));
             return;
         };
         if (!cardMsg.id) {
-            Toast.show('请输入证件号码');
+            //请输入证件号码
+            Toast.show(t('message.type_card_id'));
             return;
         };
         if (!frontCard) {
-            Toast.show('请上传证件正面照片');
+            //请上传证件正面照片
+            Toast.show(t('message.up_card_front'));
             return;
         }
         if (!backCard) {
-            Toast.show('请上传证件反面照片');
+            //请上传证件反面照片
+            Toast.show(t('message.up_card_back'));
             return;
         }
         if (!faceCard) {
-            Toast.show('请上传人像照片');
+            //请上传人像照片
+            Toast.show(t('message.up_face'));
             return;
         };
         setLoading(true);
@@ -70,7 +75,8 @@ const UpFile = (): ReactElement<ReactNode> => {
             setLoading(false);
             return;
         };
-        Toast.show('提交成功，请等待审核');
+        //提交成功，请等待审核
+        Toast.show(t('message.moderated'));
         setLoading(false);
         history.goBack();
     };
@@ -120,7 +126,10 @@ const UpFile = (): ReactElement<ReactNode> => {
                                 frontCard
                                     ? <div className="view-img-box">
                                         <img className="view-img" src={frontView} alt="" />
-                                        <p><RedoOutline fontSize={20} /><span>重新上传</span></p>
+                                        <p><RedoOutline fontSize={20} /><span>
+                                            {/* 重新上传 */}
+                                            {t('public.re_upload')}
+                                        </span></p>
                                     </div>
                                     : <>
                                         <img src={require('../../../../assets/images/file_icon.png')} className="icon-img" alt="" />
@@ -141,7 +150,10 @@ const UpFile = (): ReactElement<ReactNode> => {
                                 backCard
                                     ? <div className="view-img-box">
                                         <img className="view-img" src={backView} alt="" />
-                                        <p><RedoOutline fontSize={20} /><span>重新上传</span></p>
+                                        <p><RedoOutline fontSize={20} /><span>
+                                            {/* 重新上传 */}
+                                            {t('public.re_upload')}
+                                        </span></p>
                                     </div>
                                     : <>
                                         <img src={require('../../../../assets/images/file_icon.png')} className="icon-img" alt="" />
@@ -170,7 +182,10 @@ const UpFile = (): ReactElement<ReactNode> => {
                                 faceCard
                                     ? <div className="view-img-box">
                                         <img className="view-img" src={faceView} alt="" />
-                                        <p><RedoOutline fontSize={20} /><span>重新上传</span></p>
+                                        <p><RedoOutline fontSize={20} /><span>
+                                            {/* 重新上传 */}
+                                            {t('public.re_upload')}
+                                        </span></p>
                                     </div>
                                     : <>
                                         <img src={require('../../../../assets/images/file_icon.png')} className="icon-img" alt="" />

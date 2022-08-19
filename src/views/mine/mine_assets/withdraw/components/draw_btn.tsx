@@ -23,7 +23,6 @@ interface Safe {
 
 const SafeAuth = (props: PropsSafe): ReactElement => {
     const { t } = useTranslation();
-    // useRef等同于Vue3的ref()，自己查查看
     const [count, setCount] = useState<number>(60);
     const cbSaver: any = useRef();
     const timer = useRef<NodeJS.Timer>();
@@ -69,9 +68,10 @@ const SafeAuth = (props: PropsSafe): ReactElement => {
         };
         setDrawSafe({
             ...drawSafe,
-            code:result.data.code
-        })
-        Toast.show('验证码发送成功');
+            code: result.data.code
+        });
+        // 验证码发送成功
+        Toast.show(t('message.send_code_success'));
         countDown()
     }
     //useHistory() 等同于Vue的this.$router
@@ -122,11 +122,13 @@ const SafeAuth = (props: PropsSafe): ReactElement => {
             <p className="submit-auth">
                 <Button color="primary" block onClick={async () => {
                     if (!drawSafe.password) {
-                        Toast.show('请输入交易密码');
+                        //请输入交易密码
+                        Toast.show(t('public.enter_tarde_pass'));
                         return;
                     };
                     if (!drawSafe.code) {
-                        Toast.show('请输入邮箱验证码');
+                        //请输入邮箱验证码
+                        Toast.show(t('public.enter_code'));
                         return;
                     };
                     const params = {
@@ -144,7 +146,8 @@ const SafeAuth = (props: PropsSafe): ReactElement => {
                         Toast.show(result.message);
                         return;
                     };
-                    Toast.show('提币申请成功');
+                    //提币申请成功
+                    Toast.show(t('message.withdraw_application'));
                     props.closeSafeBox();
                     const action = UpWithdraw({ coin: String(props.coin), num: Number(props.num), address: String(props.address), fee: Number(props.fee) });
                     store.dispatch(action)
@@ -183,20 +186,23 @@ const DrawBtn = (props: Props): ReactElement<ReactNode> => {
             }}>
                 <SafeAuth closeSafeBox={(): void => {
                     setSafeBox(false)
-                }} coin={props.coin} network={props.network} num={props.num} address={props.address} fee={props.fee}/>
+                }} coin={props.coin} network={props.network} num={props.num} address={props.address} fee={props.fee} />
             </Popup>
             <Button color="primary" onClick={(): void => {
                 if (!props.address) {
-                    Toast.show('请输入提币地址');
+                    //请输入提币地址
+                    Toast.show(t('message.type_address'));
                     return;
                 };
                 if (!props.num) {
-                    Toast.show('请输入提币金额');
+                    //请输入提币金额
+                    Toast.show(t('message.type_withdraw_amount'));
                     return;
                 };
                 /* @ts-ignore */
                 if (props.num < props.min) {
-                    Toast.show('未满足最少提币数量');
+                    //未满足最少提币数量
+                    Toast.show('message.withdraw_limit_faild');
                     return;
                 }
                 setSafeBox(true);

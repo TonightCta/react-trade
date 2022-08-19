@@ -24,6 +24,10 @@ axiosInstance.interceptors.response.use(
         const data = response.data;
         if (<any>response.status == 200) {
             switch (data.code) {
+                case 401:
+                    sessionStorage.clear();
+                    window.location.replace('/login')
+                    break;
                 case 100001:
                     data.message = 'Crazy'
                     break;
