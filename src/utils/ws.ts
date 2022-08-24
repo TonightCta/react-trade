@@ -1,6 +1,6 @@
 import { UserInfoApi } from "../request/api";
 import store from "../store";
-import { upWSStatus } from "../store/app/action_creators";
+import { setWSSData, upWSStatus } from "../store/app/action_creators";
 
 interface WS {
     e: string,
@@ -14,6 +14,7 @@ interface WS {
 
 let ws: any;
 let wsStatusInner: number = 0;
+export let wsMessage: any = null;
 
 export const createWS = async () => {
     const result = await UserInfoApi();
@@ -37,6 +38,14 @@ export const createWS = async () => {
             wsStatusInner = 1;
         }
     };
+    // wsMessage = ws.onmessage;
+    // ws.onmessage = (e: any) => {
+    //     const data = JSON.parse(e.data);
+    //     if (data.e === 'subscribe') {
+    //         const action = setWSSData(data);
+    //         store.dispatch(action)
+    //     }
+    // }
 
 };
 export const sendWs = (params: WS) => {

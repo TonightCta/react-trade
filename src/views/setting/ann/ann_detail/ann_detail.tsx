@@ -1,7 +1,6 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import InnerNav from '../../../../components/inner_nav/nav'
 import store from "../../../../store";
-import { upFooterStatus } from "../../../../store/app/action_creators";
 import { useTranslation } from "react-i18next";
 import { AdvDetailApi } from '../../../../request/api'
 import './index.scss'
@@ -17,12 +16,11 @@ const AnnDetail = (): ReactElement<ReactNode> => {
     }
     useEffect(() => {
         getDetail();
-        const action = upFooterStatus(0);
-        store.dispatch(action);
+
         return () => {
             getDetail();
         }
-    }, [window.location.href])
+    }, []);
     return (
         <div className="ann-detail">
             <InnerNav leftArrow title={t('public.ann_detail')} />
@@ -30,7 +28,7 @@ const AnnDetail = (): ReactElement<ReactNode> => {
                 !!content
                     ?
                     <div className="detail-box">
-                        <div dangerouslySetInnerHTML={{__html:content}}></div>
+                        <div dangerouslySetInnerHTML={{ __html: content }}></div>
                     </div>
                     :
                     <div className="load-data">

@@ -4,12 +4,7 @@ import store from "../store";
 import { TabBar } from 'antd-mobile';
 import { useTranslation } from "react-i18next";
 import './footer.scss';
-import {
-    AppOutline,
-    HistogramOutline,
-    UnorderedListOutline,
-    UserOutline,
-} from 'antd-mobile-icons'
+
 
 interface Nav {
     key: string | number,
@@ -28,25 +23,29 @@ const Footer = (props: Props): React.ReactElement<ReactNode> => {
         {
             key: 'home',
             title: t('public.page'),
-            icon: <AppOutline />,
+            icon: <span className="iconfont icon-a-bianzu1"></span>,
+            // icon:<AppOutline/>,
             url: '/'
         },
         {
             key: 'quotes',
             title: t('public.quotes'),
-            icon: <HistogramOutline />,
+            icon: <span className="iconfont icon-bianzu"></span>,
+            // icon:<HistogramOutline/>,
             url: '/quotes'
         },
         {
             key: 'trade',
             title: t('public.trade'),
-            icon: <UnorderedListOutline />,
+            icon: <span className="iconfont icon-a-bianzu3"></span>,
+            // icon:<UnorderedListOutline/>,
             url: '/trade'
         },
         {
             key: 'mine',
             title: t('public.mine'),
-            icon: <UserOutline />,
+            icon: <span className="iconfont icon-a-bianzu4"></span>,
+            // icon:<UserOutline/>,
             url: '/mine'
         },
     ];
@@ -72,10 +71,15 @@ const Footer = (props: Props): React.ReactElement<ReactNode> => {
         }
     }, [location]);
     //更新导航显示信息
-    const [showNav, setShowNav] = useState<number>(Number(localStorage.getItem('footerStatus'))) || 1;
-    store.subscribe((): void => {
-        setShowNav(Number(store.getState().footerStatus))
-    });
+    const [showNav, setShowNav] = useState<number>(location.pathname === '/home' || location.pathname === '/quotes' || location.pathname === '/trade' || location.pathname === '/mine' ? 1 : 0);
+    // store.subscribe((): void => {
+    //     setShowNav(Number(store.getState().footerStatus))
+    // });
+    const win: any = window;
+    const setStatus = (_type: number) => {
+        setShowNav(_type)
+    };
+    win.setStatus = setStatus;
     const history = useHistory();
     //更新导航选中Key
     const [currentNav, setCurrentNav] = useState<string>('home')
@@ -87,6 +91,13 @@ const Footer = (props: Props): React.ReactElement<ReactNode> => {
             }
         })
     };
+    // useEffect(() => {
+    //     if (location.pathname === '/home' || location.pathname === '/quotes' || location.pathname === '/trade' || location.pathname === '/mine') {
+    //         setShowNav(1)
+    //     } else {
+    //         setShowNav(0)
+    //     }
+    // }, [])
     return (
         <div className={`footer-nav ${showNav === 0 ? 'hidden-nav' : ''}`}>
             <TabBar activeKey={currentNav} onChange={(key: string): void => {

@@ -117,12 +117,14 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
     //下单交易
     const submitPlaceOrder = async () => {
         if (tradeAmount == 0) {
-            Toast.show('请输入交易金额');
+            //请输入交易金额
+            Toast.show(props.t('message.type_trade_amount'));
             return;
         };
         if (tradeWay === 2) {
             if (limitPrice === 0) {
-                Toast.show('请输入限价金额');
+                //请输入限价金额
+                Toast.show(props.t('message.type_limit_amount'));
                 return;
             }
         };
@@ -306,7 +308,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
                             upList.map((el, index): ReactElement => {
                                 return (
                                     <li key={index}>
-                                        <p className="el-price">{el.Price ? Number(el.Price).toFixed(4) : '-'}</p>
+                                        <p className="el-price">{el.Price ? Number(el.Price).toFixed(state.currentCoin.precision) : '-'}</p>
                                         <p className="el-amount">{el.Quantity ? Number(el.Quantity).toFixed(6) : '-'}</p>
                                         {/* <div className="el-width"></div> */}
                                     </li>
@@ -314,13 +316,13 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
                             })
                         }
                     </ul>
-                    <p className="now-price">{props.coinPrice.toFixed(4)}</p>
+                    <p className="now-price">{props.coinPrice.toFixed(state.currentCoin.precision)}</p>
                     <ul className="down-pain">
                         {
                             downList.map((el, index): ReactElement => {
                                 return (
                                     <li key={index}>
-                                        <p className="el-price">{el.Price ? Number(el.Price).toFixed(4) : '-'}</p>
+                                        <p className="el-price">{el.Price ? Number(el.Price).toFixed(state.currentCoin.precision) : '-'}</p>
                                         <p className="el-amount">{el.Quantity ? Number(el.Quantity).toFixed(6) : '-'}</p>
                                         {/* <div className="el-width"></div> */}
                                     </li>

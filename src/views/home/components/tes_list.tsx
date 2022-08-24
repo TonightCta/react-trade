@@ -11,7 +11,9 @@ interface TesMsg {
     rate: number,
     type: number,
     yesterday_volume: number,
-    symbol:string
+    symbol: string,
+    status: number,
+    precision:number
 }
 
 const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
@@ -20,7 +22,13 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
         props.wsData.sort((a: TesMsg, b: TesMsg) => {
             return b.rate - a.rate
         });
-        setEtsListTwo(props.wsData);
+        const ar : TesMsg[] = [];
+        props.wsData.forEach((e:TesMsg) => {
+            if(e.status === 1){ 
+                ar.push(e)
+            }
+        })
+        setEtsListTwo(ar);
     };
     useEffect(() => {
         if (props.wsData.length > 0) {
@@ -47,38 +55,43 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
                 {
                     TesListTwo.map((el: TesMsg, index: number): ReactElement => {
                         return (
-                            <li key={index} className={`${el.type === 1 ? 'up-color' : 'down-color'}`} onClick={() => {
-                                const action = upCurrency(el.coin);
-                                const actionCurrent = upCurrentCoin(el);
-                                store.dispatch(actionCurrent);
-                                store.dispatch(action);
-                                const unaction = setUnCoin(el.symbol);
-                                store.dispatch(unaction);
-                                // set 队列
-                                history.push('/quotes-detail')
-                            }}>
-                                <div className="list-public">
-                                    <p className="list-sort">{index + 1}</p>
-                                    <div className="coin-msg-hour">
-                                        <p>{el.coin}</p>
-                                        <p>24H{t('public.vol')}&nbsp;{Number(el.yesterday_volume).toFixed(2)}</p>
-                                    </div>
-                                </div>
-                                <div className="list-public">
-                                    <p className="list-price">{Number(el.price).toFixed(4)}</p>
-                                    <p className="list-rate">
-                                        {el.type === 1 ? '+' : ''}
-                                        {Number(el.rate).toFixed(2)}%
-                                    </p>
-                                </div>
-                            </li>
+                            <div key={index}>
+                                {
+                                    el.status == 1 && <li key={index} className={`${el.type === 1 ? 'up-color' : 'down-color'}`} onClick={() => {
+                                        const action = upCurrency(el.coin);
+                                        const actionCurrent = upCurrentCoin(el);
+                                        store.dispatch(actionCurrent);
+                                        store.dispatch(action);
+                                        // const unaction = setUnCoin(el.symbol);
+                                        // store.dispatch(unaction);
+                                        // set 队列
+                                        history.push('/quotes-detail')
+                                    }}>
+                                        <div className="list-public">
+                                            <p className="list-sort">{index + 1}</p>
+                                            <div className="coin-msg-hour">
+                                                <p>{el.coin}</p>
+                                                <p>24H{t('public.vol')}&nbsp;{Number(el.yesterday_volume).toFixed(2)}</p>
+                                            </div>
+                                        </div>
+                                        <div className="list-public">
+                                            <p className="list-price">{Number(el.price).toFixed(el.precision)}</p>
+                                            <p className="list-rate">
+                                                {el.type === 1 ? '+' : ''}
+                                                {Number(el.rate).toFixed(2)}%
+                                            </p>
+                                        </div>
+                                    </li>
+                                }
+                            </div>
                         )
                     })
                 }
             </ul> : <div className="load-tes">
                 <DotLoading color="#3370ff" />
-            </div>}
-        </div>
+            </div>
+            }
+        </div >
     )
 };
 

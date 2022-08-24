@@ -8,6 +8,7 @@
     text-align: left;
     .form-item {
       margin-bottom: 16px;
+      position: relative;
       p {
         font-size: 14px;
         color: #999;
@@ -20,6 +21,15 @@
         width: 100%;
         border-bottom: 1px solid #eee;
         font-size: 13px;
+      }
+      .send-code{
+        position: absolute;
+        right: 12px;
+        top:18px;
+        color: #3070ff;
+      }
+      .gra-btn{
+        filter: grayscale(100%);
       }
     }
     button {

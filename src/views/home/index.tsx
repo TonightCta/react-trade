@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useReducer, useRef, useState } from "react";
 // import { useTranslation } from "react-i18next";
 import HomeBanner from "./components/banner";
 import HomeAdv from "./components/adv";
@@ -7,12 +7,15 @@ import HomeAssets from "./components/my_wallet";
 import HomeHelp from "./components/help";
 import HomeTexCard from "./components/tes_card";
 import HomeTeslist from "./components/tes_list";
-import { setHomeData, upFooterStatus } from "../../store/app/action_creators";
+import { setHomeData } from "../../store/app/action_creators";
 import store from "../../store";
 // import { upUserAssets } from '../../store/app/action_fn'
-import { QUList } from "../../request/api";
-import { sendWs, getMessage } from '../../utils/ws'
+import { WSDataType } from "../../utils/state";
 import { useHistory } from 'react-router-dom'
+import HomeCard from "./components/card";
+import { addListener, removeListener } from "../../utils/hooks";
+import { initWsSubscribe, subscribeReducer } from '../../redurce/set_subscribe'
+
 interface Props {
     type?: string
 }
@@ -27,88 +30,54 @@ const NavLogo = (): React.ReactElement<ReactNode> => {
 }
 
 
-const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
-    const [wsList, setWsList] = useState<any>([]);
-    // const [token, setToken] = useState<string | null>(sessionStorage.getItem('token_1'));
-    const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus);
-    const storeChange = () => {
-        store.subscribe(() => {
-            // setToken(store.getState().appToken);
-            setWsStatus(store.getState().wsStatus)
-        })
-    }
-    const history = useHistory();
-    // const { t } = useTranslation();
+const HomeIndex = (): React.ReactElement<ReactNode> => {
 
-    const UpView = async () => {
-        let arr: any[] = [];
-        const result = await QUList()
-        for (let i in result.data.list) {
-            arr.push(result.data.list[i]);
-            // if (result.data.list[i].symbol === "BTCUSDT") {
-            //     const action = upDefaultPriceCoin(result.data.list[i].price);
-            //     store.dispatch(action);
-            // }
-        };
-        getMessage().message.onmessage = ((e: any) => {
+    const [state, dispatch] = useReducer(subscribeReducer, [], initWsSubscribe);
+
+    const history = useHistory();
+    useEffect(() => {
+        const onMessageHome = (e: any) => {
             try {
-                const wsData = JSON.parse(e.data)
-                let arrVal: any[] = arr;
-                arrVal.forEach(item => {
-                    if (wsData.s === item.symbol) {
-                        item.price = wsData.k.c;
-                    }
-                });
-                arrVal = arrVal.map(item => {
-                    const rate = (item.price - item.yesterday_price) / item.yesterday_price * 100
-                    return {
-                        ...item,
-                        rate: rate,
-                        type: rate > 0 ? 1 : 0,
-                        coin: `${item.base}/${item.target}`
-                    }
-                });
-                setWsList(arrVal);
-                const action = setHomeData(arrVal);
-                store.dispatch(action);
+                const wsData = JSON.parse(e.data);
+                if (wsData.e === 'subscribe') {
+                    let arrVal: any[] = store.getState().quList;
+                    arrVal.forEach(item => {
+                        if (wsData.s === item.symbol) {
+                            item.price = wsData.k.c;
+                        }
+                    });
+                    arrVal = arrVal.map(item => {
+                        const rate = (item.price - item.yesterday_price) / item.yesterday_price * 100
+                        return {
+                            ...item,
+                            rate: rate,
+                            type: rate > 0 ? 1 : 0,
+                            coin: `${item.base}/${item.target}`
+                        }
+                    }).sort((x: any, y: any) => {
+                        return x.id - y.id
+                    })
+                    // console.log(arrVal.sort((x:any,y:any) => { return x.id - y.id }),'top')
+                    const action = setHomeData(arrVal);
+                    store.dispatch(action);
+                    dispatch({
+                        type: WSDataType.SET_WSS_SUBSCRIBE,
+                        payload: { wsSubscribe: arrVal }
+                    });
+                    // setTimeout(() => {
+                    //     setWsList(arrVal);
+                    // })
+                }
+
             } catch (err) {
                 console.log(err)
             }
-        });
-    };
-    useEffect(() => {
-        setTimeout(() => {
-            wsStatus === 1 && UpView()
-        }, 100);
-    }, [wsStatus])
-    useEffect(() => {
-        if (history.location.pathname === '/home') {
-            const action = upFooterStatus(1);
-            store.dispatch(action);
         }
-    }, [history.location]);
-    // const cancelWS = () => {
-    //     const result = JSON.parse(sessionStorage.getItem('homeData') || '[]');
-    //     for (let i in result) {
-    //         if (sessionStorage.getItem('unSubscribeCoin') !== result[i].symbol && sessionStorage.getItem('defaultBaseCoin') !== result[i].symbol) {
-    //             sendWs({
-    //                 e: 'unsubscribe',
-    //                 d: {
-    //                     symbol: result[i].symbol,
-    //                     interval: '1m'
-    //                 }
-    //             });
-    //         }
-    //     }
-    // };
-    useEffect(() => {
-        storeChange()
+        addListener(onMessageHome)
         return () => {
-            // cancelWS();
-            storeChange();
-            setWsList([]);
+            removeListener(onMessageHome)
         }
-    }, [])
+    }, []);
     return (
         <div className="home-index">
             <NavLogo />
@@ -116,14 +85,16 @@ const HomeIndex = (props: Props): React.ReactElement<ReactNode> => {
             <HomeBanner />
             {/* 广告中心 */}
             <HomeAdv />
+            {/* 行情卡片 */}
+            <HomeTexCard wsData={state.wsSubscribe} />
+            {/* 操作卡片 */}
+            <HomeCard history={history} />
             {/* 我的资产 */}
             <HomeAssets />
             {/* 帮助 & 公告 */}
             <HomeHelp />
-            {/* 行情卡片 */}
-            <HomeTexCard wsData={wsList} />
             {/* 涨幅榜 */}
-            <HomeTeslist wsData={wsList} />
+            <HomeTeslist wsData={state.wsSubscribe} />
         </div>
     )
 };

@@ -1,7 +1,6 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import InnerNav from '../../../../components/inner_nav/nav';
 import store from "../../../../store";
-import { upFooterStatus } from "../../../../store/app/action_creators";
 import { useTranslation } from "react-i18next";
 import './index.scss'
 import { HelpDetailApi } from "../../../../request/api";
@@ -18,8 +17,6 @@ const HelpDetail = (): ReactElement<ReactNode> => {
     }
     useEffect(() => {
         getDetail();
-        const action = upFooterStatus(0);
-        store.dispatch(action);
         return () => {
             getDetail();
         }

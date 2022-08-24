@@ -6,7 +6,8 @@ interface Props {
     upMsg: {
         type: number,
         price: number,
-        rate: number
+        rate: number,
+        precision?:number,
     }
 }
 
@@ -18,7 +19,7 @@ const TesPriceMsg = (props: Props): ReactElement<ReactNode> => {
     return (
         <div className="tes-price-msg">
             <div className={`price-box msg-public ${props.upMsg.type === 1 ? 'up-color' : 'down-color'}`}>
-                <p>{props.upMsg.price.toFixed(4)}</p>
+                <p>{props.upMsg.price.toFixed(props.upMsg.precision)}</p>
                 <p>{props.upMsg.type === 1 ? '+' : ''}{props.upMsg.rate.toFixed(2)}%</p>
             </div>
             <div className="price-high msg-public">

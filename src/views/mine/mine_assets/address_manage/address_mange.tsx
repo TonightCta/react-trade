@@ -3,7 +3,6 @@ import { CloseOutline, QuestionCircleOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import InnerNav from '../../../../components/inner_nav/nav';
 import store from "../../../../store";
-import { upFooterStatus } from "../../../../store/app/action_creators";
 import { SwipeAction, Popup } from 'antd-mobile';
 import { useTranslation } from "react-i18next";
 import { AddressListApi, AddAddressApi, RemoveAddressApi } from '../../../../request/api';
@@ -32,11 +31,11 @@ const AddressManage = (): ReactElement<ReactNode> => {
     };
     const getAdList = async () => {
         const params = {
-            page:1,
-            limit:200,
-            search:{
-                coin:store.getState().chainMsg.coin,
-                protocol:store.getState().chainMsg.protocol
+            page: 1,
+            limit: 200,
+            search: {
+                coin: store.getState().chainMsg.coin,
+                protocol: store.getState().chainMsg.protocol
             }
         }
         const result = await AddressListApi(params);
@@ -44,8 +43,6 @@ const AddressManage = (): ReactElement<ReactNode> => {
         setAddress(result.data.list);
     };
     useEffect(() => {
-        const action = upFooterStatus(0);
-        store.dispatch(action);
         getAdList();
         return () => {
             getAdList();
@@ -58,14 +55,14 @@ const AddressManage = (): ReactElement<ReactNode> => {
             <InnerNav leftArrow title={`${store.getState().chainMsg.coin}${t('public.address_manage')}`} />
             {
                 dataTotal === 0
-                    ? <Empty description='暂无地址' />
+                    ? <Empty description={t('public.has_no_address')} />
                     : addressList.length > 0
                         ? <div className="address-list">
                             {
                                 addressList.map((item: any, index: number): ReactElement => {
                                     return (
                                         <div className="list-content" key={index} onClick={() => {
-                                            sessionStorage.setItem('selectAddress',item.address);
+                                            sessionStorage.setItem('selectAddress', item.address);
                                             history.goBack();
                                         }}>
                                             <SwipeAction rightActions={[
@@ -75,14 +72,14 @@ const AddressManage = (): ReactElement<ReactNode> => {
                                                     color: 'danger',
                                                 },
                                             ]} onAction={async () => {
-                                                console.log(item);
                                                 const result = await RemoveAddressApi(item.id);
                                                 const { code } = result;
                                                 if (code !== 200) {
                                                     Toast.show(result.message);
                                                     return;
                                                 };
-                                                Toast.show('删除成功');
+                                                //删除成功
+                                                Toast.show(t('message.delete_success'));
                                                 getAdList();
                                             }}>
                                                 <div className="address-content">
@@ -177,11 +174,13 @@ const AddressManage = (): ReactElement<ReactNode> => {
                     <div className="submit-address">
                         <Button color="primary" block onClick={async () => {
                             if (!inpMsg.address) {
-                                Toast.show('请输入地址');
+                                //请输入地址
+                                Toast.show(t('message.type_address_sec'));
                                 return
                             }
                             if (!inpMsg.remark) {
-                                Toast.show('请输入地址备注');
+                                //请输入地址备注
+                                Toast.show(t('message.type_address_remark'));
                                 return;
                             };
                             const params = {
@@ -192,11 +191,12 @@ const AddressManage = (): ReactElement<ReactNode> => {
                             };
                             const result = await AddAddressApi(params);
                             const { code } = result;
-                            if(code !== 200){
+                            if (code !== 200) {
                                 Toast.show(result.message);
                                 return;
                             };
-                            Toast.show('保存成功');
+                            //保存成功
+                            Toast.show(t('message.save_success'));
                             closePop();
                             getAdList();
                         }}>

@@ -4,8 +4,6 @@ import { Button, List, PickerView, Popup, Toast } from "antd-mobile";
 import { useTranslation } from "react-i18next";
 import { CoinsListApi, RechargeAddressApi } from '../../../../request/api'
 import './index.scss';
-import { upFooterStatus } from "../../../../store/app/action_creators";
-import store from "../../../../store";
 import copy from 'copy-to-clipboard';
 import QRCode from 'qrcode.react'
 import { CloseOutline } from "antd-mobile-icons";
@@ -55,8 +53,7 @@ const RechargeIndex = (props: any): ReactElement<ReactNode> => {
         })
     }
     useEffect(() => {
-        const action = upFooterStatus(0);
-        store.dispatch(action)
+
         getCoins();
         return () => {
             getCoins();
@@ -136,7 +133,6 @@ const RechargeIndex = (props: any): ReactElement<ReactNode> => {
                     }} />
                     <div className="coin-select">
                         <Button color="primary" block onClick={() => {
-                            console.log(selectCoin);
                             sourceCoin.forEach((e) => {
                                 if (e.coin === selectCoin) {
                                     setDefaultNet(e.protocol_list[0])

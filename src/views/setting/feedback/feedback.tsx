@@ -1,6 +1,4 @@
-import { ReactElement, ReactNode, useEffect, useState } from "react";
-import store from "../../../store";
-import { upFooterStatus } from "../../../store/app/action_creators";
+import { ReactElement, ReactNode, useState } from "react";
 import InnerNav from '../../../components/inner_nav/nav'
 import './index.scss'
 import { Button, Toast } from "antd-mobile";
@@ -11,10 +9,6 @@ import { FeedBackApi } from '../../../request/api'
 const FeedBack = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const [feed, setFeed] = useState<string>('');
-    useEffect(() => {
-        const action = upFooterStatus(0);
-        store.dispatch(action);
-    }, [])
     return (
         <div className="feed-back">
             <InnerNav leftArrow title={t('public.feedback')} />
@@ -34,7 +28,6 @@ const FeedBack = (): ReactElement<ReactNode> => {
                         return;
                     }
                     const result = await FeedBackApi({ content: feed });
-                    console.log(result);
                     const { code } = result;
                     if (code !== 200) {
                         Toast.show(result.message);

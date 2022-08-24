@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import InnerNav from '../../../components/inner_nav/nav'
 import store from "../../../store";
-import { upBillCoin, upFooterStatus } from "../../../store/app/action_creators";
+import { upBillCoin } from "../../../store/app/action_creators";
 import { List, PullToRefresh, InfiniteScroll, Empty, DotLoading, Button } from 'antd-mobile'
 import { useTranslation } from "react-i18next";
 import { AssetsBillApi } from '../../../request/api'
@@ -46,8 +46,6 @@ const AssetsBill = (): ReactElement<ReactNode> => {
         // await getBillList();
     }
     useEffect(() => {
-        const action = upFooterStatus(0);
-        store.dispatch(action);
         // getBillList();
         return () => {
             const action = upBillCoin('');

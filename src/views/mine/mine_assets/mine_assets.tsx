@@ -1,10 +1,9 @@
 import { Button, Tabs, PullToRefresh, DotLoading } from "antd-mobile";
-import { sleep } from 'antd-mobile/es/utils/sleep'
 import { CheckCircleFill, RightOutline, SearchOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import InnerNav from '../../../components/inner_nav/nav'
 import store from "../../../store";
-import { upBillCoin, upFooterStatus } from "../../../store/app/action_creators";
+import { upBillCoin } from "../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { upUserAssets } from "../../../store/app/action_fn";
@@ -73,8 +72,6 @@ const MineAssets = (): ReactElement<ReactNode> => {
     const history = useHistory();
 
     useEffect(() => {
-        const action = upFooterStatus(0);
-        store.dispatch(action);
         getAssetsList();
         upUserAssets();
         storeChange()
@@ -86,7 +83,6 @@ const MineAssets = (): ReactElement<ReactNode> => {
             storeChange();
         }
     }, []);
-
     return (
         <div className="mine-assets">
             <InnerNav backMine title={t('public.assets')} />

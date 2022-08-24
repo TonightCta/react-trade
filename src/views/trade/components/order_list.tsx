@@ -38,7 +38,7 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
             page: page,
             limit: props.limit ? props.limit : 8,
             search: {
-                group_status: dataType,
+                group_status: _type ? _type : dataType,
                 symbol: props.tradeQu?.replace('/', ''),
                 direction: order_type,
                 trade_type: trade_type,
@@ -57,7 +57,7 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
         } else {
             setOrderList(result.data.list)
         }
-    }, [])
+    }, [props,page,upTime])
     const loadMore = async () => {
         setPage(page + 1);
         await getOrderList(dataType);
@@ -86,7 +86,7 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
         setOrderList([]);
         setDateType(Number(_type));
         setHasMore(true);
-        getOrderList(_type)
+        getOrderList(Number(_type))
     }
     useImperativeHandle(ref, () => ({
         uploadOrder: selectOrderType

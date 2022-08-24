@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import store from "../../store";
-import { setToken, upFooterStatus } from "../../store/app/action_creators";
+import { setToken } from "../../store/app/action_creators";
 import { NavLink, useHistory } from "react-router-dom";
 import './index.scss';
 import { CloseOutline, LockOutline, MailOutline } from "antd-mobile-icons";
@@ -19,10 +19,6 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
     })
     const { t } = useTranslation();
     const history = useHistory();
-    useEffect((): void => {
-        const aciton = upFooterStatus(0);
-        store.dispatch(aciton);
-    }, []);
     const loginService = async () => {
         if (!inpMsg.email) {
             Toast.show(t('public.enter_email'));

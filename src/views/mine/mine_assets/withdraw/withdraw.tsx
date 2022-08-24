@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 import InnerNav from '../../../../components/inner_nav/nav';
-import { CloseOutline, FileOutline } from 'antd-mobile-icons'
+import { CloseOutline } from 'antd-mobile-icons'
 import DrawBtn from "./components/draw_btn";
 import { Button, Modal, PickerView, Popup } from "antd-mobile";
 import './index.scss'
@@ -8,7 +8,7 @@ import { DownFill } from "antd-mobile-icons";
 import { useTranslation } from 'react-i18next'
 import { CoinsListApi, UserAssetsApi } from '../../../../request/api';
 import store from "../../../../store";
-import { setChainMsg, upFooterStatus } from "../../../../store/app/action_creators";
+import { setChainMsg } from "../../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
 
 
@@ -120,8 +120,6 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
     useEffect(() => {
         setCoinNet(['TRC20', 'ERC20'])
         getCoinList();
-        const action = upFooterStatus(0);
-        store.dispatch(action);
         storeChange();
         return () => {
             getCoinList();
@@ -187,7 +185,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                         {/* 提币地址 */}
                         {t('public.withdraw_address')}
                     </p>
-                    <input type="text" style={{fontSize:'12px'}} placeholder={t('public.address_paste')} value={drawMsg?.drawAddress} onChange={(e) => {
+                    <input type="text" style={{ fontSize: '12px' }} placeholder={t('public.address_paste')} value={drawMsg?.drawAddress} onChange={(e) => {
                         setDrawMsg({
                             ...drawMsg,
                             drawAddress: e.target.value,
@@ -260,7 +258,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
             {/* 提币按钮 */}
             <DrawBtn coin={currentCoin} network={currentNet} num={Number(drawMsg.drawNum)} address={drawMsg.drawAddress} min={drawMsg.withdraw_min} fee={drawMsg.fee} />
             {/* 是否设置了交易密码 */}
-            <Modal visible={isPayPass} title="提示" content={<div className="un-bind-pay">
+            <Modal visible={isPayPass} title={t('public.hint')} content={<div className="un-bind-pay">
                 <p>
                     {/* 此功能需要设置交易密码才能继续使用，是否立即前往? */}
                     {t('message.need_trade_pass')}

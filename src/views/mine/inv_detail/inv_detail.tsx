@@ -1,19 +1,27 @@
-import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useRef, useState } from "react";
 import InnerNav from '../../../components/inner_nav/nav'
 import store from "../../../store";
 import './index.scss'
-import { upFooterStatus } from "../../../store/app/action_creators";
 import { useTranslation } from "react-i18next";
 import { DateConvert } from '../../../utils/index'
 import { Tabs } from "antd-mobile";
+import { InviteNumberApi } from '../../../request/api';
 
 const InvDetail = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
-    useEffect((): void => {
-        const action = upFooterStatus(0);
-        store.dispatch(action)
-    }, []);
+    const [invMsg,setInvMsg] = useState<any>({});
     const [tabKey, setTabKey] = useState<number>(1);
+    const inviteMsg = async () => {
+        const result = await InviteNumberApi();
+        setInvMsg(result.data)
+    };
+    useEffect(() => {
+        inviteMsg();
+        return () => {
+            inviteMsg();
+            setInvMsg({})
+        }
+    },[])
     const level = store.getState().invLevel;
     return (
         <div className="inv-detail">
@@ -36,8 +44,8 @@ const InvDetail = (): ReactElement<ReactNode> => {
                         {tabKey === 1 ? t('public.inv_total') : t('public.inv_amount')}
                     </p>
                     <p>
-                        <span>0</span>
-                        {/* 人 */}
+                        <span>{ tabKey === 1 ? level === 4 ? invMsg?.total?.allInvites : invMsg?.levelsCount && invMsg?.levelsCount[level as number] || 0 : invMsg?.total?.rewards}</span>
+                        {/* 人 */}&nbsp;
                         {tabKey === 1 ? t('public.people') : 'USDT'}
                     </p>
                 </div>

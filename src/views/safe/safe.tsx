@@ -1,7 +1,6 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import InnerNav from '../../components/inner_nav/nav';
 import store from "../../store";
-import { upFooterStatus } from "../../store/app/action_creators";
 import { List } from "antd-mobile";
 import './index.scss'
 import { CheckShieldFill } from "antd-mobile-icons";
@@ -51,10 +50,6 @@ const SafeIndex = (): ReactElement<ReactNode> => {
         ])
     }, [accountMsg])
     const history = useHistory();
-    useEffect((): void => {
-        const action = upFooterStatus(0);
-        store.dispatch(action)
-    }, [])
     return (
         <div className="safe-index">
             <InnerNav leftArrow title={t('public.safe_center')} />

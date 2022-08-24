@@ -19,7 +19,8 @@ export interface DealMsg {
     dc: string,
     dt: number,
     p: string,
-    q: string
+    q: string,
+    precision?:number
 }
 export interface ADV {
     title: string,

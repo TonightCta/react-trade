@@ -3,24 +3,28 @@ import { initReactI18next } from "react-i18next";
 import en from "./en.json";
 import ru from './ru.json'
 import zhTW from "./zh-TW.json";
+import th from './th.json'
 import store from "../store";
 
 const resources = {
-    en:{
-        translation:en
+    en: {
+        translation: en
     },
-    ru:{
-        translation:ru
+    ru: {
+        translation: ru
     },
-    zh_TW:{
-        translation:zhTW
+    zh_TW: {
+        translation: zhTW
     },
+    th: {
+        translation: th
+    }
 };
 i18n.use(initReactI18next).init({
     resources,
-    lng:store.getState().language,
-    interpolation:{
-        escapeValue:false
+    lng: store.getState().language,
+    interpolation: {
+        escapeValue: false
     }
 });
 

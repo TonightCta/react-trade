@@ -4,11 +4,30 @@
   position: relative;
   z-index: 2000;
   position: fixed;
-  bottom:0;
+  bottom: 0;
   width: 100%;
   background: white;
-  transition: .3s all;
+  transition: 0.3s all;
+  .iconfont {
+    font-size: 21px;
+    color: #ccc;
+  }
+  .icon-a-bianzu4{
+    display: inline-block;
+    transform: translateY(2px);
+  }
+  .adm-tab-bar-item-title {
+    color: #ccc;
+  }
+  .adm-tab-bar-item-active {
+    .iconfont {
+      color: #4f5eff;
+    }
+    .adm-tab-bar-item-title {
+      color: #4f5eff;
+    }
+  }
 }
-.hidden-nav{
+.hidden-nav {
   transform: translateY(100%);
 }

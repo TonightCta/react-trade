@@ -17,10 +17,10 @@
         font-weight: 500;
         color: #333;
       }
-      span{
+      span {
         position: absolute;
-        right:12px;
-        top:9px;
+        right: 12px;
+        top: 9px;
       }
     }
     .account-box {
@@ -30,14 +30,51 @@
       align-items: center;
       .account-left {
         display: flex;
+        max-width: 60%;
         .avatar-box {
           width: 60px;
           height: 60px;
           border-radius: 50%;
-          overflow: hidden;
+          // overflow: hidden;
           display: flex;
           justify-content: center;
           align-items: center;
+          position: relative;
+          .edit-avatar {
+            width: 100%;
+            height: 100%;
+          }
+          .edit-avatar-box {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            bottom: -2px;
+            right: -2px;
+            backdrop-filter: saturate(180%) blur(8px);
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+          }
+          p {
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            position: relative;
+            overflow: hidden;
+            border-radius: 50%;
+            display: flex;
+            font-size: 22px;
+            font-weight: 500;
+            align-items: center;
+            justify-content: center;
+            input {
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              left: 0;
+              opacity: 0;
+            }
+          }
           img {
             height: 100%;
           }
@@ -75,7 +112,7 @@
           color: #6471ff;
           margin: 0 3px;
         }
-        img:last-child{
+        img:last-child {
           width: 11px;
           height: 8px;
         }
@@ -158,8 +195,18 @@
     text-align: left;
     font-size: 12px;
     box-shadow: 0 0 15px #eee;
+    .adm-list-item-content-prefix {
+      padding-right: 6px;
+    }
     .--font-size {
       font-size: 12px;
+    }
+    img {
+      width: 16px;
+      height: 16px;
+      vertical-align: middle;
+      display: inline-block;
+      transform: translateY(-1px);
     }
   }
 }

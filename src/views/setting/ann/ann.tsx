@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import store from "../../../store";
-import { upAnnID, upFooterStatus } from "../../../store/app/action_creators";
+import { upAnnID } from "../../../store/app/action_creators";
 import InnerNav from '../../../components/inner_nav/nav';
 import { PullToRefresh } from 'antd-mobile';
 import { sleep } from 'antd-mobile/es/utils/sleep';
@@ -30,13 +30,11 @@ const Ann = (): ReactElement<ReactNode> => {
     }
     const history = useHistory();
     useEffect(() => {
-        const action = upFooterStatus(0);
-        store.dispatch(action);
         getAnnListSet();
         return () => {
             getAnnListSet()
         }
-    }, [])
+    }, []);
     return (
         <div className="ann-index">
             <InnerNav leftArrow title={t('public.ann_center')} />

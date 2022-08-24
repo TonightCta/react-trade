@@ -70,9 +70,11 @@ const TradeNav = (props: Props): ReactElement<ReactNode> => {
             return;
         };
         if (_type === 'IN') {
-            Toast.show('添加自选成功');
+            //添加自选成功
+            Toast.show(props.t('message.add_optional'));
         } else {
-            Toast.show('取消自选成功');
+            //取消自选成功
+            Toast.show(props.t('message.cancel_optional'));
         };
         const list = await QUList();
         const arr: any[] = [];

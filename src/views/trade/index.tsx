@@ -1,13 +1,12 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TradeNav from "./components/trade_nav";
 import TradeOper from "./components/trade_oper";
 import TradeOrder from "./components/trade_order";
 import './index.scss';
-import { upFooterStatus } from "../../store/app/action_creators";
 import store from "../../store";
 import { useTranslation } from "react-i18next";
-import { sendWs, getMessage } from "../../utils/ws";
 import LoadData from "../quotes/tes_detail/components/load_data";
+import { addListener, removeListener, useSocket } from "../../utils/hooks";
 
 interface Coin {
     coin: string,
@@ -22,70 +21,38 @@ interface Depch {
 const TradeIndex = React.forwardRef((props: any, ref: any) => {
     const { t } = useTranslation();
     const [coinPrice, setCoinPrice] = useState<number>(0);
+    const { send } = useSocket();
     // const orderList: any = useRef(null);
     // ws服务连接状态
     const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus)
     const [coinMsg, setCoinMsg] = useState<Coin>({
-        coin: `${store.getState().currentCoin.base}/${store.getState().currentCoin.target}`,
-        base: store.getState().currentCoin.symbol
+        coin: `${JSON.parse(sessionStorage.getItem('currentCoin') || '{}').base}/${JSON.parse(sessionStorage.getItem('currentCoin') || '{}').target}`,
+        base: JSON.parse(sessionStorage.getItem('currentCoin') || '{}').symbol
     });
     store.subscribe(() => {
         setCoinMsg({
-            coin: `${store.getState().currentCoin.base}/${store.getState().currentCoin.target}`,
-            base: store.getState().currentCoin.symbol
+            coin: `${JSON.parse(sessionStorage.getItem('currentCoin') || '{}').base}/${JSON.parse(sessionStorage.getItem('currentCoin') || '{}').target}`,
+            base: JSON.parse(sessionStorage.getItem('currentCoin') || '{}').symbol
         });
         setCoinPrice(Number(JSON.parse(sessionStorage.getItem('currentCoin') || '{}').price));
         setWsStatus(store.getState().wsStatus)
     });
     const [sellQUList, setSellQUlist] = useState<Depch[]>([]);
     const [buyQUList, setBuyQUList] = useState<Depch[]>([]);
-    const sendSub = () => {
-        setTimeout(() => {
-            // sendWs({
-            //     e: 'subscribe',
-            //     d: {
-            //         symbol: coinMsg.base,
-            //         interval: "1m"
-            //     }
-            // });
-            sendWs({
-                e: 'subscribe-depth',
-                d: {
-                    symbol: coinMsg.base,
-                }
-            });
-            getMessage().message.onmessage = (e: any) => {
-                try {
-                    const data = JSON.parse(e.data);
-
-                    if (data.e === "subscribe" && data.s === store.getState().currentCoin.symbol) {
-                        setCoinPrice(Number(data.k.c))
-                    };
-                    if (data.e === 'subscribe-depth') {
-                        setBuyQUList(data.d.asks);
-                        setSellQUlist(data.d.bids);
-                    }
-                } catch (err) {
-                    console.log(err)
-                }
+    const sendWSDepth = () => {
+        send({
+            e: 'subscribe-depth',
+            d: {
+                symbol: coinMsg.base,
             }
-        }, 1500)
-    };
+        });
+    }
     useEffect(() => {
         setCoinPrice(Number(JSON.parse(sessionStorage.getItem('currentCoin') || '{}').price));
-        wsStatus === 1 && sendSub();
+        wsStatus === 1 && sendWSDepth();
     }, [wsStatus]);
     const unSendWS = () => {
-        // if (sessionStorage.getItem('unSubscribeCoin') !== coinMsg.base) {
-        //     sendWs({
-        //         e: 'unsubscribe',
-        //         d: {
-        //             symbol: coinMsg.base,
-        //             interval: "1m"
-        //         }
-        //     });
-        // }
-        sendWs({
+        send({
             e: 'unsubscribe-depth',
             d: {
                 symbol: coinMsg.base,
@@ -94,10 +61,26 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
         });
     }
     useEffect(() => {
-        const action = upFooterStatus(1);
-        store.dispatch(action);
+
+        const onMessageTrade = ((e: any) => {
+            try {
+                const data = JSON.parse(e.data);
+
+                if (data.e === "subscribe" && data.s === store.getState().currentCoin.symbol) {
+                    setCoinPrice(Number(data.k.c))
+                };
+                if (data.e === 'subscribe-depth') {
+                    setBuyQUList(data.d.asks);
+                    setSellQUlist(data.d.bids);
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        });
+        addListener(onMessageTrade);
         return () => {
             unSendWS();
+            removeListener(onMessageTrade);
         }
     }, []);
     return (

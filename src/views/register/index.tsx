@@ -1,12 +1,10 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import store from "../../store";
-import { upFooterStatus } from "../../store/app/action_creators";
 import { NavLink, useHistory } from "react-router-dom";
 import './index.scss';
 import { CheckShieldOutline, CloseOutline, DownOutline, LockOutline, MailOutline } from "antd-mobile-icons";
 import { Button, PickerView, Popup, Toast } from "antd-mobile";
 import { useTranslation } from 'react-i18next';
-import { SendCodeApi, RegisterApi, CountryListApi } from '../../request/api';
+import { SendCodeApi, RegisterApi, CountryListApi, GetSlugApi } from '../../request/api';
 import { GetUrlKey } from "../../utils";
 
 interface Props {
@@ -52,6 +50,11 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
     })
     const cbSaver: any = useRef();
     const timer = useRef<NodeJS.Timer>();
+    const [slug, setSlug] = useState<string>('');
+    const getSlug = async () => {
+        const result = await GetSlugApi('REGISTER_RULE');
+        setSlug(result.data.content);
+    }
     cbSaver.current = () => {
         setCount(count - 1);
     };
@@ -70,16 +73,15 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
     }, [count]);
 
     useEffect(() => {
+        getSlug()
         return () => {
+            getSlug()
+            setSlug('');
             clearInterval(timer.current);
         }
     }, []);
 
     const history = useHistory();
-    useEffect((): void => {
-        const aciton = upFooterStatus(0);
-        store.dispatch(aciton);
-    }, []);
 
     const [selectCountryBox, setSelectCountryBox] = useState<boolean>(false);
     return (
@@ -147,7 +149,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         })
                         countDown()
                     } : () => { }}>
-                        {count === 60 ? t('public.send_code') : `${count}s${t('public.send_code')}`}
+                        {count === 60 ? t('public.send_code') : `${count}s`}
                     </p>
                 </div>
                 <div className="box-public">
@@ -208,6 +210,9 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         {t('public.regis_now')}
                     </Button>
                 </p>
+                <div className="register-remark">
+                    <div dangerouslySetInnerHTML={{ __html: slug }}></div>
+                </div>
             </div>
             {/* 选择国家地区 */}
             <Popup visible={selectCountryBox} onMaskClick={() => {

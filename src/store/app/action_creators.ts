@@ -133,6 +133,11 @@ export const setChainMsg = (msg:{coin:string,protocol:string}) => ({
     type:Type.SET_CHAIN_MSG,
     msg
 });
+//设置WSS推流数据
+export const setWSSData = (data:any) => ({
+    type:Type.SET_WSS_SUBSCRIBE,
+    data
+})
 
 
 

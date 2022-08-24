@@ -3,6 +3,7 @@ import * as Type from './types';
 
 interface UMsg {
     email?: string,
+    avatar?:string,
     security?: {
         kyc?: number,
         pay_password?: number
@@ -42,6 +43,7 @@ export interface Store {
     unSubscribeCoin: string,
     quList: any[],//行情
     chainMsg: { coin: string, protocol: string },//链信息
+    wsSubscribe:any,//币种ws流数据
 }
 const defaultState: Store = {
     account: JSON.parse(sessionStorage.getItem('account') || '{}'),
@@ -71,7 +73,7 @@ const defaultState: Store = {
     unSubscribeCoin: sessionStorage.getItem('unSubscribeCoin') || '',//无需取消的订阅队列
     quList: JSON.parse(sessionStorage.getItem('quList') || '[]'),
     chainMsg: JSON.parse(sessionStorage.getItem('chainMsg') || '{}'),
-
+    wsSubscribe:{}
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
@@ -154,6 +156,9 @@ export default (state = defaultState, action: any) => {
         case Type.SET_CHAIN_MSG:
             sessionStorage.setItem('chainMsg', JSON.stringify(action.msg));
             return { ...state, chainMsg: action.msg }
+        case Type.SET_WSS_SUBSCRIBE:
+            // localStorage.setItem('wsSubscribe',JSON.stringify(action.data));
+            return { ...state,action:action.data }
         default:
             return state;
     };

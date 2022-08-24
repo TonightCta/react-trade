@@ -5,16 +5,22 @@ import './App.css';
 import './App.scss'
 import { ReactNode, useEffect, useState } from 'react';
 import LoadView from './views/load_view/load_view';
-import { createWS, sendWs } from './utils/ws'
+// import { createWS, sendWs,getMessage } from './utils/ws'
+import { useSocket } from './utils/hooks'
 import InvBox from './components/inv/inv';
 // import { upUserAssets } from './store/app/action_fn'
+// import { WSDataType } from "./utils/state";
+// import { initWsSubscribe, subscribeReducer } from './redurce/set_subscribe';
 import store from './store';
 import { QUList } from './request/api';
-import { setQU, upCurrentCoin,setTradeFrom,setTradeTo } from './store/app/action_creators';
+import { setQU, upCurrentCoin, setTradeFrom, setTradeTo } from './store/app/action_creators';
 
 const App = (): React.ReactElement<ReactNode> => {
   // const [token, setToken] = useState<string | null>(sessionStorage.getItem('token_1'));
-  const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus)
+  const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus);
+
+  // const [state, dispatch] = useReducer(subscribeReducer, {}, initWsSubscribe);
+  const { send } = useSocket();
   const sendWSApp = async () => {
     let arr: any[] = [];
     const result = await QUList();
@@ -32,7 +38,7 @@ const App = (): React.ReactElement<ReactNode> => {
     const actionQU = setQU(arr);
     store.dispatch(actionQU)
     arr.forEach(e => {
-      sendWs({
+      send({
         e: 'subscribe',
         d: {
           symbol: e.symbol,
@@ -40,6 +46,15 @@ const App = (): React.ReactElement<ReactNode> => {
         }
       });
     });
+    // getMessage().message.onmessage = (e:any) => {
+    //   const data = JSON.parse(e.data);
+    //   if(data.e === "subscribe"){
+    //     dispatch({
+    //       type:WSDataType.SET_WSS_SUBSCRIBE,
+    //       payload:{wsSubscribe:data}
+    //     });
+    //   }
+    // }
   };
   const storeChange = () => {
     store.subscribe(() => {
@@ -57,7 +72,7 @@ const App = (): React.ReactElement<ReactNode> => {
   // }, [token])
   useEffect(() => {
     storeChange();
-    createWS();
+    // createWS();
   }, [])
   return (
     <HashRouter>

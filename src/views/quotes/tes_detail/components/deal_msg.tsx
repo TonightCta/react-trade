@@ -23,7 +23,7 @@ const TesDealMsg = (props: Props): ReactElement<ReactNode> => {
         if (dealT.length >= showMore) {
             dealT.pop();
         };
-        setDealT([props.dealData, ...dealT])
+        setDealT([props.dealData, ...dealT]);
     }, [props, showMore]);
     useEffect(() => {
         showMore === 10 && setDealT(dealT.slice(0, dealT.length - 20));
@@ -45,16 +45,14 @@ const TesDealMsg = (props: Props): ReactElement<ReactNode> => {
                         {/* 时间 */}
                         {props.t('public.time')}
                     </p>
-                    <div className="deal-cen">
-                        <p>
-                            {/* 方向 */}
-                            {props.t('public.way')}
-                        </p>
-                        <p>
-                            {/* 价格 */}
-                            {props.t('public.price')}
-                        </p>
-                    </div>
+                    <p>
+                        {/* 方向 */}
+                        {props.t('public.way')}
+                    </p>
+                    <p>
+                        {/* 价格 */}
+                        {props.t('public.price')}
+                    </p>
                     <p className="deal-num">
                         {/* 数量 */}
                         {props.t('public.num')}
@@ -67,12 +65,10 @@ const TesDealMsg = (props: Props): ReactElement<ReactNode> => {
                         return (
                             <li key={index}>
                                 <p className="deal-date">{ValDate(el.dt)}</p>
-                                <div className="deal-cen">
-                                    <p className={`cen-type ${el.dc === 'BUY' ? 'buy-color' : 'sell-color'}`}>
-                                        {el.dc === 'BUY' ? props.t('public.buy_in') : props.t('public.sell_out')}
-                                    </p>
-                                    <p>{Number(el.p).toFixed(2)}</p>
-                                </div>
+                                <p className={`cen-type ${el.dc === 'BUY' ? 'buy-color' : 'sell-color'}`}>
+                                    {el.dc === 'BUY' ? props.t('public.buy_in') : props.t('public.sell_out')}
+                                </p>
+                                <p>{Number(el.p).toFixed(el.precision)}</p>
                                 <p className="deal-num">{Number(el.q).toFixed(6)}</p>
                             </li>
                         )

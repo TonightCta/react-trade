@@ -117,7 +117,7 @@ const SafeAuth = (props: PropsSafe): ReactElement => {
                 }} placeholder={t('public.enter_code')} />
                 <p onClick={() => {
                     count === 60 ? sendCodeEv() : console.log(1)
-                }} className={`send-code ${count !== 60 ? 'un-send' : ''}`}>{count === 60 ? t('public.send_code') : `${count}s${t('public.send_code')}`}</p>
+                }} className={`send-code ${count !== 60 ? 'un-send' : ''}`}>{count === 60 ? t('public.send_code') : `${count}s`}</p>
             </div>
             <p className="submit-auth">
                 <Button color="primary" block onClick={async () => {
@@ -140,7 +140,6 @@ const SafeAuth = (props: PropsSafe): ReactElement => {
                         email_code: drawSafe.code
                     };
                     const result = await WithDrawApi(params);
-                    console.log(result);
                     const { code } = result;
                     if (code !== 200) {
                         Toast.show(result.message);

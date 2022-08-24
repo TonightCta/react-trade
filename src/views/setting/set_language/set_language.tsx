@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import store from "../../../store";
-import { setLanguage, upFooterStatus } from "../../../store/app/action_creators";
+import { setLanguage } from "../../../store/app/action_creators";
 import InnerNav from '../../../components/inner_nav/nav';
 import './index.scss'
 import { List } from "antd-mobile";
@@ -9,11 +9,11 @@ import { CheckOutline } from "antd-mobile-icons";
 import { useTranslation } from "react-i18next";
 
 const langList = [
-    {
-        name: '中國台灣',
-        cation: 'zh_TW',
-        langIcon: require('../../../assets/images/test.png')
-    },
+    // {
+    //     name: '中國香港',
+    //     cation: 'zh_TW',
+    //     langIcon: require('../../../assets/images/hongkong.png')
+    // },
     {
         name: 'English',
         cation: 'en',
@@ -24,6 +24,11 @@ const langList = [
         cation: 'ru',
         langIcon: require('../../../assets/images/ru.png')
     },
+    {
+        name: 'ไทย',
+        cation: 'th',
+        langIcon: require('../../../assets/images/th.png')
+    }
 ];
 
 const SetLanguage = (): ReactElement<ReactNode> => {
@@ -35,8 +40,6 @@ const SetLanguage = (): ReactElement<ReactNode> => {
     };
     useEffect(() => {
         storeChange()
-        const action = upFooterStatus(0);
-        store.dispatch(action);
         return () => {
             storeChange()
         }

@@ -10,13 +10,13 @@ const MineOperBar = (): ReactElement<ReactNode> => {
     return (
         <div className="mine-oper-bar">
             <List style={{ "--font-size": "15px" }}>
-                <List.Item prefix={<FileOutline />} onClick={() => {
+                <List.Item prefix={<img src={require('../../../assets/images/other_1.png')} />} onClick={() => {
                     history.push('/trade-order')
                 }}>
                     {/* 我的委托 */}
                     {t('public.mine_en')}
                 </List.Item>
-                <List.Item prefix={<CheckShieldOutline />} onClick={() => {
+                <List.Item prefix={<img src={require('../../../assets/images/other_2.png')} />} onClick={() => {
                     history.push('/safe')
                 }}>
                     {/* 安全设置 */}

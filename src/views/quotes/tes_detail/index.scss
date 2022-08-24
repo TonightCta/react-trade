@@ -75,10 +75,10 @@
     .deal-list {
       margin: 22px 0;
       li {
-        .deal-cen {
-          p:last-child {
-            transform: translateX(-16px);
-          }
+        display: flex;
+        p {
+          width: 25%;
+          text-align: center;
         }
       }
     }
@@ -91,34 +91,32 @@
         margin: 12px 0;
         p {
           color: #666;
+          width: 25%;
         }
         .deal-date {
-          width: 30%;
           text-align: left;
         }
         .deal-num {
-          width: 30%;
           text-align: right;
         }
+        .cen-type {
+          font-weight: bold;
+        }
+        .buy-color {
+          color: #00c087;
+        }
+        .sell-color {
+          color: #ff7858;
+        }
         .deal-cen {
-          width: 120px;
           justify-content: space-between;
           display: flex;
           p {
             white-space: nowrap;
           }
-          .cen-type {
-            font-weight: bold;
-          }
-          .buy-color {
-            color: #00c087;
-          }
-          .sell-color {
-            color: #ff7858;
-          }
         }
       }
-      .show-more{
+      .show-more {
         justify-content: center;
         padding-top: 8px;
         color: #3070ff;

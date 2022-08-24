@@ -1,12 +1,14 @@
-import { ReactElement, ReactNode, useState } from "react";
+import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { Button, Toast } from "antd-mobile";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { TradePassApi } from '../../../../request/api';
+import { TradePassApi, SendCodeApi } from '../../../../request/api';
 import { upUserInfo } from '../../../../store/app/action_fn'
+import store from "../../../../store";
 
 interface Inp {
     loginPassword: string,
+    code: string,
     tradePass: string,
     turnPass: string,
 }
@@ -14,11 +16,50 @@ interface Inp {
 const SetLock = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const history = useHistory();
+    const [count, setCount] = useState<number>(60);
+    const cbSaver: any = useRef();
+    const timer = useRef<NodeJS.Timer>();
+    cbSaver.current = () => {
+        setCount(count - 1);
+    };
+    const countDown = useCallback((): void => {
+        timer.current = setInterval(() => {
+            cbSaver.current();
+        }, 1000);
+    }, []);
+
+    useEffect(() => {
+        if (count < 0) {
+            clearInterval(timer.current);
+            setCount(60)
+        };
+    }, [count]);
+
+    useEffect(() => {
+        return () => {
+            clearInterval(timer.current);
+        }
+    }, []);
     const [inpMsg, setInpMsg] = useState<Inp>({
         loginPassword: '',
+        code: '',
         tradePass: '',
         turnPass: ''
     });
+    const sendCodeService = async () => {
+        const result = await SendCodeApi({
+            scene: 4,
+            type: 2,
+            email:store.getState().account.email
+        });
+        const { code } = result;
+        if(code !== 200){
+            Toast.show(result.message);
+            return;
+        }
+        Toast.show(t('message.send_code_success'));
+        countDown()
+    }
     const submitSetTradePass = async () => {
         if (!inpMsg.loginPassword) {
             //请输入登录密码
@@ -28,6 +69,10 @@ const SetLock = (): ReactElement<ReactNode> => {
         if (!inpMsg.tradePass) {
             // 请输入交易密码
             Toast.show(t('public.enter_tarde_pass'));
+            return;
+        };
+        if(!inpMsg.code){
+            Toast.show(t('public.enter_code'));
             return;
         }
         if (inpMsg.tradePass.length < 8) {
@@ -71,6 +116,22 @@ const SetLock = (): ReactElement<ReactNode> => {
                         loginPassword: e.target.value
                     })
                 }} placeholder={t('public.enter_login_pass')} />
+            </div>
+            <div className="form-item">
+                {/* 登录密码 */}
+                <p>{t('public.email_code')}</p>
+                <input type="password" value={inpMsg.code} onChange={(e) => {
+                    setInpMsg({
+                        ...inpMsg,
+                        code: e.target.value
+                    })
+                }} placeholder={t('public.enter_code')} />
+                {/* 发送验证码 */}
+                <p className={`send-code ${count === 60 ? '' : 'gra-btn'}`} onClick={count === 60 ? () => {
+                    sendCodeService()
+                } : () => { }}>
+                    {count === 60 ? t('public.send_code') : `${count}s`}
+                </p>
             </div>
             <div className="form-item">
                 {/* 交易密码 */}

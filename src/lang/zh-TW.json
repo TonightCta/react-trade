@@ -23,10 +23,10 @@
         "customer": "客服",
         "set": "設置",
         "help": "幫助",
-        "home_help":"幫助",
+        "home_help": "幫助",
         "help_more": "問題/指南/資料",
         "ann": "公告",
-        "home_ann":"公告",
+        "home_ann": "公告",
         "ann_more": "新聞/活動/資訊",
         "assets": "我的資產",
         "assets_total_un": "總資產約",
@@ -64,7 +64,7 @@
         "detail": "詳細信息",
         "inv_link": "邀請鏈接",
         "click_login": "點擊登錄",
-        "welcome": "歡迎來到BiBi",
+        "welcome": "歡迎來到BIBI",
         "mine_en": "我的委託",
         "safe_set": "安全設置",
         "people": "人",
@@ -141,7 +141,7 @@
         "low": "低",
         "push_op": "添加自選",
         "move_op": "取消自選",
-        "regis_welcome": "註冊80BiBi",
+        "regis_welcome": "註冊BIBI",
         "enter_pass": "請輸入密碼",
         "real_name": "真實姓名",
         "enter_real": "請輸入您的真實姓名",
@@ -218,7 +218,11 @@
         "sell_limit": "限價賣出",
         "pre_deal": "預成交量",
         "entrust_limit": "限價委託",
-        "entrust_market": "市價委託"
+        "entrust_market": "市價委託",
+        "has_no_address": "暫無地址",
+        "hint": "提示",
+        "has_no_data": "暫無數據",
+        "inv_title":"邀請返佣"
     },
     "message": {
         "regis_success": "註冊成功,將自動為您轉到登錄",
@@ -246,7 +250,16 @@
         "type_feedback": "請輸入反饋內容",
         "feed_success": "反饋成功",
         "cancel_entrust": "取消委託成功",
-        "trade_success": "交易成功"
+        "trade_success": "交易成功",
+        "delete_success": "刪除成功",
+        "type_address_sec": "請輸入地址",
+        "type_address_remark": "請輸入地址備註",
+        "save_success": "保存成功",
+        "add_optional": "添加自選成功",
+        "cancel_optional": "取消自選成功",
+        "upload_success":"上傳成功",
+        "type_trade_amount":"請輸入交易金額",
+        "type_limit_amount":"請輸入限價金額"
     },
     "title": {
         "language_set": "語言設置"

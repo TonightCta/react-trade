@@ -1,5 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 import store from '../store';
+import error_en from './error/en.json';
+import error_ru from './error/ru.json';
+import error_th from './error/th.json'
 
 let axiosInstance: AxiosInstance = axios.create({
     baseURL: process.env.REACT_APP_BASEURL,
@@ -22,18 +25,15 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
     response => {
         const data = response.data;
-        if (<any>response.status == 200) {
-            switch (data.code) {
-                case 401:
-                    sessionStorage.clear();
-                    window.location.replace('/login')
-                    break;
-                case 100001:
-                    data.message = 'Crazy'
-                    break;
-                case 10004:
-                    data.message = '账号已存在';
-                    break;
+        const lang = localStorage.getItem('language');
+        const error = lang === 'en' && error_en || lang === 'en' && error_ru || lang === 'th' && error_th || {};
+        if (<number>response.status == 200) {
+            for (let i in error) {
+                if (data.code == i) {
+                    data.message = error[i as keyof typeof error]
+                }else{
+                    data.message = 'Pass'
+                }
             };
             return data;
         }

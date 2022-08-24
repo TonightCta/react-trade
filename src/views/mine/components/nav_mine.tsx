@@ -1,14 +1,42 @@
 import { SetOutline } from "antd-mobile-icons";
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { UpAvatarApi } from '../../../request/api'
 import store from "../../../store";
+import { Toast } from "antd-mobile";
+import { upUserInfo } from "../../../store/app/action_fn";
 
 
 const MineNav = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const history = useHistory();
-    const account = store.getState().account;
+    const [account, setAccount] = useState<any>(store.getState().account);
+    const storeChange = () => {
+        store.subscribe(() => {
+            setAccount(store.getState().account)
+        })
+    };
+    useEffect(() => {
+        storeChange();
+        return () => {
+            storeChange();
+            setAccount(store.getState().account)
+        }
+    }, []);
+    const upAvatarEv = async (_file: File) => {
+        const formdata = new FormData();
+        formdata.append('avatar', _file);
+        const result = await UpAvatarApi(formdata);
+        const { code } = result;
+        if (code !== 200) {
+            Toast.show(result.message);
+            return;
+        };
+        //上传成功
+        Toast.show(t('message.upload_success'));
+        upUserInfo();
+    }
     return (
         <div className="mine-nav">
             <div className="nav-msg">
@@ -25,12 +53,30 @@ const MineNav = (): ReactElement<ReactNode> => {
             <div className="account-box">
                 <div className="account-left">
                     <div className="avatar-box">
-                        <img src={require('../../../assets/images/a.png')} alt="" />
+                        {
+                            account.avatar
+                                ? <p>
+                                    <img src={account.avatar} alt="" />
+                                    <input type="file" accept="image/*" onChange={async (e) => {
+                                        upAvatarEv(e.target.files![0])
+                                    }} />
+                                </p>
+                                : <p>
+                                    <img src={require('../../../assets/images/default_avatar.png')} alt="" />
+                                    <input type="file" accept="image/*" onChange={async (e) => {
+                                        upAvatarEv(e.target.files![0])
+                                    }} />
+                                </p>
+                        }
+                        <div className="edit-avatar-box">
+                            <img src={require('../../../assets/images/edit_avatar.png')} className="edit-avatar" alt="" />
+                        </div>
+
                     </div>
                     <div className="account-msg">
                         <p>
                             {/* 点击登录 */}
-                            {account.email ? account.email : t('public.click_login')}
+                            {account.email ? `${account.email.substring(0,7)}...` : t('public.click_login')}
                         </p>
                         <p>
                             {/* 欢迎来到80年代 */}

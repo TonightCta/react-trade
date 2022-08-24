@@ -10,6 +10,7 @@ interface Props {
         k: any
     },
     t: any,
+    time:number
     // setLineDataMine: (second: number, type: string) => void,
 }
 
@@ -133,10 +134,10 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
                 param = param[0];
                 return [
                     `<div style='display:flex;justify-content:space-between;'><p style='width:60px;text-align:left;'>${props.t('public.time')}:</p>` + `<p>${param.name}</p></div>`,
-                    `<div style='display:flex;justify-content:space-between;'><p style='width:60px;text-align:left;'>${props.t('public.open')}:</p>` + `<p>${param.data[0]}</p></div>`,
-                    `<div style='display:flex;justify-content:space-between;'><p style='width:60px;text-align:left;'>${props.t('public.high')}:</p>` + `<p>${Number(param.data[3]).toFixed(2)}</p></div>`,
-                    `<div style='display:flex;justify-content:space-between;'><p style='width:60px;text-align:left;'>${props.t('public.recive')}:</p>` + `<p>${Number(param.data[1]).toFixed(2)}</p></div>`,
-                    `<div style='display:flex;justify-content:space-between;'><p style='width:60px;text-align:left;'>${props.t('public.low')}:</p>` + `<p>${Number(param.data[2]).toFixed(2)}</p></div>`,
+                    `<div style='display:flex;justify-content:space-between;'><p style='width:60px;text-align:left;'>${props.t('public.open')}:</p>` + `<p>${param.data[4]}</p></div>`,
+                    `<div style='display:flex;justify-content:space-between;'><p style='width:60px;text-align:left;'>${props.t('public.high')}:</p>` + `<p>${Number(param.data[2])}</p></div>`,
+                    `<div style='display:flex;justify-content:space-between;'><p style='width:60px;text-align:left;'>${props.t('public.recive')}:</p>` + `<p>${Number(param.data[1])}</p></div>`,
+                    `<div style='display:flex;justify-content:space-between;'><p style='width:60px;text-align:left;'>${props.t('public.low')}:</p>` + `<p>${Number(param.data[3])}</p></div>`,
                 ].join('');
             }
         },
@@ -197,7 +198,7 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
             {
                 type: 'inside',
                 xAxisIndex: [0, 1],
-                start: 70,
+                start: 50,
                 end: 100,
                 top: 30,
                 height: 20,
@@ -225,6 +226,7 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
             {
                 name: 'K',
                 type: 'candlestick',
+                barMaxWidth:'10px',
                 data: [],
                 itemStyle: {
                     color: '#00c087',
@@ -318,9 +320,9 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
             option.xAxis[0].data = date;
             option.xAxis[1].data = date;
             option.series[0].data = data;
-            option.series[1].data = calculateMA(5, data)
-            option.series[2].data = calculateMA(10, data)
-            option.series[3].data = calculateMA(20, data)
+            option.series[1].data = calculateMA(5, data);
+            option.series[2].data = calculateMA(10, data);
+            option.series[3].data = calculateMA(20, data);
             option.series[4].data = calculateMA(30, data);
             option.series[5].data = volume;
             let test = echarts.getInstanceByDom(document.getElementById('echarts-box') as HTMLElement);
@@ -328,7 +330,7 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
                 test = echarts.init(document.getElementById('echarts-box') as HTMLElement);
             }
             test.setOption(option);
-        }
+        };
     }, [props])
     return (
         <div className="tes-price-k">

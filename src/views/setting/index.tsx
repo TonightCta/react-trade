@@ -1,7 +1,5 @@
-import { ReactElement, ReactNode, useEffect } from "react";
+import { ReactElement, ReactNode } from "react";
 import InnerNav from '../../components/inner_nav/nav';
-import store from "../../store";
-import { upFooterStatus } from "../../store/app/action_creators";
 import { Button, List } from "antd-mobile";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -12,10 +10,6 @@ import './index.scss';
 const SetIndex = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const history = useHistory();
-    useEffect((): void => {
-        const action = upFooterStatus(0);
-        store.dispatch(action)
-    }, [])
     const setList = [
         {
             title: t('title.language_set'),//语言设置`

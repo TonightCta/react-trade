@@ -1,6 +1,5 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import store from "../../store";
-import { upFooterStatus } from "../../store/app/action_creators";
 import { NavLink, useHistory } from "react-router-dom";
 import './index.scss';
 import { CheckShieldOutline, CloseOutline, LockOutline, MailOutline } from "antd-mobile-icons";
@@ -51,10 +50,6 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
         }
     }, []);
     const history = useHistory();
-    useEffect((): void => {
-        const aciton = upFooterStatus(0);
-        store.dispatch(aciton);
-    }, []);
     //发送验证码
     const sendCodeService = async () => {
         if (!inpMsg.email) {
@@ -154,9 +149,9 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
                     <span><CheckShieldOutline color="#999" fontSize={18} /></span>
                     <p className={`send-code ${count === 60 ? '' : 'gra-btn'}`} onClick={count === 60 ? () => {
                         sendCodeService();
-                    } : () => { }}>
+                    } : () => {}}>
                         {/* 发送验证码 */}
-                        {count === 60 ? t('public.send_code') : `${count}s${t('public.send_code')}`}
+                        {count === 60 ? t('public.send_code') : `${count}s`}
                     </p>
                 </div>
                 <div className="box-public">

@@ -2,6 +2,8 @@ import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { Tabs } from "antd-mobile";
 import TesAllList from "./tes_all_list";
 import { QUList } from '../../../request/api'
+import { setQU } from "../../../store/app/action_creators";
+import store from "../../../store";
 
 interface Props {
     type: number,
@@ -50,6 +52,8 @@ const TesTabs = (props: Props): ReactElement<ReactNode> => {
         for (let i in result.data.list) {
             arr.push(result.data.list[i])
         };
+        const actionQU = setQU(arr);
+        store.dispatch(actionQU)
         setDataTotal(result.data.total);
         setTesListTwo(arr.map(item => {
             const rate = (item.price - item.yesterday_price) / item.yesterday_price * 100

@@ -1,7 +1,5 @@
-import { ReactElement, ReactNode, useEffect, useRef, useState } from "react";
-import { upFooterStatus } from "../../store/app/action_creators";
+import { ReactElement, ReactNode, useRef, useState } from "react";
 import { Tabs } from "antd-mobile";
-import store from "../../store";
 import './order.scss'
 import InnerNav from '../../components/inner_nav/nav'
 import OrderList from "../trade/components/order_list";
@@ -26,10 +24,6 @@ const TradeOrder = (): ReactElement<ReactNode> => {
         startTime: '',
         endTime: ''
     })
-    useEffect((): void => {
-        const action = upFooterStatus(0);
-        store.dispatch(action)
-    }, []);
     return (
         <div className="trade-order">
             {/* 我的订单 */}

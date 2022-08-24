@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 import { setTradeFrom, setTradeTo, upCurrency, upCurrentCoin } from "../../../store/app/action_creators";
 import store from "../../../store";
 import { useTranslation } from 'react-i18next';
-import { sendWs } from "../../../utils/ws";
+import { useSocket } from "../../../utils/hooks";
 
 type TesMsg = {
     coin: string,
@@ -17,7 +17,9 @@ type TesMsg = {
     symbol?: string,
     target?: string,
     base?: string,
-    id?:any,
+    id?: any,
+    status?: number,
+    precision?: number
 }
 interface Props {
     data: Array<TesMsg>,
@@ -29,6 +31,7 @@ interface Props {
 const TesAllList = (props: Props): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const history = useHistory();
+    const { send } = useSocket()
     const statusRecord: Record<PullStatus, ReactElement | string> = {
         pulling: t('public.pull_down'),//下拉刷新
         canRelease: t('public.freed_down'),//释放刷新
@@ -39,7 +42,7 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
         <div className="tes-all-list">
             {
                 props.total === 0
-                    ? <Empty description='暂无数据' />
+                    ? <Empty description={t('public.has_no_data')} />
                     : <PullToRefresh onRefresh={async () => {
                         await sleep(3000)
                     }} renderText={status => {
@@ -49,66 +52,69 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                             {
                                 props.data.map((el: TesMsg, index: number): ReactElement => {
                                     return (
-                                        <li key={index} className={`${el.type === 1 ? 'up-color' : 'down-color'}`} onClick={() => {
-                                            const action = upCurrency(el.coin);
-                                            store.dispatch(action);
-                                            const actiton = upCurrentCoin(el);
-                                            store.dispatch(actiton);
-                                            const viewQu = (): void => {
-                                                history.push('/quotes-detail');
-                                            };
-                                            const viewTrade = (): void => {
-                                                const actionFrom = setTradeFrom(String(el.target));
-                                                const actionTo = setTradeTo(String(el.base));
-                                                store.dispatch(actionFrom);
-                                                store.dispatch(actionTo);
-                                                props.closeDraw!()
-                                                // console.log(props.base)
-                                                // sendWs({
-                                                //     e: 'unsubscribe',
-                                                //     d: {
-                                                //         symbol: String(props.base),
-                                                //         interval: "1m"
-                                                //     }
-                                                // });
-                                                sendWs({
-                                                    e: 'unsubscribe-depth',
-                                                    d: {
-                                                        symbol: String(props.base),
+                                        <div key={index}>
+                                            {
+                                                el.status == 1 && <li key={index} className={`${el.type === 1 ? 'up-color' : 'down-color'}`} onClick={() => {
+                                                    const action = upCurrency(el.coin);
+                                                    store.dispatch(action);
+                                                    const actiton = upCurrentCoin(el);
+                                                    store.dispatch(actiton);
+                                                    const viewQu = (): void => {
+                                                        // send({
+                                                        //     e: 'unsubscribe-deal',
+                                                        //     d: {
+                                                        //         symbol: String(props.base),
+                                                        //     }
+                                                        // });
+                                                        history.push('/quotes-detail');
+                                                    };
+                                                    const viewTrade = (): void => {
+                                                        send({
+                                                            e: 'unsubscribe-depth',
+                                                            d: {
+                                                                symbol: String(props.base),
+                                                            }
+                                                        });
+                                                        setTimeout(() => {
+                                                            send({
+                                                                e: 'subscribe-depth',
+                                                                d: {
+                                                                    symbol: String(el.symbol),
+                                                                }
+                                                            });
+                                                        }, 100)
+                                                        const actionFrom = setTradeFrom(String(el.target));
+                                                        const actionTo = setTradeTo(String(el.base));
+                                                        store.dispatch(actionFrom);
+                                                        store.dispatch(actionTo);
+                                                        props.closeDraw!()
+                                                        // console.log(props.base)
+                                                        // sendWs({
+                                                        //     e: 'unsubscribe',
+                                                        //     d: {
+                                                        //         symbol: String(props.base),
+                                                        //         interval: "1m"
+                                                        //     }
+                                                        // });
                                                     }
-                                                });
-                                                setTimeout(() => {
-                                                    // sendWs({
-                                                    //     e: 'subscribe',
-                                                    //     d: {
-                                                    //         symbol: String(el.symbol),
-                                                    //         interval: "1m"
-                                                    //     }
-                                                    // });
-                                                    sendWs({
-                                                        e: 'subscribe-depth',
-                                                        d: {
-                                                            symbol: String(el.symbol),
-                                                        }
-                                                    });
-                                                }, 100)
+                                                    props.type === 1 ? viewQu() : viewTrade();
+                                                }}>
+                                                    <div className="list-public">
+                                                        <div className="coin-msg-hour">
+                                                            <p>{el.coin}</p>
+                                                            <p>24H{t('public.vol')}&nbsp;{el.hourTotal}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="list-public">
+                                                        <p className="list-price">{Number(el.price).toFixed(el.precision)}</p>
+                                                        <p className="list-rate">
+                                                            {el.type === 1 ? '+' : ''}
+                                                            {el.rate}%
+                                                        </p>
+                                                    </div>
+                                                </li>
                                             }
-                                            props.type === 1 ? viewQu() : viewTrade();
-                                        }}>
-                                            <div className="list-public">
-                                                <div className="coin-msg-hour">
-                                                    <p>{el.coin}</p>
-                                                    <p>24H{t('public.vol')}&nbsp;{el.hourTotal}</p>
-                                                </div>
-                                            </div>
-                                            <div className="list-public">
-                                                <p className="list-price">{Number(el.price).toFixed(4)}</p>
-                                                <p className="list-rate">
-                                                    {el.type === 1 ? '+' : ''}
-                                                    {el.rate}%
-                                                </p>
-                                            </div>
-                                        </li>
+                                        </div>
                                     )
                                 })
                             }

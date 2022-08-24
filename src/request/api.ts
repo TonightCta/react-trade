@@ -60,4 +60,12 @@ export const AddressListApi = (p:o) => post<IResponse>('/assets/book/list',p);
 //新增地址
 export const AddAddressApi = (p:o) => post<IResponse>('/assets/book/create',p);
 //删除地址
-export const RemoveAddressApi = (p:string | number) => get<IResponse>(`/assets/book/delete/${p}`) 
+export const RemoveAddressApi = (p:string | number) => get<IResponse>(`/assets/book/delete/${p}`);
+//上传头像
+export const UpAvatarApi = (p:o) => post<IResponse>('/user/avatar',p);
+//获取协议
+export const GetSlugApi = (p:string) => get<IResponse>(`/cms/article/slug/${p}`);
+//邀请排行
+export const RankInviteApi = () => get<IResponse>(`/user/inviteRank`);
+//邀请信息
+export const InviteNumberApi = () => get<IResponse>('/user/inviteUsersByLevel')

@@ -130,8 +130,7 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
                         </span><UnorderedListOutline fontSize={12} color="#3370ff" />
                     </p>
                     <p onClick={() => {
-                        const action = setInvBox(1);
-                        store.dispatch(action)
+                        history.push('/invite')
                     }}>
                         <span>
                             {/* 邀请链接 */}

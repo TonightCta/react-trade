@@ -2,7 +2,7 @@ import { RightOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 import InnerNav from '../../../components/inner_nav/nav'
 import store from "../../../store";
-import { upAnnID, upFooterStatus } from "../../../store/app/action_creators";
+import { upAnnID } from "../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { HelpListApi } from '../../../request/api'
@@ -17,8 +17,6 @@ const Help = (): ReactElement<ReactNode> => {
         setHelpList(result.data)
     }, [])
     useEffect(() => {
-        const action = upFooterStatus(0);
-        store.dispatch(action);
         getHelpList();
         return () => {
             getHelpList();

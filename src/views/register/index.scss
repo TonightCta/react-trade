@@ -82,15 +82,21 @@
     .login-btn {
       margin-top: 54px;
     }
+    .register-remark {
+      margin-top: 40px;
+      padding: 12px 14px;
+      background-color: #f8f8f8;
+      border-radius: 4px;
+    }
   }
 }
-.adm-picker-view{
+.adm-picker-view {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 }
-.select-country-popup{
+.select-country-popup {
   padding: 12px;
-  p{
+  p {
     text-align: right;
   }
 }
