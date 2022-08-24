@@ -27,7 +27,7 @@ const App = (): React.ReactElement<ReactNode> => {
     for (let i in result.data.list) {
       arr.push(result.data.list[i]);
     };
-    if (!sessionStorage.getItem('currentCoin')) {
+    if (!localStorage.getItem('currentCoin')) {
       const action = upCurrentCoin(Object.values<any>(result.data.list)[0]);
       const actionFromCoin = setTradeFrom(Object.values<any>(result.data.list)[0].target)
       const actionToCoin = setTradeTo(Object.values<any>(result.data.list)[0].base)
@@ -63,6 +63,7 @@ const App = (): React.ReactElement<ReactNode> => {
     })
   };
   useEffect(() => {
+    console.log(wsStatus)
     wsStatus === 1 && sendWSApp();
   }, [wsStatus])
   // useEffect(() => {

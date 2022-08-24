@@ -29,7 +29,7 @@ let precision: number = 0;
 let sourceData: any = {};
 
 const TesDetail = (): ReactElement<ReactNode> => {
-    const currentCoin = JSON.parse(sessionStorage.getItem('currentCoin') || '{}');
+    const currentCoin = JSON.parse(localStorage.getItem('currentCoin') || '{}');
     const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus);
     const [kfilterData, setFilterKData] = useState<KData>(store.getState().kData);
     const [stamp, setStamp] = useState<number>(0);
@@ -56,7 +56,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
         setFilterKData(store.getState().kData);
     })
     const getDetailData = () => {
-        const coinMsg = JSON.parse(sessionStorage.getItem('currentCoin') || '{}');
+        const coinMsg = JSON.parse(localStorage.getItem('currentCoin') || '{}');
         send({
             e: 'kline',
             d: {
@@ -82,7 +82,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
         });
     };
     useEffect(() => {
-        const coinMsg = JSON.parse(sessionStorage.getItem('currentCoin') || '{}');
+        const coinMsg = JSON.parse(localStorage.getItem('currentCoin') || '{}');
         const rate = (Number(coinMsg.price) - Number(coinMsg.yesterday_price)) / Number(coinMsg.yesterday_price) * 100
         precision = coinMsg.precision;
         setPriceMsg({
@@ -98,7 +98,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
     }, [wsStatus, window.location.href])
     const { t } = useTranslation();
     useEffect(() => {
-        const coinMsg = JSON.parse(sessionStorage.getItem('currentCoin') || '{}');
+        const coinMsg = JSON.parse(localStorage.getItem('currentCoin') || '{}');
         if (kfilterData.type != '1m') {
             send({
                 e: 'kline',
@@ -116,7 +116,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
         const onMessageDetail = (e: any) => {
             try {
                 const data = JSON.parse(e.data);
-                const coinMsg = JSON.parse(sessionStorage.getItem('currentCoin') || '{}');
+                const coinMsg = JSON.parse(localStorage.getItem('currentCoin') || '{}');
                 if (data.e === 'kline') {
                     // console.log(data)
                     // if (data.k.length <= 10) {
@@ -144,7 +144,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
                         ...coinMsg,
                         price:Number(data.k.c)
                     };
-                    sessionStorage.setItem('currentCoin',JSON.stringify(upCoinMsg))
+                    localStorage.setItem('currentCoin',JSON.stringify(upCoinMsg))
                     if (data.k.t > nowKData.k[nowKData.k.length - 1].t) {
                         // console.log(data.k.t)
                         // console.log(nowKData.k[nowKData.k.length - 1].t)
@@ -182,7 +182,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
             removeListener(onMessageDetail)
         }
     }, []);
-    const state = JSON.parse(sessionStorage.getItem('currentCoin') || '{}').coin;
+    const state = JSON.parse(localStorage.getItem('currentCoin') || '{}').coin;
     return (
         <div className="tes-detail">
             <InnerNav leftArrow title={state} withBorder />

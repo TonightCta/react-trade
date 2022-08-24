@@ -29,9 +29,10 @@ axiosInstance.interceptors.response.use(
         const error = lang === 'en' && error_en || lang === 'en' && error_ru || lang === 'th' && error_th || {};
         if (<number>response.status == 200) {
             for (let i in error) {
-                if (data.code == i) {
-                    data.message = error[i as keyof typeof error]
-                }else{
+                if (data.code === Number(i)) {
+                    data.message = error[i as keyof typeof error];
+                    break
+                } else {
                     data.message = 'Pass'
                 }
             };
@@ -41,7 +42,6 @@ axiosInstance.interceptors.response.use(
     error => {
         throw new Error(error);
     },
-
 );
 export const get = <T>(url: string, params?: any): Promise<T> => {
     return new Promise((resolve: any, reject: any): void => {

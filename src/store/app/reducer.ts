@@ -54,7 +54,7 @@ const defaultState: Store = {
     invLevel: Number(sessionStorage.getItem('invLevel')) || 1,//邀请等级
     currency: sessionStorage.getItem('currency') || 'BTC/USDT',//浏览币种
     loadView: Number(sessionStorage.getItem('loadView')) || 0,//启动页显示状态
-    currentCoin: JSON.parse(sessionStorage.getItem('currentCoin') || '{}'),
+    currentCoin: JSON.parse(localStorage.getItem('currentCoin') || '{}'),
     currentBalance: Number(sessionStorage.getItem('currentBalance')) || 0,
     // defaultCoin: sessionStorage.getItem("defaultCoin") || 'BTC/USDT',
     // defaultBaseCoin: sessionStorage.getItem('defaultBaseCoin') || 'BTCUSDT',
@@ -102,7 +102,7 @@ export default (state = defaultState, action: any) => {
             sessionStorage.setItem('loadView', action.load);
             return { ...state, loadView: action.load }
         case Type.UP_CURRENT_COIN:
-            sessionStorage.setItem('currentCoin', JSON.stringify(action.currentCoin));
+            localStorage.setItem('currentCoin', JSON.stringify(action.currentCoin));
             return { ...state, currentCoin: action.currentCoin }
         case Type.SET_BALANCE:
             sessionStorage.setItem('currentBalance', action.balance);

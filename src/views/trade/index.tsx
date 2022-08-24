@@ -24,17 +24,19 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
     const { send } = useSocket();
     // const orderList: any = useRef(null);
     // ws服务连接状态
-    const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus)
+    const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus);
+    const conMsg = JSON.parse(localStorage.getItem('currentCoin') || '{}');
     const [coinMsg, setCoinMsg] = useState<Coin>({
-        coin: `${JSON.parse(sessionStorage.getItem('currentCoin') || '{}').base}/${JSON.parse(sessionStorage.getItem('currentCoin') || '{}').target}`,
-        base: JSON.parse(sessionStorage.getItem('currentCoin') || '{}').symbol
+        coin: `${conMsg.base}/${conMsg.target}`,
+        base: conMsg.symbol
     });
     store.subscribe(() => {
+        const conMsg = JSON.parse(localStorage.getItem('currentCoin') || '{}');
         setCoinMsg({
-            coin: `${JSON.parse(sessionStorage.getItem('currentCoin') || '{}').base}/${JSON.parse(sessionStorage.getItem('currentCoin') || '{}').target}`,
-            base: JSON.parse(sessionStorage.getItem('currentCoin') || '{}').symbol
+            coin: `${conMsg.base}/${conMsg.target}`,
+            base: conMsg.symbol
         });
-        setCoinPrice(Number(JSON.parse(sessionStorage.getItem('currentCoin') || '{}').price));
+        setCoinPrice(Number(conMsg.price));
         setWsStatus(store.getState().wsStatus)
     });
     const [sellQUList, setSellQUlist] = useState<Depch[]>([]);
@@ -48,7 +50,7 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
         });
     }
     useEffect(() => {
-        setCoinPrice(Number(JSON.parse(sessionStorage.getItem('currentCoin') || '{}').price));
+        setCoinPrice(Number(JSON.parse(localStorage.getItem('currentCoin') || '{}').price));
         wsStatus === 1 && sendWSDepth();
     }, [wsStatus]);
     const unSendWS = () => {
