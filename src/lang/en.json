@@ -232,7 +232,8 @@
         "recharge_fait_remark":"Reminder:Please contact online customer service after payment",
         "next":"Next step",
         "reject":"Rejected",
-        "pay_away":"Payment method"
+        "pay_away":"Payment method",
+        "limit_50":"Minimum deposit amount 50 USDT"
     },
     "message": {
         "regis_success": "Registration is successful, it will be automatically go to login for you",

@@ -13,9 +13,6 @@ interface Props {
 
 const TesPriceMsg = (props: Props): ReactElement<ReactNode> => {
     const currentCoin = store.getState().currentCoin;
-    useEffect(() => {
-        // console.log(currentCoin)
-    }, [])
     return (
         <div className="tes-price-msg">
             <div className={`price-box msg-public ${props.upMsg.type === 1 ? 'up-color' : 'down-color'}`}>

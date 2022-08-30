@@ -16,9 +16,8 @@ const AnnDetail = (): ReactElement<ReactNode> => {
     }
     useEffect(() => {
         getDetail();
-
         return () => {
-            getDetail();
+            setContent({});
         }
     }, []);
     return (

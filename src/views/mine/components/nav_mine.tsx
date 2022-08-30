@@ -21,7 +21,7 @@ const MineNav = (): ReactElement<ReactNode> => {
         storeChange();
         return () => {
             storeChange();
-            setAccount(store.getState().account)
+            setAccount({})
         }
     }, []);
     const upAvatarEv = async (_file: File) => {

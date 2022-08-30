@@ -12,9 +12,6 @@ const About = (): ReactElement<ReactNode> => {
     };
     useEffect(() => {
         getUS();
-        return () => {
-            getUS();
-        }
     }, [])
     const { t } = useTranslation();
     return (

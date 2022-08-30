@@ -9,14 +9,9 @@ import { upUserInfo } from '../../store/app/action_fn'
 import './index.scss'
 
 const MineIndex = (): React.ReactElement<ReactNode> => {
-    useEffect((): void => {
-        upUserAssets();
-    }, [window.location.href]);
     useEffect(() => {
+        upUserAssets();
         upUserInfo();
-        return () => {
-            upUserInfo();
-        }
     }, []);
     return (
         <div className="mine-index">

@@ -91,7 +91,6 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
             disableInvite.current = true;
         }
         return () => {
-            getSlug()
             setSlug('');
             clearInterval(timer.current);
             setCountrySource([]);
@@ -227,7 +226,10 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             password_confirmation: inpMsg.password,
                             code: inpMsg.code,
                             country: getCountryCode(selectCountry),
-                            invite_code: GetUrlKey('code', window.location.href) || null
+                            invite_code: GetUrlKey('code', window.location.href) || null,
+                            channel_id:GetUrlKey('ch', window.location.href) || null,
+                            source:GetUrlKey('s', window.location.href) || null,
+                            link_id:GetUrlKey('cl', window.location.href) || null
                         };
                         const result = await RegisterApi(params);
                         setLoading(false)

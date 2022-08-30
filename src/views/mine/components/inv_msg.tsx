@@ -35,7 +35,7 @@ const ModalContent = (props: { closeModal: () => void }): ReactElement => {
     useEffect(() => {
         getInvInfo();
         return () => {
-            getInvInfo();
+            setInvInfo({});
         }
     }, [])
     return (

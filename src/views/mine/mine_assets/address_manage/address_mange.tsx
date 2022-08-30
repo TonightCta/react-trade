@@ -45,7 +45,6 @@ const AddressManage = (): ReactElement<ReactNode> => {
     useEffect(() => {
         getAdList();
         return () => {
-            getAdList();
             setAddress([])
         }
     }, []);

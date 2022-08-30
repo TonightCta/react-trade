@@ -80,8 +80,6 @@ const MineAssets = (): ReactElement<ReactNode> => {
             setAssetsList([]);
             selocalUse([]);
             setIsZroe(0)
-            upUserAssets();
-            storeChange();
         }
     }, []);
     return (

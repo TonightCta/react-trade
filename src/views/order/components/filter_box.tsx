@@ -1,9 +1,10 @@
 import { CloseOutline, DownOutline, FilterOutline } from "antd-mobile-icons";
-import { ReactElement, useState, useRef } from "react";
+import { ReactElement, useState, useRef, useEffect } from "react";
 import { Popup, PickerView, Dropdown, Button, DatePickerView } from "antd-mobile";
 import { DropdownRef } from 'antd-mobile/es/components/dropdown';
 import { useTranslation } from 'react-i18next';
 import { QUList } from '../../../request/api'
+import store from "../../../store";
 
 type bol = boolean;
 
@@ -37,12 +38,11 @@ const now = new Date();
 const coinVol : string[][] = [[]];
 
 const getCoinList = async () => {
-    const result = await QUList();
-    for(let i in result.data.list){
-        coinVol[0].push(`${result.data.list[i].base}/${result.data.list[i].target}`)
+    const result = store.getState().quList;
+    for(let i in result){
+        coinVol[0].push(`${result[i].base}/${result[i].target}`)
     };
 };
-getCoinList();
 
 const ValDate = (_time: Date): string => {
     const date = new Date(_time);
@@ -94,7 +94,10 @@ const FilterBox = (props: Props): ReactElement => {
             startTime: false,
             endTime: false
         })
-    }
+    };
+    useEffect(() => {
+        getCoinList()
+    },[])
     return (
         <div className="filter-box">
             <Dropdown ref={DrapRef}>

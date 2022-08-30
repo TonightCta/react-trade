@@ -49,7 +49,7 @@ const RechargeFaitIndex = (): ReactElement<ReactNode> => {
         channel_name: '',
         loading: false,
     });
-    const support = async () :  Promise<void> => {
+    const support = async (): Promise<void> => {
         const result = await RechargeFaitListApi();
         const list = result.data.channel.filter((item: { type: string; }) => {
             return item.type === 'OnLine'
@@ -78,7 +78,6 @@ const RechargeFaitIndex = (): ReactElement<ReactNode> => {
     useEffect(() => {
         support();
         return () => {
-            support();
             setRechargeSupport({
                 select_list: [],
                 channel: [],
@@ -87,9 +86,13 @@ const RechargeFaitIndex = (): ReactElement<ReactNode> => {
     }, []);
     const submitRecharge = async () => {
         if (!amount) {
-            Toast.show('message.enter_amount');
+            Toast.show(t('message.enter_amount'));
             return;
         };
+        if (Number(amount) < 50) {
+            Toast.show(t('public.limit_50'))
+            return;
+        }
         setFaitMsg({
             ...faitMsg,
             loading: true
@@ -97,7 +100,7 @@ const RechargeFaitIndex = (): ReactElement<ReactNode> => {
         const params = {
             channel_id: faitMsg.channel_id,
             channel_item_id: faitMsg.channel_item_id,
-            amount: faitMsg.amount,
+            amount: faitMsg.amount.toFixed(6),
             next_action: 'Wallet',
             next_id: 0,
             redirect_url: `${process.env.REACT_APP_SHARE}/#/assets-bill`

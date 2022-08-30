@@ -122,8 +122,6 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
         getCoinList();
         storeChange();
         return () => {
-            getCoinList();
-            getBalance('USDT');
             storeChange();
             setSourceCoin([]);
             setCoinList([]);

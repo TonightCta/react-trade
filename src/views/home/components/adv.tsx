@@ -21,7 +21,6 @@ const AdvSwiper = (props: { history: any }): ReactElement<ReactNode> => {
     useEffect(() => {
         getAdvList();
         return () => {
-            getAdvList();
             setAdvList([]);
         }
     }, [])

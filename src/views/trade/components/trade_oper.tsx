@@ -29,8 +29,9 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
     const [formBalance, setFormBalance] = useState<number>(0);
     const [toBalance, setToBalance] = useState<number>(0);
     const getBalance = async () => {
-        setFormBalance(await QuireBalance(state.tradeFromCoin))
-        setToBalance(await QuireBalance(state.tradeToCoin))
+        const { balance } = await QuireBalance(state.tradeFromCoin,state.tradeToCoin);
+        setFormBalance(balance[0])
+        setToBalance(balance[1])
     };
     // 交易深度信息
     const [upList, setUpList] = useState<Depch[]>([
@@ -161,10 +162,8 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
         });
     };
     useEffect(() => {
-        getBalance();
         storeChange();
         return () => {
-            getBalance()
             storeChange();
             setUpList([]);
             setDownList([]);

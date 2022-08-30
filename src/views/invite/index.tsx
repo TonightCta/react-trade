@@ -230,9 +230,7 @@ const InviteIndex = (): ReactElement<ReactNode> => {
         getInvInfo();
         getRankList();
         return () => {
-            getInvInfo();
             setInvInfo(null)
-            getRankList();
         }
     }, []);
     const QrImg = (): ReactElement => {

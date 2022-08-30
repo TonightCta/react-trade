@@ -9,6 +9,9 @@ interface UMsg {
         kyc?: number,
         pay_password?: number,
         ga?:number
+    },
+    quotation:{
+        wss_url:string
     }
 }
 export interface WithDraw {

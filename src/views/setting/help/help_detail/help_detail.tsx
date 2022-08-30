@@ -18,7 +18,7 @@ const HelpDetail = (): ReactElement<ReactNode> => {
     useEffect(() => {
         getDetail();
         return () => {
-            getDetail();
+            setContent({});
         }
     }, [window.location.href]);
     return (

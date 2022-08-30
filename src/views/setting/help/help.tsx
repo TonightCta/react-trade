@@ -19,7 +19,7 @@ const Help = (): ReactElement<ReactNode> => {
     useEffect(() => {
         getHelpList();
         return () => {
-            getHelpList();
+            setHelpList([]);
         }
     }, [window.location.href]);
     return (

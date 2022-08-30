@@ -52,11 +52,8 @@ const RechargeIndex = (props: any): ReactElement<ReactNode> => {
         })
     }
     useEffect(() => {
-
         getCoins();
         return () => {
-            getCoins();
-            getAddress();
             setSourceCoin([]);
             setCoinList([]);
             setProtocolList([]);

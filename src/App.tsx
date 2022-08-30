@@ -3,7 +3,7 @@ import RouteConfig from './route';
 import { HashRouter } from 'react-router-dom';
 import './App.css';
 import './App.scss'
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import LoadView from './views/load_view/load_view';
 // import { createWS, sendWs,getMessage } from './utils/ws'
 import { useSocket } from './utils/hooks'
@@ -20,7 +20,7 @@ const App = (): React.ReactElement<ReactNode> => {
 
   // const [state, dispatch] = useReducer(subscribeReducer, {}, initWsSubscribe);
   const { send } = useSocket();
-  const sendWSApp = async () => {
+  const sendWSApp = useCallback(async () => {
     let arr: any[] = [];
     const result = await QUList();
     for (let i in result.data.list) {
@@ -45,16 +45,7 @@ const App = (): React.ReactElement<ReactNode> => {
         }
       });
     });
-    // getMessage().message.onmessage = (e:any) => {
-    //   const data = JSON.parse(e.data);
-    //   if(data.e === "subscribe"){
-    //     dispatch({
-    //       type:WSDataType.SET_WSS_SUBSCRIBE,
-    //       payload:{wsSubscribe:data}
-    //     });
-    //   }
-    // }
-  };
+  }, []);
   const storeChange = () => {
     store.subscribe(() => {
       // setToken(store.getState().appToken);

@@ -18,7 +18,6 @@ const InvDetail = (): ReactElement<ReactNode> => {
     useEffect(() => {
         inviteMsg();
         return () => {
-            inviteMsg();
             setInvMsg({})
         }
     }, [])

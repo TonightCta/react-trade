@@ -58,10 +58,6 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
             setOrderList(result.data.list)
         }
     }, [props,page,upTime])
-    const loadMore = async () => {
-        setPage(page + 1);
-        await getOrderList(dataType);
-    }
     useEffect(() => {
         setPage(1);
         setOrderList([]);
@@ -74,11 +70,8 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
         const win: any = window;
         win.getOrderList = getOrderList;
         storeChange();
-        getOrderList();
         return () => {
-            getOrderList();
             storeChange();
-            loadMore();
         }
     }, []);
     const selectOrderType = (_type: number) => {

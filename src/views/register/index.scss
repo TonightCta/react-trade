@@ -5,6 +5,8 @@
   position: fixed;
   top: 0;
   left: 0;
+  overflow: auto;
+  padding-bottom: 24px;
   .close-page {
     display: flex;
     justify-content: space-between;

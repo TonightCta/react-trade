@@ -32,7 +32,7 @@ const Ann = (): ReactElement<ReactNode> => {
     useEffect(() => {
         getAnnListSet();
         return () => {
-            getAnnListSet()
+            setAnnList([])
         }
     }, []);
     return (

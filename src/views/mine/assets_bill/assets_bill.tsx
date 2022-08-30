@@ -41,17 +41,11 @@ const AssetsBill = (): ReactElement<ReactNode> => {
             setSourceList([...result.data.list]);
         }
     };
-    const loadMore = async () => {
-        // setPage(page + 1)
-        // await getBillList();
-    }
     useEffect(() => {
         // getBillList();
         return () => {
             const action = upBillCoin('');
             store.dispatch(action);
-            getBillList();
-            loadMore();
         }
     }, []);
     useEffect(() => {

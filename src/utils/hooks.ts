@@ -52,33 +52,39 @@ let ws: WebSocket | null;
 let wsStatusInner: number;
 
 export const useSocket = () => {
-    let init: () => void;
-    UserInfoApi().then((result => {
-        init = async () => {
-            if (ws) return
-            ws = new WebSocket(result.data.quotation.wss_url);
-            ws.onopen = (e: any) => {
-                const action = upWSStatus(1);
-                wsStatusInner = 1
-                store.dispatch(action);
-            };
-            ws.onclose = (e: any) => {
-                const action = upWSStatus(0);
-                wsStatusInner = 0;
-                store.dispatch(action);
-                setTimeout(() => {
-                    ws = null;
-                    init();
-                }, 3000)
-            };
-            ws!.onmessage = (e: any) => {
-                listener.forEach((item: any) => {
-                    item(e)
-                })
-            }
+    const url: string = localStorage.getItem('ws_url') || '';
+
+    const init = async (_url: string) => {
+        if (ws) return
+        ws = new WebSocket(_url);
+        ws.onopen = (e: any) => {
+            const action = upWSStatus(1);
+            wsStatusInner = 1
+            store.dispatch(action);
         };
-        init();
-    }))
+        ws.onclose = (e: any) => {
+            const action = upWSStatus(0);
+            wsStatusInner = 0;
+            store.dispatch(action);
+            setTimeout(() => {
+                ws = null;
+                init(url);
+            }, 3000)
+        };
+        ws!.onmessage = (e: any) => {
+            listener.forEach((item: any) => {
+                item(e)
+            })
+        }
+    };
+    if (url) {
+        init(url);
+    } else {
+        UserInfoApi().then((result => {
+            localStorage.setItem('ws_url', result.data.quotation.wss_url)
+            init(result.data.quotation.wss_url);
+        }));
+    }
     const sendWs = (params: WS) => {
         wsStatusInner === 1 && ws?.send(JSON.stringify(params));
     };

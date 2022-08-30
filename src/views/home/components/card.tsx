@@ -21,8 +21,7 @@ const HomeCard = (props: { history: any }): ReactElement<ReactNode> => {
     useEffect(() => {
         getAcc();
         return () => {
-            getAcc();
-            setAccount({})
+            setAccount({});
         }
     }, [])
     const list: Array<CardMsg> = [

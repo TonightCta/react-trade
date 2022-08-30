@@ -1,5 +1,5 @@
 import { CheckCircleFill } from "antd-mobile-icons";
-import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { ReactElement, ReactNode, useState } from "react";
 import InnerNav from '../../../../../components/inner_nav/nav'
 import './index.scss';
 import { WithdrawCoinMsg } from '../../../../../utils/types';
