@@ -7,7 +7,6 @@ import { ReactNode, useEffect, useState } from 'react';
 import LoadView from './views/load_view/load_view';
 // import { createWS, sendWs,getMessage } from './utils/ws'
 import { useSocket } from './utils/hooks'
-import InvBox from './components/inv/inv';
 // import { upUserAssets } from './store/app/action_fn'
 // import { WSDataType } from "./utils/state";
 // import { initWsSubscribe, subscribeReducer } from './redurce/set_subscribe';
@@ -63,7 +62,6 @@ const App = (): React.ReactElement<ReactNode> => {
     })
   };
   useEffect(() => {
-    console.log(wsStatus)
     wsStatus === 1 && sendWSApp();
   }, [wsStatus])
   // useEffect(() => {
@@ -81,7 +79,7 @@ const App = (): React.ReactElement<ReactNode> => {
         {/* 启动页 */}
         <LoadView />
         {/* 邀请链接 */}
-        <InvBox />
+        {/* <InvBox /> */}
         <div className='router-view'>
           <RouteConfig />
         </div>

@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useRef, useState } from "react";
 import store from "../../../store";
 import { setUnCoin } from "../../../store/app/action_creators";
 import InnerNav from '../../../components/inner_nav/nav';
@@ -32,6 +32,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
     const currentCoin = JSON.parse(localStorage.getItem('currentCoin') || '{}');
     const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus);
     const [kfilterData, setFilterKData] = useState<KData>(store.getState().kData);
+    const resetK = useRef<number>(0);
     const [stamp, setStamp] = useState<number>(0);
     const { send } = useSocket();
     const [priceMsg, setPriceMsg] = useState<PMsg>({
@@ -83,7 +84,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
     };
     useEffect(() => {
         const coinMsg = JSON.parse(localStorage.getItem('currentCoin') || '{}');
-        const rate = (Number(coinMsg.price) - Number(coinMsg.yesterday_price)) / Number(coinMsg.yesterday_price) * 100
+        const rate = (Number(coinMsg.price) - Number(coinMsg.yesterday_price)) / Number(coinMsg.yesterday_price) * 100;
         precision = coinMsg.precision;
         setPriceMsg({
             price: Number(coinMsg.price),
@@ -94,24 +95,23 @@ const TesDetail = (): ReactElement<ReactNode> => {
         wsStatus === 1 && getDetailData();
         return () => {
             cancelWS();
+            sessionStorage.removeItem('dataZoom')
         }
     }, [wsStatus, window.location.href])
     const { t } = useTranslation();
     useEffect(() => {
         const coinMsg = JSON.parse(localStorage.getItem('currentCoin') || '{}');
-        if (kfilterData.type != '1m') {
-            send({
-                e: 'kline',
-                d: {
-                    symbol: coinMsg.symbol,
-                    interval: kfilterData.type,
-                    start: new Date().getTime() - kfilterData.second * 1000 * 100,
-                    end: new Date().getTime(),
-                }
-            });
-        };
+        sessionStorage.setItem('dataZoom', JSON.stringify({ "start": 50, "end": 100 }));
+        send({
+            e: 'kline',
+            d: {
+                symbol: coinMsg.symbol,
+                interval: kfilterData.type,
+                start: new Date().getTime() - kfilterData.second * 1000 * 100,
+                end: new Date().getTime(),
+            }
+        });
     }, [kfilterData])
-
     useEffect(() => {
         const onMessageDetail = (e: any) => {
             try {
@@ -128,9 +128,46 @@ const TesDetail = (): ReactElement<ReactNode> => {
                     // } else {
 
                     // }
-                    nowKData = data;
+                    // console.log(resetK)
+
+                    if (resetK.current === 1) {
+                        // console.log(sourceData)
+                        // setkData([...data, ...sourceData])
+                        nowKData = {
+                            ...nowKData,
+                            k: [...data.k, ...nowKData.k]
+                        };
+                        // const zoom = JSON.parse(sessionStorage.getItem('dataZoom') || '{}');
+                        // console.log(zoom)
+                        // let dataZoom = {};
+                        // if (zoom.end == 100) {
+                        //     dataZoom = {
+                        //         start: zoom.end / 2,
+                        //         end: zoom.end,
+                        //     };
+                        // } else {
+                        //     dataZoom = {
+                        //         start: zoom.start / 2,
+                        //         end: zoom.end / 2,
+                        //     };
+                        // }
+                        // const dataZoom = {
+                        //     start: 0,
+                        //     end: 100,
+                        // };
+                        // sessionStorage.setItem('dataZoom', JSON.stringify(dataZoom));
+                        setkData(nowKData);
+                        resetK.current = 0;
+                    } else {
+                        sourceData = data;
+                        nowKData = data;
+                        setkData(data);
+                    }
+                    // testRef.current = data;
+                    // sourceData = data;
+                    // nowKData = data;
+                    // setkData(data);
                     // console.log(nowKData)
-                    setkData(data);
                 };
                 if (data.e === 'subscribe' && data.s === coinMsg.symbol) {
                     const rate = (Number(data.k.c) - Number(coinMsg.yesterday_price)) / Number(coinMsg.yesterday_price) * 100
@@ -142,28 +179,71 @@ const TesDetail = (): ReactElement<ReactNode> => {
                     });
                     const upCoinMsg = {
                         ...coinMsg,
-                        price:Number(data.k.c)
+                        price: Number(data.k.c)
                     };
-                    localStorage.setItem('currentCoin',JSON.stringify(upCoinMsg))
+                    localStorage.setItem('currentCoin', JSON.stringify(upCoinMsg));
+                    data.k.t = data.k.t - data.k.t % (kfilterData.second * 1000);
                     if (data.k.t > nowKData.k[nowKData.k.length - 1].t) {
+                        // console.log(213)
+                        // setResetk(0);
                         // console.log(data.k.t)
                         // console.log(nowKData.k[nowKData.k.length - 1].t)
-                        sourceData = {
-                            k: nowKData.k
-                        }
-                        send({
-                            e: 'kline',
-                            d: {
-                                symbol: coinMsg.symbol,
-                                interval: JSON.parse(sessionStorage.getItem('kData') || '{"second": 60, "type": "1m"}').type,
-                                start: new Date().getTime() - kfilterData.second * 1000 * 100,
-                                end: new Date().getTime(),
-                            }
-                        });
-                    } else if (data.k.t == nowKData.k[nowKData.k.length - 1].t) {
-                        nowKData.k[nowKData.k.length - 1] = data.k;
+                        // sourceData = {
+                        //     k: nowKData.k
+                        // }
+                        // send({
+                        //     e: 'kline',
+                        //     d: {
+                        //         symbol: coinMsg.symbol,
+                        //         interval: JSON.parse(sessionStorage.getItem('kData') || '{"second": 60, "type": "1m"}').type,
+                        //         start: new Date().getTime() - kfilterData.second * 1000 * 100,
+                        //         end: new Date().getTime(),
+                        //     }
+                        // });
+
+                        if (kfilterData.type !== '1m') {
+                            let before = nowKData.k[nowKData.k.length - 1];
+                            const open = before.o;
+                            const close = data.k.c;
+                            const high = data.k.h > before.h ? data.k.h : before.h;
+                            const low = data.k.l < before.l ? data.k.l : before.l;
+                            before = {
+                                ...before,
+                                o: open,
+                                c: close,
+                                h: high,
+                                l: low,
+                                t: data.k.t
+                            };
+                            nowKData.k.push(before);
+                            setkData(nowKData)
+                        } else {
+                            nowKData.k.push(data.k);
+                            setkData(nowKData);
+                        };
                         setStamp(new Date().getTime())
-                        setkData(nowKData);
+                    } else if (data.k.t == nowKData.k[nowKData.k.length - 1].t) {
+                        if (kfilterData.type !== '1m') {
+                            let before = nowKData.k[nowKData.k.length - 1];
+                            const open = before.o;
+                            const close = data.k.c;
+                            const high = data.k.h > before.h ? data.k.h : before.h;
+                            const low = data.k.l < before.l ? data.k.l : before.l;
+                            before = {
+                                ...before,
+                                o: open,
+                                c: close,
+                                h: high,
+                                l: low,
+                            };
+                            nowKData.k[nowKData.k.length - 1] = before;
+                            setStamp(new Date().getTime())
+                            setkData(nowKData)
+                        } else {
+                            nowKData.k[nowKData.k.length - 1] = data.k;
+                            setStamp(new Date().getTime())
+                            setkData(nowKData);
+                        }
                     }
                 }
                 if (data.e === 'subscribe-deal') {
@@ -177,11 +257,27 @@ const TesDetail = (): ReactElement<ReactNode> => {
                 // console.log(item)
             }
         };
+
         addListener(onMessageDetail)
         return () => {
-            removeListener(onMessageDetail)
+            removeListener(onMessageDetail);
         }
     }, []);
+    const getMoreK = (_end_time: number) => {
+        const coinMsg = JSON.parse(localStorage.getItem('currentCoin') || '{}');
+        send({
+            e: 'kline',
+            d: {
+                symbol: coinMsg.symbol,
+                interval: JSON.parse(sessionStorage.getItem('kData') || '{"second": 60, "type": "1m"}').type,
+                start: _end_time - kfilterData.second * 1000 * 100,
+                end: _end_time,
+            }
+        });
+        resetK.current = 1;
+    };
+    const win: any = window;
+    win.getMoreK = getMoreK;
     const state = JSON.parse(localStorage.getItem('currentCoin') || '{}').coin;
     return (
         <div className="tes-detail">

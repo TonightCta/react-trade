@@ -1,7 +1,7 @@
 import { CloseOutline, LinkOutline, UnorderedListOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 import store from "../../../store";
-import { setInvBox, upInvLevel } from "../../../store/app/action_creators";
+import { upInvLevel } from "../../../store/app/action_creators";
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd-mobile';
 import { useTranslation } from 'react-i18next';
@@ -29,6 +29,7 @@ const ModalContent = (props: { closeModal: () => void }): ReactElement => {
     });
     const getInvInfo = useCallback(async () => {
         const result = await InvInfoApi();
+        console.log(result)
         setInvInfo(result.data);
     }, [])
     useEffect(() => {
@@ -76,7 +77,7 @@ const ModalContent = (props: { closeModal: () => void }): ReactElement => {
                     invInfo.article.title
                 }
             </p>
-            <div className="content-box" dangerouslySetInnerHTML={{ __html: invInfo.article.content }}></div>
+            <div className="content-box" style={{lineHeight:'22px'}} dangerouslySetInnerHTML={{ __html: invInfo.article.content }}></div>
         </div>
     )
 };

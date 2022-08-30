@@ -13,7 +13,7 @@ const TesDealMsg = (props: Props): ReactElement<ReactNode> => {
     const ValDate = (_time: number): string => {
         const date = new Date(_time);
         const hour = date.getHours();
-        const min = date.getMinutes() < 10 ? ('0' + date.getMinutes()) : date.getMinutes() + 1;
+        const min = date.getMinutes() < 10 ? ('0' + date.getMinutes()) : date.getMinutes();
         const sec = date.getSeconds() < 10 ? ('0' + date.getSeconds()) : date.getSeconds();
         return `${hour}:${min}:${sec}`
     }

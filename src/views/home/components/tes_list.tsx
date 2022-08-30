@@ -24,10 +24,10 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
         });
         const ar : TesMsg[] = [];
         props.wsData.forEach((e:TesMsg) => {
-            if(e.status === 1){ 
+            if(e.status === 1 && ar.length < 5){ 
                 ar.push(e)
             }
-        })
+        });
         setEtsListTwo(ar);
     };
     useEffect(() => {
@@ -37,11 +37,18 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
     }, [props]);
 
     useEffect(() => {
-        if (JSON.parse(sessionStorage.getItem('homeData') || '[]').length > 0) {
-            JSON.parse(sessionStorage.getItem('homeData') || '[]').sort((a: TesMsg, b: TesMsg) => {
+            const data = JSON.parse(sessionStorage.getItem('homeData') || '[]')
+            if (data.length > 0) {
+                data.sort((a: TesMsg, b: TesMsg) => {
                 return b.rate - a.rate
             });
-            setEtsListTwo(JSON.parse(sessionStorage.getItem('homeData') || '[]'));
+            const ar : TesMsg[] = [];
+            data.forEach((e:TesMsg) => {
+                if(e.status === 1 && ar.length < 5){ 
+                    ar.push(e)
+                }
+            });
+            setEtsListTwo(ar);
         }
     }, []);
 
@@ -68,7 +75,7 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
                                         history.push('/quotes-detail')
                                     }}>
                                         <div className="list-public">
-                                            <p className="list-sort">{index + 1}</p>
+                                            {/* <p className="list-sort">{index + 1}</p> */}
                                             <div className="coin-msg-hour">
                                                 <p>{el.coin}</p>
                                                 <p>24H{t('public.vol')}&nbsp;{Number(el.yesterday_volume).toFixed(2)}</p>

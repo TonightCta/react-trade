@@ -22,6 +22,7 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
     const [count, setCount] = useState<number>(60);
     const cbSaver: any = useRef();
     const timer = useRef<NodeJS.Timer>();
+    const [loading,setLoading] = useState<boolean>(false);
     const [inpMsg, setInpMsg] = useState<InpMsg>({
         email: '',
         code: '',
@@ -99,6 +100,7 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
             Toast.show(t('message.pass_faild'));
             return;
         }; 
+        setLoading(true)
         const params = {
             type: 2,
             email: inpMsg.email,
@@ -107,6 +109,7 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
             code: inpMsg.code
         };
         const result = await ForgetPassApi(params);
+        setLoading(false);
         const { code } = result;
         if (code !== 200) {
             Toast.show(result.message);
@@ -178,7 +181,7 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
                 </div>
                 <p className="login-btn">
                     {/* 重置密码 */}
-                    <Button color="primary" block onClick={() => { resetPassService() }}>{t('public.reset_pass')}</Button>
+                    <Button loading={loading} disabled={loading} color="primary" block onClick={() => { resetPassService() }}>{t('public.reset_pass')}</Button>
                 </p>
             </div>
         </div>

@@ -5,7 +5,6 @@
     .invite-top {
       width: 100%;
       height: 305px;
-      background-image: url("../../assets/images/invite_title.png");
       background-size: 100% 100%;
       display: flex;
       justify-content: flex-end;
@@ -43,14 +42,12 @@
     .invite-box-1 {
       width: 100%;
       height: 300px;
-      background-image: url("../../assets/images/invite_box_1.png");
       background-size: 100% 100%;
       margin-top: -98px;
       padding-top: 44px;
       .box-1-top {
         width: 321px;
         height: 137px;
-        background-image: url("../../assets/images/box_1_inner.png");
         background-size: 100% 100%;
         margin: 0 auto;
       }
@@ -119,6 +116,7 @@
           }
           .link-code {
             width: 94px;
+            white-space: nowrap;
             margin-right: 12px;
           }
           .link-url {
@@ -133,7 +131,6 @@
     .invite-box-2 {
       width: 100%;
       height: 594px;
-      background-image: url("../../assets/images/invite_box_2.png");
       background-size: 100% 100%;
       margin-top: 12px;
       .ranking-mine {
@@ -141,7 +138,7 @@
         font-size: 14px;
         font-weight: 500;
         color: white;
-        padding-right: 15%;
+        padding-right: 18%;
         padding-top: 6px;
       }
       .three-list {
@@ -292,7 +289,6 @@
     bottom: 0;
     transition: 0.3s all;
     left: 0;
-    z-index: 200;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -323,8 +319,53 @@
     }
   }
   .show-poster {
-    z-index: 1;
+    z-index: 300;
     opacity: 1;
+  }
+}
+.en-invite {
+  .invite-top {
+    background-image: url("../../assets/images/invite_title.png");
+  }
+  .invite-box-1 {
+    background-image: url("../../assets/images/invite_box_1.png");
+    .box-1-top {
+      background-image: url("../../assets/images/box_1_inner.png");
+    }
+  }
+  .invite-box-2 {
+    background-image: url("../../assets/images/invite_box_2.png");
+  }
+}
+.th-invite {
+  .invite-top {
+    background-image: url("../../assets/images/invite_title_th.png");
+  }
+  .invite-box-1 {
+    background-image: url("../../assets/images/invite_box_1_th.png");
+    .box-1-top {
+      background-image: url("../../assets/images/box_1_inner_th.png");
+    }
+  }
+  .invite-box-2 {
+    background-image: url("../../assets/images/invite_box_2_th.png");
+  }
+}
+.ru-invite {
+  .invite-top {
+    background-image: url("../../assets/images/invite_title_ru.png");
+  }
+  .invite-box-1 {
+    background-image: url("../../assets/images/invite_box_1_ru.png");
+    .box-1-top {
+      background-image: url("../../assets/images/box_1_inner_ru.png");
+    }
+  }
+  .invite-box-2 {
+    background-image: url("../../assets/images/invite_box_2_ru.png");
+    .ranking-mine {
+      padding-right: 12% !important;
+    }
   }
 }
 .before-create-1 {
@@ -378,4 +419,54 @@
 .swiper-slide-active,
 .swiper-slide-duplicate-active {
   transform: scale(1) !important;
+}
+.share-popup {
+  padding: 24px 12px;
+  .share-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    p {
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+    }
+  }
+  .share-apps {
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      li {
+        width: 25%;
+        .apps-icon {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            justify-items: center;
+          }
+          img {
+            height: 100%;
+          }
+          p{
+            margin-top: 8px;
+            font-size: 12px;
+            color: #333;
+          }
+        }
+      }
+      li:last-child{
+        margin-top: 12px;
+      }
+    }
+  }
 }

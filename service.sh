@@ -2,7 +2,7 @@
 # deploy
 echo 'ℹ️ deploy'
 
-export PROD_HOST="8.219.136.35"
+export PROD_HOST="8.219.78.172"
 export PROD_DIR="/www/wwwroot/web.com"
 
 trap cancelDeploy INT
@@ -12,7 +12,7 @@ cancelDeploy() {
   exit 1;
 }
 
-npm run build:test
+npm run build:th
 
 cd build
 

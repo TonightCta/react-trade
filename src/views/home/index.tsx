@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useReducer, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useReducer } from "react";
 // import { useTranslation } from "react-i18next";
 import HomeBanner from "./components/banner";
 import HomeAdv from "./components/adv";
@@ -36,11 +36,29 @@ const HomeIndex = (): React.ReactElement<ReactNode> => {
 
     const history = useHistory();
     useEffect(() => {
+        let arrVal: any[] = [];
+        arrVal = store.getState().quList;
+        const storeChange = () => {
+            store.subscribe(() => {
+                arrVal = store.getState().quList;
+            });
+        };
+        storeChange();
+        arrVal = arrVal.map(item => {
+            const rate = (item.price - item.yesterday_price) / item.yesterday_price * 100
+            return {
+                ...item,
+                rate: rate,
+                type: rate > 0 ? 1 : 0,
+                coin: `${item.base}/${item.target}`
+            }
+        });
+        const action = setHomeData(arrVal);
+        store.dispatch(action);
         const onMessageHome = (e: any) => {
             try {
                 const wsData = JSON.parse(e.data);
                 if (wsData.e === 'subscribe') {
-                    let arrVal: any[] = store.getState().quList;
                     arrVal.forEach(item => {
                         if (wsData.s === item.symbol) {
                             item.price = wsData.k.c;
@@ -54,12 +72,9 @@ const HomeIndex = (): React.ReactElement<ReactNode> => {
                             type: rate > 0 ? 1 : 0,
                             coin: `${item.base}/${item.target}`
                         }
-                    }).sort((x: any, y: any) => {
-                        return x.id - y.id
                     })
                     // console.log(arrVal.sort((x:any,y:any) => { return x.id - y.id }),'top')
-                    const action = setHomeData(arrVal);
-                    store.dispatch(action);
+
                     dispatch({
                         type: WSDataType.SET_WSS_SUBSCRIBE,
                         payload: { wsSubscribe: arrVal }
@@ -75,7 +90,8 @@ const HomeIndex = (): React.ReactElement<ReactNode> => {
         }
         addListener(onMessageHome)
         return () => {
-            removeListener(onMessageHome)
+            removeListener(onMessageHome);
+            storeChange();
         }
     }, []);
     return (

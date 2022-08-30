@@ -126,3 +126,20 @@
     }
   }
 }
+.recharge-popup {
+  text-align: center;
+  ul {
+    li {
+      font-size: 16px;
+      color: #333;
+      padding: 14px 0;
+    }
+    li:first-child{
+      border-bottom: 1px solid #eee;
+    }
+    li:last-child {
+      color: #666;
+      border-top: 2px solid #eee;
+    }
+  }
+}

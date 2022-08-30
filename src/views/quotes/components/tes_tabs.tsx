@@ -9,7 +9,7 @@ interface Props {
     type: number,
     closeDraw?: () => void,
     t: any,
-    base?:string
+    base?: string
 }
 type TabsF = {
     name: string,
@@ -50,11 +50,14 @@ const TesTabs = (props: Props): ReactElement<ReactNode> => {
         const result = await QUList(_val ? _val : currentTab);
         const arr = [];
         for (let i in result.data.list) {
-            arr.push(result.data.list[i])
+            if (result.data.list[i].status === 1) {
+                arr.push(result.data.list[i])
+            }
         };
         const actionQU = setQU(arr);
         store.dispatch(actionQU)
-        setDataTotal(result.data.total);
+        setDataTotal(arr.length);
+        // arr = [...arr,...arr]
         setTesListTwo(arr.map(item => {
             const rate = (item.price - item.yesterday_price) / item.yesterday_price * 100
             return {

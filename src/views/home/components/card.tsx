@@ -1,7 +1,6 @@
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store from "../../../store";
-import { setInvBox } from "../../../store/app/action_creators";
 
 interface CardMsg {
     title: string,
@@ -13,7 +12,19 @@ interface CardMsg {
 
 const HomeCard = (props: { history: any }): ReactElement<ReactNode> => {
     const { t } = useTranslation();
-
+    const [account, setAccount] = useState<any>(store.getState().account);
+    const getAcc = () => {
+        store.subscribe(() => {
+            setAccount(store.getState().account)
+        })
+    };
+    useEffect(() => {
+        getAcc();
+        return () => {
+            getAcc();
+            setAccount({})
+        }
+    }, [])
     const list: Array<CardMsg> = [
         {
             title: t('public.inv'),
@@ -32,7 +43,7 @@ const HomeCard = (props: { history: any }): ReactElement<ReactNode> => {
         {
             title: t('public.customer'),
             icon: require('../../../assets/images/home_icon_3.png'),
-            url: 'https://www.baidu.com',
+            url: String(account.supportUrl),
             outSide: true,
             inner: false,
         },

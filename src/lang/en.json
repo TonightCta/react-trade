@@ -1,7 +1,7 @@
 {
     "public": {
         "search": "Search",
-        "page": "Homepage",
+        "page": "Home",
         "quotes": "Market",
         "trade": "Transaction",
         "mine": "Mine",
@@ -70,12 +70,12 @@
         "people": "People",
         "end_wait": "Up to",
         "coin": "Currency",
-        "select_net": "Select recharge network",
+        "select_net": "Recharge network",
         "qr_pay": "Scan the QR code, transfer to",
         "recharge_address": "Recharge address",
         "copy": "Copy",
         "recharge_remark": "Recharge Instructions",
-        "recharge_remark_1": "請通過客戶端或在線錢包將您需要充值的相應幣種",
+        "recharge_remark_1": "Please deposit the corresponding currency you need to recharge through the client or online wallet",
         "recharge_remark_1_1": "The amount is sent to this address, and it will not be recovered if sent to other assets.",
         "recharge_remark_2": "After the delivery is completed, the system will automatically recharge the virtual currency to your account on this site after the transaction is confirmed by the corresponding amount. The confirmation of the corresponding amount will take about 0.5 to 1 hour, please wait patiently. (The confirmation number is 2)",
         "recharge_remark_3": "Multiple top-ups to the same address are allowed without affecting the arrival of funds. Minimum top-up amount",
@@ -222,7 +222,17 @@
         "has_no_address": "No address yet",
         "hint": "Hint",
         "has_no_data": "No data",
-        "inv_title":"Invitation rebate"
+        "inv_title":"Invitation rebate",
+        "id":"ID",
+        "no_content":"No content yet",
+        "recharge_fait":"Fiat currency recharge",
+        "recharge_protocol":"On-chain recharge",
+        "recharge_amount":"Recharge amount",
+        "type_recharge_amount":"Enter the recharge amount",
+        "recharge_fait_remark":"Reminder:Please contact online customer service after payment",
+        "next":"Next step",
+        "reject":"Rejected",
+        "pay_away":"Payment method"
     },
     "message": {
         "regis_success": "Registration is successful, it will be automatically go to login for you",
@@ -259,9 +269,26 @@
         "cancel_optional": "Cancel optional success",
         "upload_success":"Uploaded successfully",
         "type_trade_amount":"Please enter transaction amount",
-        "type_limit_amount":"Please enter a limit amount"
+        "type_limit_amount":"Please enter a limit amount",
+        "level":"Level",
+        "total":"total",
+        "enter_amount":"Please enter recharge amount"
     },
     "title": {
         "language_set": "Language"
+    },
+    "invite":{
+        "rules":"Rules",
+        "Invitation":"Invitation",
+        "share":"Share and get rewarded",
+        "inv_code":"Invitation code",
+        "share_link":"Referral link",
+        "no":"No.",
+        "waiting":"Waiting",
+        "inv_more":"Invite Friends",
+        "save":"Long press the picture to save",
+        "share_to":"Share to",
+        "code":"Invitation code",
+        "enter_code":"Enter the invitation code(optional)"
     }
 }

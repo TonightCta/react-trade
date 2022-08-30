@@ -1,4 +1,4 @@
-import { DotLoading, Modal, Popover, Toast } from "antd-mobile";
+import { DotLoading, Modal, Popover, Popup, Toast } from "antd-mobile";
 import { CloseOutline, RightOutline } from "antd-mobile-icons";
 import React, { ReactElement, ReactNode, useCallback, useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
@@ -14,9 +14,7 @@ import Swiper from 'swiper';
 import { RankInviteApi } from '../../request/api'
 import 'swiper/css'
 import './index.scss'
-import { useAsyncState } from "../../utils/hooks";
 
-const test = [1, 2, 3, 4, 5, 6, 7];
 interface Rank {
     email: string,
     reward: string,
@@ -64,15 +62,62 @@ const ModalContent = (props: { closeModal: () => void, invInfo: any }): ReactEle
                     props.invInfo.article.title
                 }
             </p>
-            <div className="content-box" dangerouslySetInnerHTML={{ __html: props.invInfo.article.content }}></div>
+            <div className="content-box" style={{lineHeight:'22px'}} dangerouslySetInnerHTML={{ __html: props.invInfo.article.content }}></div>
         </div>
     )
 };
 
-const SwiperMine = (props: { invInfo: any }): ReactElement => {
+const url = encodeURIComponent(String(process.env.REACT_APP_SHARE));
+const shareList = [
+    {
+        icon: require('../../assets/images/face_icon.png'),
+        name: 'Facebook',
+        url: `https://www.facebook.com/sharer/sharer.php?u=${url}`
+    },
+    {
+        icon: require('../../assets/images/tg_icon.png'),
+        name: 'Telegram',
+        url: `https://t.me/share/url?url=${url}&text=${encodeURIComponent('BIBI')}`
+    },
+    {
+        icon: require('../../assets/images/reddit_icon.png'),
+        name: 'Reddit',
+        url: `http://www.reddit.com/submit?url=${url}&title=${encodeURIComponent('BIBI')}`
+    },
+    {
+        icon: require('../../assets/images/whats_icon.png'),
+        name: 'Whatsapp',
+        url: `https://web.whatsapp.com/send?text=${encodeURIComponent('BIBI')}&url=${url}`
+    },
+    {
+        icon: require('../../assets/images/line_icon.png'),
+        name: 'Line',
+        url: `https://lineit.line.me/share/ui?url=${url}`
+    },
+]
+
+const SwiperMine = (props: { invInfo: any, lang: string | null }): ReactElement => {
     const printElementOne = useRef() as React.MutableRefObject<any>;
     const printElementTwo = useRef() as React.MutableRefObject<any>;
     const printElementThree = useRef() as React.MutableRefObject<any>;
+    const [invInfo, setInvInfo] = useState<any>({});
+    const getInvInfo = useCallback(async () => {
+        const result = await InvInfoApi();
+        setInvInfo(result.data);
+        createImgFn();
+    }, []);
+    useEffect(() => {
+        getInvInfo();
+        new Swiper('#poster-swiper', {
+            slidesPerView: 3,
+            spaceBetween: 20,
+            initialSlide: 1,
+            centeredSlides: true,
+        });
+        return () => {
+            setInvInfo({});
+        }
+    }, [])
     // const [scaleName, setScaleName] = useState<string | null>(null)
     const [createImg, setCreateImg] = useState<any>({
         img_1: null,
@@ -93,38 +138,27 @@ const SwiperMine = (props: { invInfo: any }): ReactElement => {
         })
         // setScaleName('show-scale-8')
     };
-    useEffect(() => {
-        new Swiper('#poster-swiper', {
-            slidesPerView: 3,
-            spaceBetween: 20,
-            initialSlide: 1,
-            centeredSlides: true,
-        });
-        setTimeout(() => {
-            createImgFn();
-        }, 500)
-    }, [])
     return (
         <>
             <div className="before-create-1" ref={printElementOne}>
-                <img src={require('../../assets/images/poster_1.png')} alt="" />
-                <p>{`${props.invInfo?.link}?code=${props.invInfo?.code}`}</p>
+                <img src={require(`../../assets/images/poster_1_${props.lang}.png`)} alt="" />
+                <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p>
                 <div className="qr-box">
-                    <QRCode value={`${props.invInfo?.link}?code=${props.invInfo?.code}`} size={42} id="qrCode" />
+                    <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={42} id="qrCode" />
                 </div>
             </div>
             <div className="before-create-1" ref={printElementTwo}>
-                <img src={require('../../assets/images/poster_2.png')} alt="" />
-                <p>{`${props.invInfo?.link}?code=${props.invInfo?.code}`}</p>
+                <img src={require(`../../assets/images/poster_2_${props.lang}.png`)} alt="" />
+                <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p>
                 <div className="qr-box">
-                    <QRCode value={`${props.invInfo?.link}?code=${props.invInfo?.code}`} size={42} id="qrCode" />
+                    <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={42} id="qrCode" />
                 </div>
             </div>
             <div className="before-create-1" ref={printElementThree}>
-                <img src={require('../../assets/images/poster_3.png')} alt="" />
-                <p>{`${props.invInfo?.link}?code=${props.invInfo?.code}`}</p>
+                <img src={require(`../../assets/images/poster_3_${props.lang}.png`)} alt="" />
+                <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p>
                 <div className="qr-box">
-                    <QRCode value={`${props.invInfo?.link}?code=${props.invInfo?.code}`} size={42} id="qrCode" />
+                    <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={42} id="qrCode" />
                 </div>
             </div>
             <div className="swiper-container" id="poster-swiper">
@@ -157,26 +191,30 @@ const InviteIndex = (): ReactElement<ReactNode> => {
         setInvInfo(result.data);
     }, []);
 
-    const copyLink = () => {
-        copy(`${invInfo?.link}?code=${invInfo?.code}`);
+    const copyLink = (_url:string) => {
+        copy(_url);
         Toast.show(t('message.copy_success'))
     };
     const [showPoster, setShowPoster] = useState<number>(0);
     const [loadPoster, setLoadposter] = useState<boolean>(false);
     const [rankList, setRandList] = useState<Rank[]>([]);
     const [outThree, setOutThree] = useState<Rank[]>([]);
+    const [rankMine, setRandMin] = useState<number>(0);
     // const [listTotal, setListTotal] = useState<number | null>(null)
     const openLoading = () => {
         setLoadposter(true);
         setTimeout(() => {
             setLoadposter(false);
             setShowPoster(1);
-        }, 500)
+        }, 1000)
     };
+    const [shareBox, setShareBox] = useState<boolean>(false);
+    const lang = localStorage.getItem('language') || 'en';
     const getRankList = async () => {
         const result = await RankInviteApi();
         const forword: Rank[] = [];
         const end: Rank[] = [];
+        setRandMin(result.data.mine)
         result.data.lists.forEach((e: any, index: number) => {
             if (index <= 2) {
                 forword.push(e)
@@ -205,19 +243,25 @@ const InviteIndex = (): ReactElement<ReactNode> => {
         )
     };
     return (
-        <div className="invite-index">
+        <div className={`invite-index ${lang}-invite`}>
             <InnerNav leftArrow title={t('public.inv_title')} />
             <div className="invite-box">
                 <div className="invite-top">
                     <div className="top-inner">
                         <p onClick={() => {
                             setMsgModal(true)
-                        }}>Rules<span><RightOutline fontSize={12} /></span></p>
+                        }}>
+                            {/* Rules */}
+                            {t('invite.rules')}
+                            <span><RightOutline fontSize={12} /></span></p>
                         <p onClick={() => {
                             const action = upInvLevel(4);
                             store.dispatch(action);
                             history.push('/inv-detail')
-                        }}>Invitation<span><RightOutline fontSize={12} /></span></p>
+                        }}>
+                            {/* Invitation */}
+                            {t('invite.invitation')}
+                            <span><RightOutline fontSize={12} /></span></p>
                     </div>
                 </div>
                 <div className="p-12">
@@ -228,7 +272,10 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                                 <button onClick={() => {
                                     // createPoster();
                                     openLoading()
-                                }}>Share and get rewarded</button>
+                                }}>
+                                    {/* Share and get rewarded */}
+                                    {t('invite.share')}
+                                </button>
                                 <Popover
                                     content={<QrImg />}
                                     trigger='click'
@@ -242,20 +289,26 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                             </div>
                             <div className="share-link">
                                 <div className="link-code link-public">
-                                    <p className="label">Invitation code</p>
+                                    <p className="label">
+                                        {/* Invitation code */}
+                                        {t('invite.inv_code')}
+                                    </p>
                                     <div className="link-inner">
                                         <p>{invInfo?.code}</p>
                                         <img src={require('../../assets/images/copy_icon.png')} alt="" onClick={() => {
-                                            copyLink()
+                                            copyLink(invInfo?.code)
                                         }} />
                                     </div>
                                 </div>
                                 <div className="link-url link-public">
-                                    <p className="label">Referral link</p>
+                                    <p className="label">
+                                        {/* Referral link */}
+                                        {t('invite.share_link')}
+                                    </p>
                                     <div className="link-inner">
                                         <p>{invInfo?.link}</p>
                                         <img src={require('../../assets/images/copy_icon.png')} alt="" onClick={() => {
-                                            copyLink()
+                                            copyLink(`${invInfo?.link}?code=${invInfo?.code}`)
                                         }} />
                                     </div>
                                 </div>
@@ -263,35 +316,44 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                         </div>
                     </div>
                     <div className="invite-box-2">
-                        <p className="ranking-mine">No.999+</p>
+                        <p className="ranking-mine">No.{rankMine}{rankMine > 999 ? '+' : ''}</p>
                         <div className="three-list">
                             <ul>
                                 <li>
                                     {rankList.length > 1 ? <>
                                         <div className="three-avatar">
-                                            <img src={rankList[1].avatar} alt="" />
+                                            <img src={rankList[1].avatar ? rankList[1].avatar : require('../../assets/images/default_avatar.png')} alt="" />
                                         </div>
                                         <p>****{rankList[1].email.substring(rankList[1].email.length - 5, rankList[1].email.length)}</p>
                                         <p>{rankList[1].reward}&nbsp;USDT</p>
-                                    </> : <div className="p-24">{rankList.length < 2 ? <p>Waiting</p> : <DotLoading color='primary' />}</div>}
+                                    </> : <div className="p-24">{rankList.length < 2 ? <p>
+                                        {/* Waiting */}
+                                        {t('invite.waiting')}
+                                    </p> : <DotLoading color='primary' />}</div>}
                                 </li>
                                 <li>
                                     {rankList.length > 0 ? <>
                                         <div className="three-avatar">
-                                            <img src={rankList[0].avatar} alt="" />
+                                            <img src={rankList[0].avatar ? rankList[0].avatar : require('../../assets/images/default_avatar.png')} alt="" />
                                         </div>
                                         <p>****{rankList[0].email.substring(rankList[0].email.length - 5, rankList[0].email.length)}</p>
                                         <p>{rankList[0].reward}&nbsp;USDT</p>
-                                    </> : <div className="p-24">{rankList.length === 0 ? <p>Waiting</p> : <DotLoading color='primary' />}</div>}
+                                    </> : <div className="p-24">{rankList.length === 0 ? <p>
+                                        {/* Waiting */}
+                                        {t('invite.waiting')}
+                                    </p> : <DotLoading color='primary' />}</div>}
                                 </li>
                                 <li>
                                     {rankList.length > 2 ? <>
                                         <div className="three-avatar">
-                                            <img src={rankList[2].avatar} alt="" />
+                                            <img src={rankList[2].avatar ? rankList[2].avatar : require('../../assets/images/default_avatar.png')} alt="" />
                                         </div>
                                         <p>****{rankList[2].email.substring(rankList[2].email.length - 5, rankList[2].email.length)}</p>
                                         <p>{rankList[2].reward}&nbsp;USDT</p>
-                                    </> : <div className="p-24">{rankList.length < 3 ? <p>Waiting</p> : <DotLoading color='primary' />}</div>}
+                                    </> : <div className="p-24">{rankList.length < 3 ? <p>
+                                        {/* Waiting */}
+                                        {t('invite.waiting')}
+                                    </p> : <DotLoading color='primary' />}</div>}
                                 </li>
                             </ul>
                         </div>
@@ -305,7 +367,7 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                                                     <div className="other-left">
                                                         <p>{index + 4}</p>
                                                         <div className="other-avatar">
-                                                            <img src={el.avatar} alt="" />
+                                                            <img src={el.avatar ? el.avatar : require('../../assets/images/default_avatar.png')} alt="" />
                                                         </div>
                                                         <p>****{el.email.substring(rankList[2].email.length - 5, rankList[2].email.length)}</p>
                                                     </div>
@@ -315,7 +377,10 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                                         })
                                     }
                                 </ul>
-                                : <>{outThree.length === 0 ? <p className="no-data">Waiting</p> : <DotLoading color='primary' />}</>}
+                                : <>{outThree.length === 0 ? <p className="no-data">
+                                    {/* Waiting */}
+                                    {t('invite.waiting')}
+                                </p> : <DotLoading color='primary' />}</>}
                         </div>
                     </div>
                 </div>
@@ -332,8 +397,12 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                     <div className="invite-btn-inner">
                         <button onClick={() => {
                             // createPoster()
-                            openLoading()
-                        }}>Invite Friends</button>
+                            // openLoading()
+                            setShareBox(true)
+                        }}>
+                            {/* Invite Friends */}
+                            {t('invite.inv_more')}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -350,9 +419,10 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                 <div className="poster-mask" onClick={() => {
                     setShowPoster(0)
                 }}></div>
-                <SwiperMine invInfo={invInfo} />
+                <SwiperMine invInfo={invInfo} lang={lang} />
                 <div className="remark-save">
-                    Long press to save the picture
+                    {/* Long press to save the picture */}
+                    {t('invite.save')}
                 </div>
             </div>
             {
@@ -360,6 +430,38 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                     <DotLoading color='primary' />
                 </div>
             }
+            {/* 分享 */}
+            <Popup visible={shareBox} onMaskClick={() => { setShareBox(false) }}>
+                <div className="share-popup">
+                    <div className="share-title">
+                        <p>
+                            {/* Share to */}
+                            {t('invite.share_to')}
+                        </p>
+                        <CloseOutline fontSize={16} color="#666" onClick={() => { setShareBox(false) }} />
+                    </div>
+                    <div className="share-apps">
+                        <ul>
+                            {
+                                shareList.map((el: any, index: number): ReactElement => {
+                                    return (
+                                        <li key={index} onClick={() => {
+                                            window.open(el.url)
+                                        }}>
+                                            <div className="apps-icon">
+                                                <div className="icon-box">
+                                                    <img src={el.icon} alt="" />
+                                                </div>
+                                                <p>{el.name}</p>
+                                            </div>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </Popup>
         </div >
     )
 };

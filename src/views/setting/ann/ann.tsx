@@ -53,7 +53,7 @@ const Ann = (): ReactElement<ReactNode> => {
                                     history.push('/ann-detail')
                                 }}>
                                     <p className="ann-title">{el.title}</p>
-                                    <p className="ann-date">{el.updated_at}</p>
+                                    <p className="ann-date">{el.created_at}</p>
                                 </li>
                             )
                         })

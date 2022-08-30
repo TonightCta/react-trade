@@ -20,7 +20,7 @@
     display: flex;
     background: #eee;
     border-radius: 8px;
-    padding:20px 12px;
+    padding: 20px 12px;
     justify-content: space-between;
     align-items: center;
     margin-top: 12px;
@@ -39,5 +39,55 @@
     font-size: 14px;
     margin-top: 12px;
     color: #666;
+  }
+  .inv-list {
+    padding: 12px;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    margin-top: 16px;
+    ul {
+      li {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        color: #666;
+        margin-top: 8px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #eee;
+        justify-content: space-between;
+        p {
+          width: 30%;
+          text-align: center;
+        }
+        p:first-child {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+      .other-size {
+        p:nth-child(2) {
+          font-size: 12px;
+        }
+      }
+      li:first-child {
+        border: 0;
+        margin-bottom: 12px;
+      }
+      li:last-child {
+        border: 0;
+      }
+    }
+  }
+  .four-item {
+    ul {
+      li {
+        p {
+          width: 25%;
+        }
+        p:first-child {
+          font-size: 12px;
+        }
+      }
+    }
   }
 }

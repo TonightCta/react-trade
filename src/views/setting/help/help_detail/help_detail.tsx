@@ -4,16 +4,16 @@ import store from "../../../../store";
 import { useTranslation } from "react-i18next";
 import './index.scss'
 import { HelpDetailApi } from "../../../../request/api";
-import { DotLoading } from "antd-mobile";
+import { DotLoading, Empty } from "antd-mobile";
 
 
 const HelpDetail = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const AnnID = store.getState().annID;
-    const [content, setContent] = useState<string | null>('');
+    const [content, setContent] = useState<any>({});
     const getDetail = async () => {
         const result = await HelpDetailApi(AnnID);
-        setContent(result.data.content);
+        setContent(result.data);
     }
     useEffect(() => {
         getDetail();
@@ -25,10 +25,12 @@ const HelpDetail = (): ReactElement<ReactNode> => {
         <div className="help-detail">
             <InnerNav leftArrow title={t('public.help_detail')} />
             {
-                !!content
+                !!content.created_at
                     ?
                     <div className="detail-box">
-                        <div dangerouslySetInnerHTML={{ __html: content }}></div>
+                        {
+                            content.content ? <div style={{ lineHeight: '22px' }} dangerouslySetInnerHTML={{ __html: content.content }}></div> : <Empty description={t('public.no_content')} />
+                        }
                     </div>
                     :
                     <div className="load-data">

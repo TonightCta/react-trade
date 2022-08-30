@@ -48,39 +48,42 @@ export const removeListener = (fn: any) => {
     index > -1 && listener.splice(index, 1);
 }
 
-let ws : WebSocket | null;
-let wsStatusInner : number;
+let ws: WebSocket | null;
+let wsStatusInner: number;
 
 export const useSocket = () => {
-    const init = async () => {
-        const result = await UserInfoApi();
-        if(ws) return
-        ws = new WebSocket(result.data.quotation.wss_url);
-        ws.onopen = (e: any) => {
-            const action = upWSStatus(1);
-            wsStatusInner = 1
-            store.dispatch(action);
+    let init: () => void;
+    UserInfoApi().then((result => {
+        init = async () => {
+            if (ws) return
+            ws = new WebSocket(result.data.quotation.wss_url);
+            ws.onopen = (e: any) => {
+                const action = upWSStatus(1);
+                wsStatusInner = 1
+                store.dispatch(action);
+            };
+            ws.onclose = (e: any) => {
+                const action = upWSStatus(0);
+                wsStatusInner = 0;
+                store.dispatch(action);
+                setTimeout(() => {
+                    ws = null;
+                    init();
+                }, 3000)
+            };
+            ws!.onmessage = (e: any) => {
+                listener.forEach((item: any) => {
+                    item(e)
+                })
+            }
         };
-        ws.onclose = (e: any) => {
-            const action = upWSStatus(0);
-            wsStatusInner = 0;
-            store.dispatch(action);
-            setTimeout(() => {
-                ws = null;
-                init();
-            }, 3000)
-        };
-        ws!.onmessage = (e: any) => {
-            listener.forEach((item: any) => {
-                item(e)
-            })
-        }
-    };
+        init();
+    }))
     const sendWs = (params: WS) => {
         wsStatusInner === 1 && ws?.send(JSON.stringify(params));
     };
     useEffect(() => {
-        init();
+        // init();
         return () => {
             // ws!.onclose = () => {};
             // ws!.close();

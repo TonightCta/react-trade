@@ -27,6 +27,7 @@ import RechargeIndex from "./mine/mine_assets/recharge/recharge";
 import WithDrawPending from "./mine/mine_assets/withdraw/withdraw_pending/withdraw_pending";
 import AddressManage from "./mine/mine_assets/address_manage/address_mange";
 import InviteIndex from "./invite";
+import RechargeFaitIndex from "./mine/mine_assets/rechange_fait/recharge_fait";
 
 
 export {
@@ -59,4 +60,5 @@ export {
     WithDrawPending,//提币详情
     AddressManage,//地址管理
     InviteIndex,//邀请
+    RechargeFaitIndex,//法币充值
 }

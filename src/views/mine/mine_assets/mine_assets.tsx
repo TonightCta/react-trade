@@ -1,4 +1,4 @@
-import { Button, Tabs, PullToRefresh, DotLoading } from "antd-mobile";
+import { Button, PullToRefresh, DotLoading, Popup } from "antd-mobile";
 import { CheckCircleFill, RightOutline, SearchOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import InnerNav from '../../../components/inner_nav/nav'
@@ -21,6 +21,7 @@ const MineAssets = (): ReactElement<ReactNode> => {
     const [assetsList, setAssetsList] = useState<Data[]>([]);
     const [localUse, selocalUse] = useState<Data[]>([]);
     const [isZroe, setIsZroe] = useState<number>(0);
+    const [rechargePopup, setRechargePopup] = useState<boolean>(false);
     const getAssetsList = useCallback(async () => {
         const result = await UserAssetsApi();
         const arr = [];
@@ -93,7 +94,10 @@ const MineAssets = (): ReactElement<ReactNode> => {
                     <p>{assets}</p>
                 </div>
                 <div className="view-oper">
-                    <Button color="primary" onClick={() => { history.push('/recharge') }}>
+                    <Button color="primary" onClick={() => {
+                        // history.push('/recharge')
+                        setRechargePopup(true)
+                    }}>
                         {/* 充值 */}
                         {t('public.recharge_fiat')}
                     </Button>
@@ -176,9 +180,27 @@ const MineAssets = (): ReactElement<ReactNode> => {
                             <DotLoading color='primary' />
                         </div>
                     }
-
                 </div>
             </div>
+            {/* Select Recharge Way */}
+            <Popup visible={rechargePopup} onMaskClick={() => { setRechargePopup(false) }}>
+                <div className="recharge-popup" onClick={() => { setRechargePopup(false) }}>
+                    <ul>
+                        <li onClick={() => { history.push('/recharge-fait') }}>
+                            {/* 法币充值 */}
+                            {t('public.recharge_fait')}
+                        </li>
+                        <li onClick={() => { history.push('/recharge') }}>
+                            {/* 链上充值 */}
+                            {t('public.recharge_protocol')}
+                        </li>
+                        <li>
+                            {/* 取消 */}
+                            {t('public.cancel')}
+                        </li>
+                    </ul>
+                </div>
+            </Popup>
         </div>
     )
 };

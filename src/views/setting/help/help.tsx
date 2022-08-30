@@ -37,7 +37,7 @@ const Help = (): ReactElement<ReactNode> => {
                                 }}>
                                     <div className="title-msg">
                                         <p>{item.title}</p>
-                                        <p>{item.updated_at}</p>
+                                        <p>{item.created_at}</p>
                                     </div>
                                     <RightOutline color="#999" fontSize={16} />
                                 </li>

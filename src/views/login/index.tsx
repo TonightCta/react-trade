@@ -18,6 +18,7 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
         password: ''
     })
     const { t } = useTranslation();
+    const [loading,setLoading] = useState<boolean>(false);
     const history = useHistory();
     const loginService = async () => {
         if (!inpMsg.email) {
@@ -28,11 +29,13 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
             Toast.show(t('public.enter_pass'));
             return;
         };
+        setLoading(true)
         const params = {
             account: inpMsg.email,
             password: inpMsg.password
         };
         const result = await LoginApi(params);
+        setLoading(false)
         const { code } = result;
         if (code != 200) {
             Toast.show(result.message);
@@ -88,7 +91,7 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
                 </div>
                 <p className="login-btn">
                     {/* 登录 */}
-                    <Button color="primary" block onClick={() => {loginService()}}>{t('public.login')}</Button>
+                    <Button color="primary" loading={loading} disabled={loading} block onClick={() => {loginService()}}>{t('public.login')}</Button>
                 </p>
                 <p className="register-btn">
                     <span onClick={() => { history.push('/register') }}>

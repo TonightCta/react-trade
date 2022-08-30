@@ -25,5 +25,6 @@ export interface DealMsg {
 export interface ADV {
     title: string,
     id: number,
-    updated_at: string
+    updated_at: string,
+    created_at:string
 }

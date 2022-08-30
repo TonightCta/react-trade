@@ -87,11 +87,11 @@ const MineNav = (): ReactElement<ReactNode> => {
                     </div>
                 </div>
                 <div className="account-right" onClick={() => {
-                    account?.security?.kyc === 0 && history.push('/auth-card')
+                    account?.security?.kyc === 0 || account?.security?.kyc === 3 && history.push('/auth-card')
                 }}>
                     <img src={require('../../../assets/images/card_icon.png')} alt="" />
                     <p>
-                        {account?.security?.kyc === 0 && t('public.un_auth') || account?.security?.kyc === 1 && t('public.had_auth') || account?.security?.kyc === 2 && t('public.auth_processing')}
+                        {account?.security?.kyc === 0 && t('public.un_auth') || account?.security?.kyc === 1 && t('public.had_auth') || account?.security?.kyc === 2 && t('public.auth_processing') || account?.security?.kyc === 3 && t('public.reject')}
                     </p>
                     <img src={require('../../../assets/images/right_dou.png')} alt="" />
                 </div>

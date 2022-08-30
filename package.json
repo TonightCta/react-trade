@@ -89,7 +89,8 @@
   "scripts": {
     "start": "node -r dotenv/config scripts/start.js dotenv_config_path=.env.development",
     "start:test": "node -r dotenv/config scripts/start.js dotenv_config_path=.env.test",
-    "build:test": "node -r dotenv/config scripts/build.js dotenv_config_path=.env.test",
+    "build:th": "node -r dotenv/config scripts/build.js dotenv_config_path=.env.test",
+    "build:source": "node -r dotenv/config scripts/build.js dotenv_config_path=.env.master",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {

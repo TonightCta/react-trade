@@ -10,7 +10,8 @@ interface Props {
         k: any
     },
     t: any,
-    time:number
+    time: number,
+    getMoreKChild?:(time:number) => void;
     // setLineDataMine: (second: number, type: string) => void,
 }
 
@@ -37,6 +38,7 @@ const KTabs = [
     },
 ];
 
+let echartsMine: any = null;
 
 const convet = (_timestamp: number): string => {
     let month, day, hour, min;
@@ -65,6 +67,7 @@ const calculateMA = (dayCount: number, data: string[][]) => {
     return result;
 }
 const TesPriceK = (props: Props): ReactElement<ReactNode> => {
+    const zoom = JSON.parse(sessionStorage.getItem('dataZoom') || '{"start":50,"end":100}');
     const option: any = {
         height: 300,
         legend: {
@@ -198,8 +201,8 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
             {
                 type: 'inside',
                 xAxisIndex: [0, 1],
-                start: 50,
-                end: 100,
+                start: zoom.start,
+                end: zoom.end,
                 top: 30,
                 height: 20,
             }
@@ -226,7 +229,7 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
             {
                 name: 'K',
                 type: 'candlestick',
-                barMaxWidth:'10px',
+                barMaxWidth: '10px',
                 data: [],
                 itemStyle: {
                     color: '#00c087',
@@ -330,6 +333,19 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
                 test = echarts.init(document.getElementById('echarts-box') as HTMLElement);
             }
             test.setOption(option);
+            test.off('dataZoom')
+            test.on('dataZoom', (params: any) => {
+                const data = {
+                    start:Math.ceil(params.batch[0].start),
+                    end:Math.ceil(params.batch[0].end)
+                }
+                sessionStorage.setItem('dataZoom',JSON.stringify(data));
+                if(params.batch[0].start === 0){
+                    // props.getMoreK(props.upKMsg.k[0].t)
+                    const win : any = window;
+                    win.getMoreK(props.upKMsg.k[0].t)
+                }
+            })
         };
     }, [props])
     return (

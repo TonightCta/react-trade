@@ -16,16 +16,19 @@ const langList = [
     // },
     {
         name: 'English',
+        country:'South Africa',
         cation: 'en',
         langIcon: require('../../../assets/images/en.png')
     },
     {
         name: 'Русский',
+        country:'Россия',
         cation: 'ru',
         langIcon: require('../../../assets/images/ru.png')
     },
     {
         name: 'ไทย',
+        country:'ประเทศไทย',
         cation: 'th',
         langIcon: require('../../../assets/images/th.png')
     }
@@ -59,6 +62,7 @@ const SetLanguage = (): ReactElement<ReactNode> => {
                                     const action = setLanguage(el.cation);
                                     store.dispatch(action)
                                     i18n.changeLanguage(el.cation);
+                                    localStorage.setItem('country',el.country)
                                     // window.location.reload();
                                 }}>
                                     {el.name}

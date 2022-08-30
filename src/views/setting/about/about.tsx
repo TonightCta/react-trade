@@ -20,7 +20,7 @@ const About = (): ReactElement<ReactNode> => {
     return (
         <div className="about-index">
             <InnerNav leftArrow title={t('public.about_us')} />
-            <div dangerouslySetInnerHTML={{__html:abountContent.current}}></div>
+            <div style={{lineHeight:'22px'}} dangerouslySetInnerHTML={{__html:abountContent.current}}></div>
         </div>
     )
 };

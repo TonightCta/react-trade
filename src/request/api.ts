@@ -68,4 +68,8 @@ export const GetSlugApi = (p:string) => get<IResponse>(`/cms/article/slug/${p}`)
 //邀请排行
 export const RankInviteApi = () => get<IResponse>(`/user/inviteRank`);
 //邀请信息
-export const InviteNumberApi = () => get<IResponse>('/user/inviteUsersByLevel')
+export const InviteNumberApi = (p:number | string) => get<IResponse>(`/user/inviteUsersByLevel/${p}`);
+//法币充值渠道
+export const RechargeFaitListApi = () => get<IResponse>('rechargeBegin');
+//法币充值
+export const RechargePayApi = (p:o) => post<IResponse>('/putInInOnlineOrder',p);

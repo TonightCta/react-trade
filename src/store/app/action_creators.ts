@@ -129,14 +129,19 @@ export const setQU = (qu: any[]) => ({
     qu
 });
 //设置链信息
-export const setChainMsg = (msg:{coin:string,protocol:string}) => ({
-    type:Type.SET_CHAIN_MSG,
+export const setChainMsg = (msg: { coin: string, protocol: string }) => ({
+    type: Type.SET_CHAIN_MSG,
     msg
 });
 //设置WSS推流数据
-export const setWSSData = (data:any) => ({
-    type:Type.SET_WSS_SUBSCRIBE,
+export const setWSSData = (data: any) => ({
+    type: Type.SET_WSS_SUBSCRIBE,
     data
+});
+//设置国家
+export const upCountry = (country: string) => ({
+    type: Type.UP_COUNTRY,
+    country
 })
 
 

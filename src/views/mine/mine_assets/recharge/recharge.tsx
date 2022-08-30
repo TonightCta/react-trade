@@ -14,7 +14,6 @@ interface Coin {
     min: number,
     address: string,
 };
-const columns = [['USDT', 'BTC']];
 const RechargeIndex = (props: any): ReactElement<ReactNode> => {
     const [coinTypeBox, setCoinTypeBox] = useState<boolean>(false);
     const [coinProBox, setCoinProBox] = useState<boolean>(false);
@@ -116,7 +115,7 @@ const RechargeIndex = (props: any): ReactElement<ReactNode> => {
                 <p className="remark-title">
                     {/* 充值说明 */}
                     {t('public.recharge_remark')}:</p>
-                <p className="remark-text">1. {t('public.recharge_remark_1')}({`${selectCoin}-${defaultNet}`}){t('public.recharge_remark_1_1')}</p>
+                <p className="remark-text">1. {t('public.recharge_remark_1')}</p>
                 <p className="remark-text">2. {t('public.recharge_remark_2')}</p>
                 <p className="remark-text">3. {t('public.recharge_remark_3')}{selectCoinMsg.min}</p>
             </div>

@@ -91,6 +91,7 @@ const SetLock = (): ReactElement<ReactNode> => {
             return;
         };
         const params = {
+            code:inpMsg.code,
             login_password: inpMsg.loginPassword,
             password: inpMsg.tradePass,
             password_confirmation: inpMsg.turnPass

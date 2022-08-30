@@ -46,6 +46,13 @@
           display: flex;
           align-items: center;
           justify-content: flex-start;
+          width: 50%;
+          p {
+            width: 80%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
         }
       }
     }
@@ -72,15 +79,14 @@
           color: #333;
         }
       }
-      
     }
   }
-  .f-12-list{
+  .f-12-list {
     font-size: 12px;
-    ul{
-      li{
+    ul {
+      li {
         width: 25%;
-        p{
+        p {
           white-space: wrap;
         }
       }

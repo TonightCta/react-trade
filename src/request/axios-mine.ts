@@ -26,12 +26,16 @@ axiosInstance.interceptors.response.use(
     response => {
         const data = response.data;
         const lang = localStorage.getItem('language');
-        const error = lang === 'en' && error_en || lang === 'en' && error_ru || lang === 'th' && error_th || {};
-        if (<number>response.status == 200) {
+        const error = lang === 'en' && error_en || lang === 'ru' && error_ru || lang === 'th' && error_th || {};
+        if (<number>response.status === 200) {
             for (let i in error) {
                 if (data.code === Number(i)) {
                     data.message = error[i as keyof typeof error];
                     break
+                } else if (data.code === 401) {
+                    // data.message = 'Login expired';
+                    window.location.replace(`${process.env.REACT_APP_SHARE}/#/login`)
+                    break;
                 } else {
                     data.message = 'Pass'
                 }
@@ -40,7 +44,23 @@ axiosInstance.interceptors.response.use(
         }
     },
     error => {
-        throw new Error(error);
+        // const config = error.config;
+        // if (!config || !config.retryTimes) return Promise.reject(error);
+        // const { __retryCount = 0, retryDelay = 1000, retryTimes } = config;
+        // config.__retryCount = __retryCount;
+        // if (__retryCount > retryTimes) {
+        //     return Promise.reject(error);
+        // };
+        // config.__retryCount++;
+        // const delay = new Promise<void>((resolve) => {
+        //     setTimeout(() => {
+        //         resolve()
+        //     }, retryDelay)
+        // });
+        // return delay.then(() => {
+        //     return axiosInstance(config);
+        // })
+        throw new Error(error)
     },
 );
 export const get = <T>(url: string, params?: any): Promise<T> => {

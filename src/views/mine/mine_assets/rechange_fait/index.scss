@@ -1,0 +1,112 @@
+.recharge-fait-index {
+  text-align: left;
+  .select-msg {
+    width: 92%;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 24px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
+    .adm-list-body {
+      border: 0;
+    }
+  }
+  .charge-msg {
+    padding: 12px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
+    width: 92%;
+    border-radius: 8px;
+    margin: 0 auto;
+    margin-top: 12px;
+    .msg-title {
+      font-size: 14px;
+      color: #333;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .inp-amount {
+      width: 100%;
+      display: flex;
+      height: 36px;
+      background-color: #f8f8f8;
+      border-radius: 4px;
+      padding: 0 12px;
+      align-items: center;
+      input {
+        flex: 1;
+        outline: none;
+        background-color: rgba(0, 0, 0, 0);
+        border: 0;
+        font-size: 12px;
+      }
+      p {
+        font-size: 12px;
+        color: #666;
+        margin-left: 12px;
+      }
+    }
+    .amount-oper {
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        li {
+          margin-top: 12px;
+          width: 31%;
+          height: 36px;
+          border: 1px solid #f2f2f2;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 14px;
+          color: #666;
+        }
+        .selected-amount {
+          background: url("../../../../assets/images/active_box.png");
+          background-size: 100% 100%;
+          color: #4f5eff;
+        }
+      }
+    }
+    .fait-type {
+      margin-top: 18px;
+      font-size: 14px;
+      color: #333;
+      font-weight: 500;
+    }
+    .fait-amount {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #666;
+    }
+    .next-step {
+      margin-top: 28px;
+      button {
+        height: 44px;
+      }
+    }
+    .fait-remark {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #999;
+    }
+  }
+}
+.fait-popup {
+  text-align: center;
+  ul {
+    li {
+      font-size: 16px;
+      color: #333;
+      padding: 14px 0;
+    }
+    li:first-child {
+      border-bottom: 1px solid #eee;
+    }
+    .cancel-popup {
+      color: #666;
+      border-top: 2px solid #eee;
+    }
+  }
+}

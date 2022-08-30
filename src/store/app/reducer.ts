@@ -3,10 +3,12 @@ import * as Type from './types';
 
 interface UMsg {
     email?: string,
-    avatar?:string,
+    avatar?: string,
+    supportUrl?:string,
     security?: {
         kyc?: number,
-        pay_password?: number
+        pay_password?: number,
+        ga?:number
     }
 }
 export interface WithDraw {
@@ -43,13 +45,14 @@ export interface Store {
     unSubscribeCoin: string,
     quList: any[],//行情
     chainMsg: { coin: string, protocol: string },//链信息
-    wsSubscribe:any,//币种ws流数据
+    wsSubscribe: any,//币种ws流数据
+    country: string,//国家
 }
 const defaultState: Store = {
     account: JSON.parse(sessionStorage.getItem('account') || '{}'),
     assets: Number(sessionStorage.getItem('assets')) || 0,
     appToken: sessionStorage.getItem('token_1') || '',//设置登录token
-    language: localStorage.getItem('language') || 'zh_TW',//本地语言环境
+    language: localStorage.getItem('language') || 'en',//本地语言环境
     footerStatus: Number(localStorage.getItem('footerStatus')) || 1,//底部导航显示状态
     invLevel: Number(sessionStorage.getItem('invLevel')) || 1,//邀请等级
     currency: sessionStorage.getItem('currency') || 'BTC/USDT',//浏览币种
@@ -73,7 +76,8 @@ const defaultState: Store = {
     unSubscribeCoin: sessionStorage.getItem('unSubscribeCoin') || '',//无需取消的订阅队列
     quList: JSON.parse(sessionStorage.getItem('quList') || '[]'),
     chainMsg: JSON.parse(sessionStorage.getItem('chainMsg') || '{}'),
-    wsSubscribe:{}
+    wsSubscribe: {},
+    country: localStorage.getItem('country') || 'South Africa'
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
@@ -158,7 +162,10 @@ export default (state = defaultState, action: any) => {
             return { ...state, chainMsg: action.msg }
         case Type.SET_WSS_SUBSCRIBE:
             // localStorage.setItem('wsSubscribe',JSON.stringify(action.data));
-            return { ...state,action:action.data }
+            return { ...state, action: action.data }
+        case Type.UP_COUNTRY:
+            localStorage.setItem('country', action.country);
+            return { ...state, country: action.country }
         default:
             return state;
     };

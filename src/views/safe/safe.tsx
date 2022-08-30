@@ -34,8 +34,8 @@ const SafeIndex = (): ReactElement<ReactNode> => {
             {
                 title: t('public.verify_card'),//实名认证
                 url: '/auth-card',
-                isGo: accountMsg?.security?.kyc === 0 ? true : false,
-                extra: accountMsg?.security?.kyc === 0 && t('public.un_auth') || accountMsg?.security?.kyc === 1 && t('public.had_auth') || accountMsg?.security?.kyc === 2 && t('public.auth_processing') || ''
+                isGo: accountMsg?.security?.kyc === 0 || accountMsg?.security?.kyc === 3 ? true : false,
+                extra: accountMsg?.security?.kyc === 0 && t('public.un_auth') || accountMsg?.security?.kyc === 1 && t('public.had_auth') || accountMsg?.security?.kyc === 2 && t('public.auth_processing') || accountMsg?.security?.kyc === 3 && t('public.reject') || ''
             },
             {
                 title: t('public.edit_login_pass'),//修改登录密码
@@ -47,16 +47,17 @@ const SafeIndex = (): ReactElement<ReactNode> => {
                 url: '/assets-lock',
                 isGo: true,
             }
-        ])
+        ]);
+        console.log(accountMsg)
     }, [accountMsg])
     const history = useHistory();
     return (
         <div className="safe-index">
             <InnerNav leftArrow title={t('public.safe_center')} />
-            <div className="need-auth">
+            {accountMsg?.security?.kyc !== 1 && <div className="need-auth">
                 <CheckShieldFill />
                 <span>{t('public.security')}</span>
-            </div>
+            </div>}
             <div className="safe-list">
                 <List style={{ '--border-top': '1px solid rgba(0,0,0,0)' }}>
                     {

@@ -25,7 +25,7 @@ export const upUserAssets = async (): Promise<void> => {
         }
     };
     const val = assets.map((item) => {
-        return item.available * QResult.data.list[item.symbol].price
+        return item.available * (QResult.data.list[item.symbol] && QResult.data.list[item.symbol].price)
     });
     const num = val.reduce((prev, curr) => { return prev + curr }) + result.data['USDT'].available;
     const action = setAssets(num.toFixed(4));

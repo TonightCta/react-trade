@@ -8,7 +8,7 @@
     font-size: 16px;
     font-weight: 500;
   }
-  .tes-tabs{
+  .tes-tabs {
     background-color: white;
     padding-top: 6px;
   }
@@ -50,7 +50,7 @@
           border-radius: 4px;
         }
       }
-      li:last-child{
+      li:last-child {
         border: 0;
       }
       .up-color {
@@ -71,6 +71,9 @@
           color: white;
         }
       }
+    }
+    ul::-webkit-scrollbar{
+      display: none;
     }
   }
 }
