@@ -2,11 +2,11 @@ import { ReactElement, ReactNode, useCallback, useEffect, useState } from "react
 import InnerNav from '../../../../components/inner_nav/nav';
 import { CloseOutline } from 'antd-mobile-icons'
 import DrawBtn from "./components/draw_btn";
-import { Button, Modal, PickerView, Popup } from "antd-mobile";
+import { Button, Modal, PickerView, Popup, Toast } from "antd-mobile";
 import './index.scss'
-import { DownFill } from "antd-mobile-icons";
+// import { DownFill } from "antd-mobile-icons";
 import { useTranslation } from 'react-i18next'
-import { CoinsListApi, UserAssetsApi } from '../../../../request/api';
+import { CoinsListApi, UserAssetsApi, WithdrawNetApi } from '../../../../request/api';
 import store from "../../../../store";
 import { setChainMsg } from "../../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
@@ -20,6 +20,9 @@ interface TypeMsg {
     fee: number,
     withdraw_min: number,
     withdraw_max: number,
+    channel_id: number,
+    channel_id_parent: number,
+    rate: number
 }
 
 
@@ -40,10 +43,8 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
     //Hooks提供的Api均可带入泛型
     //币种
     const [currentCoin, setCurrentCoin] = useState<any>('USDT');
-    //币种支持网络
-    const [coinNet, setCoinNet] = useState<string[]>();
     //选择网络
-    const [currentNet, setCurrentNet] = useState<string>('TRC20');
+    const [currentNet, setCurrentNet] = useState<string>('');
     //当前币种余额
     const [currentBalance, setCurrentBalance] = useState<number>(store.getState().currentBalance);
     //是否设置交易密码
@@ -52,12 +53,15 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
         drawAddress: sessionStorage.getItem('selectAddress') || '',//充值地址
         drawNum: '',//充值数量
         selectCoin: false,//选择币种弹出层
-        netWork: 'TRC20',//网络名称
-        fee: 6,//手续费
+        netWork: '',//网络名称
+        fee: 0,//手续费
         withdraw_min: 10,//限额
         withdraw_max: 9999,//限额
+        channel_id: 0,
+        channel_id_parent: 0,
+        rate: 0,
     });
-    const [proKey, setProKey] = useState<number>(0);
+    // const [proKey, setProKey] = useState<number>(0);
     //获取币种列表
     const getCoinList = useCallback(async () => {
         const result = await CoinsListApi();
@@ -72,43 +76,75 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
         setCoinList([arr]);
         setSourceCoin(arr2);
     }, []);
-    const getBalance = useCallback(async (_val: string) => {
-        const result = await UserAssetsApi();
-        for (let i in result.data) {
-            if (result.data[i].coin === _val) {
-                setCurrentBalance(result.data[i].available)
+    // const getBalance = useCallback(async (_val: string) => {
+    //     const result = await UserAssetsApi();
+    //     for (let i in result.data) {
+    //         console.log(result.data[i])
+    //         if (result.data[i].chain === _val) {
+    //             setCurrentBalance(result.data[i].available);
+    //         }
+    //     }
+    // }, []);
+    const [netList, setNetList] = useState([]);
+    const setNetListService = async () => {
+        const result = await WithdrawNetApi();
+        const { data } = result;
+        console.log(data)
+        data.list.forEach((item: any) => {
+            if (item.type === 'USDT_TRC20') {
+                setNetList(item.channel_list);
+                setCurrentNet(item.channel_list[0].name);
+                setDrawMsg({
+                    ...drawMsg,
+                    rate: item.rate,
+                    netWork: item.channel_list[0].name,
+                    withdraw_min: item.channel_list[0].min_money,
+                    withdraw_max: item.channel_list[0].max_money,
+                    channel_id: item.channel_list[0].id,
+                    channel_id_parent: item.channel_list[0].withdraw_channel_id
+                })
             }
+        })
+    }
+    // useEffect(() => {
+    //     // getBalance(currentNet);
+    //     netList.forEach((e:{name:string,min_money:number,max_money:number}) => {
+    //         if (e.name === currentNet) {
+    //             setDrawMsg({
+    //                 ...drawMsg,
+    //                 drawNum: '',
+    //                 withdraw_min: e.min_money,
+    //                 withdraw_max: e.max_money,
+    //             })
+    //         }
+    //     })
+    // }, [currentNet]);
+    // useEffect(() => {
+    //     sourceCoin.forEach(e => {
+    //         if (e.coin === currentCoin) {
+    //             setDrawMsg({
+    //                 ...drawMsg,
+    //                 drawNum: '',
+    //                 fee: e.withdraw_fee_list[proKey],
+    //                 withdraw_min: e.withdraw_min_list[proKey],
+    //                 withdraw_max: e.withdraw_max_list[proKey],
+    //             })
+    //         }
+    //     })
+    // }, [currentNet]);
+    useEffect(() => {
+        setDrawMsg({
+            ...drawMsg,
+            fee: Number(drawMsg.drawNum) * (drawMsg.rate / 100)
+        });
+        if (drawMsg.drawNum > currentBalance) {
+            Toast.show(t('message.last_balance'))
+            setDrawMsg({
+                ...drawMsg,
+                drawNum: currentBalance,
+            })
         }
-    }, []);
-    useEffect(() => {
-        getBalance(currentCoin);
-        sourceCoin.forEach(e => {
-            if (e.coin === currentCoin) {
-                setCoinNet(e.protocol_list);
-                setDrawMsg({
-                    ...drawMsg,
-                    drawNum: '',
-                    netWork: e.protocol_list[0],
-                    fee: e.withdraw_fee_list[0],
-                    withdraw_min: e.withdraw_min_list[0],
-                    withdraw_max: e.withdraw_max_list[0],
-                })
-            }
-        })
-    }, [currentCoin]);
-    useEffect(() => {
-        sourceCoin.forEach(e => {
-            if (e.coin === currentCoin) {
-                setDrawMsg({
-                    ...drawMsg,
-                    drawNum: '',
-                    fee: e.withdraw_fee_list[proKey],
-                    withdraw_min: e.withdraw_min_list[proKey],
-                    withdraw_max: e.withdraw_max_list[proKey],
-                })
-            }
-        })
-    }, [currentNet]);
+    }, [drawMsg.drawNum])
     const storeChange = () => {
         store.subscribe(() => {
             /* @ts-ignore */
@@ -118,9 +154,10 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
         })
     }
     useEffect(() => {
-        setCoinNet(['TRC20', 'ERC20'])
-        getCoinList();
+        // setCoinNet(['TRC20', 'ERC20'])
+        // getCoinList();
         storeChange();
+        setNetListService();
         return () => {
             storeChange();
             setSourceCoin([]);
@@ -139,18 +176,12 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
             <InnerNav leftArrow title={t('public.withdraw')} />
             <div className="draw-msg">
                 {/* 选择币种 */}
-                <div className="msg-option" onClick={(): void => {
-                    setDrawMsg({
-                        ...drawMsg,
-                        selectCoin: true,
-                    })
-                }}>
+                <div className="msg-option">
                     <p className="option-lable">
                         {/* 币种 */}
                         {t('public.coin')}
                     </p>
-                    <input type="text" disabled value={currentCoin} />
-                    <span className="icon-inp"><DownFill /></span>
+                    <input type="text" disabled value="USDT" onChange={() => { }} />
                 </div>
                 {/* 提币网络 */}
                 <div className="msg-option">
@@ -160,17 +191,18 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                     </p>
                     <ul className="net-list">
                         {
-                            coinNet?.map((el: any, index: number): ReactElement => {
+                            netList?.map((el: any, index: number): ReactElement => {
                                 return (
-                                    <li key={index} className={`${currentNet === el ? 'active-network' : ''}`} onClick={() => {
-                                        setCurrentNet(el);
-                                        setProKey(index)
+                                    <li key={index} className={`${currentNet === el.name ? 'active-network' : ''}`} onClick={() => {
+                                        setCurrentNet(el.name);
                                         setDrawMsg({
                                             ...drawMsg,
-                                            netWork: el,
+                                            netWork: el.name,
+                                            withdraw_min: el.min_money,
+                                            withdraw_max: el.max_money
                                         })
                                     }}>
-                                        {el}
+                                        {el.name}
                                     </li>
                                 )
                             })
@@ -205,14 +237,14 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                         {/* 提币数量 */}
                         {t('public.withdraw_num')}
                     </p>
-                    <input type="number" placeholder={`${t('public.min')}${Number(drawMsg.withdraw_min).toFixed(8)}`} value={drawMsg?.drawNum} onChange={(e) => {
+                    <input type="number" placeholder={`${t('public.min')} ${Number(drawMsg.withdraw_min).toFixed(4)}`} value={drawMsg?.drawNum} onChange={(e) => {
                         setDrawMsg({
                             ...drawMsg,
                             drawNum: e.target.value,
                         })
                     }} />
                     <p className="inp-remark">
-                        <span>{currentCoin}</span>
+                        <span>{currentNet}</span>
                         <span></span>
                         <span className="click-span" onClick={() => {
                             setDrawMsg({
@@ -225,15 +257,15 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                         </span>
                     </p>
                     <p className="option-remark">
-                        <span>{t('public.use_balance')}:{currentBalance.toFixed(4)} {currentCoin}</span>
-                        <span>{t('public.fee')}:{Number(drawMsg.fee).toFixed(8)} {currentCoin}</span>
+                        <span>{t('public.use_balance')}:&nbsp;{currentBalance.toFixed(4)} {currentNet}</span>
+                        <span>{t('public.fee')}:&nbsp;{Number(drawMsg.fee).toFixed(4)} {currentNet}</span>
                     </p>
                 </div>
                 <div className="draw-attention">
                     <ul>
                         <li>{t('public.withdraw_remark_1')}</li>
                         <li>{t('public.withdraw_remark_2')}</li>
-                        <li>{t('public.withdraw_remark_3')}:{drawMsg.withdraw_min}-{drawMsg.withdraw_max} {currentCoin}({drawMsg.netWork})</li>
+                        <li>{t('public.withdraw_remark_3')}:{drawMsg.withdraw_min}-{drawMsg.withdraw_max}({currentNet})</li>
                     </ul>
                 </div>
             </div>
@@ -254,7 +286,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                 </div>
             </Popup>
             {/* 提币按钮 */}
-            <DrawBtn coin={currentCoin} network={currentNet} num={Number(drawMsg.drawNum)} address={drawMsg.drawAddress} min={drawMsg.withdraw_min} fee={drawMsg.fee} />
+            <DrawBtn channel_id={drawMsg.channel_id} channel_id_parent={drawMsg.channel_id_parent} type={2} coin={currentNet} network={currentNet} num={Number(drawMsg.drawNum)} address={drawMsg.drawAddress} min={drawMsg.withdraw_min} fee={drawMsg.fee} />
             {/* 是否设置了交易密码 */}
             <Modal visible={isPayPass} title={t('public.hint')} content={<div className="un-bind-pay">
                 <p>

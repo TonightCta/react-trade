@@ -3,6 +3,8 @@ import * as Type from './types';
 
 interface UMsg {
     email?: string,
+    phone:string,
+    phone_prefix:string,
     avatar?: string,
     supportUrl?:string,
     security?: {
@@ -52,10 +54,10 @@ export interface Store {
     country: string,//国家
 }
 const defaultState: Store = {
-    account: JSON.parse(sessionStorage.getItem('account') || '{}'),
+    account: JSON.parse(localStorage.getItem('account') || '{}'),
     assets: Number(sessionStorage.getItem('assets')) || 0,
-    appToken: sessionStorage.getItem('token_1') || '',//设置登录token
-    language: localStorage.getItem('language') || 'en',//本地语言环境
+    appToken: localStorage.getItem('token_1') || '',//设置登录token
+    language: localStorage.getItem('language') || String(process.env.REACT_APP_LANGUAGE),//本地语言环境
     footerStatus: Number(localStorage.getItem('footerStatus')) || 1,//底部导航显示状态
     invLevel: Number(sessionStorage.getItem('invLevel')) || 1,//邀请等级
     currency: sessionStorage.getItem('currency') || 'BTC/USDT',//浏览币种
@@ -68,8 +70,8 @@ const defaultState: Store = {
     // defaultCoinID: sessionStorage.getItem('defaultCoinID') || 0,
     wsStatus: 0,//ws服务连接状态
     kData: JSON.parse(sessionStorage.getItem('kData') || '{ "second": 60, "type": "1m" }'),
-    tradeFromCoin: sessionStorage.getItem('tradeFromCoin') || 'USDT',
-    tradeToCoin: sessionStorage.getItem('tradeToCoin') || 'BTC',
+    tradeFromCoin: sessionStorage.getItem('tradeFromCoin') || '',
+    tradeToCoin: sessionStorage.getItem('tradeToCoin') || '',
     upLoadOrder: 0,
     annID: Number(sessionStorage.getItem('annID')) || 999,
     billCoin: sessionStorage.getItem('billCoin') || '',
@@ -85,10 +87,10 @@ const defaultState: Store = {
 export default (state = defaultState, action: any) => {
     switch (action.type) {
         case Type.SET_TOKEN:
-            sessionStorage.setItem('token_1', action.token);
+            localStorage.setItem('token_1', action.token);
             return { ...state, appToken: action.token }
         case Type.STE_ACCOUNT:
-            sessionStorage.setItem('account', JSON.stringify(action.account));
+            localStorage.setItem('account', JSON.stringify(action.account));
             return { ...state, account: action.account }
         case Type.SET_ASSETS:
             sessionStorage.setItem('assets', action.assets);

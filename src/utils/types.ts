@@ -6,7 +6,13 @@ export interface WithdrawCoinMsg {
     address?: string,
     fee?: number,
     network?: string | number,
-    min?:number
+    min?: number,
+    channel_id?: number,
+    channel_id_parent?: number,
+    card_name?: string,
+    card_num?: number,
+    bank_name?:string,
+    fiat_rate?:number
 }
 
 export interface IResponse {
@@ -20,11 +26,11 @@ export interface DealMsg {
     dt: number,
     p: string,
     q: string,
-    precision?:number
+    precision?: number
 }
 export interface ADV {
     title: string,
     id: number,
     updated_at: string,
-    created_at:string
+    created_at: string
 }

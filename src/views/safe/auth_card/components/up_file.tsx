@@ -1,9 +1,10 @@
 import { Button, Toast } from "antd-mobile";
 import { RedoOutline } from "antd-mobile-icons";
-import { ReactElement, ReactNode, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { AuthCardApi } from '../../../../request/api'
+import store from "../../../../store";
 import { upUserInfo } from "../../../../store/app/action_fn";
 
 interface Card {
@@ -13,10 +14,14 @@ interface Card {
 
 const UpFile = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
+    const account = store.getState().account;
     const [cardMsg, setCardMsg] = useState<Card>({
         name: '',
         id: ''
     });
+    useEffect(() => {
+        console.log(account)
+    },[])
     const history = useHistory();
     const [loading, setLoading] = useState<boolean>(false);
     //正面

@@ -14,7 +14,7 @@ let axiosInstance: AxiosInstance = axios.create({
 });
 axiosInstance.interceptors.request.use(
     config => {
-        config.headers!.Authorization = String(sessionStorage.getItem('token_1'))
+        config.headers!.Authorization = String(localStorage.getItem('token_1'))
         config.headers!.Lang = store.getState().language || String(localStorage.getItem('language'))
         return config
     },

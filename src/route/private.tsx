@@ -9,7 +9,7 @@ interface Props extends RouteComponentProps {
     locationMine?: any
 }
 const PrivateRoute = (props: Props): ReactElement<ReactNode> => {
-    const [appToken, setAppToken] = useAsyncState<string | null>(sessionStorage.getItem('token_1'));
+    const [appToken, setAppToken] = useAsyncState<string | null>(localStorage.getItem('token_1'));
     const storeChange = () => {
         store.subscribe((): void => {
             setAppToken(store.getState().appToken)

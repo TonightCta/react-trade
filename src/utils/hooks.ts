@@ -53,7 +53,6 @@ let wsStatusInner: number;
 
 export const useSocket = () => {
     const url: string = localStorage.getItem('ws_url') || '';
-
     const init = async (_url: string) => {
         if (ws) return
         ws = new WebSocket(_url);

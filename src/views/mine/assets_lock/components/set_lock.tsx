@@ -49,8 +49,10 @@ const SetLock = (): ReactElement<ReactNode> => {
     const sendCodeService = async () => {
         const result = await SendCodeApi({
             scene: 4,
-            type: 2,
-            email:store.getState().account.email
+            type: store.getState().account.email ? 2 : 1,
+            email:store.getState().account.email,
+            phone:store.getState().account.phone,
+            phone_prefix:store.getState().account.phone_prefix
         });
         const { code } = result;
         if(code !== 200){

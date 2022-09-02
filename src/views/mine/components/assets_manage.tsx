@@ -2,7 +2,7 @@ import { ReactElement, ReactNode } from "react";
 import { withRouter, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next'
 
-interface Manage {
+export interface Manage {
     title: string,
     icon: string,
     url: string,
@@ -24,11 +24,23 @@ const MineAssetsManage = (): ReactElement<ReactNode> => {
             icon: require('../../../assets/images/assets_icon.png'),
             url: '/mine-assets'
         },
+        // {
+        //     //资金密码
+        //     title: t('public.assets_pass'),
+        //     icon: require('../../../assets/images/assets_lock.png'),
+        //     url: '/assets-lock'
+        // },
         {
-            //资金密码
-            title: t('public.assets_pass'),
-            icon: require('../../../assets/images/assets_lock.png'),
-            url: '/assets-lock'
+            //当前委托
+            title: t('public.now_mission'),
+            icon: require('../../../assets/images/cur_icon.png'),
+            url: '/trade-order?type=1'
+        },
+        {
+            //历史委托
+            title: t('public.before_mission'),
+            icon: require('../../../assets/images/his_icon.png'),
+            url: '/trade-order?type=2'
         },
     ]
     const history = useHistory();

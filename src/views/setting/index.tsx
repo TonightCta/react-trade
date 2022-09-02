@@ -49,6 +49,8 @@ const SetIndex = (): ReactElement<ReactNode> => {
                 </List>
             </div>
             <Button color="primary" block onClick={() => {
+                window.localStorage.removeItem('account');
+                window.localStorage.removeItem('token_1');
                 window.sessionStorage.clear();
                 history.push('/')
             }}>

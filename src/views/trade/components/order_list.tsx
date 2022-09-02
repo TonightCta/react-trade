@@ -5,6 +5,7 @@ import React from "react";
 import store from "../../../store";
 import { sleep } from "antd-mobile/es/utils/sleep";
 import { t } from "i18next";
+import { GetUrlKey } from "../../../utils";
 
 interface OrderMsg {
     type?: number,//订单类型 当前 & 历史
@@ -19,7 +20,7 @@ interface OrderMsg {
 const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
     const [orderList, setOrderList] = useState<any[]>([]);
     const [dataTotal, setDataTotal] = useState<number>(1);
-    const [dataType, setDateType] = useState<any>(1)
+    const [dataType, setDateType] = useState<number>(Number(GetUrlKey('type',window.location.href)) || 1)
     const [upTime, setUpTime] = useState<number>(0);
     const [page, setPage] = useState<number>(1);
     const [isLoading, setIsLoading] = useState<boolean>(true)

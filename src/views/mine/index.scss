@@ -8,7 +8,7 @@
     .nav-msg {
       display: flex;
       justify-content: center;
-      padding: 12px 4%;
+      padding: 12px 0;
       color: white;
       align-items: center;
       position: relative;
@@ -16,11 +16,8 @@
         font-size: 20px;
         font-weight: 500;
         color: #333;
-      }
-      span {
-        position: absolute;
-        right: 12px;
-        top: 9px;
+        width: 100%;
+        text-align: center;
       }
     }
     .account-box {
@@ -149,21 +146,31 @@
     ul {
       display: flex;
       justify-content: space-around;
-      padding-top: 18px;
+      padding-top: 6px;
+      flex-wrap: wrap;
       li {
+        width: 30%;
+        margin-top: 20px;
         img {
-          width: 30px;
-          height: 30px;
-          margin-bottom: 6px;
+          width: 33px;
+          height: 33px;
         }
         p {
           font-size: 13px;
-          color: #9d9c9d;
+          color: #333333;
         }
+      }
+      .m-t-zero{
+        margin-top: 12px;
       }
     }
     .with-three {
       justify-content: space-around;
+      li {
+        width: 25%;
+        margin-bottom: 0;
+        margin-top: 12px;
+      }
     }
   }
   .mine-inv {
@@ -187,26 +194,12 @@
   }
   .mine-oper-bar {
     // transform: translateY(-100px);
-    width: 92%;
-    margin: 0 auto;
-    border-radius: 8px;
-    overflow: hidden;
+    position: inherit;
     margin-top: 12px;
-    text-align: left;
-    font-size: 12px;
-    box-shadow: 0 0 15px #eee;
-    .adm-list-item-content-prefix {
-      padding-right: 6px;
-    }
-    .--font-size {
-      font-size: 12px;
-    }
-    img {
-      width: 16px;
-      height: 16px;
-      vertical-align: middle;
-      display: inline-block;
-      transform: translateY(-1px);
+    ul {
+      li {
+        margin-top: 12px;
+      }
     }
   }
 }

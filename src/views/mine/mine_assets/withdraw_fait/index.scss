@@ -1,4 +1,4 @@
-.with-draw {
+.withdraw-fiat {
   .draw-msg {
     margin-top: 12px;
     padding: 12px;
@@ -30,11 +30,11 @@
         color: #999;
         top: 40px;
       }
-      .oper-icon{
+      .oper-icon {
         position: absolute;
         right: 16px;
-        top:38px;
-        img{
+        top: 38px;
+        img {
           width: 18px;
         }
       }
@@ -85,35 +85,33 @@
         justify-content: space-between;
         color: #666;
         flex-wrap: wrap;
-        span{
+        span {
           margin-top: 12px;
         }
       }
     }
-    .draw-attention {
-      margin-top: 30px;
-      padding: 10px;
-      background-color: #f8f8f8;
-      border-radius: 4px;
+    .oper-amount {
       ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
         li {
-          font-size: 12px;
-          color: #999;
-          text-align: left;
-          position: relative;
-          padding-left: 8px;
-          margin-bottom: 6px;
-          line-height: 18px;
+          width: 30%;
+          height: 36px;
+          margin-top: 12px;
+          border-radius: 4px;
+          border: 1px solid #f2f2f2;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
-        li::before {
-          content: "";
-          width: 3px;
-          height: 3px;
-          background: #999;
-          border-radius: 50%;
-          position: absolute;
-          left: 0;
-          top: 8px;
+        li:last-child {
+          opacity: 0;
+          height: 0;
+        }
+        .active-amount {
+          background: url("../../../../assets/images/active_box.png");
+          background-size: 100% 100%;
         }
       }
     }
@@ -152,11 +150,9 @@
         font-weight: 500;
         color: #333;
         margin-top: 4px;
-        align-items: center;
-        // background-color: red;
+        align-items: flex-end;
         span:last-child {
           font-size: 12px;
-          transform: translateY(1px);
         }
       }
     }
@@ -241,16 +237,26 @@
 }
 .un-bind-pay {
   text-align: left;
-  p{
+  p {
     font-size: 14px;
   }
-  p:last-child{
+  p:last-child {
     margin-top: 12px;
     display: flex;
     justify-content: space-around;
-    button{
+    button {
       font-size: 14px;
       width: 30%;
     }
+  }
+}
+.select-bank-popup {
+  padding: 12px;
+  .bank-popup-title {
+    display: flex;
+    justify-content: flex-end;
+  }
+  p{
+    margin-top: 12px;
   }
 }

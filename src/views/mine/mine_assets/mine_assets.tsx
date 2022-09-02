@@ -22,6 +22,7 @@ const MineAssets = (): ReactElement<ReactNode> => {
     const [localUse, selocalUse] = useState<Data[]>([]);
     const [isZroe, setIsZroe] = useState<number>(0);
     const [rechargePopup, setRechargePopup] = useState<boolean>(false);
+    const [withDrawPopup,setWithdrawPopup] = useState<boolean>(false);
     const getAssetsList = useCallback(async () => {
         const result = await UserAssetsApi();
         const arr = [];
@@ -79,7 +80,7 @@ const MineAssets = (): ReactElement<ReactNode> => {
         return () => {
             setAssetsList([]);
             selocalUse([]);
-            setIsZroe(0)
+            setIsZroe(0);
         }
     }, []);
     return (
@@ -99,7 +100,10 @@ const MineAssets = (): ReactElement<ReactNode> => {
                         {/* 充值 */}
                         {t('public.recharge_fiat')}
                     </Button>
-                    <Button color="default" onClick={() => { history.push('/withdraw') }}>
+                    <Button color="default" onClick={() => { 
+                        // history.push('/withdraw')
+                        setWithdrawPopup(true)
+                    }}>
                         {/* 提现 */}
                         {t('public.withdraw_fiat')}
                     </Button>
@@ -191,6 +195,25 @@ const MineAssets = (): ReactElement<ReactNode> => {
                         <li onClick={() => { history.push('/recharge') }}>
                             {/* 链上充值 */}
                             {t('public.recharge_protocol')}
+                        </li>
+                        <li>
+                            {/* 取消 */}
+                            {t('public.cancel')}
+                        </li>
+                    </ul>
+                </div>
+            </Popup>
+            {/* Select Withdraw Way */}
+            <Popup visible={withDrawPopup} onMaskClick={() => {setWithdrawPopup(false)}}>
+            <div className="recharge-popup" onClick={() => { setWithdrawPopup(false) }}>
+                    <ul>
+                        <li onClick={() => { history.push('/withdraw-fait') }}>
+                            {/* 法币充值 */}
+                            {t('public.fait_withdraw')}
+                        </li>
+                        <li onClick={() => { history.push('/withdraw') }}>
+                            {/* 链上提币 */}
+                            {t('public.protocol_withdraw')}
                         </li>
                         <li>
                             {/* 取消 */}

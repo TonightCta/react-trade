@@ -44,11 +44,11 @@ const MineNav = (): ReactElement<ReactNode> => {
                     {/* 我的 */}
                     {t('public.mine')}
                 </p>
-                <span>
+                {/* <span>
                     <SetOutline fontSize={24} color="#333" onClick={() => {
                         history.push('/setting')
                     }} />
-                </span>
+                </span> */}
             </div>
             <div className="account-box">
                 <div className="account-left">
@@ -76,7 +76,7 @@ const MineNav = (): ReactElement<ReactNode> => {
                     <div className="account-msg">
                         <p>
                             {/* 点击登录 */}
-                            {account.email ? `${account.email.substring(0,7)}...` : t('public.click_login')}
+                            {(account.email || account.phone) ? `${account.email ? `${account.email.substring(0,7)}...` : account.phone}` : t('public.click_login')}
                         </p>
                         <p>
                             {/* 欢迎来到80年代 */}

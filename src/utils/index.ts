@@ -2,17 +2,15 @@ import * as api from '../request/api'
 interface Bal{
     balance:number[]
 }
-export const QuireBalance = async (_coin: string,_after_coin:string): Promise<Bal> => {
-    const balance: number[] = [];
+export const QuireBalance = async (_coin:string): Promise<number> => {
+    let balance: number = 0;
     const result = await api.UserAssetsApi();
     for (let i in result.data) {
-        if (_coin === result.data[i].coin || _after_coin === result.data[i].coin) {
-            balance.push(result.data[i].available);
+        if (_coin === result.data[i].coin) {
+            balance = result.data[i].available;
         }
     }
-    return {
-        balance:balance
-    }
+    return balance
 }
 //获取地址栏参数
 export const GetUrlKey = (name: string, url: string): string | null => {

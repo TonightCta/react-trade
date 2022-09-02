@@ -29,9 +29,8 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
     const [formBalance, setFormBalance] = useState<number>(0);
     const [toBalance, setToBalance] = useState<number>(0);
     const getBalance = async () => {
-        const { balance } = await QuireBalance(state.tradeFromCoin,state.tradeToCoin);
-        setFormBalance(balance[0])
-        setToBalance(balance[1])
+        setFormBalance(await QuireBalance(state.tradeFromCoin))
+        setToBalance(await QuireBalance(state.tradeToCoin));
     };
     // 交易深度信息
     const [upList, setUpList] = useState<Depch[]>([
@@ -122,6 +121,10 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
             Toast.show(props.t('message.type_trade_amount'));
             return;
         };
+        if(tradeType === 1 && state.tradeFromCoin === 'USDT' && tradeAmount < 10){
+            Toast.show(props.t('message.min_10'));
+            return
+        }
         if (tradeWay === 2) {
             if (limitPrice === 0) {
                 //请输入限价金额

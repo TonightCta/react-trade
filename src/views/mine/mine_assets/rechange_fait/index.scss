@@ -67,6 +67,10 @@
           background-size: 100% 100%;
           color: #4f5eff;
         }
+        li:last-child {
+          opacity: 0;
+          height: 0;
+        }
       }
     }
     .fait-type {

@@ -73,3 +73,7 @@ export const InviteNumberApi = (p:number | string) => get<IResponse>(`/user/invi
 export const RechargeFaitListApi = () => get<IResponse>('rechargeBegin');
 //法币充值
 export const RechargePayApi = (p:o) => post<IResponse>('/putInInOnlineOrder',p);
+//提币渠道
+export const WithdrawNetApi = () => get<IResponse>('/withdrawBegin');
+//提币啊
+export const WithdrawApiNew = (p:o) => post<IResponse>('/putInWithdraw',p);

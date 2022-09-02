@@ -28,7 +28,7 @@ const langList = [
     },
     {
         name: 'ไทย',
-        country:'ประเทศไทย',
+        country:'ไทย',
         cation: 'th',
         langIcon: require('../../../assets/images/th.png')
     }

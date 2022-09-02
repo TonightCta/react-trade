@@ -5,6 +5,7 @@ import InnerNav from '../../components/inner_nav/nav'
 import OrderList from "../trade/components/order_list";
 import FilterBox from "./components/filter_box";
 import { useTranslation } from 'react-i18next';
+import { GetUrlKey } from '../../utils/index'
 
 type FilterVal = {
     coin: string,
@@ -29,7 +30,7 @@ const TradeOrder = (): ReactElement<ReactNode> => {
             {/* 我的订单 */}
             <InnerNav title={t('public.mine_order')} leftArrow withBorder={true} />
             <div className="trade-type-inner">
-                <Tabs style={{ '--title-font-size': '14px' }} onChange={(e) => {
+                <Tabs style={{ '--title-font-size': '14px' }} defaultActiveKey={GetUrlKey('type',window.location.href) || '1'} onChange={(e) => {
                     // setOrderType(Number(e));
                     testRef.current.uploadOrder(e)
                 }}>

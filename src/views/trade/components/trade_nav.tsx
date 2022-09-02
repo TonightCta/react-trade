@@ -41,11 +41,9 @@ const FilterDraw = (props: DrawProps): ReactElement => {
 }
 
 const TradeNav = (props: Props): ReactElement<ReactNode> => {
-
     const history = useHistory();
-
     const [drawStatus, setDrawStatus] = useState<boolean>(false);
-    const [state, setState] = useState<Store>(store.getState());
+    const [state, setState] = useState<any>(store.getState());
     const storeChange = () => {
         store.subscribe(() => {
             setState(store.getState())
@@ -55,6 +53,7 @@ const TradeNav = (props: Props): ReactElement<ReactNode> => {
         storeChange();
         return () => {
             storeChange();
+            setState({});
         }
     }, []);
     //添加 ｜ 取消 自选

@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useReducer } from "react";
+import React, { ReactNode, useEffect, useReducer, useState } from "react";
 // import { useTranslation } from "react-i18next";
 import HomeBanner from "./components/banner";
 import HomeAdv from "./components/adv";
@@ -9,7 +9,7 @@ import HomeTexCard from "./components/tes_card";
 import HomeTeslist from "./components/tes_list";
 import { setHomeData } from "../../store/app/action_creators";
 import store from "../../store";
-// import { upUserAssets } from '../../store/app/action_fn'
+import { upUserAssets } from '../../store/app/action_fn'
 import { WSDataType } from "../../utils/state";
 import { useHistory } from 'react-router-dom'
 import HomeCard from "./components/card";
@@ -33,18 +33,47 @@ const NavLogo = (): React.ReactElement<ReactNode> => {
 const HomeIndex = (): React.ReactElement<ReactNode> => {
 
     const [state, dispatch] = useReducer(subscribeReducer, [], initWsSubscribe);
-
+    const [localQU, setLocalQU] = useState<any[]>(store.getState().quList);
     const history = useHistory();
+    const storeChange = () => {
+        store.subscribe(() => {
+            setLocalQU(store.getState().quList);
+        });
+    };
+    const onMessageHome = (e: any) => {
+        let arr: any[] = localQU;
+        try {
+            const wsData = JSON.parse(e.data);
+            if (wsData.e === 'subscribe') {
+                arr.forEach(item => {
+                    if (wsData.s === item.symbol) {
+                        item.price = wsData.k.c;
+                    }
+                });
+                arr = arr.map(item => {
+                    const rate = (item.price - item.yesterday_price) / item.yesterday_price * 100
+                    return {
+                        ...item,
+                        rate: rate,
+                        type: rate > 0 ? 1 : 0,
+                        coin: `${item.base}/${item.target}`
+                    }
+                });
+                dispatch({
+                    type: WSDataType.SET_WSS_SUBSCRIBE,
+                    payload: { wsSubscribe: arr }
+                });
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
     useEffect(() => {
+        storeChange();
         let arrVal: any[] = [];
         arrVal = store.getState().quList;
-        const storeChange = () => {
-            store.subscribe(() => {
-                arrVal = store.getState().quList;
-            });
-        };
-        storeChange();
-        arrVal = arrVal.map(item => {
+        const arrValTw = arrVal.map(item => {
             const rate = (item.price - item.yesterday_price) / item.yesterday_price * 100
             return {
                 ...item,
@@ -53,42 +82,18 @@ const HomeIndex = (): React.ReactElement<ReactNode> => {
                 coin: `${item.base}/${item.target}`
             }
         });
-        const action = setHomeData(arrVal);
+        const action = setHomeData(arrValTw);
         store.dispatch(action);
-        const onMessageHome = (e: any) => {
-            try {
-                const wsData = JSON.parse(e.data);
-                if (wsData.e === 'subscribe') {
-                    arrVal.forEach(item => {
-                        if (wsData.s === item.symbol) {
-                            item.price = wsData.k.c;
-                        }
-                    });
-                    arrVal = arrVal.map(item => {
-                        const rate = (item.price - item.yesterday_price) / item.yesterday_price * 100
-                        return {
-                            ...item,
-                            rate: rate,
-                            type: rate > 0 ? 1 : 0,
-                            coin: `${item.base}/${item.target}`
-                        }
-                    })
-                    // console.log(arrVal.sort((x:any,y:any) => { return x.id - y.id }),'top')
-
-                    dispatch({
-                        type: WSDataType.SET_WSS_SUBSCRIBE,
-                        payload: { wsSubscribe: arrVal }
-                    });
-                    // setTimeout(() => {
-                    //     setWsList(arrVal);
-                    // })
-                }
-
-            } catch (err) {
-                console.log(err)
-            }
+        dispatch({
+            type: WSDataType.SET_WSS_SUBSCRIBE,
+            payload: { wsSubscribe: arrValTw }
+        });
+        addListener(onMessageHome);
+    }, [localQU])
+    useEffect(() => {
+        if (localStorage.getItem('token_1')) {
+            upUserAssets();
         }
-        addListener(onMessageHome)
         return () => {
             removeListener(onMessageHome);
             storeChange();

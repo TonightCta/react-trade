@@ -11,6 +11,9 @@ interface Manage {
     title: string,
     icon: string,
     level: number,
+    url: string,
+    out: boolean,
+    class?:string
 }
 
 
@@ -77,7 +80,7 @@ const ModalContent = (props: { closeModal: () => void }): ReactElement => {
                     invInfo.article.title
                 }
             </p>
-            <div className="content-box" style={{lineHeight:'22px'}} dangerouslySetInnerHTML={{ __html: invInfo.article.content }}></div>
+            <div className="content-box" style={{ lineHeight: '22px' }} dangerouslySetInnerHTML={{ __html: invInfo.article.content }}></div>
         </div>
     )
 };
@@ -87,28 +90,55 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const ManageList: Array<Manage> = [
         {
+            //邀请链接
+            title: t('public.inv_link'),
+            icon: require('../../../assets/images/link_icon.png'),
+            level: 1,
+            url: '/invite',
+            out: false,
+            class:'m-t-zero',
+        },
+        {
+            //邀请规则
+            title: t('public.detail'),
+            icon: require('../../../assets/images/rules_icon.png'),
+            level: 1,
+            url: '',
+            out: true,
+            class:'m-t-zero',
+        },
+        {
             //一级好友
             title: t('public.level_one'),
             icon: require('../../../assets/images/one.png'),
             level: 1,
+            url: '/inv-detail',
+            out: false,
+            class:'m-t-zero',
         },
         {
             //二级好友
             title: t('public.level_two'),
             icon: require('../../../assets/images/two.png'),
             level: 2,
+            url: '/inv-detail',
+            out: false,
         },
         {
             //三级好友
             title: t('public.level_three'),
             icon: require('../../../assets/images/three.png'),
             level: 3,
+            url: '/inv-detail',
+            out: false,
         },
         {
             //邀请总数
             title: t('public.inv_total'),
             icon: require('../../../assets/images/all.png'),
             level: 4,
+            url: '/inv-detail',
+            out: false,
         },
     ]
     const history = useHistory();
@@ -119,12 +149,11 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
                     {/* 我的邀请 */}
                     {t('public.inv_mine')}
                 </p>
-                <div className="title-more-oper">
+                {/* <div className="title-more-oper">
                     <p onClick={() => {
                         setMsgModal(true)
                     }}>
                         <span>
-                            {/* 详细信息 */}
                             {
                                 t('public.detail')
                             }
@@ -134,22 +163,24 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
                         history.push('/invite')
                     }}>
                         <span>
-                            {/* 邀请链接 */}
                             {
                                 t('public.inv_link')
                             }
                         </span><LinkOutline fontSize={12} color="#3370ff" />
                     </p>
-                </div>
+                </div> */}
             </div>
             <ul>
                 {
                     ManageList.map((el: Manage, index: number): ReactElement => {
                         return (
-                            <li key={index} onClick={() => {
-                                const action = upInvLevel(el.level);
-                                store.dispatch(action);
-                                history.push('/inv-detail')
+                            <li key={index} className={`${el.class ? el.class : ''}`} onClick={() => {
+                                const routeNext = () => {
+                                    const action = upInvLevel(el.level);
+                                    store.dispatch(action);
+                                    history.push(el.url)
+                                }
+                                el.out ? setMsgModal(true) : routeNext();
                             }}>
                                 <img src={el.icon} alt="" />
                                 <p>{el.title}</p>

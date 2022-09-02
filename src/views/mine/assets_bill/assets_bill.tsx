@@ -85,7 +85,7 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                 <li key={index} className={`
                                             ${el.type === 2 && 'buy-color' ||
                                                     el.type === 3 && 'sell-color' ||
-                                                    el.type === 1 && 'charged-color' ||
+                                                    el.type === 1 && el.type === 11 && 'charged-color' ||
                                                     el.type === 4 && 'withdraw-color' ||
                                                     el.type === 98 && 'withdraw-freeze' ||
                                                     el.type === 9 && 'admin-color'
@@ -113,7 +113,7 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                                 // 售出
                                                                 el.type === 3 && t('public.sell') ||
                                                                 // 充币
-                                                                el.type === 1 && t('public.recharge') ||
+                                                                el.type === 1 || el.type === 11 && t('public.recharge') ||
                                                                 //提币
                                                                 el.type === 4 && t('public.withdraw') ||
                                                                 //冻结
@@ -139,7 +139,7 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                             // 售出
                                                             el.type === 3 && t('public.sell') ||
                                                             // 充币
-                                                            el.type === 1 && t('public.recharge') ||
+                                                            el.type === 1 || el.type === 11 && t('public.recharge') ||
                                                             //提币
                                                             el.type === 4 && t('public.withdraw') ||
                                                             //冻结

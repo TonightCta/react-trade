@@ -57,7 +57,7 @@ const RechargeFaitIndex = (): ReactElement<ReactNode> => {
         setFaitMsg({
             ...faitMsg,
             name: list[0].title,
-            symbol: list[0].ccy_no,
+            symbol: String(process.env.REACT_APP_COIN),
             rate: list[0].ccy_rate,
             channel_id: list[0].id,
             channel_item_id: list[0].channel_list[0].id,
@@ -159,6 +159,7 @@ const RechargeFaitIndex = (): ReactElement<ReactNode> => {
                                 )
                             })
                         }
+                        <li></li>
                     </ul>
                 </div>
                 <p className="fait-type">
