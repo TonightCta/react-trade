@@ -261,6 +261,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
         addListener(onMessageDetail)
         return () => {
             removeListener(onMessageDetail);
+            setWsStatus(0);
         }
     }, []);
     const getMoreK = (_end_time: number) => {

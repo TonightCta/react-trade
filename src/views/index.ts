@@ -29,6 +29,7 @@ import AddressManage from "./mine/mine_assets/address_manage/address_mange";
 import InviteIndex from "./invite";
 import RechargeFaitIndex from "./mine/mine_assets/rechange_fait/recharge_fait";
 import WithdrawFait from "./mine/mine_assets/withdraw_fait/withdraw_fait";
+import DownIndex from "./down/down";
 
 
 export {
@@ -63,4 +64,5 @@ export {
     InviteIndex,//邀请
     RechargeFaitIndex,//法币充值
     WithdrawFait,//法币提现
+    DownIndex,//下载
 }

@@ -265,7 +265,11 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                     <ul>
                         <li>{t('public.withdraw_remark_1')}</li>
                         <li>{t('public.withdraw_remark_2')}</li>
-                        <li>{t('public.withdraw_remark_3')}:{drawMsg.withdraw_min}-{drawMsg.withdraw_max}({currentNet})</li>
+                        <li>{t('public.withdraw_remark_3')}</li>
+                        <li>{t('public.withdraw_remark_4')}</li>
+                        <li>{t('public.withdraw_remark_5')}</li>
+                        <li>{t('public.withdraw_remark_6')}</li>
+                        <li>{t('public.withdraw_remark_7')}</li>
                     </ul>
                 </div>
             </div>

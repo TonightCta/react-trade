@@ -41,6 +41,7 @@ const RouteConfig = (): ReactElement<ReactNode> => {
             <Route path="/help-detail" key="helpDetail" component={View.HelpDetail}></Route>
             <Route path="/register" key="register" component={View.RegisterIndex}></Route>
             <Route path="/forget" key="forget" component={View.ForgetIndex}></Route>
+            <Route path="/download" key="download" component={View.DownIndex}></Route>
             <PrivateRoute children={<View.TradeIndex />} key="trade" path="/trade" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.MineIndex />} key="mine" path="/mine" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.TradeOrder />} key="tradeOrder" path="/trade-order" locationMine={location}></PrivateRoute>

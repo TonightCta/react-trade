@@ -72,7 +72,6 @@ const App = (): React.ReactElement<ReactNode> => {
       setQUH();
     };
     const win :any  = window;
-    console.log(win)
     // createWS();
     return () => {
       setSourceQ([])

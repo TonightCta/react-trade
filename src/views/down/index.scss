@@ -1,0 +1,26 @@
+.down-index {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  .click-box{
+    width: 50%;
+    height: 100vh;
+    position: absolute;
+    top:0;
+  }
+  .left-android{
+    left: 0;
+  }
+  .right-ios{
+    right: 0;
+  }
+  img{
+    width: 100%;
+  }
+}
+.down-index::-webkit-scrollbar{
+    display: none;
+}
