@@ -17,6 +17,8 @@ interface Props {
     t: any,
     sellQUList: Depch[],
     buyQUList: Depch[],
+    formWSSBalance: number,
+    toWSSBalance: number
 }
 const TradeOper = (props: Props): ReactElement<ReactNode> => {
     //交易类型 1 - 买入 2 - 卖出
@@ -83,6 +85,14 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
             setDownList(props.buyQUList.slice(props.buyQUList.length - 5, props.buyQUList.length));
         }
     }, [props]);
+    useEffect(() => {
+        if (props.formWSSBalance > 0) {
+            setFormBalance(props.formWSSBalance);
+        }
+        if (props.toWSSBalance > 0) {
+            setToBalance(props.toWSSBalance)
+        }
+    }, [props.formWSSBalance, props.toWSSBalance])
     //交易金额
     const [tradeAmount, setTradeAmount] = useState<number>(0);
     //交易换算后数量
@@ -121,7 +131,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
             Toast.show(props.t('message.type_trade_amount'));
             return;
         };
-        if(tradeType === 1 && state.tradeFromCoin === 'USDT' && tradeAmount < 10){
+        if (tradeType === 1 && state.tradeFromCoin === 'USDT' && tradeAmount < 10) {
             Toast.show(props.t('message.min_10'));
             return
         }
@@ -174,7 +184,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
     }, [])
     useEffect(() => {
         getBalance();
-    },[state.currentCoin])
+    }, [state.currentCoin])
     const colosePopip = () => {
         setSelectWayBox(false);
     }

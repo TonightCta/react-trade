@@ -77,3 +77,5 @@ export const RechargePayApi = (p:o) => post<IResponse>('/putInInOnlineOrder',p);
 export const WithdrawNetApi = () => get<IResponse>('/withdrawBegin');
 //提币啊
 export const WithdrawApiNew = (p:o) => post<IResponse>('/putInWithdraw',p);
+//查询币种余额
+export const FindbalanceApi = (p:string) => get<IResponse>(`/assets/accountSingle/spot/${p}`);

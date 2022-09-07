@@ -4,12 +4,8 @@ interface Bal{
 }
 export const QuireBalance = async (_coin:string): Promise<number> => {
     let balance: number = 0;
-    const result = await api.UserAssetsApi();
-    for (let i in result.data) {
-        if (_coin === result.data[i].coin) {
-            balance = result.data[i].available;
-        }
-    }
+    const result = await api.FindbalanceApi(_coin);
+    balance = result.data.balance;
     return balance
 }
 //获取地址栏参数

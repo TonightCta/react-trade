@@ -18,7 +18,7 @@ import { setQU, upCurrentCoin, setTradeFrom, setTradeTo, setDownApp } from './st
 import DownBtn from './components/down_btn';
 
 const App = (): React.ReactElement<ReactNode> => {
-  // const [token, setToken] = useState<string | null>(sessionStorage.getItem('token_1'));
+  const [token, setToken] = useState<string | null>(sessionStorage.getItem('tokenWSS'));
   const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus);
   const [downIcon, setDownicon] = useState<number>(store.getState().downApp);
   const [sourceQ, setSourceQ] = useState<any[]>([]);
@@ -54,11 +54,12 @@ const App = (): React.ReactElement<ReactNode> => {
           interval: '1m'
         }
       });
+
     });
   }
   const storeChange = () => {
     store.subscribe(() => {
-      // setToken(store.getState().appToken);
+      setToken(store.getState().tokenWSS);
       setWsStatus(store.getState().wsStatus);
       setDownicon(store.getState().downApp)
     })
@@ -66,11 +67,17 @@ const App = (): React.ReactElement<ReactNode> => {
   useEffect(() => {
     wsStatus === 1 && sendWSApp();
   }, [wsStatus, sourceQ.length])
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     token && upUserAssets();
-  //   }, 10000)
-  // }, [token])
+  useEffect(() => {
+    if (token && wsStatus === 1) {
+      console.log(token)
+      send({
+        e: 'login',
+        d: {
+          token: token
+        }
+      })
+    }
+  }, [token,wsStatus])
   useEffect(() => {
     storeChange();
     if (store.getState().quList.length < 1) {

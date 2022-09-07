@@ -28,3 +28,4 @@ export const SET_CHAIN_MSG = 'set_chain_msg';
 export const SET_WSS_SUBSCRIBE = 'set_wss_subscribe';
 export const UP_COUNTRY = 'up_country';
 export const DOWN_APP = 'down_app';
+export const WSS_TOKEN = 'wss_token';

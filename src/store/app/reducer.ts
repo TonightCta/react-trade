@@ -3,17 +3,17 @@ import * as Type from './types';
 
 interface UMsg {
     email?: string,
-    phone:string,
-    phone_prefix:string,
+    phone: string,
+    phone_prefix: string,
     avatar?: string,
-    supportUrl?:string,
+    supportUrl?: string,
     security?: {
         kyc?: number,
         pay_password?: number,
-        ga?:number
+        ga?: number
     },
-    quotation:{
-        wss_url:string
+    quotation: {
+        wss_url: string
     }
 }
 export interface WithDraw {
@@ -52,7 +52,8 @@ export interface Store {
     chainMsg: { coin: string, protocol: string },//链信息
     wsSubscribe: any,//币种ws流数据
     country: string,//国家
-    downApp:number,//下载状态
+    downApp: number,//下载状态
+    tokenWSS: string,//ws登录
 }
 const defaultState: Store = {
     account: JSON.parse(localStorage.getItem('account') || '{}'),
@@ -84,7 +85,8 @@ const defaultState: Store = {
     chainMsg: JSON.parse(sessionStorage.getItem('chainMsg') || '{}'),
     wsSubscribe: {},
     country: localStorage.getItem('country') || 'South Africa',
-    downApp:Number(sessionStorage.getItem('downApp')) || 1,
+    downApp: Number(sessionStorage.getItem('downApp')) || 1,
+    tokenWSS: sessionStorage.getItem('tokenWSS') || '',
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
@@ -174,8 +176,11 @@ export default (state = defaultState, action: any) => {
             localStorage.setItem('country', action.country);
             return { ...state, country: action.country }
         case Type.DOWN_APP:
-            sessionStorage.setItem('downApp',action.down);
-            return { ...state,downApp:action.down }
+            sessionStorage.setItem('downApp', action.down);
+            return { ...state, downApp: action.down }
+        case Type.WSS_TOKEN:
+            sessionStorage.setItem('tokenWSS', action.token);
+            return { ...state, tokenWSS: action.token }
         default:
             return state;
     };

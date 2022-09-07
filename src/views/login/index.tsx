@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import store from "../../store";
-import { setToken } from "../../store/app/action_creators";
+import { setToken, setWSSToken } from "../../store/app/action_creators";
 import { NavLink, useHistory } from "react-router-dom";
 import './index.scss';
 import { CloseOutline, LockOutline, MailOutline, RightOutline } from "antd-mobile-icons";
@@ -45,6 +45,9 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
         store.dispatch(action);
 
         const info = await upUserInfo();
+        const { data } = info;
+        const actionWss = setWSSToken(data.quotation.wss_token);
+        store.dispatch(actionWss);
         if (info.code !== 200) {
             //登录异常，请稍后再试
             Toast.show(t('message.login_faild'));

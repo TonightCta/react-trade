@@ -7,11 +7,6 @@ import { upAnnID } from "../../../store/app/action_creators";
 import store from "../../../store";
 import { ADV } from '../../../utils/types'
 
-
-
-
-
-
 const AdvSwiper = (props: { history: any }): ReactElement<ReactNode> => {
     const [advList, setAdvList] = useState<ADV[]>([]);
     const getAdvList = async () => {

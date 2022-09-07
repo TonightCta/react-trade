@@ -21,6 +21,13 @@ interface Depch {
 const TradeIndex = React.forwardRef((props: any, ref: any) => {
     const { t } = useTranslation();
     const [coinPrice, setCoinPrice] = useState<number>(0);
+    const [wssBalance, setWssBalance] = useState<{
+        fromBlance: number,
+        toBalance: number
+    }>({
+        fromBlance: 0,
+        toBalance: 0
+    })
     const { send } = useSocket();
     // const orderList: any = useRef(null);
     // ws服务连接状态
@@ -75,6 +82,20 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
                     setBuyQUList(data.d.asks);
                     setSellQUlist(data.d.bids);
                 }
+                if (data.e === 'balance') {
+                    if (data.d.coin === store.getState().tradeFromCoin) {
+                        setWssBalance({
+                            ...wssBalance,
+                            fromBlance: data.d.balance
+                        })
+                    }
+                    if (data.d.coin === store.getState().tradeToCoin) {
+                        setWssBalance({
+                            ...wssBalance,
+                            toBalance: data.d.balance
+                        })
+                    }
+                }
             } catch (err) {
                 console.log(err)
             }
@@ -90,7 +111,7 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
             {/* 导航信息 */}
             <TradeNav coinMsg={coinMsg} t={t} />
             {/* 交易模块 */}
-            <TradeOper t={t} sellQUList={sellQUList} buyQUList={buyQUList} coinPrice={coinPrice} />
+            <TradeOper t={t} formWSSBalance={wssBalance.fromBlance} toWSSBalance={wssBalance.toBalance} sellQUList={sellQUList} buyQUList={buyQUList} coinPrice={coinPrice} />
             {/* 订单信息 */}
             <TradeOrder t={t} />
             {coinPrice === 0 && <LoadData />}

@@ -6,10 +6,11 @@ import { upWSStatus } from "../store/app/action_creators";
 interface WS {
     e: string,
     d: {
-        symbol: string,
+        symbol?: string,
         interval?: string,
         start?: number,
-        end?: number
+        end?: number,
+        token?:string
     }
 }
 

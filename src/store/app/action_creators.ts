@@ -144,10 +144,15 @@ export const upCountry = (country: string) => ({
     country
 })
 //下载状态
-export const setDownApp  = (down:number) => ({
+export const setDownApp = (down:number) => ({
     type:Type.DOWN_APP,
     down
 });
+//WSS登录TOKEN
+export const setWSSToken = (token:string) => ({
+    type:Type.WSS_TOKEN,
+    token
+})
 
 
 
