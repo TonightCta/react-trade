@@ -21,23 +21,31 @@ interface Props {
 }
 
 // Logo
-const NavLogo = (): React.ReactElement<ReactNode> => {
+const NavLogo = (props: { history: any, downIcon: number }): React.ReactElement<ReactNode> => {
+    const [showDown, setShowdown] = useState<number>(props.downIcon);
+    useEffect(() => {
+        setShowdown(props.downIcon)
+    }, [props.downIcon])
     return (
         <div className="nav-logo">
-            <img src={require('../../assets/images/logo.png')} alt="" />
+            <img className="bibi-logo" src={require('../../assets/images/logo.png')} alt="" />
+            {showDown === 2 && <img className="down-icon" src={require('../../assets/images/down_icon.png')} alt="" onClick={() => {
+                props.history.push('/download')
+            }} />}
         </div>
     )
-}
+};
 
 
 const HomeIndex = (): React.ReactElement<ReactNode> => {
-
     const [state, dispatch] = useReducer(subscribeReducer, [], initWsSubscribe);
     const [localQU, setLocalQU] = useState<any[]>(store.getState().quList);
+    const [downIcon, setDownIcon] = useState<number>(store.getState().downApp)
     const history = useHistory();
     const storeChange = () => {
         store.subscribe(() => {
             setLocalQU(store.getState().quList);
+            setDownIcon(store.getState().downApp);
         });
     };
     const onMessageHome = (e: any) => {
@@ -97,11 +105,12 @@ const HomeIndex = (): React.ReactElement<ReactNode> => {
         return () => {
             removeListener(onMessageHome);
             storeChange();
+            setLocalQU([]);
         }
     }, []);
     return (
         <div className="home-index">
-            <NavLogo />
+            <NavLogo history={history} downIcon={downIcon} />
             {/* 轮播广告 */}
             <HomeBanner />
             {/* 广告中心 */}

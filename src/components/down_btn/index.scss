@@ -1,0 +1,20 @@
+.down-btn {
+  width: 144px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  left: 50%;
+  margin-left: -72px;
+  position: fixed;
+  bottom: 58px;
+  z-index: 1000;
+  img:first-child {
+    width: 18px;
+    height: 18px;
+    margin-right: -4px;
+  }
+  img:last-child {
+    width: 128px;
+    height: 46px;
+  }
+}

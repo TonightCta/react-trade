@@ -1,6 +1,6 @@
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import * as View from "../views/index";
-import { ReactElement, ReactNode, useEffect } from "react";
+import { ReactElement, ReactNode } from "react";
 import { withRouter, Route, Switch, Redirect, useLocation, Router } from "react-router-dom";
 import PrivateRoute from "./private";
 import { createHashHistory } from "history";

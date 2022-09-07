@@ -143,6 +143,11 @@ export const upCountry = (country: string) => ({
     type: Type.UP_COUNTRY,
     country
 })
+//下载状态
+export const setDownApp  = (down:number) => ({
+    type:Type.DOWN_APP,
+    down
+});
 
 
 

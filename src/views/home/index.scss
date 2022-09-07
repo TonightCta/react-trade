@@ -5,12 +5,16 @@
     width: 100%;
     background-color: white;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #eee;
-    img {
+    padding-right: 22px;
+    .bibi-logo {
       // width: 110px;
       height: 28px;
+    }
+    .down-icon {
+      height: 37px;
     }
   }
   .home-banner {
@@ -40,15 +44,16 @@
         height: 34px;
         flex: 1;
         margin-left: 8px;
+        overflow: hidden;
         .adv-item {
           height: 34px;
           font-size: 13px;
           display: flex;
+          padding-right: 12px;
           align-items: center;
           justify-content: flex-start;
-          width: 50%;
           p {
-            width: 80%;
+            text-align: left;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;

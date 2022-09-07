@@ -1,6 +1,6 @@
 import { Button, Toast } from "antd-mobile";
 import { RedoOutline } from "antd-mobile-icons";
-import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { ReactElement, ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { AuthCardApi } from '../../../../request/api'
@@ -12,6 +12,41 @@ interface Card {
     id: string
 }
 
+const convertBase64 = async (file: File) : Promise<File> => {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            const img = new Image();
+            img.src = String(reader.result);
+            img.onload = () => {
+                let w = img.width;
+                let h = img.height;
+                const scale = w / h;
+                const quality = 0.5;
+                w = w > 300 ? w * quality : w;
+                h = w > 300 ? w / scale : h;
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = w;
+                canvas.height = h;
+                ctx?.drawImage(img, 0, 0, w, h);
+                const base64 = canvas.toDataURL('image/jpeg', quality);
+                const arr = base64.split(',');
+                /* @ts-ignore */
+                const mine = arr[0].match(/:(.*?);/)[1];
+                const bstr = atob(arr[1]);
+                let n = bstr.length;
+                let u8arr = new Uint8Array(n);
+                while (n--) {
+                    u8arr[n] = bstr.charCodeAt(n);
+                };
+                resolve(new File([u8arr],file.name ,{ type: mine }))
+            };
+        };
+    })
+}
+
 const UpFile = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const account = store.getState().account;
@@ -19,9 +54,6 @@ const UpFile = (): ReactElement<ReactNode> => {
         name: '',
         id: ''
     });
-    useEffect(() => {
-        console.log(account)
-    },[])
     const history = useHistory();
     const [loading, setLoading] = useState<boolean>(false);
     //正面
@@ -122,8 +154,8 @@ const UpFile = (): ReactElement<ReactNode> => {
                     </p>
                     <div className="file-inp">
                         <div className="inp-box">
-                            <input type="file" accept="image/*" onChange={($e: any): void => {
-                                setFrontCard($e.target.files[0]);
+                            <input type="file" accept="image/*" onChange={async ($e: any) => {
+                                setFrontCard(await convertBase64($e.target.files[0]));
                                 const view = window.URL.createObjectURL($e.target.files[0]);
                                 setFrontView(view);
                             }} />
@@ -146,8 +178,8 @@ const UpFile = (): ReactElement<ReactNode> => {
                             }
                         </div>
                         <div className="inp-box">
-                            <input type="file" accept="image/*" onChange={($e: any): void => {
-                                setBackCard($e.target.files[0]);
+                            <input type="file" accept="image/*" onChange={async ($e: any) => {
+                                setBackCard(await convertBase64($e.target.files[0]));
                                 const view = window.URL.createObjectURL($e.target.files[0]);
                                 setBackView(view);
                             }} />
@@ -178,8 +210,8 @@ const UpFile = (): ReactElement<ReactNode> => {
                     </p>
                     <div className="file-inp">
                         <div className="inp-box">
-                            <input type="file" accept="image/*" onChange={($e: any): void => {
-                                setFaceCard($e.target.files[0]);
+                            <input type="file" accept="image/*" onChange={async ($e: any) => {
+                                setFaceCard(await convertBase64($e.target.files[0]));
                                 const view = window.URL.createObjectURL($e.target.files[0]);
                                 setFaceView(view);
                             }} />

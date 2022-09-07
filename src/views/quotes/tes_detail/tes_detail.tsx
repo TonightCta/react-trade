@@ -1,6 +1,5 @@
 import { ReactElement, ReactNode, useEffect, useRef, useState } from "react";
 import store from "../../../store";
-import { setUnCoin } from "../../../store/app/action_creators";
 import InnerNav from '../../../components/inner_nav/nav';
 import './index.scss'
 import TesPriceMsg from "./components/price_msg";

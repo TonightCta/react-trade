@@ -3,7 +3,8 @@ import RouteConfig from './route';
 import { HashRouter } from 'react-router-dom';
 import './App.css';
 import './App.scss'
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+import { GetUrlKey } from './utils';
 import LoadView from './views/load_view/load_view';
 // import { createWS, sendWs,getMessage } from './utils/ws'
 import { useSocket } from './utils/hooks'
@@ -12,11 +13,13 @@ import { useSocket } from './utils/hooks'
 // import { initWsSubscribe, subscribeReducer } from './redurce/set_subscribe';
 import store from './store';
 import { QUList } from './request/api';
-import { setQU, upCurrentCoin, setTradeFrom, setTradeTo } from './store/app/action_creators';
+import { setQU, upCurrentCoin, setTradeFrom, setTradeTo, setDownApp } from './store/app/action_creators';
+import DownBtn from './components/down_btn';
 
 const App = (): React.ReactElement<ReactNode> => {
   // const [token, setToken] = useState<string | null>(sessionStorage.getItem('token_1'));
   const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus);
+  const [downIcon, setDownicon] = useState<number>(store.getState().downApp);
   const [sourceQ, setSourceQ] = useState<any[]>([]);
   const setQUH = async () => {
     let arr: any[] = [];
@@ -55,7 +58,8 @@ const App = (): React.ReactElement<ReactNode> => {
   const storeChange = () => {
     store.subscribe(() => {
       // setToken(store.getState().appToken);
-      setWsStatus(store.getState().wsStatus)
+      setWsStatus(store.getState().wsStatus);
+      setDownicon(store.getState().downApp)
     })
   };
   useEffect(() => {
@@ -71,7 +75,10 @@ const App = (): React.ReactElement<ReactNode> => {
     if (store.getState().quList.length < 1) {
       setQUH();
     };
-    const win :any  = window;
+    if (GetUrlKey('innerApp', window.location.href)) {
+      const action = setDownApp(3);
+      store.dispatch(action);
+    }
     // createWS();
     return () => {
       setSourceQ([])
@@ -80,6 +87,8 @@ const App = (): React.ReactElement<ReactNode> => {
   return (
     <HashRouter>
       <div className="App">
+        {/* 下载按钮 */}
+        {downIcon === 1 && <DownBtn />}
         {/* 启动页 */}
         <LoadView />
         {/* 邀请链接 */}

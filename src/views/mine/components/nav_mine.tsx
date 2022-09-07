@@ -71,12 +71,11 @@ const MineNav = (): ReactElement<ReactNode> => {
                         <div className="edit-avatar-box">
                             <img src={require('../../../assets/images/edit_avatar.png')} className="edit-avatar" alt="" />
                         </div>
-
                     </div>
                     <div className="account-msg">
                         <p>
                             {/* 点击登录 */}
-                            {(account.email || account.phone) ? `${account.email ? `${account.email.substring(0,7)}...` : account.phone}` : t('public.click_login')}
+                            {(account.email || account.phone) ? `${account.email ? `${account.email.substring(0, 7)}...` : account.phone}` : t('public.click_login')}
                         </p>
                         <p>
                             {/* 欢迎来到80年代 */}
@@ -96,6 +95,20 @@ const MineNav = (): ReactElement<ReactNode> => {
                     <img src={require('../../../assets/images/right_dou.png')} alt="" />
                 </div>
             </div>
+            {
+                store.getState().downApp !== 3 && <div className="download-box" onClick={() => {
+                    history.push('/download')
+                }}>
+                    <p>
+                        {/* 下载BIBI App，交易更便捷 */}
+                        {t('public.download_remark')}
+                    </p>
+                    <p>
+                        {/* 立即下载 */}
+                        {t('public.download')}
+                    </p>
+                </div>
+            }
         </div>
     )
 };

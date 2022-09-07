@@ -252,7 +252,18 @@
         "use_bank":"Available channels",
         "enter_bank_num":"Enter the bank card number",
         "min_50":"Minimum 50",
-        "min_10":"Minimum transaction amount 10 USDT"
+        "back_home":"Back homepage",
+        "guide_title":"How to quickly access BIBI on iOS",
+        "guide_1":"Open the safari browser, enter 'www.bibitrades.com' and visit, select the menu at the bottom of the browser (marked in red) and go to the next step",
+        "guide_2":"After the menu pops up, select 'add to home screen' (marked in red) and go to the next step",
+        "guide_3":"After entering this link, please enter the relevant information (it comes with it by default, but you don't need to enter it), and finally click the upper right corner (marked in red) to complete the addition",
+        "guide_4":"After completing the above process, you can see the bibi entrance (marked in red) on your mobile phone desktop, you can directly click to open BIBI",
+        "one":"One",
+        "two":"Two",
+        "three":"Three",
+        "four":"Four",
+        "download":"Download",
+        "download_remark":"Download BIBI App for more convenient transactions"
     },
     "message": {
         "regis_success": "Registration is successful, it will be automatically go to login for you",

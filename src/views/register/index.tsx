@@ -158,7 +158,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         <p className="mask-select" onClick={() => { setSelectCountryBox(true) }}></p>
                         <span><DownOutline fontSize={18} color="#999" /></span>
                     </div>
-                    <div className="box-public">
+                    {!GetUrlKey('ch', window.location.href) && <div className="box-public">
                         <p>
                             {/* 邀请码 */}
                             {t('invite.code')}
@@ -170,7 +170,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             })
                         }} placeholder={t('invite.enter_code')} />
                         <span><LinkOutline color="#999" fontSize={18} /></span>
-                    </div>
+                    </div>}
                     <div className={`box-public ${intWay === 2 ? 'other-p-l' : ''}`}>
                         <p>
                             {/* 邮箱 */}

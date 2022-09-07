@@ -27,3 +27,4 @@ export const SET_QU = 'set_qu';
 export const SET_CHAIN_MSG = 'set_chain_msg';
 export const SET_WSS_SUBSCRIBE = 'set_wss_subscribe';
 export const UP_COUNTRY = 'up_country';
+export const DOWN_APP = 'down_app';

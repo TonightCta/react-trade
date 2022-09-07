@@ -1,6 +1,7 @@
 import { ReactElement, ReactNode } from "react";
 import { withRouter, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next'
+import store from "../../../store";
 
 export interface Manage {
     title: string,
@@ -45,7 +46,7 @@ const MineAssetsManage = (): ReactElement<ReactNode> => {
     ]
     const history = useHistory();
     return (
-        <div className="mine-assets-manage">
+        <div className={`mine-assets-manage ${store.getState().downApp === 3 ? 't-100' : ''}`}>
             <p className="manage-title">
                 {/* 资产管理 */}
                 {t('public.assets_manage')}

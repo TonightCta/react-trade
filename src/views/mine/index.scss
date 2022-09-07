@@ -115,6 +115,29 @@
         }
       }
     }
+    .download-box {
+      height: 32px;
+      width: 92%;
+      margin: 0 auto;
+      border-radius: 4px;
+      background: url("../../assets/images/down_mine.png");
+      background-size: 100% 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 28px 0 24px;
+      p {
+        font-size: 12px;
+        transform: scale(0.9);
+        color: #3849ff;
+      }
+      p:first-child {
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
   }
   .mine-assets-manage {
     // transform: translateY(-100px);
@@ -125,7 +148,7 @@
     padding: 16px;
     box-sizing: border-box;
     background-color: white;
-    margin-top: -100px;
+    margin-top: -68px;
     z-index: 100;
     position: relative;
     .manage-title {
@@ -160,7 +183,7 @@
           color: #333333;
         }
       }
-      .m-t-zero{
+      .m-t-zero {
         margin-top: 12px;
       }
     }
@@ -172,6 +195,9 @@
         margin-top: 12px;
       }
     }
+  }
+  .t-100 {
+    margin-top: -100px;
   }
   .mine-inv {
     margin-top: 12px;

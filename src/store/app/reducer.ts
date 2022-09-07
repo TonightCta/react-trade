@@ -52,6 +52,7 @@ export interface Store {
     chainMsg: { coin: string, protocol: string },//链信息
     wsSubscribe: any,//币种ws流数据
     country: string,//国家
+    downApp:number,//下载状态
 }
 const defaultState: Store = {
     account: JSON.parse(localStorage.getItem('account') || '{}'),
@@ -82,7 +83,8 @@ const defaultState: Store = {
     quList: JSON.parse(sessionStorage.getItem('quList') || '[]'),
     chainMsg: JSON.parse(sessionStorage.getItem('chainMsg') || '{}'),
     wsSubscribe: {},
-    country: localStorage.getItem('country') || 'South Africa'
+    country: localStorage.getItem('country') || 'South Africa',
+    downApp:Number(sessionStorage.getItem('downApp')) || 1,
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
@@ -171,6 +173,9 @@ export default (state = defaultState, action: any) => {
         case Type.UP_COUNTRY:
             localStorage.setItem('country', action.country);
             return { ...state, country: action.country }
+        case Type.DOWN_APP:
+            sessionStorage.setItem('downApp',action.down);
+            return { ...state,downApp:action.down }
         default:
             return state;
     };
