@@ -84,7 +84,7 @@ const RechargeFaitIndex = (): ReactElement<ReactNode> => {
             })
         }
     }, []);
-    const submitRecharge = async () => {
+    const submitRecharge = async (event:any) => {
         if (!amount) {
             Toast.show(t('message.enter_amount'));
             return;
@@ -116,7 +116,18 @@ const RechargeFaitIndex = (): ReactElement<ReactNode> => {
             Toast.show(result.message);
             return;
         };
-        window.open(data.pay_url);
+        
+        // event.preventDefault()
+        window.location.href = data.pay_url;
+        // const temp = window.open('_blank');
+        // temp!.location = data.pay_url;
+        // const a = document.createElement('a');
+        // a.href = data.pay_url;
+        // a.target = '_blank';
+        // document.body.appendChild(a);
+        // a.click();
+        // a.remove();
+        // return false;
     }
     return (
         <div className="recharge-fait-index">
@@ -169,9 +180,7 @@ const RechargeFaitIndex = (): ReactElement<ReactNode> => {
                     {faitMsg.amount.toFixed(4)}&nbsp;{faitMsg.symbol}
                 </p>
                 <p className="next-step">
-                    <Button loading={faitMsg.loading} disabled={faitMsg.loading} color="primary" block onClick={() => {
-                        submitRecharge()
-                    }}>
+                    <Button loading={faitMsg.loading} disabled={faitMsg.loading} color="primary" block onClick={submitRecharge}>
                         {/* 下一步 */}
                         {t('public.next')}
                     </Button>
