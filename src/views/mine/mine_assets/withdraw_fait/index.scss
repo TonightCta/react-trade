@@ -115,6 +115,18 @@
         }
       }
     }
+    .draw-attention {
+      margin-top: 30px;
+      padding: 10px;
+      background-color: #f8f8f8;
+      border-radius: 4px;
+      .danger-inner{
+        font-size: 12px;
+        color: #999;
+        text-align: left;
+        line-height: 24px;
+      }
+    }
   }
   .draw-btn-mine {
     position: fixed;

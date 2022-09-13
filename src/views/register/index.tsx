@@ -6,6 +6,7 @@ import { Button, Popup, Toast } from "antd-mobile";
 import { useTranslation } from 'react-i18next';
 import { SendCodeApi, RegisterApi, CountryListApi, GetSlugApi } from '../../request/api';
 import { GetUrlKey } from "../../utils";
+import store from "../../store";
 
 interface Props {
     from: string
@@ -126,7 +127,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         history.goBack()
                     }} />
                     <div className="language-box">
-                        <NavLink to="/set-language"><img src={require('../../assets/images/language.png')} alt="" /></NavLink>
+                        <NavLink to="/set-language"><img src={require(`../../assets/images/${store.getState().language}.png`)} alt="" /></NavLink>
                         <RightOutline fontSize={12} color="#5B646F" />
                     </div>
                 </div>
@@ -212,7 +213,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                                 ...inpMsg,
                                 code: e.target.value
                             })
-                        }} placeholder={t('public.enter_code')} />
+                        }} placeholder={t(`public.${'enter_code'}`)} />
                         <span><CheckShieldOutline color="#999" fontSize={18} /></span>
                         <p className={`send-code ${count === 60 ? '' : 'gra-btn'}`} onClick={count === 60 ? async () => {
                             if (intWay === 1 && !inpMsg.email) {

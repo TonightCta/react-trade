@@ -6,7 +6,7 @@ import { Button, Modal, PickerView, Popup, Toast } from "antd-mobile";
 import './index.scss'
 // import { DownFill } from "antd-mobile-icons";
 import { useTranslation } from 'react-i18next'
-import { CoinsListApi, UserAssetsApi, WithdrawNetApi } from '../../../../request/api';
+import { CoinsListApi, GetSlugApi, UserAssetsApi, WithdrawNetApi } from '../../../../request/api';
 import store from "../../../../store";
 import { setChainMsg } from "../../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
@@ -47,6 +47,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
     const [currentNet, setCurrentNet] = useState<string>('');
     //当前币种余额
     const [currentBalance, setCurrentBalance] = useState<number>(store.getState().currentBalance);
+    const [slug, setSlug] = useState<string>('');
     //是否设置交易密码
     const [isPayPass, setIsPayPass] = useState<boolean>(false);
     const [drawMsg, setDrawMsg] = useState<TypeMsg>({
@@ -76,6 +77,10 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
         setCoinList([arr]);
         setSourceCoin(arr2);
     }, []);
+    const getWithdrawRemark = async () => {
+        const result = await GetSlugApi('WITHDRAW_HINT');
+        setSlug(result.data.content)
+    }
     // const getBalance = useCallback(async (_val: string) => {
     //     const result = await UserAssetsApi();
     //     for (let i in result.data) {
@@ -89,7 +94,6 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
     const setNetListService = async () => {
         const result = await WithdrawNetApi();
         const { data } = result;
-        console.log(data)
         data.list.forEach((item: any) => {
             if (item.type === 'USDT_TRC20') {
                 setNetList(item.channel_list);
@@ -145,23 +149,17 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
             })
         }
     }, [drawMsg.drawNum])
-    const storeChange = () => {
-        store.subscribe(() => {
-            /* @ts-ignore */
-            if (store.getState().account.security.pay_password == 0) {
-                setIsPayPass(true);
-            }
-        })
-    }
     useEffect(() => {
         // setCoinNet(['TRC20', 'ERC20'])
         // getCoinList();
-        storeChange();
+        /* @ts-ignore */
+        setIsPayPass(store.getState().account.security.pay_password == 0 ? true : false);
+        getWithdrawRemark();
         setNetListService();
         return () => {
-            storeChange();
             setSourceCoin([]);
             setCoinList([]);
+            setSlug('');
             sessionStorage.removeItem('selectAddress');
         }
     }, []);
@@ -262,15 +260,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                     </p>
                 </div>
                 <div className="draw-attention">
-                    <ul>
-                        <li>{t('public.withdraw_remark_1')}</li>
-                        <li>{t('public.withdraw_remark_2')}</li>
-                        <li>{t('public.withdraw_remark_3')}</li>
-                        <li>{t('public.withdraw_remark_4')}</li>
-                        <li>{t('public.withdraw_remark_5')}</li>
-                        <li>{t('public.withdraw_remark_6')}</li>
-                        <li>{t('public.withdraw_remark_7')}</li>
-                    </ul>
+                    <div className="danger-inner" dangerouslySetInnerHTML={{ __html: slug }}></div>
                 </div>
             </div>
             {/* 选择币种 */}

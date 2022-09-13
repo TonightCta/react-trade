@@ -66,7 +66,7 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
                         history.goBack()
                     }} />
                     <div className="language-box">
-                        <NavLink to="/set-language"><img src={require('../../assets/images/language.png')} alt="" /></NavLink>
+                        <NavLink to="/set-language"><img src={require(`../../assets/images/${store.getState().language}.png`)} alt="" /></NavLink>
                         <RightOutline fontSize={12} color="#5B646F" />
                     </div>
                 </div>

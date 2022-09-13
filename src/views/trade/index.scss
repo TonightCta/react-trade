@@ -84,10 +84,15 @@
       }
       .use-balance {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         font-size: 12px;
+        justify-content: flex-start;
+        p{
+          text-align: left;
+        }
         p:first-child {
           color: #999;
+          margin-bottom: 8px;
         }
         p:last-child {
           color: #333;
@@ -193,7 +198,7 @@
         flex-direction: column;
         ul {
           li {
-            height: 25px;
+            height: 27px;
             font-size: 12px;
             display: flex;
             align-items: center;

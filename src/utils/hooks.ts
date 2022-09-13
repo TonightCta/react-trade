@@ -10,7 +10,7 @@ interface WS {
         interval?: string,
         start?: number,
         end?: number,
-        token?:string
+        token?: string
     }
 }
 
@@ -55,6 +55,22 @@ let wsStatusInner: number;
 export const useSocket = () => {
     const url: string = localStorage.getItem('ws_url') || '';
     const init = async (_url: string) => {
+
+        //TODO Test
+        // setInterval(() => {
+        //     ws = new WebSocket(_url);
+        //     ws.onopen = () => {
+        //         ws?.send('{"e":"subscribe","d":{"symbol":"BBB2USDT","interval":"1m"}}');
+        //         ws?.send('{"e":"login","d":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcGkiLCJzdWIiOiJ1c2VyIiwiZXhwIjoxODgzMzc0NjM3LCJuYmYiOjE4ODMzNzQ2MzcsImlhdCI6MTY2MjYyMjYzNywianRpIjoiMjMyNmQ5NDMtNWQ2My00ZTJkLWEwZTktN2U4MDZiY2U0MWI2IiwiaWQiOjQ2fQ.JE8JbEepmSzllke6nzftAfbURsfhFf7xy5-YpsKdAjI"}}')
+        //     };
+        //     ws.onmessage = (e) => {
+        //         const data = JSON.parse(e.data);
+        //         if (data.e === '1662375290') {
+        //             console.warn(data.d.aa)
+        //         }
+        //     }
+        // }, 150)
+
         if (ws) return
         ws = new WebSocket(_url);
         ws.onopen = (e: any) => {

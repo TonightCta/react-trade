@@ -5,6 +5,7 @@ import { CheckShieldOutline, CloseOutline, LockOutline, MailOutline, PhonebookOu
 import { Button, Popup, Toast } from "antd-mobile";
 import { useTranslation } from "react-i18next";
 import { SendCodeApi, ForgetPassApi, CountryListApi } from '../../request/api';
+import store from "../../store";
 
 interface Props {
     from: string
@@ -156,7 +157,7 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
                         history.goBack()
                     }} />
                     <div className="language-box">
-                        <NavLink to="/set-language"><img src={require('../../assets/images/language.png')} alt="" /></NavLink>
+                        <NavLink to="/set-language"><img src={require(`../../assets/images/${store.getState().language}.png`)} alt="" /></NavLink>
                         <RightOutline fontSize={12} color="#5B646F" />
                     </div>
                 </div>

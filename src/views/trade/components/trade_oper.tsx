@@ -265,7 +265,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
                         {/* 可用余额 */}
                         {props.t('public.use_balance')}
                     </p>
-                    <p>{tradeType === 1 ? formBalance.toFixed(4) : toBalance.toFixed(4)}&nbsp;{tradeType === 1 ? state.tradeFromCoin : state.tradeToCoin}</p>
+                    <p>{tradeType === 1 ? formBalance.toFixed(8) : toBalance.toFixed(8)}&nbsp;{tradeType === 1 ? state.tradeFromCoin : state.tradeToCoin}</p>
                 </div>
                 {/* 快捷操作 */}
                 <div className={`fast-oper persent-high-${persent}`}>

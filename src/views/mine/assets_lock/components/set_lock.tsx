@@ -123,7 +123,7 @@ const SetLock = (): ReactElement<ReactNode> => {
             <div className="form-item">
                 {/* 登录密码 */}
                 <p>{t('public.email_code')}</p>
-                <input type="password" value={inpMsg.code} onChange={(e) => {
+                <input type="number" value={inpMsg.code} onChange={(e) => {
                     setInpMsg({
                         ...inpMsg,
                         code: e.target.value

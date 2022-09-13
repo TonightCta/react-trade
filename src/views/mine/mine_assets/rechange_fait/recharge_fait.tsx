@@ -84,7 +84,7 @@ const RechargeFaitIndex = (): ReactElement<ReactNode> => {
             })
         }
     }, []);
-    const submitRecharge = async (event:any) => {
+    const submitRecharge = async () => {
         if (!amount) {
             Toast.show(t('message.enter_amount'));
             return;

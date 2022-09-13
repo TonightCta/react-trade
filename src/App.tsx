@@ -16,6 +16,7 @@ import store from './store';
 import { QUList } from './request/api';
 import { setQU, upCurrentCoin, setTradeFrom, setTradeTo, setDownApp } from './store/app/action_creators';
 import DownBtn from './components/down_btn';
+import AnnboxView from './components/ann_box';
 
 const App = (): React.ReactElement<ReactNode> => {
   const [token, setToken] = useState<string | null>(sessionStorage.getItem('tokenWSS'));
@@ -95,6 +96,8 @@ const App = (): React.ReactElement<ReactNode> => {
   return (
     <HashRouter>
       <div className="App">
+        {/* 公告 */}
+        <AnnboxView/>
         {/* 下载按钮 */}
         {downIcon === 1 && <DownBtn />}
         {/* 启动页 */}

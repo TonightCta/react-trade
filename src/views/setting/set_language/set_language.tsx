@@ -7,6 +7,7 @@ import { List } from "antd-mobile";
 import i18n from "../../../lang";
 import { CheckOutline } from "antd-mobile-icons";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 
 const langList = [
     // {
@@ -36,6 +37,7 @@ const langList = [
 
 const SetLanguage = (): ReactElement<ReactNode> => {
     const [lang, setLang] = useState<string>(localStorage.getItem('language') || 'zh-TW');
+    const history = useHistory();
     const storeChange = () => {
         store.subscribe(() => {
             setLang(store.getState().language)
@@ -62,7 +64,8 @@ const SetLanguage = (): ReactElement<ReactNode> => {
                                     const action = setLanguage(el.cation);
                                     store.dispatch(action)
                                     i18n.changeLanguage(el.cation);
-                                    localStorage.setItem('country',el.country)
+                                    localStorage.setItem('country',el.country);
+                                    history.goBack();
                                     // window.location.reload();
                                 }}>
                                     {el.name}

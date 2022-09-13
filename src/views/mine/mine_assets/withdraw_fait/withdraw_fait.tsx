@@ -4,7 +4,7 @@ import DrawBtn from "../withdraw/components/draw_btn";
 import { Button, Modal, PickerView, Popup, Toast, } from "antd-mobile";
 import './index.scss'
 import { useTranslation } from 'react-i18next'
-import { UserAssetsApi, WithdrawNetApi } from '../../../../request/api';
+import { GetSlugApi, UserAssetsApi, WithdrawNetApi } from '../../../../request/api';
 import store from "../../../../store";
 import { useHistory } from "react-router-dom";
 import { CloseOutline } from "antd-mobile-icons";
@@ -46,6 +46,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
     const [currentNet, setCurrentNet] = useState<string>('');
     //USDT余额
     const [currentBalance, setCurrentBalance] = useState<number>(store.getState().currentBalance);
+    const [fiatSlug, setFiatslug] = useState<string>('');
     //选择银行
     const [selectBank, setSelectBank] = useState<boolean>(false);
     //提现信息
@@ -57,7 +58,11 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
         card_name: '',//持卡人姓名
         amount: '',//提现金额
         fee: 0,//手续费
-    })
+    });
+    const getFiatWithdrawRemark = async () => {
+        const result = await GetSlugApi('WITHDRAW_HINT_M');
+        setFiatslug(result.data.content)
+    }
     const setCoinNetService = async () => {
         const result = await WithdrawNetApi();
         console.log(result);
@@ -120,19 +125,13 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
     //         }
     //     }
     // }, []);
-    const storeChange = () => {
-        store.subscribe(() => {
-            /* @ts-ignore */
-            if (store.getState().account.security.pay_password == 0) {
-                setIsPayPass(true);
-            }
-        })
-    }
     useEffect(() => {
+        /* @ts-ignore */
+        setIsPayPass(store.getState().account.security.pay_password == 0 ? true : false);
         setCoinNetService()
-        storeChange();
+        getFiatWithdrawRemark()
         return () => {
-            storeChange();
+            setFiatslug('');
         }
     }, []);
     return (
@@ -245,6 +244,9 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                         }
                         <li></li>
                     </ul>
+                </div>
+                <div className="draw-attention">
+                    <div className="danger-inner" dangerouslySetInnerHTML={{ __html: fiatSlug }}></div>
                 </div>
             </div>
             {/* 提币按钮 */}
