@@ -16,19 +16,19 @@ const langList = [
     //     langIcon: require('../../../assets/images/hongkong.png')
     // },
     {
-        name: 'English',
-        country:'South Africa',
+        name: 'Philippines(English)',
+        country:'Philippines',
         cation: 'en',
         langIcon: require('../../../assets/images/en.png')
     },
+    // {
+    //     name: 'Русский',
+    //     country:'Россия',
+    //     cation: 'ru',
+    //     langIcon: require('../../../assets/images/ru.png')
+    // },
     {
-        name: 'Русский',
-        country:'Россия',
-        cation: 'ru',
-        langIcon: require('../../../assets/images/ru.png')
-    },
-    {
-        name: 'ไทย',
+        name: 'Thailand(ไทย)',
         country:'ไทย',
         cation: 'th',
         langIcon: require('../../../assets/images/th.png')

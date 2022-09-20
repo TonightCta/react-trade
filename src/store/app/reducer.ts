@@ -84,7 +84,7 @@ const defaultState: Store = {
     quList: JSON.parse(sessionStorage.getItem('quList') || '[]'),
     chainMsg: JSON.parse(sessionStorage.getItem('chainMsg') || '{}'),
     wsSubscribe: {},
-    country: localStorage.getItem('country') || 'South Africa',
+    country: localStorage.getItem('country') || 'Philippines',
     downApp: Number(sessionStorage.getItem('downApp')) || 1,
     tokenWSS: sessionStorage.getItem('tokenWSS') || '',
 };

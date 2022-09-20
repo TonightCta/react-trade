@@ -108,6 +108,14 @@
           color: #bf29df;
         }
       }
+      .back-color{
+        .order-type::before{
+          background-color: #50c40d;
+        }
+        .now-balance{
+          color: #50c40d;
+        }
+      }
     }
   }
 }

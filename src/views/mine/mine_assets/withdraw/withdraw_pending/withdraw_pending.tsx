@@ -7,6 +7,7 @@ import { Button, Steps } from 'antd-mobile';
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from "react-i18next";
 import store from "../../../../../store";
+import { DateConvert } from "../../../../../utils";
 const { Step } = Steps;
 
 interface Props extends WithdrawCoinMsg {
@@ -31,7 +32,7 @@ const WithDrawPending = (props: Props): ReactElement<ReactNode> => {
                     <Steps direction='vertical' current={1}>
                         <Step
                             title={t('public.withdraw_pending')}
-                            description={`${t('public.over_date')}:2020-12-01 12:30`}
+                            description={`${t('public.over_date')}:${DateConvert(new Date().getTime())}`}
                         />
                         <Step
                             title={t('public.audit')}

@@ -14,6 +14,7 @@ const InvDetail = (): ReactElement<ReactNode> => {
     const inviteMsg = async () => {
         const result = await InviteNumberApi(level === 4 ? -1 : level);
         setInvMsg(result.data);
+        console.log(result)
     };
     useEffect(() => {
         inviteMsg();
@@ -74,6 +75,9 @@ const InvDetail = (): ReactElement<ReactNode> => {
                                             {/* Amount */}
                                             {t('public.vol')}
                                         </p>
+                                        <p>
+                                            {t('public.vol_inv')}
+                                        </p>
                                     </li>
                                     {
                                         invMsg.allInviteUsers.map((item: any, index: number): ReactElement => {
@@ -89,6 +93,7 @@ const InvDetail = (): ReactElement<ReactNode> => {
                                                         <p>{item.email.substr(0,3)}...</p>
                                                     </Popover>
                                                     <p>{item.amount}</p>
+                                                    <p>{item.deposit_amount}</p>
                                                 </li>
                                             )
                                         })
@@ -107,7 +112,7 @@ const InvDetail = (): ReactElement<ReactNode> => {
                                             return (
                                                 <li key={index} className="other-size">
                                                     <p><span>{item.created_at.substr(0, 10)}</span>{item.created_at.substr(11, 19)}</p>
-                                                    <p>{item.spot.symbol}</p>
+                                                    <p>{item.spot?.symbol}</p>
                                                     <p>{item.true_amount}</p>
                                                 </li>
                                             )

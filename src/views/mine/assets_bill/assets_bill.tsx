@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { AssetsBillApi } from '../../../request/api'
 import './index.scss'
 import { sleep } from "antd-mobile/es/utils/sleep";
+import { PullStatus } from "antd-mobile/es/components/pull-to-refresh";
 
 
 const AssetsBill = (): ReactElement<ReactNode> => {
@@ -63,7 +64,13 @@ const AssetsBill = (): ReactElement<ReactNode> => {
             setBillList(filterL)
         }
         searchVal ? startFilter() : setBillList(sourceBill)
-    }, [searchVal])
+    }, [searchVal]);
+    const statusRecord: Record<PullStatus, ReactElement | string> = {
+        pulling: t('public.pull_down'),//下拉刷新
+        canRelease: t('public.freed_down'),//释放刷新
+        refreshing: <DotLoading color='primary' />,
+        complete: t('public.down_over'),//刷新完成
+    }
     return (
         <div className="assets-bill">
             <InnerNav title={t('public.bill_list')} search withBorder leftArrow getSearchVal={(val: string) => {
@@ -76,6 +83,8 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                         ? <Empty description={t('public.has_no_bill')} />
                         : <PullToRefresh onRefresh={async () => {
                             await sleep(1500)
+                        }} renderText={status => {
+                            return <div>{statusRecord[status]}</div>
                         }}>
                             <List>
                                 <ul>
@@ -85,10 +94,11 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                 <li key={index} className={`
                                             ${el.type === 2 && 'buy-color' ||
                                                     el.type === 3 && 'sell-color' ||
-                                                    el.type === 1 && el.type === 11 && 'charged-color' ||
+                                                    (el.type === 1 || el.type === 11) && 'charged-color' ||
                                                     el.type === 4 && 'withdraw-color' ||
                                                     el.type === 98 && 'withdraw-freeze' ||
-                                                    el.type === 9 && 'admin-color'
+                                                    el.type === 9 && 'admin-color' ||
+                                                    (el.type === 6 || el.type === 7) && 'back-color'
                                                     }`}>
                                                     {/* <p className="icon-type">{el.coin}</p> */}
                                                     <div className="order-title">
@@ -113,13 +123,17 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                                 // 售出
                                                                 el.type === 3 && t('public.sell') ||
                                                                 // 充币
-                                                                el.type === 1 || el.type === 11 && t('public.recharge') ||
+                                                                (el.type === 1 || el.type === 11) && t('public.recharge') ||
                                                                 //提币
                                                                 el.type === 4 && t('public.withdraw') ||
                                                                 //冻结
                                                                 el.type === 98 && t('public.freeze_coin') ||
                                                                 // Admin
-                                                                el.type === 9 && 'Admin'
+                                                                el.type === 9 && 'Admin' ||
+                                                                //交易返佣
+                                                                el.type === 6 && t('public.recharge_trade') ||
+                                                                //充值返佣
+                                                                el.type === 7 && t('public.recharge_reward')
                                                             ]}
                                                         </p>
                                                         <p className="now-balance">{el.amount > 0 ? '+' : ''}{el.true_amount}</p>
@@ -139,13 +153,15 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                             // 售出
                                                             el.type === 3 && t('public.sell') ||
                                                             // 充币
-                                                            el.type === 1 || el.type === 11 && t('public.recharge') ||
+                                                            (el.type === 1 || el.type === 11) && t('public.recharge') ||
                                                             //提币
                                                             el.type === 4 && t('public.withdraw') ||
                                                             //冻结
                                                             el.type === 98 && t('public.freeze_coin') ||
                                                             // Admin
-                                                            el.type === 9 && 'Admin'
+                                                            el.type === 9 && 'Admin' ||
+                                                            //rebate
+                                                            (el.type === 6 || el.type === 7) && t('public.rebate')
                                                         ]}</p>
                                                         <div className="fee-and-amount">
                                                             {/* 余额 */}
@@ -176,8 +192,6 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                             {/* <InfiniteScroll loadMore={loadMore} hasMore={hasMore} /> */}
                         </PullToRefresh>
                 }
-
-
             </div>
         </div>
     )

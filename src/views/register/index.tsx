@@ -56,7 +56,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
         // const index = arr.indexOf(defaultCountry);
         // index > -1 && arr.splice(index, 1)
         // arr.unshift()
-        const first = localStorage.getItem('country') || 'South Africa';
+        const first = localStorage.getItem('country') || 'Philippines';
         // const index = result.data.list.country.search(first);
         result.data.list.forEach((e: { country: string; }, index: number) => {
             if (e.country === first) {

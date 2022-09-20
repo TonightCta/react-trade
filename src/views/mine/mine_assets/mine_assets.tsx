@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { upUserAssets } from "../../../store/app/action_fn";
 import { UserAssetsApi } from '../../../request/api'
 import './index.scss'
+import { PullStatus } from "antd-mobile/es/components/pull-to-refresh";
 
 interface Data {
     coin: string,
@@ -83,6 +84,12 @@ const MineAssets = (): ReactElement<ReactNode> => {
             setIsZroe(0);
         }
     }, []);
+    const statusRecord: Record<PullStatus, ReactElement | string> = {
+        pulling: t('public.pull_down'),//下拉刷新
+        canRelease: t('public.freed_down'),//释放刷新
+        refreshing: <DotLoading color='primary' />,
+        complete: t('public.down_over'),//刷新完成
+    }
     return (
         <div className="mine-assets">
             <InnerNav backMine title={t('public.assets')} />
@@ -138,6 +145,9 @@ const MineAssets = (): ReactElement<ReactNode> => {
                         ? <PullToRefresh
                             onRefresh={async () => {
                                 await getAssetsList()
+                            }}
+                            renderText={status => {
+                                return <div>{statusRecord[status]}</div>
                             }}
                         >
                             <ul>

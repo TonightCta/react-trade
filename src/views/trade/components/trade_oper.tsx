@@ -31,8 +31,8 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
     const [formBalance, setFormBalance] = useState<number>(0);
     const [toBalance, setToBalance] = useState<number>(0);
     const getBalance = async () => {
-        setFormBalance(await QuireBalance(state.tradeFromCoin))
-        setToBalance(await QuireBalance(state.tradeToCoin));
+        setFormBalance(await QuireBalance(sessionStorage.getItem('tradeFromCoin') || ''))
+        setToBalance(await QuireBalance(sessionStorage.getItem('tradeToCoin') || ''));
     };
     // 交易深度信息
     const [upList, setUpList] = useState<Depch[]>([

@@ -1,4 +1,4 @@
-import { CloseOutline, LinkOutline, UnorderedListOutline } from "antd-mobile-icons";
+import { CloseOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 import store from "../../../store";
 import { upInvLevel } from "../../../store/app/action_creators";
@@ -13,7 +13,7 @@ interface Manage {
     level: number,
     url: string,
     out: boolean,
-    class?:string
+    class?: string
 }
 
 
@@ -25,9 +25,9 @@ const ModalContent = (props: { closeModal: () => void }): ReactElement => {
             content: "",
         },
         levels: [
-            { reward: '' },
-            { reward: '' },
-            { reward: '' },
+            { reward: '', deposit_reward: '' },
+            { reward: '', deposit_reward: '' },
+            { reward: '', deposit_reward: '' },
         ]
     });
     const getInvInfo = useCallback(async () => {
@@ -49,30 +49,66 @@ const ModalContent = (props: { closeModal: () => void }): ReactElement => {
                 {t('public.reward_rule')}
             </p>
             <div className="modal-inv-reward">
-                <p>
-                    {/* 一代:60% */}
-                    Level 1 :
-                    {
-                        invInfo?.levels[0].reward
-                    }
-                    %
-                </p>
-                <p>
-                    {/* 二代:30% */}
-                    Level 2 :
-                    {
-                        invInfo?.levels[1].reward
-                    }
-                    %
-                </p>
-                <p>
-                    {/* 三代:10% */}
-                    Level 3 :
-                    {
-                        invInfo?.levels[2].reward
-                    }
-                    %
-                </p>
+                {invInfo?.openDepositReward === 1 && <div>
+                    <p className="modal-title">
+                        {/* 充值返佣 */}
+                        {t('public.recharge_reward')}
+                    </p>
+                    <p>
+                        {/* 一代:60% */}
+                        Level 1 :
+                        {
+                            invInfo?.levels[0].deposit_reward
+                        }
+                        U
+                    </p>
+                    <p>
+                        {/* 二代:30% */}
+                        Level 2 :
+                        {
+                            invInfo?.levels[1].deposit_reward
+                        }
+                        U
+                    </p>
+                    <p>
+                        {/* 三代:10% */}
+                        Level 3 :
+                        {
+                            invInfo?.levels[2].deposit_reward
+                        }
+                        U
+                    </p>
+                </div>}
+                <div>
+                    <p className="modal-title">
+                        {/* 交易返佣 */}
+                        {t('public.recharge_trade')}
+                    </p>
+                    <p>
+                        {/* 一代:60% */}
+                        Level 1 :
+                        {
+                            invInfo?.levels[0].reward
+                        }
+                        %
+                    </p>
+                    <p>
+                        {/* 二代:30% */}
+                        Level 2 :
+                        {
+                            invInfo?.levels[1].reward
+                        }
+                        %
+                    </p>
+                    <p>
+                        {/* 三代:10% */}
+                        Level 3 :
+                        {
+                            invInfo?.levels[2].reward
+                        }
+                        %
+                    </p>
+                </div>
             </div>
             <p className="modal-title-mine">
                 {/* 推广计划奖励制度详情 */}
@@ -96,7 +132,7 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
             level: 1,
             url: '/invite',
             out: false,
-            class:'m-t-zero',
+            class: 'm-t-zero',
         },
         {
             //邀请规则
@@ -105,7 +141,7 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
             level: 1,
             url: '',
             out: true,
-            class:'m-t-zero',
+            class: 'm-t-zero',
         },
         {
             //一级好友
@@ -114,7 +150,7 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
             level: 1,
             url: '/inv-detail',
             out: false,
-            class:'m-t-zero',
+            class: 'm-t-zero',
         },
         {
             //二级好友

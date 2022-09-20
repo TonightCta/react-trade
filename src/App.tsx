@@ -70,7 +70,6 @@ const App = (): React.ReactElement<ReactNode> => {
   }, [wsStatus, sourceQ.length])
   useEffect(() => {
     if (token && wsStatus === 1) {
-      console.log(token)
       send({
         e: 'login',
         d: {
@@ -78,7 +77,7 @@ const App = (): React.ReactElement<ReactNode> => {
         }
       })
     }
-  }, [token,wsStatus])
+  }, [token, wsStatus])
   useEffect(() => {
     storeChange();
     if (store.getState().quList.length < 1) {
@@ -97,7 +96,7 @@ const App = (): React.ReactElement<ReactNode> => {
     <HashRouter>
       <div className="App">
         {/* 公告 */}
-        <AnnboxView/>
+        <AnnboxView />
         {/* 下载按钮 */}
         {downIcon === 1 && <DownBtn />}
         {/* 启动页 */}

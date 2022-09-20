@@ -253,6 +253,11 @@
     font-size: 12px;
     margin-top: 8px;
     color: #666;
+    justify-content: space-around;
+    display: flex;
+    div {
+      width: calc(50% - 12px);
+    }
     p {
       margin-bottom: 8px;
     }

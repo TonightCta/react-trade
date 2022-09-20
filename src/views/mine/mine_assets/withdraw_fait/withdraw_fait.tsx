@@ -59,16 +59,17 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
         amount: '',//提现金额
         fee: 0,//手续费
     });
+    //法币名称
+    const [currency,setCurrency] = useState<string>(process.env.REACT_APP_COIN || '');
     const getFiatWithdrawRemark = async () => {
         const result = await GetSlugApi('WITHDRAW_HINT_M');
         setFiatslug(result.data.content)
     }
     const setCoinNetService = async () => {
         const result = await WithdrawNetApi();
-        console.log(result);
         const { data } = result;
         const bank: Bank[] = [];
-        data.list.forEach((item: { rate: number, type: string; title: string, channel_list: { bank_code: string, id: number }[]; id: number }) => {
+        data.list.forEach((item: { rate: number,code:string, type: string; title: string, channel_list: { bank_code: string, id: number }[]; id: number }) => {
             if (item.type === 'OnLine') {
                 bank.push({
                     name: item.title,
@@ -78,6 +79,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                     rate_num: data.rate
                 });
                 setCurrentNet(item.channel_list[0].bank_code);
+                setCurrency(item.code)
                 item.channel_list.forEach(e => {
                     columns.push(e.bank_code)
                 })
@@ -101,7 +103,6 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
         })
     }, [currentNet]);
     useEffect(() => {
-
         setDespositMsg({
             ...despositMsg,
             fee: Number(despositMsg.amount) * coinNet[0]?.rate_num * (coinNet[0]?.rate / 100),
@@ -224,7 +225,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                     </p>
                     <p className="option-remark">
                         <span>{t('public.use_balance')}:{currentBalance.toFixed(4)}&nbsp;USDT</span>
-                        <span>{t('public.fee')}:{despositMsg.fee.toFixed(4)}&nbsp;{process.env.REACT_APP_COIN}</span>
+                        <span>{t('public.fee')}:{despositMsg.fee.toFixed(4)}&nbsp;{currency}</span>
                     </p>
                 </div>
                 {/* 快捷选项 */}
@@ -250,7 +251,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                 </div>
             </div>
             {/* 提币按钮 */}
-            <DrawBtn type={1} fiat_rate={coinNet[0]?.rate_num} fee={despositMsg.fee} channel_id={despositMsg.channel_id} channel_id_parent={despositMsg.channel_id_parent} card_name={despositMsg.card_name} bank_name={despositMsg.bank_name} address={despositMsg.address} coin={process.env.REACT_APP_COIN} num={despositMsg.amount} />
+            <DrawBtn type={1} fiat_rate={coinNet[0]?.rate_num} fee={despositMsg.fee} channel_id={despositMsg.channel_id} channel_id_parent={despositMsg.channel_id_parent} card_name={despositMsg.card_name} bank_name={despositMsg.bank_name} address={despositMsg.address} coin={currency} num={despositMsg.amount} />
             {/* 是否设置了交易密码 */}
             <Modal visible={isPayPass} title={t('public.hint')} content={<div className="un-bind-pay">
                 <p>

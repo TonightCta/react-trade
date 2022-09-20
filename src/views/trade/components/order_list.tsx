@@ -6,6 +6,7 @@ import store from "../../../store";
 import { sleep } from "antd-mobile/es/utils/sleep";
 import { t } from "i18next";
 import { GetUrlKey } from "../../../utils";
+import { PullStatus } from "antd-mobile/es/components/pull-to-refresh";
 
 interface OrderMsg {
     type?: number,//订单类型 当前 & 历史
@@ -84,7 +85,13 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
     }
     useImperativeHandle(ref, () => ({
         uploadOrder: selectOrderType
-    }))
+    }));
+    const statusRecord: Record<PullStatus, ReactElement | string> = {
+        pulling: t('public.pull_down'),//下拉刷新
+        canRelease: t('public.freed_down'),//释放刷新
+        refreshing: <DotLoading color='primary' />,
+        complete: t('public.down_over'),//刷新完成
+    }
     return (
         <div className="order-list">
             {
@@ -94,6 +101,9 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
                     <PullToRefresh
                         onRefresh={async () => {
                             await sleep(1500)
+                        }}
+                        renderText={status => {
+                            return <div>{statusRecord[status]}</div>
                         }}
                     >
                         <List>

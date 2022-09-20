@@ -50,6 +50,7 @@ export const removeListener = (fn: any) => {
 }
 
 let ws: WebSocket | null;
+let count : number = 0;
 let wsStatusInner: number;
 
 export const useSocket = () => {
@@ -82,8 +83,12 @@ export const useSocket = () => {
             const action = upWSStatus(0);
             wsStatusInner = 0;
             store.dispatch(action);
+            if (count > 5){
+                return
+            } 
             setTimeout(() => {
                 ws = null;
+                count ++;
                 init(url);
             }, 3000)
         };

@@ -40,7 +40,8 @@
         "assets_total_un": "Total assests about",
         "for_u": "around ",
         "up_list": "Increase",
-        "vol": "Amount",
+        "vol": "Trading rebate",
+        "vol_inv":"Invitation bonus",
         "login_pass": "Login password",
         "enter_login_pass": "Enter the login password",
         "login": "Login",
@@ -263,7 +264,11 @@
         "three":"Three",
         "four":"Four",
         "download":"Download",
-        "download_remark":"Download BIBI App for more convenient transactions"
+        "download_remark":"Download BIBI App for more convenient transactions",
+        "mission":"Commission",
+        "recharge_reward":"Recharge rebate",
+        "recharge_trade":"Trading rebate",
+        "rebate":"Rebate"
     },
     "message": {
         "regis_success": "Registration is successful, it will be automatically go to login for you",

@@ -1,8 +1,8 @@
 import * as api from '../request/api'
-interface Bal{
-    balance:number[]
+interface Bal {
+    balance: number[]
 }
-export const QuireBalance = async (_coin:string): Promise<number> => {
+export const QuireBalance = async (_coin: string): Promise<number> => {
     let balance: number = 0;
     const result = await api.FindbalanceApi(_coin);
     balance = result.data.balance;
@@ -19,7 +19,8 @@ export const GetUrlKey = (name: string, url: string): string | null => {
         ) || null
     );
 };
-export const DateConvert = (_time:number) : string => {
+//日期转换
+export const DateConvert = (_time: number): string => {
     const date = new Date(_time);
     const year = date.getFullYear();
     const month = date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1);
