@@ -69,7 +69,7 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
                 symbol: coinMsg.base,
             }
         });
-    }
+    };
     useEffect(() => {
         setCoinPrice(Number(JSON.parse(localStorage.getItem('currentCoin') || '{}').price));
         wsStatus === 1 && sendWSDepth();
