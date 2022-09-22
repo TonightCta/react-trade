@@ -55,7 +55,6 @@ const App = (): React.ReactElement<ReactNode> => {
           interval: '1m'
         }
       });
-
     });
   }
   const storeChange = () => {

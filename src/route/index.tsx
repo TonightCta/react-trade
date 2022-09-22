@@ -1,26 +1,53 @@
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import * as View from "../views/index";
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect } from "react";
 import { withRouter, Route, Switch, Redirect, useLocation, Router } from "react-router-dom";
 import PrivateRoute from "./private";
 import { createHashHistory } from "history";
 import "./index.css";
+import { useSocket } from "../utils/hooks";
+import store from "../store";
 
 const RouteConfig = (): ReactElement<ReactNode> => {
-  const location: any = useLocation();
+  const location = useLocation();
   const history = createHashHistory();
-  history.listen((location: any) => {
-    setTimeout(() => {
-      if (location.action === 'POP') return;
-      const win: any = window;
-      if (location.pathname === '/home' || location.pathname === '/quotes' || location.pathname === '/trade' || location.pathname === '/mine') {
-        win.setStatus(1)
-      } else {
-        win.setStatus(0)
-      };
-      window.scrollTo(0, 0);
-    });
-  })
+  const { send } = useSocket();
+  useEffect(() => {
+    const quList = store.getState().quList;
+    history.listen((location: any) => {
+      setTimeout(() => {
+        if (location.action === 'POP') return;
+        const win: any = window;
+        if (location.pathname === '/home' || location.pathname === '/quotes' || location.pathname === '/trade' || location.pathname === '/mine') {
+          win.setStatus(1)
+        } else {
+          win.setStatus(0)
+        };
+        if (location.pathname === '/home' || location.pathname === '/trade' || location.pathname === '/quotes-detail') {
+          quList.forEach(e => {
+            send({
+              e: 'subscribe',
+              d: {
+                symbol: e.symbol,
+                interval: '1m'
+              }
+            });
+          });
+        } else {
+          quList.forEach(e => {
+            send({
+              e: 'unsubscribe',
+              d: {
+                symbol: e.symbol,
+                interval: '1m'
+              }
+            });
+          });
+        }
+        window.scrollTo(0, 0);
+      });
+    })
+  }, [])
   return (
     <Router history={createHashHistory()}>
       <TransitionGroup>
@@ -59,6 +86,7 @@ const RouteConfig = (): ReactElement<ReactNode> => {
             <PrivateRoute children={<View.InviteIndex />} key="invite" path="/invite" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.RechargeFaitIndex />} key="rechargeFait" path="/recharge-fait" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.WithdrawFait />} key="withdrawFait" path="/withdraw-fait" locationMine={location}></PrivateRoute>
+            <Route path="*" key="unknow" component={View.NotFound}></Route>
           </Switch>
         </CSSTransition>
       </TransitionGroup>

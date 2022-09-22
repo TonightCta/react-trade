@@ -14,7 +14,6 @@ const InvDetail = (): ReactElement<ReactNode> => {
     const inviteMsg = async () => {
         const result = await InviteNumberApi(level === 4 ? -1 : level);
         setInvMsg(result.data);
-        console.log(result)
     };
     useEffect(() => {
         inviteMsg();

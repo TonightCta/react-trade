@@ -4,7 +4,7 @@ import DrawBtn from "../withdraw/components/draw_btn";
 import { Button, Modal, PickerView, Popup, Toast, } from "antd-mobile";
 import './index.scss'
 import { useTranslation } from 'react-i18next'
-import { GetSlugApi, UserAssetsApi, WithdrawNetApi } from '../../../../request/api';
+import { GetSlugApi, WithdrawNetApi } from '../../../../request/api';
 import store from "../../../../store";
 import { useHistory } from "react-router-dom";
 import { CloseOutline } from "antd-mobile-icons";
@@ -16,11 +16,13 @@ interface Trade {
 }
 
 interface Bank {
+    id: number;
     name: string,
     channel_id_parent: number,
     channel_list: any[],
     rate: number,
-    rate_num: number
+    rate_num: number,
+    code: string
 }
 
 interface Deposit {
@@ -35,7 +37,7 @@ interface Deposit {
 }
 
 const testAmount: number[] = [100, 500, 1000, 5000, 10000, 50000]
-const columns: string[] = [];
+// const columns: string[] = [];
 
 const WithdrawIndex = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
@@ -49,6 +51,12 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
     const [fiatSlug, setFiatslug] = useState<string>('');
     //选择银行
     const [selectBank, setSelectBank] = useState<boolean>(false);
+    //支持的银行列表
+    const [columns, setColumns] = useState<string[]>([]);
+    //银行列表源数据
+    const [sourceBank, setSourceBank] = useState<any[]>([]);
+    //选择的支付渠道标识
+    const [wayName, setWayName] = useState<string>('');
     //提现信息
     const [despositMsg, setDespositMsg] = useState<Deposit>({
         channel_id: 0,//渠道父ID
@@ -60,47 +68,58 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
         fee: 0,//手续费
     });
     //法币名称
-    const [currency,setCurrency] = useState<string>(process.env.REACT_APP_COIN || '');
+    const [currency, setCurrency] = useState<string>(process.env.REACT_APP_COIN || '');
     const getFiatWithdrawRemark = async () => {
         const result = await GetSlugApi('WITHDRAW_HINT_M');
-        setFiatslug(result.data.content)
+        setFiatslug(result.data.content ? result.data.content : '<div></div>')
     }
     const setCoinNetService = async () => {
         const result = await WithdrawNetApi();
         const { data } = result;
         const bank: Bank[] = [];
-        data.list.forEach((item: { rate: number,code:string, type: string; title: string, channel_list: { bank_code: string, id: number }[]; id: number }) => {
+        data.list.forEach((item: { rate: number, code: string, type: string; title: string, channel_list: { bank_code: string, id: number }[]; id: number }, index: number) => {
             if (item.type === 'OnLine') {
                 bank.push({
                     name: item.title,
                     channel_id_parent: item.id,
                     channel_list: item.channel_list,
                     rate: item.rate,
-                    rate_num: data.rate
+                    rate_num: data.rate,
+                    code: item.code,
+                    id: item.id
                 });
-                setCurrentNet(item.channel_list[0].bank_code);
-                setCurrency(item.code)
-                item.channel_list.forEach(e => {
-                    columns.push(e.bank_code)
-                })
-                setDespositMsg({
-                    ...despositMsg,
-                    channel_id_parent: item.id,
-                    channel_id: item.channel_list[0].id,
-                })
             };
         });
         setCoinNet(bank);
     };
     useEffect(() => {
-        coinNet.length > 0 && coinNet[0].channel_list.forEach(item => {
+        const setDefaultData = () => {
+            setWayName(coinNet[0].name)
+            setCurrentNet(coinNet[0].channel_list[0].bank_code);
+            setSourceBank(coinNet[0].channel_list)
+            setCurrency(coinNet[0].code);
+            setDespositMsg({
+                ...despositMsg,
+                channel_id_parent: coinNet[0].id,
+                channel_id: coinNet[0].channel_list[0].id,
+            })
+            const bankList: string[] = [];
+            coinNet[0].channel_list.forEach(e => {
+                bankList.push(e.bank_code)
+            });
+            setColumns(bankList)
+        };
+        coinNet.length > 0 && setDefaultData();
+    }, [coinNet])
+    useEffect(() => {
+        coinNet.length > 0 && sourceBank.forEach(item => {
             if (currentNet === item.bank_code) {
                 setDespositMsg({
                     ...despositMsg,
                     channel_id: item.id
                 })
             }
-        })
+        });
     }, [currentNet]);
     useEffect(() => {
         setDespositMsg({
@@ -153,12 +172,29 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                         {/* 可用渠道 */}
                         {t('public.use_bank')}
                     </p>
-                    <ul className="net-list">
+                    <ul className="net-list"> 
                         {
-                            coinNet?.map((el: any, index: number): ReactElement => {
+                            coinNet?.map((el: Bank, index: number): ReactElement => {
                                 return (
                                     // className={`${currentNet === el ? 'active-network' : ''}`}
-                                    <li key={index} className={`active-network`}>
+                                    <li key={index} onClick={() => {
+                                        setCurrentNet(el.channel_list[0].bank_code);
+                                        setSourceBank(el.channel_list)
+                                        setWayName(el.name)
+                                        setCurrency(el.code);
+                                        setDespositMsg({
+                                            ...despositMsg,
+                                            bank_name: el.channel_list[0].bank_code,
+                                            channel_id_parent: el.id,
+                                            channel_id:el.channel_list[0].id
+                                        })
+                                        const bankList: string[] = [];
+                                        setColumns([])
+                                        el.channel_list.forEach(e => {
+                                            bankList.push(e.bank_code)
+                                        });
+                                        setColumns(bankList)
+                                    }} className={`${wayName === el.name ? 'active-network' : ''}`}>
                                         {el.name}
                                     </li>
                                 )
@@ -169,16 +205,18 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                 {/* 银行选择 */}
                 <div className="msg-option" onClick={() => { setSelectBank(true) }}>
                     <p className="option-lable">
-                        Select bank
+                        {/* Select bank */}
+                        {t('public.select_bank')}
                     </p>
-                    <input type="text" value={despositMsg.bank_name} onChange={() => { }} disabled placeholder="Select a bank" />
+                    <input type="text" value={despositMsg.bank_name} onChange={() => { }} disabled placeholder={t('public.enter_bank')} />
                 </div>
                 {/* 持卡人姓名 */}
                 <div className="msg-option">
                     <p className="option-lable">
-                        Cardholder name
+                        {/* Cardholder name */}
+                        {t('public.name')}
                     </p>
-                    <input type="text" placeholder="Enter the cardholder name" value={despositMsg.card_name} onChange={(e) => {
+                    <input type="text" placeholder={t('public.enter_name')} value={despositMsg.card_name} onChange={(e) => {
                         setDespositMsg({
                             ...despositMsg,
                             card_name: e.target.value
@@ -188,9 +226,9 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                 {/* 银行卡号 */}
                 <div className="msg-option">
                     <p className="option-lable">
-                        {t('public.bank_num')}
+                        {t('public.card_name')}
                     </p>
-                    <input type="number" placeholder={t('public.enter_bank_num')} value={despositMsg.address} onChange={(e) => {
+                    <input type="text" placeholder={t('public.enter_bank_num')} value={despositMsg.address} onChange={(e) => {
                         setDespositMsg({
                             ...despositMsg,
                             address: e.target.value

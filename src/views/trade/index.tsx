@@ -27,7 +27,7 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
     }>({
         fromBlance: 0,
         toBalance: 0
-    })
+    });
     const { send } = useSocket();
     // const orderList: any = useRef(null);
     // ws服务连接状态
@@ -49,6 +49,20 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
     const [sellQUList, setSellQUlist] = useState<Depch[]>([]);
     const [buyQUList, setBuyQUList] = useState<Depch[]>([]);
     const sendWSDepth = () => {
+        setTimeout(() => {
+            store.getState().quList.forEach((e) => {
+                console.log(e);
+                if (e.symbol !== coinMsg.base) {
+                    send({
+                        e: 'unsubscribe',
+                        d: {
+                            symbol: e.symbol,
+                            interval: '1m'
+                        }
+                    });
+                }
+            })
+        },1000)
         send({
             e: 'subscribe-depth',
             d: {

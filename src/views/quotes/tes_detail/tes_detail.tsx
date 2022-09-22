@@ -57,6 +57,20 @@ const TesDetail = (): ReactElement<ReactNode> => {
     })
     const getDetailData = () => {
         const coinMsg = JSON.parse(localStorage.getItem('currentCoin') || '{}');
+        setTimeout(() => {
+            store.getState().quList.forEach((e) => {
+                console.log(e);
+                if (e.symbol !== coinMsg.symbol) {
+                    send({
+                        e: 'unsubscribe',
+                        d: {
+                            symbol: e.symbol,
+                            interval: '1m'
+                        }
+                    });
+                }
+            })
+        },1000)
         send({
             e: 'kline',
             d: {

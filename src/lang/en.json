@@ -251,7 +251,7 @@
         "protocol_withdraw":"Withdrawal on the chain",
         "bank_num":"Bank card number",
         "use_bank":"Available channels",
-        "enter_bank_num":"Enter the bank card number",
+        "enter_bank_num":"Enter the bank card number/account",
         "min_50":"Minimum 50",
         "back_home":"Back homepage",
         "guide_title":"How to quickly access BIBI on iOS",
@@ -268,7 +268,13 @@
         "mission":"Commission",
         "recharge_reward":"Recharge rebate",
         "recharge_trade":"Trading rebate",
-        "rebate":"Rebate"
+        "rebate":"Rebate",
+        "select_bank":"Select bank",
+        "name":"Name",
+        "card_name":"Bank card number/account",
+        "enter_name":"Enter name",
+        "enter_bank":"Select a bank",
+        "not_found":"Access error"
     },
     "message": {
         "regis_success": "Registration is successful, it will be automatically go to login for you",
@@ -309,7 +315,7 @@
         "level":"Level",
         "total":"total",
         "enter_amount":"Please enter recharge amount",
-        "enter_bank_num":"Please enter bank card number",
+        "enter_bank_num":"Please enter the bank card number/account",
         "last_balance":"Exceeded maximum balance",
         "min_10":"Minimum transaction amount 10 USDT",
         "enter_phone":"Please enter the mobile number",
