@@ -2,7 +2,7 @@ import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } fro
 import { NavLink, useHistory } from "react-router-dom";
 import './index.scss';
 import { CheckShieldOutline, CloseOutline, DownOutline, LinkOutline, LockOutline, MailOutline, PhonebookOutline, RightOutline, SearchOutline } from "antd-mobile-icons";
-import { Button, Popup, Toast } from "antd-mobile";
+import { Button, Checkbox, Popup, Toast } from "antd-mobile";
 import { useTranslation } from 'react-i18next';
 import { SendCodeApi, RegisterApi, CountryListApi, GetSlugApi } from '../../request/api';
 import { GetUrlKey } from "../../utils";
@@ -97,6 +97,9 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
             setCount(60)
         };
     }, [count]);
+    // 
+    const protocol: string = `${process.env.REACT_APP_SHARE}/PrivacyPolicy.html`;
+    const [readPrototal,setReadPrototal] = useState<boolean>(false);
     useEffect(() => {
         getSlug();
         getCountryList();
@@ -259,6 +262,17 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         }} placeholder={t('public.enter_pass')} />
                         <span><LockOutline color="#999" fontSize={18} /></span>
                     </div>
+                    <p className="read-protocol">
+                        <Checkbox onChange={(e) => {
+                            setReadPrototal(e);
+                        }} style={{
+                            '--icon-size': '18px',
+                            '--font-size': '14px',
+                            '--gap': '6px',
+                        }}>{t('public.need_read')} <span className="need-outline" onClick={() => {
+                            window.open(protocol)
+                        }}>{t('public.protocol')}</span></Checkbox>
+                    </p>
                     <p className="login-btn">
                         <Button loading={loading} disabled={loading} color="primary" block onClick={async () => {
                             if (!inpMsg.iso) {
@@ -286,6 +300,10 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                                 Toast.show(t('public.last_8'));
                                 return;
                             };
+                            if(!readPrototal){
+                                Toast.show('message.agree_protocol');
+                                return;
+                            }
                             setLoading(true)
                             const params = {
                                 type: intWay === 1 ? 2 : 1,
@@ -315,6 +333,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             {t('public.regis_now')}
                         </Button>
                     </p>
+
                     <div className="register-remark">
                         <div style={{ lineHeight: '24px' }} dangerouslySetInnerHTML={{ __html: slug }}></div>
                     </div>

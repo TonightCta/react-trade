@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import InnerNav from '../../../../components/inner_nav/nav';
 import DrawBtn from "../withdraw/components/draw_btn";
 import { Button, Modal, PickerView, Popup, Toast, } from "antd-mobile";
@@ -10,10 +10,6 @@ import { useHistory } from "react-router-dom";
 import { CloseOutline } from "antd-mobile-icons";
 
 
-interface Trade {
-    amount: number | string,
-    bank_num: number | string,
-}
 
 interface Bank {
     id: number;
@@ -36,7 +32,6 @@ interface Deposit {
 
 }
 
-const testAmount: number[] = [100, 500, 1000, 5000, 10000, 50000]
 // const columns: string[] = [];
 
 const WithdrawIndex = (): ReactElement<ReactNode> => {
@@ -69,6 +64,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
     });
     //法币名称
     const [currency, setCurrency] = useState<string>(process.env.REACT_APP_COIN || '');
+    const [operAmount,setOperAmount] = useState<number[]>([]);
     const getFiatWithdrawRemark = async () => {
         const result = await GetSlugApi('WITHDRAW_HINT_M');
         setFiatslug(result.data.content ? result.data.content : '<div></div>')
@@ -76,6 +72,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
     const setCoinNetService = async () => {
         const result = await WithdrawNetApi();
         const { data } = result;
+        setOperAmount(data.select_list);
         const bank: Bank[] = [];
         data.list.forEach((item: { rate: number, code: string, type: string; title: string, channel_list: { bank_code: string, id: number }[]; id: number }, index: number) => {
             if (item.type === 'OnLine') {
@@ -172,7 +169,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                         {/* 可用渠道 */}
                         {t('public.use_bank')}
                     </p>
-                    <ul className="net-list"> 
+                    <ul className="net-list">
                         {
                             coinNet?.map((el: Bank, index: number): ReactElement => {
                                 return (
@@ -186,7 +183,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                                             ...despositMsg,
                                             bank_name: el.channel_list[0].bank_code,
                                             channel_id_parent: el.id,
-                                            channel_id:el.channel_list[0].id
+                                            channel_id: el.channel_list[0].id
                                         })
                                         const bankList: string[] = [];
                                         setColumns([])
@@ -270,7 +267,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                 <div className="oper-amount">
                     <ul>
                         {
-                            testAmount.map((el: number): ReactElement => {
+                            operAmount.map((el: number): ReactElement => {
                                 return (
                                     <li key={el} className={`${despositMsg.amount === el ? 'active-amount' : ''}`} onClick={() => {
                                         setDespositMsg({
