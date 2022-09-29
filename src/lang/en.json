@@ -276,7 +276,9 @@
         "enter_bank":"Select a bank",
         "not_found":"Access error",
         "need_read":"I have read and agree to the ",
-        "protocol":"Privacy Policy"
+        "protocol":"Privacy Policy",
+        "experience":"Experience Gold",
+        "experience_order":"Experience Gold Order"
     },
     "message": {
         "regis_success": "Registration is successful, it will be automatically go to login for you",

@@ -98,7 +98,8 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                     el.type === 4 && 'withdraw-color' ||
                                                     el.type === 98 && 'withdraw-freeze' ||
                                                     el.type === 9 && 'admin-color' ||
-                                                    (el.type === 6 || el.type === 7) && 'back-color'
+                                                    (el.type === 6 || el.type === 7) && 'back-color' ||
+                                                    el.type === 10 && 'experience-color'
                                                     }`}>
                                                     {/* <p className="icon-type">{el.coin}</p> */}
                                                     <div className="order-title">
@@ -133,7 +134,9 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                                 //交易返佣
                                                                 el.type === 6 && t('public.recharge_trade') ||
                                                                 //充值返佣
-                                                                el.type === 7 && t('public.recharge_reward')
+                                                                el.type === 7 && t('public.recharge_reward') || 
+                                                                //体验金
+                                                                el.type === 10 && t('public.experience') 
                                                             ]}
                                                         </p>
                                                         <p className="now-balance">{el.amount > 0 ? '+' : ''}{el.true_amount}</p>
@@ -161,7 +164,9 @@ const AssetsBill = (): ReactElement<ReactNode> => {
                                                             // Admin
                                                             el.type === 9 && 'Admin' ||
                                                             //rebate
-                                                            (el.type === 6 || el.type === 7) && t('public.rebate')
+                                                            (el.type === 6 || el.type === 7) && t('public.rebate') ||
+                                                            //体验金
+                                                            el.type === 10 && t('public.experience') 
                                                         ]}</p>
                                                         <div className="fee-and-amount">
                                                             {/* 余额 */}

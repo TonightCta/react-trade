@@ -99,7 +99,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
     }, [count]);
     // 
     const protocol: string = `${process.env.REACT_APP_SHARE}/PrivacyPolicy.html`;
-    const [readPrototal,setReadPrototal] = useState<boolean>(false);
+    const [readPrototal,setReadPrototal] = useState<boolean>(true);
     useEffect(() => {
         getSlug();
         getCountryList();
@@ -263,7 +263,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         <span><LockOutline color="#999" fontSize={18} /></span>
                     </div>
                     <p className="read-protocol">
-                        <Checkbox onChange={(e) => {
+                        <Checkbox defaultChecked onChange={(e) => {
                             setReadPrototal(e);
                         }} style={{
                             '--icon-size': '18px',

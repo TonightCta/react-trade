@@ -33,4 +33,24 @@ export const upUserAssets = async (): Promise<void> => {
     store.dispatch(action);
     store.dispatch(balance);
 }
+//更新用户资产
+export const computedAssets = async (_assets:any) : Promise<number> => {
+    //10s 刷新
+    const QResult = await api.QUList();
+    let assets:any[]  = [];
+    for (let i in _assets) {
+        if (i !== 'USDT') {
+            assets.push({
+                symbol:`${i}USDT`,
+                amount:_assets[i]
+            })
+        }
+    };
+    const quteos = QResult.data.list;
+    const val = assets.map((item) => {
+        return item.amount * (quteos[item.symbol] && quteos[item.symbol].price)
+    });
+    const num : number = val.length === 0 ? Number(_assets['USDT']) : val.reduce((prev, curr) => { return prev + curr }) + _assets['USDT'];
+    return num;
+}
 

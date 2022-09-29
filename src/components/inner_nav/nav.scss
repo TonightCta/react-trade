@@ -37,3 +37,32 @@
 .with-border-nav{
     border-bottom: 1px solid #eee;
 }
+.show-owne{
+  height: 96px;
+  align-items: flex-start;
+  padding-top: 8px;
+  .left-arrow{
+    transform: translateX(12px) translateY(12px);
+  }
+  .owne-msg{
+    height: 20px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    border: 1px solid #D6D9FF;
+    margin-top: 8px;
+    position: relative;
+    img{
+      width: 12px;
+      height: 5px;
+      position: absolute;
+      left: 50%;
+      margin-left: -6px;
+      top:-4px;
+    }
+    p{
+      font-size: 12px;
+      color: #4F5EFF;
+      transform: translateY(1px);
+    }
+  }
+}

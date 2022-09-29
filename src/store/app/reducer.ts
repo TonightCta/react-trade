@@ -1,7 +1,7 @@
-import { stat } from 'fs';
+
 import * as Type from './types';
 
-interface UMsg {
+export interface UMsg {
     email?: string,
     phone: string,
     phone_prefix: string,
@@ -14,6 +14,9 @@ interface UMsg {
     },
     quotation: {
         wss_url: string
+    },
+    experience:{
+        assets:{}
     }
 }
 export interface WithDraw {

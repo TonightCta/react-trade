@@ -119,6 +119,7 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
                                                                 ? <p>{el.deal_amount_symbol}/{el.order_amount_symbol}</p>
                                                                 : <p>{el.order_amount_symbol}/{el.deal_amount_symbol}</p>
                                                         }
+                                                        {el.experience === 1 && <p className="experience-order">{props.t('public.experience_order')}</p>}
                                                     </div>
                                                     <p className="order-status">
                                                         {el.status === 1 && props.t('public.deal_all')}

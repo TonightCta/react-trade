@@ -1,13 +1,13 @@
 import { Button, PullToRefresh, DotLoading, Popup } from "antd-mobile";
 import { CheckCircleFill, RightOutline, SearchOutline } from "antd-mobile-icons";
-import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import InnerNav from '../../../components/inner_nav/nav'
 import store from "../../../store";
 import { upBillCoin } from "../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { upUserAssets } from "../../../store/app/action_fn";
-import { UserAssetsApi } from '../../../request/api'
+import { computedAssets, upUserAssets } from "../../../store/app/action_fn";
+import { UserAssetsApi, UserInfoApi } from '../../../request/api'
 import './index.scss'
 import { PullStatus } from "antd-mobile/es/components/pull-to-refresh";
 
@@ -22,8 +22,10 @@ const MineAssets = (): ReactElement<ReactNode> => {
     const [assetsList, setAssetsList] = useState<Data[]>([]);
     const [localUse, selocalUse] = useState<Data[]>([]);
     const [isZroe, setIsZroe] = useState<number>(0);
+    const [account, setAccount] = useState(store.getState().account);
+    const [owneAmount,setOwneAmount] = useState<number>(0)
     const [rechargePopup, setRechargePopup] = useState<boolean>(false);
-    const [withDrawPopup,setWithdrawPopup] = useState<boolean>(false);
+    const [withDrawPopup, setWithdrawPopup] = useState<boolean>(false);
     const getAssetsList = useCallback(async () => {
         const result = await UserAssetsApi();
         const arr = [];
@@ -73,15 +75,23 @@ const MineAssets = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
 
     const history = useHistory();
-
+    // upUserInfo
+    const upUserInfo = async () => {
+        const result = await UserInfoApi();
+        setAccount(result.data);
+        setOwneAmount(await computedAssets(account.experience.assets));
+    }
     useEffect(() => {
         getAssetsList();
         upUserAssets();
-        storeChange()
+        storeChange();
+        upUserInfo();
         return () => {
             setAssetsList([]);
             selocalUse([]);
             setIsZroe(0);
+            setAccount(store.getState().account);
+            setOwneAmount(0)
         }
     }, []);
     const statusRecord: Record<PullStatus, ReactElement | string> = {
@@ -92,8 +102,8 @@ const MineAssets = (): ReactElement<ReactNode> => {
     }
     return (
         <div className="mine-assets">
-            <InnerNav backMine title={t('public.assets')} />
-            <div className="assets-overview">
+            <InnerNav owneMine={ account.experience ? true : false } owneAmount={account.experience ? owneAmount : 0} backMine title={t('public.assets')} />
+            <div className={`assets-overview ${account.experience ? 'has-owne' : ''}`}>
                 <div className="view-msg">
                     {/* 总资产约 */}
                     <p>{t('public.assets_total_un')} ({t('public.for_u')}USDT)</p>
@@ -107,7 +117,7 @@ const MineAssets = (): ReactElement<ReactNode> => {
                         {/* 充值 */}
                         {t('public.recharge_fiat')}
                     </Button>
-                    <Button color="default" onClick={() => { 
+                    <Button color="default" onClick={() => {
                         // history.push('/withdraw')
                         setWithdrawPopup(true)
                     }}>
@@ -214,8 +224,8 @@ const MineAssets = (): ReactElement<ReactNode> => {
                 </div>
             </Popup>
             {/* Select Withdraw Way */}
-            <Popup visible={withDrawPopup} onMaskClick={() => {setWithdrawPopup(false)}}>
-            <div className="recharge-popup" onClick={() => { setWithdrawPopup(false) }}>
+            <Popup visible={withDrawPopup} onMaskClick={() => { setWithdrawPopup(false) }}>
+                <div className="recharge-popup" onClick={() => { setWithdrawPopup(false) }}>
                     <ul>
                         <li onClick={() => { history.push('/withdraw-fait') }}>
                             {/* 法币充值 */}
