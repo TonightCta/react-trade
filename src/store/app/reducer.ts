@@ -89,7 +89,7 @@ const defaultState: Store = {
     wsSubscribe: {},
     country: localStorage.getItem('country') || 'Philippines',
     downApp: Number(sessionStorage.getItem('downApp')) || 1,
-    tokenWSS: sessionStorage.getItem('tokenWSS') || '',
+    tokenWSS: localStorage.getItem('tokenWSS') || '',
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
@@ -182,7 +182,7 @@ export default (state = defaultState, action: any) => {
             sessionStorage.setItem('downApp', action.down);
             return { ...state, downApp: action.down }
         case Type.WSS_TOKEN:
-            sessionStorage.setItem('tokenWSS', action.token);
+            localStorage.setItem('tokenWSS', action.token);
             return { ...state, tokenWSS: action.token }
         default:
             return state;

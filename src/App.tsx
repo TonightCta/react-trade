@@ -19,7 +19,7 @@ import DownBtn from './components/down_btn';
 import AnnboxView from './components/ann_box';
 
 const App = (): React.ReactElement<ReactNode> => {
-  const [token, setToken] = useState<string | null>(sessionStorage.getItem('tokenWSS'));
+  const [token, setToken] = useState<string | null>(localStorage.getItem('tokenWSS'));
   const [wsStatus, setWsStatus] = useState<number>(store.getState().wsStatus);
   const [downIcon, setDownicon] = useState<number>(store.getState().downApp);
   const [sourceQ, setSourceQ] = useState<any[]>([]);
@@ -68,6 +68,8 @@ const App = (): React.ReactElement<ReactNode> => {
     wsStatus === 1 && sendWSApp();
   }, [wsStatus, sourceQ.length])
   useEffect(() => {
+    console.log(token)
+    console.log(wsStatus)
     if (token && wsStatus === 1) {
       send({
         e: 'login',
