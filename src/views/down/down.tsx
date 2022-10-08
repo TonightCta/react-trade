@@ -151,7 +151,7 @@ const DownIndex = (): ReactElement<ReactNode> => {
             <div className="left-android click-box" onClick={() => {
                 const downImg = document.createElement("a");
                 downImg.download = "BIBI.apk";
-                downImg.href = `${process.env.REACT_APP_SHARE}/BIBI_version_07.apk`;
+                downImg.href = `${process.env.REACT_APP_SHARE}/BIBI_version_08.apk`;
                 document.body.appendChild(downImg);
                 downImg.click();
                 downImg.remove();

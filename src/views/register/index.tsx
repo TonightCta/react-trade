@@ -103,11 +103,12 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
     useEffect(() => {
         getSlug();
         getCountryList();
-        if (GetUrlKey('code', window.location.href)) {
+        if (GetUrlKey('code', window.location.href) || sessionStorage.getItem('inv_code')) {
             setInpMsg({
                 ...inpMsg,
-                invite_code: GetUrlKey('code', window.location.href)
+                invite_code: GetUrlKey('code', window.location.href) || sessionStorage.getItem('inv_code')
             });
+            sessionStorage.setItem('inv_code',GetUrlKey('code', window.location.href) as string);
             disableInvite.current = true;
         }
         return () => {
@@ -314,7 +315,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                                 password_confirmation: inpMsg.password,
                                 code: inpMsg.code,
                                 country: inpMsg.iso,
-                                invite_code: GetUrlKey('code', window.location.href) || null,
+                                invite_code: GetUrlKey('code', window.location.href) || sessionStorage.getItem('inv_code') || null,
                                 channel_id: GetUrlKey('ch', window.location.href) || null,
                                 source: GetUrlKey('s', window.location.href) || null,
                                 link_id: GetUrlKey('cl', window.location.href) || null
