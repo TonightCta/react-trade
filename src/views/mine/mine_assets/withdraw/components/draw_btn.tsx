@@ -11,7 +11,8 @@ import store from "../../../../../store";
 import { UpWithdraw } from "../../../../../store/app/action_creators";
 
 interface Props extends WithdrawCoinMsg {
-    type: number
+    type: number,
+    disable:boolean
 }
 
 interface PropsSafe extends WithdrawCoinMsg {
@@ -235,7 +236,7 @@ const DrawBtn = (props: Props): ReactElement<ReactNode> => {
                     setSafeBox(false)
                 }} type={props.type} card_name={props.card_name} fiat_rate={props.fiat_rate} channel_id={props.channel_id} channel_id_parent={props.channel_id_parent} coin={props.coin} network={props.network} num={props.num} address={props.address} fee={props.fee} />
             </Popup>
-            <Button color="primary" onClick={(): void => {
+            <Button color="primary" disabled={props.disable} onClick={(): void => {
                 if (!props.bank_name && props.type === 1) {
                     //请选择银行
                     Toast.show('Please select a bank');

@@ -116,32 +116,32 @@ const DownIndex = (): ReactElement<ReactNode> => {
     const [guideBox, setGuidebox] = useState<boolean>(false);
     const history = useHistory();
     const { t } = useTranslation();
-    const saveDesktop = (name: string, url: string) => {
-        const win: any = window;
-        // @ts-ognore
-        // new ActiveXObject()
-        // const expoler = win.navigator.userAgent.toLowercase();
-        // if (expoler.indexOf('trident') > 0) {
-        //     // const wss = new ActiveXObject()
-        //     console.log('unknow')
-        // } else {
+    // const saveDesktop = (name: string, url: string) => {
+    //     const win: any = window;
+    //     // @ts-ognore
+    //     // new ActiveXObject()
+    //     // const expoler = win.navigator.userAgent.toLowercase();
+    //     // if (expoler.indexOf('trident') > 0) {
+    //     //     // const wss = new ActiveXObject()
+    //     //     console.log('unknow')
+    //     // } else {
 
-        // }
-        const urlObj = window.URL || window.webkitURL || window;
-        const blob = new Blob([url]);
-        const link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a') as any;
-        link.href = urlObj.createObjectURL(blob);
-        link.download = name;
-        saveClick(link);
+    //     // }
+    //     const urlObj = window.URL || window.webkitURL || window;
+    //     const blob = new Blob([url]);
+    //     const link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a') as any;
+    //     link.href = urlObj.createObjectURL(blob);
+    //     link.download = name;
+    //     saveClick(link);
 
-    }
-    const saveClick = (url: any) => {
-        const e = document.createEvent("MouseEvents");
-        e.initMouseEvent(
-            'click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null
-        );
-        url.dispatchEvent(e)
-    }
+    // }
+    // const saveClick = (url: any) => {
+    //     const e = document.createEvent("MouseEvents");
+    //     e.initMouseEvent(
+    //         'click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null
+    //     );
+    //     url.dispatchEvent(e)
+    // }
     return (
         <div className="down-index">
             <img className="back-icon" src={require('../../assets/images/back_icon.png')} alt="" onClick={() => {
@@ -151,7 +151,7 @@ const DownIndex = (): ReactElement<ReactNode> => {
             <div className="left-android click-box" onClick={() => {
                 const downImg = document.createElement("a");
                 downImg.download = "BIBI.apk";
-                downImg.href = `${process.env.REACT_APP_SHARE}/BIBI_version_08.apk`;
+                downImg.href = `${process.env.REACT_APP_SHARE}/BIBI_version_09.apk`;
                 document.body.appendChild(downImg);
                 downImg.click();
                 downImg.remove();

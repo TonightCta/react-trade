@@ -1,0 +1,311 @@
+.home-index-outside {
+  .nav-logo {
+    height: 44px;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-right: 22px;
+    .bibi-logo {
+      // width: 110px;
+      height: 28px;
+    }
+    .down-icon {
+      height: 37px;
+    }
+  }
+  .home-banner {
+    width: 100%;
+    background-color: #f8f8f8;
+    position: relative;
+    .banner-items {
+      height: 160px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+      p {
+        line-height: 180px;
+      }
+    }
+    .ann-box{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 28px;
+      width: 100%;
+      background-color: rgba(0,0,0,0);
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .ann-icon{
+        width: 20px;
+        height: 18px;
+        background-color: #8659FF;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 4px;
+        img{
+          width: 12px;
+          height: 12px;
+        }
+      }
+      p{
+        font-size: 12px;
+        color: white;
+      }
+    }
+    .ann-left{
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .ann-list-icon{
+      img{
+       width: 12px;
+       height: 12px; 
+      }
+    }
+  }
+  .outside-card {
+    margin: 8px 0;
+    padding: 0 12px;
+    display: flex;
+    justify-content: space-between;
+    .card-public {
+      border-radius: 4px;
+      background-color: white;
+      // height: 156px;
+    }
+    .left-card {
+      padding: 10px;
+      width: 184px;
+      margin-right: 8px;
+      display: flex;
+      align-items: center;
+      img {
+        width: 34px;
+        height: 34px;
+        margin-right: 6px;
+      }
+      ul {
+        li {
+          display: flex;
+          text-align: left;
+          align-items: center;
+          padding: 15px 6px;
+          background-color: #fbfbfb;
+          .text-content {
+            p:first-child {
+              font-size: 14px;
+              color: #333;
+              font-weight: bold;
+              margin-bottom: 4px;
+            }
+            p:last-child {
+              font-size: 12px;
+              color: #999;
+            }
+          }
+        }
+        li:first-child {
+          margin-bottom: 12px;
+        }
+      }
+    }
+    .right-card {
+      flex: 1;
+      background: url("../../assets/images/out/out_bg.png");
+      background-size: 100% 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        padding-left: 12px;
+        li {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50%;
+          flex-direction: column;
+          margin-bottom: 20px;
+          // margin-right: 12px;
+          img{
+            width: 34px;
+            height: 34px;
+          }
+        }
+        li:last-child{
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  .f-12-list {
+    font-size: 12px;
+    ul {
+      li {
+        width: 25%;
+        p {
+          white-space: wrap;
+        }
+      }
+    }
+  }
+  .home-tex-card {
+    background: white;
+    padding: 20px 0;
+    padding-bottom: 6px;
+    .adm-page-indicator-dot-active{
+      background-color: #F68B3B;
+    }
+    ul {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      padding-left: 12px;
+      li {
+        width: 25%;
+        .coin-qu {
+          font-size: 12px;
+          color: #333;
+          font-weight: 500;
+          text-align: left;
+        }
+        .coin-price {
+          font-size: 16px;
+          font-weight: bold;
+          text-align: left;
+          margin: 8px 0;
+        }
+        .coin-rate {
+          font-size: 12px;
+          border-radius: 4px;
+          display: inline-block;
+          display: flex;
+          img{
+            width: 34px;
+            height: 11px;
+            margin-right: 6px;
+          }
+        }
+      }
+      .up-color {
+        .coin-price {
+          color: #00c087;
+        }
+        .coin-rate {
+          color: #00c087;
+        }
+      }
+      .down-color {
+        .coin-price {
+          color: #fd7a56;
+        }
+        .coin-rate {
+          color: #fd7a56;
+        }
+      }
+    }
+  }
+  .home-tes-list {
+    margin-top: 12px;
+    background-color: white;
+    padding: 12px;
+    .list-title {
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
+      color: #3370ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img{
+        width: 19px;
+        height: 19px;
+        margin-right: 7px;
+      }
+    }
+    ul {
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #f8f8f8;
+        padding: 12px 0;
+        .list-public {
+          display: flex;
+          align-items: center;
+        }
+        .list-sort {
+          width: 16px;
+          height: 16px;
+          font-size: 12px;
+          color: #E8A833;
+          margin-right: 8px;
+          line-height: 16px;
+          font-weight: 500;
+        }
+        .coin-msg-hour {
+          text-align: left;
+          font-size: 14px;
+          color: #333;
+          p {
+            font-weight: 500;
+          }
+          p:last-child {
+            margin-top: 4px;
+            color: #c5c5c6;
+          }
+        }
+        .list-price {
+          font-size: 14px;
+          margin-right: 24px;
+        }
+        .list-rate {
+          font-size: 13px;
+          font-weight: 500;
+          padding: 8px 6px;
+          min-width: 60px;
+          border-radius: 4px;
+        }
+      }
+      .up-color {
+        .list-price {
+          color: #00c087;
+        }
+        .list-rate {
+          background-color: #00c087;
+          color: white;
+        }
+      }
+      .down-color {
+        .list-price {
+          color: #fd7a56;
+        }
+        .list-rate {
+          background-color: #fd7a56;
+          color: white;
+        }
+      }
+    }
+  }
+}
+.load-tes {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

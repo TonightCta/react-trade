@@ -74,7 +74,7 @@ const RechargeFaitIndex = (): ReactElement<ReactNode> => {
             ...faitMsg,
             amount: Number(amount) * faitMsg.rate
         })
-    }, [amount])
+    }, [amount,faitMsg.rate])
     useEffect(() => {
         support();
         return () => {
@@ -116,7 +116,7 @@ const RechargeFaitIndex = (): ReactElement<ReactNode> => {
             Toast.show(result.message);
             return;
         };
-        
+
         // event.preventDefault()
         window.location.href = data.pay_url;
         // const temp = window.open('_blank');
@@ -205,7 +205,8 @@ const RechargeFaitIndex = (): ReactElement<ReactNode> => {
                                             rate: el.ccy_rate,
                                             channel_id: el.id,
                                             channel_item_id: el.channel_list[0].id,
-                                            channel_list: el.channel_list
+                                            channel_list: el.channel_list,
+                                            channel_name: el.channel_list[0].bank_name
                                         });
                                         setFaitPopup(false)
                                     }}>

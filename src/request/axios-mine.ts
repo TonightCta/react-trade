@@ -29,15 +29,13 @@ axiosInstance.interceptors.response.use(
         const error = lang === 'en' && error_en || lang === 'ru' && error_ru || lang === 'th' && error_th || {};
         if (<number>response.status === 200) {
             for (let i in error) {
-                if (data.code === Number(i)) {
+                if (data.code === Number(i) && data.code !== 400) {
                     data.message = error[i as keyof typeof error];
                     break
                 } else if (data.code === 401) {
                     // data.message = 'Login expired';
                     window.location.replace(`${process.env.REACT_APP_SHARE}/#/login`)
                     break;
-                } else {
-                    data.message = 'Pass'
                 }
             };
             return data;

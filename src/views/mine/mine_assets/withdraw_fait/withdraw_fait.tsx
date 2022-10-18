@@ -62,6 +62,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
         amount: '',//提现金额
         fee: 0,//手续费
     });
+    const [isWithdraw,setIsWithdraw] = useState<boolean>(false);
     //法币名称
     const [currency, setCurrency] = useState<string>(process.env.REACT_APP_COIN || '');
     const [operAmount,setOperAmount] = useState<number[]>([]);
@@ -71,7 +72,12 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
     }
     const setCoinNetService = async () => {
         const result = await WithdrawNetApi();
-        const { data } = result;
+        const { code,data } = result;
+        if(code !== 200){
+            Toast.show(result.message);
+            setIsWithdraw(true);
+            return
+        }
         setOperAmount(data.select_list);
         const bank: Bank[] = [];
         data.list.forEach((item: { rate: number, code: string, type: string; title: string, channel_list: { bank_code: string, id: number }[]; id: number }, index: number) => {
@@ -286,7 +292,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                 </div>
             </div>
             {/* 提币按钮 */}
-            <DrawBtn type={1} fiat_rate={coinNet[0]?.rate_num} fee={despositMsg.fee} channel_id={despositMsg.channel_id} channel_id_parent={despositMsg.channel_id_parent} card_name={despositMsg.card_name} bank_name={despositMsg.bank_name} address={despositMsg.address} coin={currency} num={despositMsg.amount} />
+            <DrawBtn disable={isWithdraw} type={1} fiat_rate={coinNet[0]?.rate_num} fee={despositMsg.fee} channel_id={despositMsg.channel_id} channel_id_parent={despositMsg.channel_id_parent} card_name={despositMsg.card_name} bank_name={despositMsg.bank_name} address={despositMsg.address} coin={currency} num={despositMsg.amount} />
             {/* 是否设置了交易密码 */}
             <Modal visible={isPayPass} title={t('public.hint')} content={<div className="un-bind-pay">
                 <p>

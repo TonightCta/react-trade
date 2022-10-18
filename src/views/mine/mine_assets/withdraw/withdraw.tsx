@@ -6,7 +6,7 @@ import { Button, Modal, PickerView, Popup, Toast } from "antd-mobile";
 import './index.scss'
 // import { DownFill } from "antd-mobile-icons";
 import { useTranslation } from 'react-i18next'
-import { CoinsListApi, GetSlugApi, UserAssetsApi, WithdrawNetApi } from '../../../../request/api';
+import { CoinsListApi, GetSlugApi, WithdrawNetApi } from '../../../../request/api';
 import store from "../../../../store";
 import { setChainMsg } from "../../../../store/app/action_creators";
 import { useHistory } from "react-router-dom";
@@ -62,6 +62,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
         channel_id_parent: 0,
         rate: 0,
     });
+    const [isWithdraw,setIsWithdraw] = useState<boolean>(false);
     // const [proKey, setProKey] = useState<number>(0);
     //获取币种列表
     const getCoinList = useCallback(async () => {
@@ -92,8 +93,13 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
     // }, []);
     const [netList, setNetList] = useState([]);
     const setNetListService = async () => {
-        const result = await WithdrawNetApi();
-        const { data } = result;
+        const result = await WithdrawNetApi();        
+        const { data,code } = result;
+        if(code !== 200){
+            Toast.show(result.message);
+            setIsWithdraw(true);
+            return
+        }
         data.list.forEach((item: any) => {
             if (item.type === 'USDT_TRC20') {
                 setNetList(item.channel_list);
@@ -280,7 +286,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
                 </div>
             </Popup>
             {/* 提币按钮 */}
-            <DrawBtn channel_id={drawMsg.channel_id} channel_id_parent={drawMsg.channel_id_parent} type={2} coin={currentNet} network={currentNet} num={Number(drawMsg.drawNum)} address={drawMsg.drawAddress} min={drawMsg.withdraw_min} fee={drawMsg.fee} />
+            <DrawBtn disable={isWithdraw} channel_id={drawMsg.channel_id} channel_id_parent={drawMsg.channel_id_parent} type={2} coin={currentNet} network={currentNet} num={Number(drawMsg.drawNum)} address={drawMsg.drawAddress} min={drawMsg.withdraw_min} fee={drawMsg.fee} />
             {/* 是否设置了交易密码 */}
             <Modal visible={isPayPass} title={t('public.hint')} content={<div className="un-bind-pay">
                 <p>

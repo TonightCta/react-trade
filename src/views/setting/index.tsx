@@ -28,6 +28,11 @@ const SetIndex = (): ReactElement<ReactNode> => {
             url: '/help'
         },
         {
+            //${process.env.REACT_APP_SHARE}/PrivacyPolicy.html
+            title:t('public.protocol'),
+            url:'',
+        },
+        {
             title: t('public.about_us'),//关于我们
             url: '/about-us'
         },
@@ -41,7 +46,7 @@ const SetIndex = (): ReactElement<ReactNode> => {
                         setList.map((el, index): ReactElement => {
                             return (
                                 <List.Item onClick={() => {
-                                    history.push(el.url)
+                                    el.url ? history.push(el.url) : window.open(`${process.env.REACT_APP_SHARE}/PrivacyPolicy.html`)
                                 }} key={index}>{el.title}</List.Item>
                             )
                         })

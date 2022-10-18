@@ -99,7 +99,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
     }, [count]);
     // 
     const protocol: string = `${process.env.REACT_APP_SHARE}/PrivacyPolicy.html`;
-    const [readPrototal,setReadPrototal] = useState<boolean>(true);
+    const [readPrototal, setReadPrototal] = useState<boolean>(true);
     useEffect(() => {
         getSlug();
         getCountryList();
@@ -108,8 +108,17 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                 ...inpMsg,
                 invite_code: GetUrlKey('code', window.location.href) || sessionStorage.getItem('inv_code')
             });
-            sessionStorage.setItem('inv_code',GetUrlKey('code', window.location.href) as string);
+            sessionStorage.setItem('inv_code', GetUrlKey('code', window.location.href) as string);
             disableInvite.current = true;
+        }
+        if(GetUrlKey('ch', window.location.href)){
+            sessionStorage.setItem('ch',GetUrlKey('ch', window.location.href) as string)
+        }
+        if(GetUrlKey('s', window.location.href)){
+            sessionStorage.setItem('s',GetUrlKey('s', window.location.href) as string)
+        }
+        if(GetUrlKey('cl', window.location.href)){
+            sessionStorage.setItem('cl',GetUrlKey('cl', window.location.href) as string)
         }
         return () => {
             setSlug('');
@@ -301,7 +310,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                                 Toast.show(t('public.last_8'));
                                 return;
                             };
-                            if(!readPrototal){
+                            if (!readPrototal) {
                                 Toast.show('message.agree_protocol');
                                 return;
                             }
@@ -316,9 +325,9 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                                 code: inpMsg.code,
                                 country: inpMsg.iso,
                                 invite_code: GetUrlKey('code', window.location.href) || sessionStorage.getItem('inv_code') || null,
-                                channel_id: GetUrlKey('ch', window.location.href) || null,
-                                source: GetUrlKey('s', window.location.href) || null,
-                                link_id: GetUrlKey('cl', window.location.href) || null
+                                channel_id: GetUrlKey('ch', window.location.href) || sessionStorage.getItem('ch') || null,
+                                source: GetUrlKey('s', window.location.href) || sessionStorage.getItem('s') || null,
+                                link_id: GetUrlKey('cl', window.location.href) || sessionStorage.getItem('cl') || null
                             };
                             const result = await RegisterApi(params);
                             setLoading(false)

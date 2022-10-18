@@ -323,7 +323,7 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                                             <img src={rankList[1].avatar ? rankList[1].avatar : require('../../assets/images/default_avatar.png')} alt="" />
                                         </div>
                                         <p>****{rankList[1].email.substring(rankList[1].email.length - 5, rankList[1].email.length)}</p>
-                                        <p>{rankList[1].reward}&nbsp;USDT</p>
+                                        <p>{Number(rankList[1].reward).toFixed(0)}&nbsp;USDT</p>
                                     </> : <div className="p-24">{rankList.length < 2 ? <p>
                                         {/* Waiting */}
                                         {t('invite.waiting')}
@@ -335,7 +335,7 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                                             <img src={rankList[0].avatar ? rankList[0].avatar : require('../../assets/images/default_avatar.png')} alt="" />
                                         </div>
                                         <p>****{rankList[0].email.substring(rankList[0].email.length - 5, rankList[0].email.length)}</p>
-                                        <p>{rankList[0].reward}&nbsp;USDT</p>
+                                        <p>{Number(rankList[0].reward).toFixed(0)}&nbsp;USDT</p>
                                     </> : <div className="p-24">{rankList.length === 0 ? <p>
                                         {/* Waiting */}
                                         {t('invite.waiting')}
@@ -347,7 +347,7 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                                             <img src={rankList[2].avatar ? rankList[2].avatar : require('../../assets/images/default_avatar.png')} alt="" />
                                         </div>
                                         <p>****{rankList[2].email.substring(rankList[2].email.length - 5, rankList[2].email.length)}</p>
-                                        <p>{rankList[2].reward}&nbsp;USDT</p>
+                                        <p>{Number(rankList[2].reward).toFixed(0)}&nbsp;USDT</p>
                                     </> : <div className="p-24">{rankList.length < 3 ? <p>
                                         {/* Waiting */}
                                         {t('invite.waiting')}
@@ -359,7 +359,7 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                             {outThree.length > 0
                                 ? <ul>
                                     {
-                                        rankList.map((el: Rank, index: number): ReactElement => {
+                                        outThree.map((el: Rank, index: number): ReactElement => {
                                             return (
                                                 <li key={index}>
                                                     <div className="other-left">
@@ -367,7 +367,7 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                                                         <div className="other-avatar">
                                                             <img src={el.avatar ? el.avatar : require('../../assets/images/default_avatar.png')} alt="" />
                                                         </div>
-                                                        <p>****{el.email.substring(rankList[2].email.length - 5, rankList[2].email.length)}</p>
+                                                        <p>****{el.email.substring(el.email.length - 5, el.email.length)}</p>
                                                     </div>
                                                     <p className="other-right">{el.reward}&nbsp;USDT</p>
                                                 </li>

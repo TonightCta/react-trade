@@ -1,4 +1,5 @@
 import HomeIndex from "./home";
+import HomeIndexOutside from "./home_out";
 import QuotesIndex from './quotes';
 import TradeIndex from "./trade";
 import MineIndex from "./mine";
@@ -66,5 +67,6 @@ export {
     RechargeFaitIndex,//法币充值
     WithdrawFait,//法币提现
     DownIndex,//下载
-    NotFound
+    NotFound,
+    HomeIndexOutside
 }
