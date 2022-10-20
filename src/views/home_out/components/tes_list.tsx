@@ -65,7 +65,13 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
                         return (
                             <div key={index}>
                                 {
-                                    el.status == 1 && <li key={index} className={`${el.type === 1 ? 'up-color' : 'down-color'}`}>
+                                    el.status == 1 && <li key={index} className={`${el.type === 1 ? 'up-color' : 'down-color'}`} onClick={() => {
+                                        const action = upCurrency(el.coin);
+                                        const actionCurrent = upCurrentCoin(el);
+                                        store.dispatch(actionCurrent);
+                                        store.dispatch(action);
+                                        history.push('/quotes-detail')
+                                    }}>
                                         <div className="list-public">
                                             <p className="list-sort">{index + 1}</p>
                                             <div className="coin-msg-hour">

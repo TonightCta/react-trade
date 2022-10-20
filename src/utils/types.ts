@@ -28,7 +28,7 @@ export interface DealMsg {
     q: string,
     precision?: number
 }
-export interface ADV {
+export declare interface ADV {
     title: string,
     id: number,
     updated_at: string,

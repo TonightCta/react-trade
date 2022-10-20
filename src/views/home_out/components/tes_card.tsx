@@ -53,7 +53,13 @@ const HomeTexCard = (props: { wsData: any }): ReactElement<ReactNode> => {
                     {
                         el?.msg.map((msg: TesL, indexS: number): ReactElement => {
                             return (
-                                <li key={indexS} className={`${msg.type === 1 ? 'up-color' : 'down-color'}`}>
+                                <li key={indexS} className={`${msg.type === 1 ? 'up-color' : 'down-color'}`} onClick={() => {
+                                    const action = upCurrency(msg.coin);
+                                    const actionCurrent = upCurrentCoin(msg);
+                                    store.dispatch(actionCurrent);
+                                    store.dispatch(action);
+                                    history.push('/quotes-detail')
+                                }}>
                                     <p className="coin-qu">{msg.coin}</p>
                                     <p className="coin-price">{Number(msg.price).toFixed(msg.precision)}</p>
                                     <p className="coin-rate">

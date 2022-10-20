@@ -6,6 +6,90 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "257406",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e6a7",
+      "unicode_decimal": 59047
+    },
+    {
+      "icon_id": "109779",
+      "name": "right",
+      "font_class": "right",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "31728983",
+      "name": "商家",
+      "font_class": "shangjia",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "31728061",
+      "name": "新增商户备份 4",
+      "font_class": "a-xinzengshanghubeifen4",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "31728062",
+      "name": "新增商户备份 4 (7)",
+      "font_class": "a-xinzengshanghubeifen47",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "31728063",
+      "name": "新增商户备份 4 (6)",
+      "font_class": "a-xinzengshanghubeifen46",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "31728064",
+      "name": "新增商户备份 4 (4)",
+      "font_class": "a-xinzengshanghubeifen44",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "31728065",
+      "name": "新增商户备份 4 (2)",
+      "font_class": "a-xinzengshanghubeifen42",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "31728066",
+      "name": "新增商户备份 4 (5)",
+      "font_class": "a-xinzengshanghubeifen45",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "31728067",
+      "name": "编组",
+      "font_class": "bianzu1",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "31728068",
+      "name": "新增商户备份 4 (1)",
+      "font_class": "a-xinzengshanghubeifen41",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "31728069",
+      "name": "新增商户备份 4 (3)",
+      "font_class": "a-xinzengshanghubeifen43",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
       "icon_id": "31430225",
       "name": "编组 3",
       "font_class": "a-bianzu3",

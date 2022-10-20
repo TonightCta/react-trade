@@ -11,7 +11,8 @@ const HomeBanner = (): React.ReactElement<ReactNode> => {
     ]);
     const getBannerList = async () => {
         const result = await BannerListApi();
-        setColors(result.data)
+        setColors(result.data);
+        console.log(result)
     };
     useEffect(() => {
         getBannerList();

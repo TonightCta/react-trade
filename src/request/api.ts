@@ -79,3 +79,5 @@ export const WithdrawNetApi = () => get<IResponse>('/withdrawBegin');
 export const WithdrawApiNew = (p:o) => post<IResponse>('/putInWithdraw',p);
 //查询币种余额
 export const FindbalanceApi = (p:string) => get<IResponse>(`/assets/accountSingle/spot/${p}`);
+//币种价格
+export const QueryAllCoinPrice = () => get<IResponse>('/quotation/listAll');

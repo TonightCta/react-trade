@@ -55,7 +55,7 @@ const RouteConfig = (): ReactElement<ReactNode> => {
           <Switch location={location}>
             <Route path="/" exact render={() => <Redirect to="/home" />}></Route>
             <Route path="/login" key="login" component={View.LoginIndex}></Route>
-            <Route path={`/home`} key="home" component={View.HomeIndex}></Route>
+            <Route path={`/home`} key="home" component={process.env.REACT_APP_AREA === '63' ? View.HomeIndexOutside :  View.HomeIndex}></Route>
             <Route path="/quotes" key="quotes" component={View.QuotesIndex}></Route>
             <Route path="/quotes-detail" key="quotesDetail" component={View.TesDetail}></Route>
             <Route path="/setting" key="setting" component={View.SetIndex}></Route>

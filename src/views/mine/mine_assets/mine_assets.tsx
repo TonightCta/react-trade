@@ -32,8 +32,8 @@ const MineAssets = (): ReactElement<ReactNode> => {
         for (let i in result.data) {
             arr.push(result.data[i])
         };
-        assetsList.length < 1 && setAssetsList(arr.map(item => { return item }))
-        selocalUse(arr.map(item => { return item }))
+        assetsList.length < 1 && setAssetsList(arr.map(item => { return item }));
+        selocalUse(arr.map(item => { return item }));
     }, []);
     const [assets, setAssets] = useState<number>(store.getState().assets);
     const storeChange = () => {
@@ -79,7 +79,7 @@ const MineAssets = (): ReactElement<ReactNode> => {
     const upUserInfo = async () => {
         const result = await UserInfoApi();
         setAccount(result.data);
-        setOwneAmount(await computedAssets(account.experience.assets));
+        account.experience && setOwneAmount(await computedAssets(account.experience.assets));
     }
     useEffect(() => {
         getAssetsList();

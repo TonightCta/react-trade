@@ -17,7 +17,7 @@ export const upUserInfo = async (): Promise<IResponse> => {
 export const upUserAssets = async (): Promise<void> => {
     //10s 刷新
     const result = await api.UserAssetsApi();
-    const QResult = await api.QUList();
+    const QResult = await api.QueryAllCoinPrice();
     let assets = [];
     for (let i in result.data) {
         if (i !== 'USDT') {
@@ -36,7 +36,7 @@ export const upUserAssets = async (): Promise<void> => {
 //更新用户资产
 export const computedAssets = async (_assets:any) : Promise<number> => {
     //10s 刷新
-    const QResult = await api.QUList();
+    const QResult = await api.QueryAllCoinPrice();
     let assets:any[]  = [];
     for (let i in _assets) {
         if (i !== 'USDT') {

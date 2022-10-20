@@ -69,9 +69,6 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
                                         const actionCurrent = upCurrentCoin(el);
                                         store.dispatch(actionCurrent);
                                         store.dispatch(action);
-                                        // const unaction = setUnCoin(el.symbol);
-                                        // store.dispatch(unaction);
-                                        // set 队列
                                         history.push('/quotes-detail')
                                     }}>
                                         <div className="list-public">

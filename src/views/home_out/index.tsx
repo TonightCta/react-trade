@@ -106,11 +106,11 @@ const HomeIndexOutside = (): React.ReactElement<ReactNode> => {
         <div className="home-index-outside">
             <NavLogo history={history} downIcon={downIcon} />
             {/* 轮播广告 */}
-            <HomeBanner />
+            <HomeBanner history={history}/>
             {/* 行情卡片 */}
             <HomeTexCard wsData={state.wsSubscribe} />
             {/* 卡片 */}
-            <OutsideCard/>
+            <OutsideCard history={history} />
             {/* 涨幅榜 */}
             <HomeTeslist wsData={state.wsSubscribe} />
         </div>
