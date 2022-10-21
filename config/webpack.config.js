@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const resolve = require('resolve');
+const pxrem = require('postcss-pxtorem')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
@@ -28,7 +29,6 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
 
-const px2rem = require('postcss-pxtorem');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -145,7 +145,13 @@ module.exports = function (webpackEnv) {
                       stage: 3,
                     },
                   ],
-                  px2rem({remUnit:37.5}),
+                  pxrem({
+                    rootValue: 37.5,
+                    unitPrecision: 5,
+                    propList: ['*'],
+                    propWhiteList:['.click-box-use-to-rem'],
+                    exclude: /node_modules/i
+                  }),
                   // Adds PostCSS Normalize as the reset css with default options,
                   // so that it honors browserslist config in package.json
                   // which in turn let's users customize the target behavior as per their needs.
@@ -163,7 +169,13 @@ module.exports = function (webpackEnv) {
                       stage: 3,
                     },
                   ],
-                  px2rem({remUnit:37.5}),
+                  pxrem({
+                    rootValue: 37.5,
+                    unitPrecision: 5,
+                    propList: ['*'],
+                    propWhiteList:['.click-box-use-to-rem'],
+                    exclude: /node_modules/i
+                  }),
                 ],
           },
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,

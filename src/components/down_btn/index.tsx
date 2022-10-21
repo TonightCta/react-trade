@@ -15,7 +15,7 @@ const DownBtn = (): ReactElement<ReactNode> => {
                     store.dispatch(action)
                 }} />
                 <img src={require('../../assets/images/down_fixed.png')} alt="" onClick={() => {
-                    history.push('/download')
+                    history.push(`/${process.env.REACT_APP_AREA === '63' ? 'download-en' : 'download'}`)
                 }} />
             </div>}
         </div>

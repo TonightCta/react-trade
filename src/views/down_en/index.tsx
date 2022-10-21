@@ -1,9 +1,8 @@
 import { Button, Dialog } from "antd-mobile";
 import { CloseOutline } from "antd-mobile-icons";
-import { ReactElement, ReactNode, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-import store from "../../store";
 import './index.scss'
 
 const GuideHeader = (props: { closeDialog: (status: boolean) => void, t: any }): ReactElement => {
@@ -112,27 +111,50 @@ const GuideContent = (props: { history: any, t: any }): ReactElement<ReactNode> 
     )
 };
 
-const DownIndex = (): ReactElement<ReactNode> => {
+const DownEnIndex = (): ReactElement<ReactNode> => {
     const [guideBox, setGuidebox] = useState<boolean>(false);
     const history = useHistory();
     const { t } = useTranslation();
+    //设备型号
+    const [mobileType, setMobileType] = useState<string>('');
+    useEffect(() => {
+        const userAgent = navigator.userAgent;
+        if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
+            setMobileType('IOS')
+        }
+        if (userAgent.includes('Android')) {
+            setMobileType('Android')
+        }
+    }, [])
     return (
-        <div className="down-index">
+        <div className="down-index-en">
             <img className="back-icon" src={require('../../assets/images/back_icon.png')} alt="" onClick={() => {
                 history.goBack();
             }} />
-            <img src={require(`../../assets/images/down_bg_${store.getState().language === 'th' ? 'th' : 'en'}.png`)} alt="" />
-            <div className="left-android click-box" onClick={() => {
+            <img className="bg-img" src={require(`../../assets/images/down_en_bg.png`)} alt="" />
+            {mobileType === 'Android' && <div className="left-android click-box-use-to-rem" onClick={() => {
                 const downImg = document.createElement("a");
                 downImg.download = "BIBI.apk";
                 downImg.href = `${process.env.REACT_APP_SHARE}/BIBI_version_09.apk`;
                 document.body.appendChild(downImg);
                 downImg.click();
                 downImg.remove();
-            }}></div>
-            <div className="right-ios click-box" onClick={() => {
+            }}>
+                <p className="iconfont icon-android"></p>
+                <div className="">
+                    <p>Android</p>
+                    <p>Download</p>
+                </div>
+            </div>}
+            {mobileType === 'IOS' && <div className="right-ios click-box-use-to-rem" onClick={() => {
                 setGuidebox(true)
-            }}></div>
+            }}>
+                <p className="iconfont icon-iOS"></p>
+                <div className="">
+                    <p>IOS</p>
+                    <p>Download</p>
+                </div>
+            </div>}
             <Dialog visible={guideBox} closeOnMaskClick header={<GuideHeader t={t} closeDialog={(status: boolean) => {
                 setGuidebox(status)
             }} />} content={<GuideContent history={history} t={t} />}></Dialog>
@@ -140,4 +162,4 @@ const DownIndex = (): ReactElement<ReactNode> => {
     )
 };
 
-export default DownIndex;
+export default DownEnIndex;

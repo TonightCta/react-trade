@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "32012325",
+      "name": "iOS",
+      "font_class": "iOS",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "32012328",
+      "name": "google play",
+      "font_class": "a-googleplay",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "32012330",
+      "name": "android",
+      "font_class": "android",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
       "icon_id": "257406",
       "name": "close",
       "font_class": "close",
