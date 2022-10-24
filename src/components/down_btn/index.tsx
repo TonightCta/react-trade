@@ -9,12 +9,12 @@ const DownBtn = (): ReactElement<ReactNode> => {
     const location = useLocation();
     return (
         <div>
-            {(location.pathname === '/home' || location.pathname === '/quotes' || location.pathname === '/trade') && <div className="down-btn">
-                <img src={require('../../assets/images/close_icon.png')} alt="" onClick={() => {
+            {(location.pathname === '/home' || location.pathname === '/quotes' || location.pathname === '/trade') && <div className='down-btn'>
+                <img src={require(`../../assets/images/close_icon${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`)} alt="" onClick={() => {
                     const action = setDownApp(2);
                     store.dispatch(action)
                 }} />
-                <img src={require('../../assets/images/down_fixed.png')} alt="" onClick={() => {
+                <img src={require(`../../assets/images/down_fixed${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`)} alt="" onClick={() => {
                     history.push(`/${process.env.REACT_APP_AREA === '63' ? 'download-en' : 'download'}`)
                 }} />
             </div>}

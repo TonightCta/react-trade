@@ -59,7 +59,6 @@ const TesDetail = (): ReactElement<ReactNode> => {
         const coinMsg = JSON.parse(localStorage.getItem('currentCoin') || '{}');
         setTimeout(() => {
             store.getState().quList.forEach((e) => {
-                console.log(e);
                 if (e.symbol !== coinMsg.symbol) {
                     send({
                         e: 'unsubscribe',
@@ -135,7 +134,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
                     // if (data.k.length <= 10) {
                     //     sourceData.k.shift();
                     //     sourceData.k.push(data.k[0]);
-                    //     // console.log(data.k[0])
+                    //     console.log(data.k[0])
                     //     setkData(sourceData);
                     //     nowKData = sourceData;
                     // } else {
@@ -197,7 +196,6 @@ const TesDetail = (): ReactElement<ReactNode> => {
                     localStorage.setItem('currentCoin', JSON.stringify(upCoinMsg));
                     data.k.t = data.k.t - data.k.t % (kfilterData.second * 1000);
                     if (data.k.t > nowKData.k[nowKData.k.length - 1].t) {
-                        // console.log(213)
                         // setResetk(0);
                         // console.log(data.k.t)
                         // console.log(nowKData.k[nowKData.k.length - 1].t)

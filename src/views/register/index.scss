@@ -90,6 +90,11 @@
       }
     }
   }
+  .register-way-th {
+    .active-intway {
+      color: #00D9B5!important;
+    }
+  }
   .login-box {
     margin-top: 44px;
     padding: 0 20px;
@@ -141,7 +146,9 @@
         right: 12px;
         top: 37px;
       }
-
+      .send-code-th{
+        color: #00D9B5;
+      }
       .gra-btn {
         filter: grayscale(100%);
       }
@@ -171,11 +178,16 @@
         width: 100%;
       }
     }
-    .read-protocol{
-      .need-outline{
-        color: #1677FF;
+    .read-protocol {
+      .need-outline {
+        color: #1677ff;
         font-weight: 500;
         text-decoration: underline;
+      }
+    }
+    .read-protocol-th{
+      .need-outline {
+        color: #00D9B5;
       }
     }
     .login-btn {
@@ -272,10 +284,9 @@
 }
 
 @media screen and (min-width: 1280px) {
-  .register-index  {
+  .register-index {
     width: 750px;
     left: 50%;
     margin-left: -375px;
   }
 }
-

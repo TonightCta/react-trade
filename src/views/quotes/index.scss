@@ -72,8 +72,30 @@
         }
       }
     }
-    ul::-webkit-scrollbar{
+    ul::-webkit-scrollbar {
       display: none;
+    }
+  }
+  .tes-all-list-th {
+    ul {
+      .up-color {
+        .list-price {
+          color: #5BC638;
+        }
+        .list-rate {
+          background-color: #5BC638;
+          color: white;
+        }
+      }
+      .down-color {
+        .list-price {
+          color: #fd5656;
+        }
+        .list-rate {
+          background-color: #fd5656;
+          color: white;
+        }
+      }
     }
   }
 }

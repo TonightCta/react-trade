@@ -78,7 +78,9 @@ const OutsideCard = (props: { history: any }): ReactElement<ReactNode> => {
                         }
                     </ul>
                 </div>
-                <div className='right-card card-public'>
+                <div className='right-card card-public' onClick={() => {
+                    props.history.push('/mine-assets')
+                }}>
                     <p>{t('public.assets')}</p>
                     <p>{t('public.assets_total_un')}({t('public.for_u')}USDT)</p>
                     <p>{mineAssets}</p>

@@ -27,28 +27,28 @@ const HomeCard = (props: { history: any }): ReactElement<ReactNode> => {
     const list: Array<CardMsg> = [
         {
             title: t('public.inv'),
-            icon: require('../../../assets/images/home_icon_1.png'),
+            icon: require('../../../assets/images/home_icon_1_th.png'),
             url: '/invite',
             outSide: false,
             inner: false,
         },
         {
             title: t('public.quotes'),
-            icon: require('../../../assets/images/home_icon_2.png'),
+            icon: require('../../../assets/images/home_icon_2_th.png'),
             url: '/quotes',
             outSide: false,
             inner: false,
         },
         {
             title: t('public.customer'),
-            icon: require('../../../assets/images/home_icon_3.png'),
+            icon: require('../../../assets/images/home_icon_3_th.png'),
             url: String(account.supportUrl),
             outSide: true,
             inner: false,
         },
         {
             title: t('public.set'),
-            icon: require('../../../assets/images/setting_icon.png'),
+            icon: require('../../../assets/images/home_icon_4_th.png'),
             url: '/setting',
             outSide: false,
             inner: false,
@@ -63,7 +63,9 @@ const HomeCard = (props: { history: any }): ReactElement<ReactNode> => {
                             <li key={index} onClick={() => {
                                 el.outSide ? window.open(el.url) : props.history.push(el.url)
                             }}>
-                                <img src={el.icon} alt="" />
+                                <div className="img-box">
+                                    <img src={el.icon} alt="" />
+                                </div>
                                 <p>{el.title}</p>
                             </li>
                         )

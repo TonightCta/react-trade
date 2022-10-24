@@ -55,7 +55,14 @@ const App = (): React.ReactElement<ReactNode> => {
           interval: '1m'
         }
       });
+      // GetUrlKey('innerApp', window.location.href)
     });
+    if (GetUrlKey('innerApp', window.location.href)) {
+      send({
+        e: 'app',
+        d: {}
+      });
+    }
   }
   const storeChange = () => {
     store.subscribe(() => {
@@ -68,8 +75,6 @@ const App = (): React.ReactElement<ReactNode> => {
     wsStatus === 1 && sendWSApp();
   }, [wsStatus, sourceQ.length])
   useEffect(() => {
-    console.log(token)
-    console.log(wsStatus)
     if (token && wsStatus === 1) {
       send({
         e: 'login',

@@ -71,7 +71,7 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
                     </div>
                 </div>
                 <div className="page-remark">
-                    <img src={require('../../assets/images/int_logo.png')} alt="" />
+                    <img src={require(`../../assets/images/int_logo${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`)} alt="" />
                     <p>{t('public.welcome')}</p>
                 </div>
                 <div className="login-box">
@@ -104,7 +104,7 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
                         {/* 登录 */}
                         <Button color="primary" loading={loading} disabled={loading} block onClick={() => { loginService() }}>{t('public.login')}</Button>
                     </p>
-                    <p className="register-btn">
+                    <p className={`register-btn ${process.env.REACT_APP_AREA == '66' ? 'register-btn-th' : ''}`}>
                         <span onClick={() => { history.push('/register') }}>
                             {/* 立即注册 */}
                             {t('public.regis_now')}

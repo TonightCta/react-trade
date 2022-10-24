@@ -1,10 +1,10 @@
 import React, { ReactNode, useEffect, useReducer, useState } from "react";
 // import { useTranslation } from "react-i18next";
-import HomeBanner from "./components/banner";
-import HomeAdv from "./components/adv";
+// import HomeBanner from "./components/banner";
+// import HomeAdv from "./components/adv";
 import './index.scss'
 import HomeAssets from "./components/my_wallet";
-import HomeHelp from "./components/help";
+// import HomeHelp from "./components/help";
 import HomeTexCard from "./components/tes_card";
 import HomeTeslist from "./components/tes_list";
 import { setHomeData } from "../../store/app/action_creators";
@@ -15,26 +15,13 @@ import { useHistory } from 'react-router-dom'
 import HomeCard from "./components/card";
 import { addListener, removeListener } from "../../utils/hooks";
 import { initWsSubscribe, subscribeReducer } from '../../redurce/set_subscribe'
+import NavLogo from "./components/nav_log";
 
 interface Props {
     type?: string
 }
 
-// Logo
-const NavLogo = (props: { history: any, downIcon: number }): React.ReactElement<ReactNode> => {
-    const [showDown, setShowdown] = useState<number>(props.downIcon);
-    useEffect(() => {
-        setShowdown(props.downIcon)
-    }, [props.downIcon])
-    return (
-        <div className="nav-logo">
-            <img className="bibi-logo" src={require('../../assets/images/logo.png')} alt="" />
-            {showDown === 2 && <img className="down-icon" src={require('../../assets/images/down_icon.png')} alt="" onClick={() => {
-                props.history.push('/download')
-            }} />}
-        </div>
-    )
-};
+
 
 
 const HomeIndex = (): React.ReactElement<ReactNode> => {
@@ -112,9 +99,9 @@ const HomeIndex = (): React.ReactElement<ReactNode> => {
         <div className="home-index">
             <NavLogo history={history} downIcon={downIcon} />
             {/* 轮播广告 */}
-            <HomeBanner />
+            {/* <HomeBanner /> */}
             {/* 广告中心 */}
-            <HomeAdv />
+            {/* <HomeAdv /> */}
             {/* 行情卡片 */}
             <HomeTexCard wsData={state.wsSubscribe} />
             {/* 操作卡片 */}
@@ -122,7 +109,7 @@ const HomeIndex = (): React.ReactElement<ReactNode> => {
             {/* 我的资产 */}
             <HomeAssets />
             {/* 帮助 & 公告 */}
-            <HomeHelp />
+            {/* <HomeHelp /> */}
             {/* 涨幅榜 */}
             <HomeTeslist wsData={state.wsSubscribe} />
         </div>

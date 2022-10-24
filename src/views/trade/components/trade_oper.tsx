@@ -192,7 +192,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
         <div className="trade-oper">
             <div className="oper-left oper-public">
                 {/* 交易类型 */}
-                <div className="trade-type">
+                <div className={`trade-type ${process.env.REACT_APP_AREA == '66' ? 'trade-type-th' : ''}`}>
                     <p className={`${tradeType === 1 ? 'buy-btn' : ''}`} onClick={() => {
                         setTradeType(1)
                     }}>
@@ -268,7 +268,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
                     <p>{tradeType === 1 ? formBalance.toFixed(8) : toBalance.toFixed(8)}&nbsp;{tradeType === 1 ? state.tradeFromCoin : state.tradeToCoin}</p>
                 </div>
                 {/* 快捷操作 */}
-                <div className={`fast-oper persent-high-${persent}`}>
+                <div className={`fast-oper persent-high-${persent} ${process.env.REACT_APP_AREA == '66' ? `persent-high-${persent}-th` : ''}`}>
                     <div className="percent-item percent-25" onClick={() => {
                         setTradeAmount(tradeType === 1 ? formBalance * 0.25 : toBalance * 0.25)
                         setPersent(25)
@@ -328,7 +328,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
                             })
                         }
                     </ul>
-                    <p className="now-price">{props.coinPrice.toFixed(state.currentCoin.precision)}</p>
+                    <p className={`now-price ${process.env.REACT_APP_AREA == '66' ? 'now-price-th' : ''}`}>{props.coinPrice.toFixed(state.currentCoin.precision)}</p>
                     <ul className="down-pain">
                         {
                             downList.map((el, index): ReactElement => {

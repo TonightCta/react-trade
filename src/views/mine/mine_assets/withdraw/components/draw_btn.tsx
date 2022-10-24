@@ -112,7 +112,6 @@ const SafeAuth = (props: PropsSafe): ReactElement => {
                 pay_password: drawSafe.password,
                 email_code: drawSafe.code
             };
-            console.log(params);
             const result = await WithdrawApiNew(params);
             setLoading(false)
             return result;

@@ -8,6 +8,7 @@
   position: fixed;
   bottom: 58px;
   z-index: 1000;
+  backdrop-filter: blur(1px);
   img:first-child {
     width: 18px;
     height: 18px;

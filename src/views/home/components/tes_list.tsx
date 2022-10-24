@@ -13,7 +13,10 @@ interface TesMsg {
     yesterday_volume: number,
     symbol: string,
     status: number,
-    precision:number
+    precision: number,
+    target: string,
+    base: string,
+    logo:string
 }
 
 const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
@@ -22,9 +25,9 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
         props.wsData.sort((a: TesMsg, b: TesMsg) => {
             return b.rate - a.rate
         });
-        const ar : TesMsg[] = [];
-        props.wsData.forEach((e:TesMsg) => {
-            if(e.status === 1 && ar.length < 5){ 
+        const ar: TesMsg[] = [];
+        props.wsData.forEach((e: TesMsg) => {
+            if (e.status === 1 && ar.length < 5) {
                 ar.push(e)
             }
         });
@@ -37,14 +40,14 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
     }, [props]);
 
     useEffect(() => {
-            const data = JSON.parse(sessionStorage.getItem('homeData') || '[]')
-            if (data.length > 0) {
-                data.sort((a: TesMsg, b: TesMsg) => {
+        const data = JSON.parse(sessionStorage.getItem('homeData') || '[]')
+        if (data.length > 0) {
+            data.sort((a: TesMsg, b: TesMsg) => {
                 return b.rate - a.rate
             });
-            const ar : TesMsg[] = [];
-            data.forEach((e:TesMsg) => {
-                if(e.status === 1 && ar.length < 5){ 
+            const ar: TesMsg[] = [];
+            data.forEach((e: TesMsg) => {
+                if (e.status === 1 && ar.length < 5) {
                     ar.push(e)
                 }
             });
@@ -57,7 +60,10 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
     return (
         <div className="home-tes-list">
             {/* 涨幅榜 */}
-            <p className="list-title">{t('public.up_list')}</p>
+            <p className="list-title">
+                <span>{t('public.up_list')}</span>
+                <span></span>
+            </p>
             {TesListTwo.length > 0 ? <ul>
                 {
                     TesListTwo.map((el: TesMsg, index: number): ReactElement => {
@@ -74,8 +80,17 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
                                         <div className="list-public">
                                             {/* <p className="list-sort">{index + 1}</p> */}
                                             <div className="coin-msg-hour">
-                                                <p>{el.coin}</p>
-                                                <p>24H{t('public.vol')}&nbsp;{Number(el.yesterday_volume).toFixed(2)}</p>
+                                                <div className="coin-icon">
+                                                    {
+                                                        el.logo 
+                                                            ? <img src={el.logo} alt="" />
+                                                            : <img src={require('../../../assets/images/default_avatar.png')} alt="" />
+                                                    }
+                                                </div>
+                                                <div className="coin-msg">
+                                                    <p>{el.base}<span>/{el.target}</span></p>
+                                                    <p>24H {t('public.vol')}&nbsp;{Number(el.yesterday_volume).toFixed(2)}</p>
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="list-public">

@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { withRouter, useHistory, RouteComponentProps, useLocation } from "react-router-dom";
-import store from "../store";
+// import store from "../store";
 import { TabBar } from 'antd-mobile';
 import { useTranslation } from "react-i18next";
 import './footer.scss';
@@ -19,32 +19,33 @@ interface Props extends RouteComponentProps {
 
 const Footer = (props: Props): React.ReactElement<ReactNode> => {
     const { t } = useTranslation();
+    const AREA : string | undefined = process.env.REACT_APP_AREA;
     const navList: Array<Nav> = [
         {
             key: 'home',
             title: t('public.page'),
-            icon: <span className="iconfont icon-a-bianzu1"></span>,
+            icon: <span className={`iconfont ${AREA == '66' ? 'icon-bianzu11' : 'icon-a-bianzu1'}`}></span>,
             // icon:<AppOutline/>,
             url: '/'
         },
         {
             key: 'quotes',
             title: t('public.quotes'),
-            icon: <span className="iconfont icon-bianzu"></span>,
+            icon: <span className={`iconfont ${AREA == '66' ? 'icon-a-bianzu31' : 'icon-bianzu'}`}></span>,
             // icon:<HistogramOutline/>,
             url: '/quotes'
         },
         {
             key: 'trade',
             title: t('public.trade'),
-            icon: <span className="iconfont icon-a-bianzu3"></span>,
+            icon: <span className={`iconfont ${AREA == '66' ? 'icon-a-bianzu41' : 'icon-a-bianzu3' }`}></span>,
             // icon:<UnorderedListOutline/>,
             url: '/trade'
         },
         {
             key: 'mine',
             title: t('public.mine'),
-            icon: <span className="iconfont icon-a-bianzu4"></span>,
+            icon: <span className={`iconfont ${AREA == '66' ? 'icon-bianzu2' : 'icon-a-bianzu4'}`}></span>,
             // icon:<UserOutline/>,
             url: '/mine'
         },
@@ -67,7 +68,6 @@ const Footer = (props: Props): React.ReactElement<ReactNode> => {
                 break;
             default:
                 setCurrentNav('home');
-
         }
     }, [location]);
     //更新导航显示信息
@@ -99,7 +99,7 @@ const Footer = (props: Props): React.ReactElement<ReactNode> => {
     //     }
     // }, [])
     return (
-        <div className={`footer-nav ${showNav === 0 ? 'hidden-nav' : ''}`}>
+        <div className={`footer-nav ${showNav === 0 ? 'hidden-nav' : ''} ${process.env.REACT_APP_AREA == '66' ? 'th-footer' : ''}`}>
             <TabBar activeKey={currentNav} onChange={(key: string): void => {
                 changeNav(key)
             }}>

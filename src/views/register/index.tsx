@@ -60,7 +60,6 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
         // const index = result.data.list.country.search(first);
         result.data.list.forEach((e: { country: string; }, index: number) => {
             if (e.country === first) {
-                console.log(index);
                 [result.data.list[0], result.data.list[index]] = [result.data.list[index], result.data.list[0]]
             }
         });
@@ -145,11 +144,11 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                     </div>
                 </div>
                 <div className="page-remark">
-                    <img src={require('../../assets/images/int_logo.png')} alt="" />
+                    <img src={require(`../../assets/images/int_logo${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`)} alt="" />
                     <p>{t('public.regis_now')}</p>
                 </div>
                 {/* 注册方式 */}
-                <div className="register-way">
+                <div className={`register-way ${process.env.REACT_APP_AREA == '66' ? 'register-way-th' : ''}`}>
                     <ul>
                         <li className={`${intWay === 1 ? 'active-intway' : ''}`} onClick={() => { setIntWay(1) }}>
                             {/* Mail */}
@@ -228,7 +227,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             })
                         }} placeholder={t(`public.${'enter_code'}`)} />
                         <span><CheckShieldOutline color="#999" fontSize={18} /></span>
-                        <p className={`send-code ${count === 60 ? '' : 'gra-btn'}`} onClick={count === 60 ? async () => {
+                        <p className={`send-code ${process.env.REACT_APP_AREA == '66' ? 'send-code-th' : ''} ${count === 60 ? '' : 'gra-btn'}`} onClick={count === 60 ? async () => {
                             if (intWay === 1 && !inpMsg.email) {
                                 Toast.show(t('public.enter_email'));
                                 return;
@@ -272,7 +271,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         }} placeholder={t('public.enter_pass')} />
                         <span><LockOutline color="#999" fontSize={18} /></span>
                     </div>
-                    <p className="read-protocol">
+                    <p className={`read-protocol ${process.env.REACT_APP_AREA == '66' ? 'read-protocol-th' : ''}`}>
                         <Checkbox defaultChecked onChange={(e) => {
                             setReadPrototal(e);
                         }} style={{

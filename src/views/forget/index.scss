@@ -88,6 +88,11 @@
       }
     }
   }
+  .register-way-th {
+    .active-intway {
+      color: #00d9b5 !important;
+    }
+  }
   .login-box {
     margin-top: 44px;
     padding: 0 20px;
@@ -121,6 +126,9 @@
         right: 12px;
         top: 37px;
       }
+      .send-code-th{
+        color: #00d9b5;
+      }
       .select-perfix {
         position: absolute;
         left: 34px;
@@ -153,7 +161,7 @@
   }
 }
 @media screen and (min-width: 1280px) {
-  .forget-pass  {
+  .forget-pass {
     width: 750px;
     left: 50%;
     margin-left: -375px;

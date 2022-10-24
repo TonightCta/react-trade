@@ -1,20 +1,93 @@
 .home-index {
   .nav-logo {
-    height: 44px;
+    height: auto;
     box-sizing: border-box;
     width: 100%;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #eee;
-    padding-right: 22px;
+    background: linear-gradient(180deg, #ddfee6 0%, #ffffff 100%);
+    padding: 6px 0 4px 12px;
     .bibi-logo {
-      // width: 110px;
       height: 28px;
     }
     .down-icon {
-      height: 37px;
+      height: 28px;
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
+      padding: 0 12px 0 2px;
+      display: flex;
+      align-items: center;
+      border: 1px solid #24be22;
+      backdrop-filter: blur(1px);
+      border-right: 0;
+      background: rgba(128, 243, 121, 0.08);
+      img {
+        width: 24px;
+        margin-right: 4px;
+      }
+      span {
+        font-size: 12px;
+        color: #06b503;
+        font-weight: bold;
+      }
+      // padding: ;
+    }
+    .logo-down {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      position: relative;
+      z-index: 200;
+    }
+    .text-banner {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      position: relative;
+      z-index: 100;
+      .play-video{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 54px;
+        height: 26px;
+      }
+      div {
+        height: auto;
+        img {
+          width: 30px;
+        }
+        text-align: left;
+        max-width: 180px;
+        p:last-child {
+          margin-top: 4px;
+          font-size: 12px;
+          color: #666;
+        }
+        p:first-child {
+          font-size: 24px;
+          // font-weight: bold;
+          color: #333;
+          line-height: 33px;
+          img {
+            vertical-align: middle;
+            margin-left: 4px;
+          }
+        }
+      }
+      .en-text-inner {
+        max-width: 240px;
+        p:first-child {
+          font-weight: bold;
+        }
+      }
+      .right-earth {
+        width: 160px;
+        height: 152px;
+        display: inline-block;
+        position: absolute;
+        right: 20px;
+        top: -32px;
+      }
     }
   }
   .home-banner {
@@ -64,10 +137,9 @@
   }
   .home-card-list {
     background-color: white;
-    margin-top: 12px;
     ul {
       display: flex;
-      padding: 22px 8px;
+      padding: 16px 8px;
       padding-top: 12px;
       justify-content: space-around;
       li {
@@ -75,13 +147,19 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        .img-box {
+          padding: 12px 12px 4px 12px;
+          border-radius: 25px;
+          background: linear-gradient(180deg, #ebfff9 0%, #ffffff 100%);
+        }
         img {
-          width: 22px;
-          height: 22px;
+          width: 35px;
+          height: 35px;
         }
         p {
           margin-top: 6px;
-          color: #333;
+          font-size: 14px;
+          color: #666;
         }
       }
     }
@@ -99,29 +177,74 @@
   }
   .home-assets {
     background-color: white;
-    padding: 12px 20px;
+    padding: 0 12px;
+    padding-bottom: 16px;
     display: flex;
-    img {
-      width: 80px;
-      height: 55px;
-    }
-    .assets-msg {
-      padding-left: 24px;
+    .assets-box {
+      width: 198px;
+      height: 122px;
+      background: url("../../assets/images/assets_1.png");
+      background-size: 100% 100%;
+      margin-right: 12px;
       text-align: left;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      padding: 14px 20px;
       p:first-child {
-        font-weight: 500;
-        font-size: 16px;
+        font-size: 18px;
+        color: #00a573;
       }
       p:nth-child(2) {
-        font-size: 14px;
-        margin: 4px 0;
-        color: #c5c5c6;
+        font-size: 12px;
+        color: rgba(0, 165, 115, 0.6);
+        margin-top: 6px;
       }
       p:last-child {
-        color: #333;
+        padding: 5px 8px;
+        display: inline-block;
+        background-color: white;
+        border-radius: 14px;
+        font-size: 14px;
+        color: #00cf91;
+        font-weight: 500;
+        margin-top: 8px;
+      }
+    }
+    .ann-help {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .inner-public {
+        padding: 12px 10px;
+        height: 56px;
+        text-align: left;
+        p:first-child {
+          font-size: 14px;
+          font-weight: 500px;
+        }
+        p:last-child {
+          font-size: 12px;
+          margin-top: 2px;
+        }
+      }
+      .help-inner {
+        background: url("../../assets/images/assets_2.png");
+        background-size: 100% 100%;
+        p:first-child {
+          color: #b652bd;
+        }
+        p:last-child {
+          color: rgba(182, 82, 189, 0.6);
+        }
+      }
+      .ann-inner {
+        background: url("../../assets/images/assets_3.png");
+        background-size: 100% 100%;
+        p:first-child {
+          color: #218aff;
+        }
+        p:last-child {
+          color: rgba(33, 138, 255, 0.6);
+        }
       }
     }
   }
@@ -164,69 +287,86 @@
   .home-tex-card {
     background: white;
     padding: 20px 0;
-    padding-bottom: 6px;
+    padding-bottom: 0;
+    .adm-page-indicator-dot-active {
+      background-color: #00bf87;
+      border-radius: 2px;
+    }
+    .adm-swiper-track {
+      padding-bottom: 16px;
+    }
     ul {
       display: flex;
       width: 100%;
       justify-content: space-around;
       li {
         width: 30%;
+        text-align: left;
+        padding-left: 24px;
         .coin-qu {
           font-size: 12px;
-          color: #333;
-          font-weight: 500;
+          color: #666;
         }
         .coin-price {
           font-size: 16px;
           font-weight: bold;
           margin: 8px 0;
+          color: #333;
         }
         .coin-rate {
           font-size: 12px;
-          padding: 2px 8px;
+          padding: 2px 0;
           border-radius: 4px;
+          font-weight: 500;
           display: inline-block;
         }
       }
       .up-color {
-        .coin-price {
-          color: #00c087;
-        }
         .coin-rate {
-          color: #00c087;
-          background-color: #e6f8f5;
+          color: #01c087;
         }
       }
       .down-color {
-        .coin-price {
-          color: #fd7a56;
-        }
         .coin-rate {
-          color: #fd7a56;
-          background-color: #fcefec;
+          color: #fd5656;
         }
       }
     }
   }
   .home-tes-list {
-    margin-top: 12px;
     background-color: white;
     padding: 12px;
+    padding-top: 0;
+    text-align: left;
     .list-title {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 500;
       text-align: center;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #eee;
-      color: #3370ff;
+      color: #333;
+      text-align: left;
+      display: inline-block;
+      span:last-child {
+        display: inline-block;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(
+          270deg,
+          rgba(0, 190, 135, 0) 0%,
+          #00be87 100%
+        );
+        transform: translateY(-4px);
+      }
     }
     ul {
       li {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px solid #f8f8f8;
-        padding: 12px 0;
+        padding: 12px 10px;
+        background: #ffffff;
+        box-shadow: 0px 2px 8px 0px rgba(0, 179, 126, 0.08),
+          inset 0px 0px 0px 0px #f8f8f8;
+        margin-bottom: 8px;
         .list-public {
           display: flex;
           align-items: center;
@@ -241,44 +381,62 @@
           line-height: 16px;
         }
         .coin-msg-hour {
-          text-align: left;
-          font-size: 14px;
-          color: #333;
-          p {
-            font-weight: 500;
+          display: flex;
+          .coin-icon {
+            width: 32px;
+            min-width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            img {
+              height: 100%;
+            }
           }
-          p:last-child {
-            margin-top: 4px;
-            color: #c5c5c6;
+          .coin-msg {
+            text-align: left;
+            font-size: 14px;
+            color: #333;
+            p {
+              font-weight: 500;
+              span {
+                font-size: 12px;
+                color: #999;
+                font-weight: 400;
+              }
+            }
+            p:last-child {
+              margin-top: 4px;
+              color: #c5c5c6;
+            }
           }
         }
         .list-price {
           font-size: 14px;
+          color: #333;
           margin-right: 24px;
+          font-weight: 500;
         }
         .list-rate {
           font-size: 13px;
           font-weight: 500;
-          padding: 8px 6px;
+          padding: 6px 8px;
           min-width: 60px;
           border-radius: 4px;
         }
       }
       .up-color {
-        .list-price {
-          color: #00c087;
-        }
         .list-rate {
-          background-color: #00c087;
+          background-color: #5BC638;
           color: white;
         }
       }
       .down-color {
-        .list-price {
-          color: #fd7a56;
-        }
         .list-rate {
-          background-color: #fd7a56;
+          background-color: #F66F6A;
           color: white;
         }
       }
@@ -290,4 +448,37 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.video-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 7000;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  .video-mask {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    width: 100%;
+    height: 100%;
+  }
+  video {
+    width: 100%;
+    position: relative;
+    z-index: 300;
+  }
+  .iconfont {
+    color: white;
+    font-size: 44px;
+    position: relative;
+    z-index: 310;
+    margin-top: 86px;
+  }
 }

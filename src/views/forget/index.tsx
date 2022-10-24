@@ -150,7 +150,7 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
     }
     return (
         <div className="forget-pass">
-            <div className="int-bg-box"></div>
+            <div className={`int-bg-box`}></div>
             <div className="up-bg-box">
                 <div className="close-page">
                     <CloseOutline fontSize={24} color="#333" onClick={() => {
@@ -163,10 +163,10 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
                 </div>
                 {/* 忘记密码 */}
                 <div className="page-remark">
-                    <img src={require('../../assets/images/int_logo.png')} alt="" />
+                    <img src={require(`../../assets/images/int_logo${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`)} alt="" />
                     <p>{t('public.forget')}</p>
                 </div>
-                <div className="register-way">
+                <div className={`register-way ${process.env.REACT_APP_AREA == '66' ? 'register-way-th' : ''}`}>
                     <ul>
                         <li className={`${intWay === 1 ? 'active-intway' : ''}`} onClick={() => { setIntWay(1) }}>
                             {/* Mail */}
@@ -216,7 +216,7 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
                             })
                         }} placeholder={t('public.enter_code')} />
                         <span><CheckShieldOutline color="#999" fontSize={18} /></span>
-                        <p className={`send-code ${count === 60 ? '' : 'gra-btn'}`} onClick={count === 60 ? () => {
+                        <p className={`send-code ${process.env.REACT_APP_AREA == '66' ? 'send-code-th' : ''} ${count === 60 ? '' : 'gra-btn'}`} onClick={count === 60 ? () => {
                             sendCodeService();
                         } : () => { }}>
                             {/* 发送验证码 */}

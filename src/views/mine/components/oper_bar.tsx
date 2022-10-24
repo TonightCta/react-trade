@@ -10,30 +10,30 @@ const MineOperBar = (): ReactElement<ReactNode> => {
         {
             //资金密码
             title: t('public.assets_pass'),
-            icon: require('../../../assets/images/assets_lock.png'),
+            icon: require(`../../../assets/images/assets_lock${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`),
             url: '/assets-lock'
         },
         {
             //实名认证
             title: t('public.verify_card'),
-            icon: require('../../../assets/images/auth_icon.png'),
+            icon: require(`../../../assets/images/auth_icon${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`),
             url: '/auth-card'
         },
         {
             //登录密码
             title: t('public.edit_login_pass'),
-            icon: require('../../../assets/images/pass_icon.png'),
+            icon: require(`../../../assets/images/pass_icon${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`),
             url: '/set-pass'
         },
         {
             //设置
             title: t('public.set_center'),
-            icon: require('../../../assets/images/set_icon.png'),
+            icon: require(`../../../assets/images/set_icon${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`),
             url: '/setting'
         },
     ]
     return (
-        <div className="mine-oper-bar mine-assets-manage">
+        <div className={`mine-oper-bar mine-assets-manage ${process.env.REACT_APP_AREA == '66' ? 'mine-assets-manage-th' : ''}`}>
             {/* <List style={{ "--font-size": "15px" }}>
                 <List.Item prefix={<img src={require('../../../assets/images/other_1.png')} />} onClick={() => {
                     history.push('/trade-order')

@@ -48,7 +48,6 @@ const SafeIndex = (): ReactElement<ReactNode> => {
                 isGo: true,
             }
         ]);
-        console.log(accountMsg)
     }, [accountMsg])
     const history = useHistory();
     return (

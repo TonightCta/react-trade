@@ -122,7 +122,6 @@ const TradeNav = (props: Props): ReactElement<ReactNode> => {
                         }
                     })
                     // history.push('/quotes-detail')
-                    // console.log(123)
                 }} fontSize={22} />
             </div>
             {/* 选项弹出层 */}

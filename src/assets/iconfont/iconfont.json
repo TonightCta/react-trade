@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "32437038",
+      "name": "编组 3",
+      "font_class": "a-bianzu31",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "32437039",
+      "name": "编组",
+      "font_class": "bianzu2",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "32437040",
+      "name": "编组 4",
+      "font_class": "a-bianzu41",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "32437054",
+      "name": "编组",
+      "font_class": "bianzu11",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
       "icon_id": "32012325",
       "name": "iOS",
       "font_class": "iOS",

@@ -32,7 +32,6 @@ const ModalContent = (props: { closeModal: () => void }): ReactElement => {
     });
     const getInvInfo = useCallback(async () => {
         const result = await InvInfoApi();
-        console.log(result)
         setInvInfo(result.data);
     }, [])
     useEffect(() => {
@@ -124,11 +123,12 @@ const ModalContent = (props: { closeModal: () => void }): ReactElement => {
 const MineInvMsg = (): ReactElement<ReactNode> => {
     const [msgModal, setMsgModal] = useState<boolean>(false);
     const { t } = useTranslation();
+    const AREA : string | undefined = process.env.REACT_APP_AREA;
     const ManageList: Array<Manage> = [
         {
             //邀请链接
             title: t('public.inv_link'),
-            icon: require('../../../assets/images/link_icon.png'),
+            icon: require(`../../../assets/images/link_icon${AREA == '66' ? '_th' : ''}.png`),
             level: 1,
             url: '/invite',
             out: false,
@@ -137,7 +137,7 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
         {
             //邀请规则
             title: t('public.detail'),
-            icon: require('../../../assets/images/rules_icon.png'),
+            icon: require(`../../../assets/images/rules_icon${AREA == '66' ? '_th' : ''}.png`),
             level: 1,
             url: '',
             out: true,
@@ -146,7 +146,7 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
         {
             //一级好友
             title: t('public.level_one'),
-            icon: require('../../../assets/images/one.png'),
+            icon: require(`../../../assets/images/one${AREA == '66' ? '_th' : ''}.png`),
             level: 1,
             url: '/inv-detail',
             out: false,
@@ -155,7 +155,7 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
         {
             //二级好友
             title: t('public.level_two'),
-            icon: require('../../../assets/images/two.png'),
+            icon: require(`../../../assets/images/two${AREA == '66' ? '_th' : ''}.png`),
             level: 2,
             url: '/inv-detail',
             out: false,
@@ -163,7 +163,7 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
         {
             //三级好友
             title: t('public.level_three'),
-            icon: require('../../../assets/images/three.png'),
+            icon: require(`../../../assets/images/three${AREA == '66' ? '_th' : ''}.png`),
             level: 3,
             url: '/inv-detail',
             out: false,
@@ -171,7 +171,7 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
         {
             //邀请总数
             title: t('public.inv_total'),
-            icon: require('../../../assets/images/all.png'),
+            icon: require(`../../../assets/images/all${AREA == '66' ? '_th' : ''}.png`),
             level: 4,
             url: '/inv-detail',
             out: false,
@@ -179,7 +179,7 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
     ]
     const history = useHistory();
     return (
-        <div className="mine-assets-manage mine-inv">
+        <div className={`mine-assets-manage mine-inv ${process.env.REACT_APP_AREA == '66' ? 'mine-assets-manage-th' : ''}`}>
             <div className="title-msg">
                 <p className="manage-title">
                     {/* 我的邀请 */}

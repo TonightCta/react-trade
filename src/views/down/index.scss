@@ -5,21 +5,47 @@
   top: 0;
   left: 0;
   overflow: auto;
-  .click-box {
-    width: 50%;
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    z-index: 200;
-  }
-  .left-android {
-    left: 0;
-  }
-  .right-ios {
-    right: 0;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 100px;
   img {
     width: 100%;
+  }
+  .click-box-use-to-rem {
+    z-index: 200;
+    text-align: left;
+    padding: 8px 14px;
+    background: rgba(122, 234, 206, 0.2);
+    margin-top: 16px;
+    align-items: center;
+    padding-right: 20px;
+    border-radius: 7px;
+    backdrop-filter: blur(1px);
+    display: flex;
+    margin-left: 16px;
+    .iconfont {
+      font-size: 22px;
+      color: #00A573;
+      margin-right: 8px;
+    }
+    div {
+      p {
+        color: #00A573;
+      }
+      p:first-child {
+        font-size: 12px;
+      }
+      p:last-child {
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+  }
+  .bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
   .back-icon {
     position: absolute;

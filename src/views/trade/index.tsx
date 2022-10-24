@@ -51,7 +51,6 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
     const sendWSDepth = () => {
         setTimeout(() => {
             store.getState().quList.forEach((e) => {
-                console.log(e);
                 if (e.symbol !== coinMsg.base) {
                     send({
                         e: 'unsubscribe',
