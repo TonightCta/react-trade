@@ -8,7 +8,7 @@ import './index.scss'
 
 const GuideHeader = (props: { closeDialog: (status: boolean) => void, t: any }): ReactElement => {
     return (
-        <div className="guide-header">
+        <div className={`guide-header ${process.env.REACT_APP_AREA == '66' ? 'guide-header-th' : ''}`}>
             <div className="close-icon" onClick={() => {
                 props.closeDialog(false)
             }}><CloseOutline fontSize={16} /></div>

@@ -9,9 +9,9 @@ import store from "../../../store";
 const HomeBanner = (props:{history:any}): React.ReactElement<ReactNode> => {
     const [advList, setAdvList] = useState<ADV[]>([]);
     const [colors, setColors] = useState<any[]>([
-        // {
-        //     image:require('../../../assets/images/out/banner_1.png')
-        // },
+        {
+            // image:require('../../../assets/images/out/banner_1.png')
+        },
         // {
         //     image:require('../../../assets/images/out/banner_2.png')
         // },

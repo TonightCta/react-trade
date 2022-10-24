@@ -73,7 +73,7 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
                                         history.push('/quotes-detail')
                                     }}>
                                         <div className="list-public">
-                                            <p className="list-sort">{index + 1}</p>
+                                            {/* <p className="list-sort">{index + 1}</p> */}
                                             <div className="coin-msg-hour">
                                                 <p>{el.coin}</p>
                                                 <p>24H{t('public.vol')}&nbsp;{Number(el.yesterday_volume).toFixed(2)}</p>

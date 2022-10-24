@@ -26,12 +26,12 @@
     margin-left: 16px;
     .iconfont {
       font-size: 22px;
-      color: #00A573;
+      color: #00a573;
       margin-right: 8px;
     }
     div {
       p {
-        color: #00A573;
+        color: #00a573;
       }
       p:first-child {
         font-size: 12px;
@@ -85,6 +85,13 @@
         color: #333;
         font-weight: 600;
       }
+    }
+  }
+  .guide-header-th {
+    background: url("../../assets/images/guide_bg_th.png");
+    background-size: 100% 100%;
+    .close-icon {
+      color: #19A76B;
     }
   }
   .guide-box {
