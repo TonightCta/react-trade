@@ -3,7 +3,7 @@ import { CloseOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-import store from "../../store";
+// import store from "../../store";
 import './index.scss'
 
 const GuideHeader = (props: { closeDialog: (status: boolean) => void, t: any }): ReactElement => {
