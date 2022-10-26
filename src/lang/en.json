@@ -326,7 +326,8 @@
         "min_10":"Minimum transaction amount 10 USDT",
         "enter_phone":"Please enter the mobile number",
         "enter_email_phone":"Please enter email address or mobile number",
-        "agree_protocol":"Please read and agree to the Privacy Policy"
+        "agree_protocol":"Please read and agree to the Privacy Policy",
+        "enter_invite":"Please enter the invitation code"
     },
     "title": {
         "language_set": "Language"

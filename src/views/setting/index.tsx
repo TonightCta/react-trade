@@ -29,8 +29,8 @@ const SetIndex = (): ReactElement<ReactNode> => {
         },
         {
             //${process.env.REACT_APP_SHARE}/PrivacyPolicy.html
-            title:t('public.protocol'),
-            url:'',
+            title: t('public.protocol'),
+            url: '',
         },
         {
             title: t('public.about_us'),//关于我们
@@ -46,7 +46,8 @@ const SetIndex = (): ReactElement<ReactNode> => {
                         setList.map((el, index): ReactElement => {
                             return (
                                 <List.Item onClick={() => {
-                                    el.url ? history.push(el.url) : window.open(`${process.env.REACT_APP_SHARE}/PrivacyPolicy.html`)
+                                    const protocol: string = process.env.REACT_APP_AREA == '63' ? 'https://sites.google.com/view/terms-of-use2privacy-policy' : `${process.env.REACT_APP_SHARE}/PrivacyPolicy.html`;
+                                    el.url ? history.push(el.url) : window.open(protocol)
                                 }} key={index}>{el.title}</List.Item>
                             )
                         })

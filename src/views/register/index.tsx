@@ -97,7 +97,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
         };
     }, [count]);
     // 
-    const protocol: string = `${process.env.REACT_APP_SHARE}/PrivacyPolicy.html`;
+    const protocol: string = process.env.REACT_APP_AREA == '63' ? 'https://sites.google.com/view/terms-of-use2privacy-policy' : `${process.env.REACT_APP_SHARE}/PrivacyPolicy.html`;
     const [readPrototal, setReadPrototal] = useState<boolean>(true);
     useEffect(() => {
         getSlug();
@@ -110,14 +110,14 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
             sessionStorage.setItem('inv_code', GetUrlKey('code', window.location.href) as string);
             disableInvite.current = true;
         }
-        if(GetUrlKey('ch', window.location.href)){
-            sessionStorage.setItem('ch',GetUrlKey('ch', window.location.href) as string)
+        if (GetUrlKey('ch', window.location.href)) {
+            sessionStorage.setItem('ch', GetUrlKey('ch', window.location.href) as string)
         }
-        if(GetUrlKey('s', window.location.href)){
-            sessionStorage.setItem('s',GetUrlKey('s', window.location.href) as string)
+        if (GetUrlKey('s', window.location.href)) {
+            sessionStorage.setItem('s', GetUrlKey('s', window.location.href) as string)
         }
-        if(GetUrlKey('cl', window.location.href)){
-            sessionStorage.setItem('cl',GetUrlKey('cl', window.location.href) as string)
+        if (GetUrlKey('cl', window.location.href)) {
+            sessionStorage.setItem('cl', GetUrlKey('cl', window.location.href) as string)
         }
         return () => {
             setSlug('');
@@ -295,6 +295,10 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             }
                             if (intWay === 2 && !inpMsg.phone) {
                                 Toast.show(t('message.enter_phone'));
+                                return;
+                            }
+                            if (!inpMsg.invite_code && !GetUrlKey('ch', window.location.href)) {
+                                Toast.show(t('message.enter_invite'))
                                 return;
                             }
                             if (!inpMsg.code) {
