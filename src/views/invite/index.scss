@@ -83,8 +83,10 @@
         }
         .share-link {
           display: flex;
+          width: 100%;
           padding: 0 12px;
           padding-top: 8px;
+          overflow: hidden;
           .link-public {
             .label {
               font-size: 12px;
@@ -123,6 +125,16 @@
             flex: 1;
             .label {
               margin-left: -12px;
+            }
+            .link-inner {
+              p {
+                display: inline;
+                transform: scale(0.9) translateX(-4px);
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-width: 200px;
+                // width: 50%;
+              }
             }
           }
         }
@@ -457,14 +469,14 @@
           img {
             height: 100%;
           }
-          p{
+          p {
             margin-top: 8px;
             font-size: 12px;
             color: #333;
           }
         }
       }
-      li:last-child{
+      li:last-child {
         margin-top: 12px;
       }
     }

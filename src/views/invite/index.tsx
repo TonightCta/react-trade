@@ -288,7 +288,6 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                             <div className="share-link">
                                 <div className="link-code link-public">
                                     <p className="label">
-                                        {/* Invitation code */}
                                         {t('invite.inv_code')}
                                     </p>
                                     <div className="link-inner">
@@ -304,7 +303,7 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                                         {t('invite.share_link')}
                                     </p>
                                     <div className="link-inner">
-                                        <p>{invInfo?.link}</p>
+                                        <p>{invInfo?.link}?code={invInfo?.code}</p>
                                         <img src={require('../../assets/images/copy_icon.png')} alt="" onClick={() => {
                                             copyLink(`${invInfo?.link}?code=${invInfo?.code}`)
                                         }} />
