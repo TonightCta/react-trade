@@ -35,7 +35,7 @@ const GuideContent = (props: { history: any, t: any }): ReactElement<ReactNode> 
         {
             class: 'left-tree',
             index: props.t('public.one'),
-            text: props.t('public.guide_1'),
+            text: props.t('public.guide_1',{value:`www.bibitrades.${process.env.REACT_APP_AREA == '66' ? 'com' : 'net'}`}),
             line: false,
             step_img: require('../../assets/images/guide_1.png'),
         },
