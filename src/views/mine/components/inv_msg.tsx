@@ -130,7 +130,7 @@ const MineInvMsg = (): ReactElement<ReactNode> => {
             title: t('public.inv_link'),
             icon: require(`../../../assets/images/link_icon${AREA == '66' ? '_th' : ''}.png`),
             level: 1,
-            url: '/invite',
+            url: `/invite${process.env.REACT_APP_AREA == '66' ? '-th' :''}`,
             out: false,
             class: 'm-t-zero',
         },

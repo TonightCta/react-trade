@@ -87,6 +87,7 @@ const RouteConfig = (): ReactElement<ReactNode> => {
             <PrivateRoute children={<View.InviteIndex />} key="invite" path="/invite" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.RechargeFaitIndex />} key="rechargeFait" path="/recharge-fait" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.WithdrawFait />} key="withdrawFait" path="/withdraw-fait" locationMine={location}></PrivateRoute>
+            <PrivateRoute children={<View.InviteIndexTh/>} key="inviteTh" path="/invite-th"></PrivateRoute>
             <Route path="*" key="unknow" component={View.NotFound}></Route>
           </Switch>
         </CSSTransition>

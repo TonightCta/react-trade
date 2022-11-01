@@ -334,7 +334,7 @@
     },
     "invite":{
         "rules":"Rules",
-        "Invitation":"Invitation",
+        "invitation":"Invitation",
         "share":"Share and get rewarded",
         "inv_code":"Invitation code",
         "share_link":"Referral link",

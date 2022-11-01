@@ -32,7 +32,8 @@ import RechargeFaitIndex from "./mine/mine_assets/rechange_fait/recharge_fait";
 import WithdrawFait from "./mine/mine_assets/withdraw_fait/withdraw_fait";
 import DownIndex from "./down/down";
 import NotFound from "./notfound/not_fount";
-import DownEnIndex from './down_en/index'
+import DownEnIndex from './down_en/index';
+import InviteIndexTh from "./invite_th";
 
 
 export {
@@ -71,4 +72,5 @@ export {
     NotFound,//
     HomeIndexOutside,//南非首页
     DownEnIndex,//南非下载页
+    InviteIndexTh,//泰国邀请页
 }

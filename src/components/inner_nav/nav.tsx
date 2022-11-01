@@ -13,14 +13,15 @@ interface Props extends RouteComponentProps {
     backMine?: boolean,
     getSearchVal?: (val: string) => void;
     owneMine?: boolean,
-    owneAmount?: number
+    owneAmount?: number,
+    withOutBg?:boolean
 }
 
 const InnerNav = (props: Props): ReactElement<ReactNode> => {
     const { t } = useTranslation();
     const history = useHistory();
     return (
-        <div className={`inner-nav ${props.withBorder ? 'with-border-nav' : ''} ${props.owneMine ? 'show-owne' : ''}`}>
+        <div className={`inner-nav ${props.withOutBg ? 'without-bg-nav' : ''} ${props.withBorder ? 'with-border-nav' : ''} ${props.owneMine ? 'show-owne' : ''}`}>
             {/* 返回 */}
             <div className="left-arrow">
                 {props.leftArrow && <LeftOutline fontSize={16} onClick={() => {

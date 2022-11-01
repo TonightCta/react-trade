@@ -28,7 +28,7 @@ const HomeCard = (props: { history: any }): ReactElement<ReactNode> => {
         {
             title: t('public.inv'),
             icon: require('../../../assets/images/home_icon_1_th.png'),
-            url: '/invite',
+            url: '/invite-th',
             outSide: false,
             inner: false,
         },
