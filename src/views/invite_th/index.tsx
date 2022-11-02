@@ -1,5 +1,5 @@
 import { DotLoading, Modal, Popover, Popup, Toast } from "antd-mobile";
-import { CloseOutline, RightOutline } from "antd-mobile-icons";
+import { CloseOutline } from "antd-mobile-icons";
 import React, { ReactElement, ReactNode, useCallback, useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
@@ -141,24 +141,24 @@ const SwiperMine = (props: { invInfo: any, lang: string | null }): ReactElement 
     return (
         <>
             <div className="before-create-1" ref={printElementOne}>
-                <img src={require(`../../assets/images/poster_1_${props.lang}.png`)} alt="" />
+                <img src={require(`../../assets/images/poster_1_th_${props.lang}.png`)} alt="" />
                 <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p>
                 <div className="qr-box">
-                    <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={42} id="qrCode" />
+                    <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={30} id="qrCode" />
                 </div>
             </div>
             <div className="before-create-1" ref={printElementTwo}>
-                <img src={require(`../../assets/images/poster_2_${props.lang}.png`)} alt="" />
+                <img src={require(`../../assets/images/poster_2_th_${props.lang}.png`)} alt="" />
                 <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p>
                 <div className="qr-box">
-                    <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={42} id="qrCode" />
+                    <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={30} id="qrCode" />
                 </div>
             </div>
             <div className="before-create-1" ref={printElementThree}>
-                <img src={require(`../../assets/images/poster_3_${props.lang}.png`)} alt="" />
+                <img src={require(`../../assets/images/poster_3_th_${props.lang}.png`)} alt="" />
                 <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p>
                 <div className="qr-box">
-                    <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={42} id="qrCode" />
+                    <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={30} id="qrCode" />
                 </div>
             </div>
             <div className="swiper-container" id="poster-swiper">
@@ -247,35 +247,60 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                 <div className="top-bg"></div>
                 <div className="invite-top">
                     <div className="top-inner-left">
-                        <p>Invite friends to earn<br />money together</p>
-                        <p>Share highest with friends</p>
-                        <p><span>3~10%</span>commission rebates</p>
+                        <p>
+                            {/* Invite friends to earn */}
+                            {t('invite.share_1')}
+                            <br />
+                            {/* money together */}
+                            {t('invite.share_2')}
+                        </p>
+                        <p>
+                            {/* Share highest with friends */}
+                            {t('invite.share_3')}
+                        </p>
+                        <p>
+                            <span>3~10%</span>
+                            {/* commission rebates */}
+                            {t('invite.share_4')}
+                        </p>
                     </div>
                     <div className="top-inner">
                         <p onClick={() => {
                             setMsgModal(true)
                         }}>
                             {/* Rules */}
-                            Rules
+                            {t('invite.rules')}
                         </p>
                         <p onClick={() => {
                             const action = upInvLevel(4);
                             store.dispatch(action);
                             history.push('/inv-detail')
                         }}>
-                            {/* Invitation */}
-                            My recommendation
+                            {/* My recommendation */}
+                            {t('invite.recom')}
                         </p>
                     </div>
                 </div>
                 <div className="banner-text">
-                    <p>After recharging, you will get：</p>
-                    <p><span>10%~60%</span>Invitation commission</p>
+                    <p>
+                        {/* After recharging, you will get： */}
+                        {t('invite.share_after')}
+                    </p>
+                    <p><span>10%~60%</span>
+                        {/* Invitation commission */}
+                        {t('invite.commission')}
+                    </p>
                     <div className="top-text">
-                        <p>Every successful recommendation of a friend</p>
+                        <p>
+                            {/* Every successful recommendation of a friend */}
+                            {t('invite.share_5')}
+                        </p>
                         <img src={require('../../assets/images/right_invite_th.png')} alt="" />
                     </div>
-                    <p>Enjoy multi-level commission return</p>
+                    <p>
+                        {/* Enjoy multi-level commission return */}
+                        {t('invite.share_6')}
+                    </p>
                 </div>
                 <div className="p-12">
                     <div className="invite-box-1">
@@ -286,8 +311,13 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                                     openLoading()
                                 }}>
                                     {/* Share and get rewarded */}
-                                    <span>Share and get rewarded</span>
-                                    <span>Earn coins with friends</span>
+                                    <span>
+                                        {t('invite.share')}
+                                    </span>
+                                    <span>
+                                        {/* Earn coins with friends */}
+                                        {t('invite.share_earn')}
+                                    </span>
                                 </button>
                                 <Popover
                                     content={<QrImg />}
@@ -303,18 +333,27 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                                 <div className="link-code link-public" onClick={() => {
                                     copyLink(invInfo?.code)
                                 }}>
-                                    <p>Copy Code</p>
+                                    <p>
+                                        {/* Copy Code */}
+                                        {t('invite.copy_code')}
+                                    </p>
                                 </div>
                                 <div className="link-url link-public" onClick={() => {
                                     copyLink(`${invInfo?.link}?code=${invInfo?.code}`)
                                 }}>
-                                    <p>Copy Link</p>
+                                    <p>
+                                        {/* Copy Link */}
+                                        {t('invite.copy_link')}
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="invite-box-2">
-                        <p className="ranking-mine">Your ranking in the first 24 hours</p>
+                        <p className="ranking-mine">
+                            {/* Your ranking in the first 24 hours */}
+                            {t('invite.rank_remark')}
+                        </p>
                         {/* <p className="">No.{rankMine}{rankMine > 999 ? '+' : ''}</p> */}
                         <p className="ranking-num">
                             No.{rankMine}{rankMine >= 99 ? '+' : ''}
@@ -330,7 +369,7 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                                         <p>{Number(rankList[1].reward).toFixed(0)}&nbsp;USDT</p>
                                     </> : <div className="p-24">{rankList.length < 2 ? <p>
                                         {/* Waiting */}
-                                        Waiting
+                                        {t('invite.waiting')}
                                     </p> : <DotLoading color='primary' />}</div>}
                                 </li>
                                 <li>
@@ -342,7 +381,7 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                                         <p>{Number(rankList[0].reward).toFixed(0)}&nbsp;USDT</p>
                                     </> : <div className="p-24">{rankList.length === 0 ? <p>
                                         {/* Waiting */}
-                                        Waiting
+                                        {t('invite.waiting')}
                                     </p> : <DotLoading color='primary' />}</div>}
                                 </li>
                                 <li>
@@ -354,7 +393,7 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                                         <p>{Number(rankList[2].reward).toFixed(0)}&nbsp;USDT</p>
                                     </> : <div className="p-24">{rankList.length < 3 ? <p>
                                         {/* Waiting */}
-                                        Waiting
+                                        {t('invite.waiting')}
                                     </p> : <DotLoading color='primary' />}</div>}
                                 </li>
                             </ul>
@@ -403,7 +442,7 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                             setShareBox(true)
                         }}>
                             {/* Invite Friends */}
-                            Invite Friends
+                            {t('invite.inv_more')}
                         </button>
                     </div>
                 </div>
@@ -424,7 +463,7 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                 <SwiperMine invInfo={invInfo} lang={lang} />
                 <div className="remark-save">
                     {/* Long press to save the picture */}
-                    Long press to save the picture
+                    {t('invite.save')}
                 </div>
             </div>
             {
@@ -438,7 +477,7 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                     <div className="share-title">
                         <p>
                             {/* Share to */}
-                            Share to
+                            {t('invite.share_to')}
                         </p>
                         <CloseOutline fontSize={16} color="#666" onClick={() => { setShareBox(false) }} />
                     </div>

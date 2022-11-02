@@ -344,6 +344,19 @@
         "save":"Long press the picture to save",
         "share_to":"Share to",
         "code":"Invitation code",
-        "enter_code":"Enter the invitation code"
+        "enter_code":"Enter the invitation code",
+        "share_1":"Invite friends to earn",
+        "share_2":"money together",
+        "share_3":"Share highest with friends",
+        "share_4":"commission rebates",
+        "recom":"My recommendation",
+        "share_after":"After recharging, you will get:",
+        "commission":"Invitation commission",
+        "share_5":"Every successful recommendation of a friend",
+        "share_6":"Enjoy multi-level commission return",
+        "share_earn":"Earn coins with friends",
+        "copy_code":"Copy Code",
+        "copy_link":"Copy Link",
+        "rank_remark":"Your ranking in the first 24 hours"
     }
 }
