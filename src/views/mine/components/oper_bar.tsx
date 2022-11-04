@@ -6,34 +6,35 @@ import { Manage } from "./assets_manage";
 const MineOperBar = (): ReactElement<ReactNode> => {
     const history = useHistory();
     const { t } = useTranslation();
+    const LAND:string | undefined = process.env.REACT_APP_LAND;
     const safeList: Manage[] = [
         {
             //资金密码
             title: t('public.assets_pass'),
-            icon: require(`../../../assets/images/assets_lock${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`),
+            icon: require(`../../../assets/images/assets_lock${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`),
             url: '/assets-lock'
         },
         {
             //实名认证
             title: t('public.verify_card'),
-            icon: require(`../../../assets/images/auth_icon${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`),
+            icon: require(`../../../assets/images/auth_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`),
             url: '/auth-card'
         },
         {
             //登录密码
             title: t('public.edit_login_pass'),
-            icon: require(`../../../assets/images/pass_icon${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`),
+            icon: require(`../../../assets/images/pass_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`),
             url: '/set-pass'
         },
         {
             //设置
             title: t('public.set_center'),
-            icon: require(`../../../assets/images/set_icon${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`),
+            icon: require(`../../../assets/images/set_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`),
             url: '/setting'
         },
     ]
     return (
-        <div className={`mine-oper-bar mine-assets-manage ${process.env.REACT_APP_AREA == '66' ? 'mine-assets-manage-th' : ''}`}>
+        <div className={`mine-oper-bar mine-assets-manage ${process.env.REACT_APP_LAND == '1' && 'mine-assets-manage-th' || process.env.REACT_APP_LAND == '3' && 'mine-assets-manage-new' || ''}`}>
             {/* <List style={{ "--font-size": "15px" }}>
                 <List.Item prefix={<img src={require('../../../assets/images/other_1.png')} />} onClick={() => {
                     history.push('/trade-order')
@@ -49,6 +50,7 @@ const MineOperBar = (): ReactElement<ReactNode> => {
                 </List.Item>
             </List> */}
             <p className="manage-title">
+                <img src={require('../../../assets/images/home_new/title_before.png')} alt="" />
                 {/* 安全设置 */}
                 {t('public.safe_set')}
             </p>

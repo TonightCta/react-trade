@@ -53,9 +53,15 @@ const RouteConfig = (): ReactElement<ReactNode> => {
       <TransitionGroup>
         <CSSTransition key={location.pathname} timeout={1000} classNames="page">
           <Switch location={location}>
+            {/**
+             * REACT_APP_LAND
+             * 1 ---> 泰国
+             * 2 ---> 南非
+             * 3 ---> 南非 YD
+            */}
             <Route path="/" exact render={() => <Redirect to="/home" />}></Route>
             <Route path="/login" key="login" component={View.LoginIndex}></Route>
-            <Route path={`/home`} key="home" component={process.env.REACT_APP_AREA === '63' ? View.HomeIndexOutside :  View.HomeIndex}></Route>
+            <Route path={`/home`} key="home" component={process.env.REACT_APP_LAND == '1' && View.HomeIndex || process.env.REACT_APP_LAND == '2' && View.HomeIndexOutside || process.env.REACT_APP_LAND == '3' && View.HomeIndexNew || View.HomeIndex}></Route>
             <Route path="/quotes" key="quotes" component={View.QuotesIndex}></Route>
             <Route path="/quotes-detail" key="quotesDetail" component={View.TesDetail}></Route>
             <Route path="/setting" key="setting" component={View.SetIndex}></Route>

@@ -34,6 +34,7 @@ import DownIndex from "./down/down";
 import NotFound from "./notfound/not_fount";
 import DownEnIndex from './down_en/index';
 import InviteIndexTh from "./invite_th";
+import HomeIndexNew from './home_new'
 
 
 export {
@@ -73,4 +74,5 @@ export {
     HomeIndexOutside,//南非首页
     DownEnIndex,//南非下载页
     InviteIndexTh,//泰国邀请页
+    HomeIndexNew,//南非YD首页
 }

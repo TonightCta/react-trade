@@ -39,7 +39,7 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
         complete: t('public.down_over'),//刷新完成
     }
     return (
-        <div className={`tes-all-list ${process.env.REACT_APP_AREA == '66' ? 'tes-all-list-th' : ''}`}>
+        <div className={`tes-all-list ${process.env.REACT_APP_LAND == '1' && 'tes-all-list-th' || process.env.REACT_APP_LAND == '3' && 'tes-all-list-new' || ''}`}>
             {
                 props.total === 0
                     ? <Empty description={t('public.has_no_data')} />

@@ -54,12 +54,20 @@
           color: white;
         }
       }
-      .trade-type-th{
-        .buy-btn{
-          background-color: #00D9B5;
+      .trade-type-th {
+        .buy-btn {
+          background-color: #00d9b5;
         }
-        .sell-btn{
-          background-color: #F66F6A;
+        .sell-btn {
+          background-color: #f66f6a;
+        }
+      }
+      .trade-type-new {
+        .buy-btn {
+          background-color: #6b7bff;
+        }
+        .sell-btn {
+          background-color: #ef7171;
         }
       }
       .trade-way {
@@ -95,7 +103,7 @@
         flex-direction: column;
         font-size: 12px;
         justify-content: flex-start;
-        p{
+        p {
           text-align: left;
         }
         p:first-child {
@@ -171,31 +179,60 @@
       }
       .persent-high-25-th {
         .percent-25 {
-          background-color: #00D9B5;
+          background-color: #00d9b5;
         }
       }
       .persent-high-50-th {
         .percent-25 {
-          background-color: #00D9B5;
+          background-color: #00d9b5;
         }
         .percent-50 {
-          background-color: #00D9B5;
+          background-color: #00d9b5;
         }
       }
       .persent-high-75-th {
         .percent-25 {
-          background-color: #00D9B5;
+          background-color: #00d9b5;
         }
         .percent-50 {
-          background-color: #00D9B5;
+          background-color: #00d9b5;
         }
         .percent-75 {
-          background-color: #00D9B5;
+          background-color: #00d9b5;
         }
       }
       .persent-high-100-th {
         .percent-item {
-          background-color: #00D9B5;
+          background-color: #00d9b5;
+        }
+      }
+      .persent-high-25-new {
+        .percent-25 {
+          background-color: #6b7bff;
+        }
+      }
+      .persent-high-50-new {
+        .percent-25 {
+          background-color: #6b7bff;
+        }
+        .percent-50 {
+          background-color: #6b7bff;
+        }
+      }
+      .persent-high-75-new {
+        .percent-25 {
+          background-color: #6b7bff;
+        }
+        .percent-50 {
+          background-color: #6b7bff;
+        }
+        .percent-75 {
+          background-color: #6b7bff;
+        }
+      }
+      .persent-high-100-new {
+        .percent-item {
+          background-color: #6b7bff;
         }
       }
       .trade-price {
@@ -216,6 +253,12 @@
         button {
           background-color: #fd7a56;
           border-color: #fd7a56;
+        }
+      }
+      .sell-btn-new {
+        button {
+          background-color: #ef7171;
+          border-color: #ef7171;
         }
       }
     }
@@ -266,8 +309,8 @@
           font-weight: bold;
           color: #3370ff;
         }
-        .now-price-th{
-          color: #00D9B5;
+        .now-price-th {
+          color: #00d9b5;
         }
         .up-pain {
           li {
@@ -418,13 +461,13 @@
             font-size: 14px;
             font-weight: 500;
           }
-          .experience-order{
+          .experience-order {
             margin-left: 4px;
-            background:url('../../assets/images/text_bg.png');
+            background: url("../../assets/images/text_bg.png");
             background-size: 100% 100%;
             padding: 3px 12px;
             font-size: 12px;
-            color: #FCA443;
+            color: #fca443;
             font-weight: 500;
           }
         }

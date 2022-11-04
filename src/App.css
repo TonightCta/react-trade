@@ -5,7 +5,10 @@
   box-sizing: border-box;
 }
 body{
-  background-color: #f8f8f8;
+  /* 泰国 */
+  /* background-color: #f8f8f8; */
+  /* 南非 - New */
+  background-color: #f9f9f9;
 }
 .App {
   text-align: center;

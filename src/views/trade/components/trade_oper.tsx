@@ -29,6 +29,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
     const [state, setState] = useState<Store>(store.getState());
     //队列可用余额
     const [formBalance, setFormBalance] = useState<number>(0);
+    const LAND : string | undefined = process.env.REACT_APP_LAND
     const [toBalance, setToBalance] = useState<number>(0);
     const getBalance = async () => {
         setFormBalance(await QuireBalance(sessionStorage.getItem('tradeFromCoin') || ''))
@@ -192,7 +193,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
         <div className="trade-oper">
             <div className="oper-left oper-public">
                 {/* 交易类型 */}
-                <div className={`trade-type ${process.env.REACT_APP_AREA == '66' ? 'trade-type-th' : ''}`}>
+                <div className={`trade-type ${process.env.REACT_APP_LAND == '1' && 'trade-type-th' || process.env.REACT_APP_LAND == '3' && 'trade-type-new' || ''}`}>
                     <p className={`${tradeType === 1 ? 'buy-btn' : ''}`} onClick={() => {
                         setTradeType(1)
                     }}>
@@ -268,7 +269,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
                     <p>{tradeType === 1 ? formBalance.toFixed(8) : toBalance.toFixed(8)}&nbsp;{tradeType === 1 ? state.tradeFromCoin : state.tradeToCoin}</p>
                 </div>
                 {/* 快捷操作 */}
-                <div className={`fast-oper persent-high-${persent} ${process.env.REACT_APP_AREA == '66' ? `persent-high-${persent}-th` : ''}`}>
+                <div className={`fast-oper persent-high-${persent} ${process.env.REACT_APP_LAND == '1' && `persent-high-${persent}-th` || process.env.REACT_APP_LAND == '3' && `persent-high-${persent}-new` || ''}`}>
                     <div className="percent-item percent-25" onClick={() => {
                         setTradeAmount(tradeType === 1 ? formBalance * 0.25 : toBalance * 0.25)
                         setPersent(25)
@@ -295,7 +296,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
                     <p>{tradeToAmount.toFixed(6)}&nbsp;{tradeType == 1 ? state.tradeToCoin : state.tradeFromCoin}</p>
                 </div>
                 {/* 交易进行 */}
-                <div className={`turn-btn ${tradeType === 2 ? 'sell-btn' : ''}`} onClick={() => {
+                <div className={`turn-btn ${tradeType === 2 ? 'sell-btn' : ''} ${LAND == '3' && tradeType === 2 && 'sell-btn-new'}`} onClick={() => {
                     submitPlaceOrder();
                 }}>
                     <Button color='primary'>

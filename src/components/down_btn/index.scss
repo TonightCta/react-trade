@@ -19,3 +19,8 @@
     height: 46px;
   }
 }
+.without-left{
+  img:first-child {
+    margin-right: 4px;
+  }
+}

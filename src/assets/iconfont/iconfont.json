@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "2154945",
+      "name": "播放器-播放_44",
+      "font_class": "bofangqi-bofang",
+      "unicode": "e6a4",
+      "unicode_decimal": 59044
+    },
+    {
+      "icon_id": "32647118",
+      "name": "xiazai-2",
+      "font_class": "xiazai-2",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "32646184",
+      "name": "编组 (3)",
+      "font_class": "a-bianzu32",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "32646185",
+      "name": "编组 (2)",
+      "font_class": "a-bianzu2",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "32646186",
+      "name": "编组 (1)",
+      "font_class": "a-bianzu11",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "32646187",
+      "name": "编组",
+      "font_class": "bianzu3",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
       "icon_id": "32437038",
       "name": "编组 3",
       "font_class": "a-bianzu31",

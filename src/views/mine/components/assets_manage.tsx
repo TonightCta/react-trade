@@ -12,17 +12,18 @@ export interface Manage {
 
 const MineAssetsManage = (): ReactElement<ReactNode> => {
     const { t } = useTranslation();
+    const LAND : string | undefined = process.env.REACT_APP_LAND;
     const ManageList: Array<Manage> = [
         {
             //资产流水
             title: t('public.bill_list'),
-            icon: require(`../../../assets/images/order_icon${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`),
+            icon: require(`../../../assets/images/order_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`),
             url: '/assets-bill'
         },
         {
             //我的资产
             title: t('public.assets'),
-            icon: require(`../../../assets/images/assets_icon${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`),
+            icon: require(`../../../assets/images/assets_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`),
             url: '/mine-assets'
         },
         // {
@@ -34,20 +35,21 @@ const MineAssetsManage = (): ReactElement<ReactNode> => {
         {
             //当前委托
             title: t('public.now_mission'),
-            icon: require(`../../../assets/images/cur_icon${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`),
+            icon: require(`../../../assets/images/cur_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`),
             url: '/trade-order?type=1'
         },
         {
             //历史委托
             title: t('public.before_mission'),
-            icon: require(`../../../assets/images/his_icon${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`),
+            icon: require(`../../../assets/images/his_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`),
             url: '/trade-order?type=2'
         },
     ]
     const history = useHistory();
     return (
-        <div className={`mine-assets-manage ${process.env.REACT_APP_AREA == '66' ? 'mine-assets-manage-th' : '' } ${store.getState().downApp === 3 ? 't-100' : ''}`}>
+        <div className={`mine-assets-manage ${process.env.REACT_APP_LAND == '1' && 'mine-assets-manage-th' || process.env.REACT_APP_LAND == '3' && 'mine-assets-manage-new' || ''} ${store.getState().downApp === 3 ? 't-100' : ''}`}>
             <p className="manage-title">
+                <img src={require('../../../assets/images/home_new/title_before.png')} alt="" />
                 {/* 资产管理 */}
                 {t('public.assets_manage')}
             </p>

@@ -80,10 +80,10 @@
     ul {
       .up-color {
         .list-price {
-          color: #5BC638;
+          color: #5bc638;
         }
         .list-rate {
-          background-color: #5BC638;
+          background-color: #5bc638;
           color: white;
         }
       }
@@ -94,6 +94,28 @@
         .list-rate {
           background-color: #fd5656;
           color: white;
+        }
+      }
+    }
+  }
+  .tes-all-list-new {
+    ul {
+      .up-color {
+        .list-price {
+          color: #5acf52;
+        }
+        .list-rate {
+          background-color: #e3ffd9;
+          color: #5acf52;
+        }
+      }
+      .down-color {
+        .list-price {
+          color: #ef7171;
+        }
+        .list-rate {
+          background-color: #ffe0df;
+          color: #ef7171;
         }
       }
     }

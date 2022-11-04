@@ -19,33 +19,33 @@ interface Props extends RouteComponentProps {
 
 const Footer = (props: Props): React.ReactElement<ReactNode> => {
     const { t } = useTranslation();
-    const AREA : string | undefined = process.env.REACT_APP_AREA;
+    const AREA : string | undefined = process.env.REACT_APP_LAND;
     const navList: Array<Nav> = [
         {
             key: 'home',
             title: t('public.page'),
-            icon: <span className={`iconfont ${AREA == '66' ? 'icon-bianzu11' : 'icon-a-bianzu1'}`}></span>,
+            icon: <span className={`iconfont ${AREA == '1' && 'icon-bianzu11' || AREA == '2' && 'icon-a-bianzu1' || AREA == '3' && 'icon-bianzu3'}`}></span>,
             // icon:<AppOutline/>,
             url: '/'
         },
         {
             key: 'quotes',
             title: t('public.quotes'),
-            icon: <span className={`iconfont ${AREA == '66' ? 'icon-a-bianzu31' : 'icon-bianzu'}`}></span>,
+            icon: <span className={`iconfont ${AREA == '1' && 'icon-a-bianzu31' || AREA == '2' && 'icon-bianzu' || AREA == '3' && 'icon-a-bianzu11'}`}></span>,
             // icon:<HistogramOutline/>,
             url: '/quotes'
         },
         {
             key: 'trade',
             title: t('public.trade'),
-            icon: <span className={`iconfont ${AREA == '66' ? 'icon-a-bianzu41' : 'icon-a-bianzu3' }`}></span>,
+            icon: <span className={`iconfont ${AREA == '1' && 'icon-a-bianzu41' || AREA == '2' && 'icon-a-bianzu3' || AREA == '3' && 'icon-a-bianzu2'}`}></span>,
             // icon:<UnorderedListOutline/>,
             url: '/trade'
         },
         {
             key: 'mine',
             title: t('public.mine'),
-            icon: <span className={`iconfont ${AREA == '66' ? 'icon-bianzu2' : 'icon-a-bianzu4'}`}></span>,
+            icon: <span className={`iconfont ${AREA == '1' && 'icon-bianzu2' || AREA == '2' && 'icon-a-bianzu4' || AREA == '3' && 'icon-a-bianzu32'}`}></span>,
             // icon:<UserOutline/>,
             url: '/mine'
         },
@@ -97,9 +97,10 @@ const Footer = (props: Props): React.ReactElement<ReactNode> => {
     //     } else {
     //         setShowNav(0)
     //     }
-    // }, [])
+    // }, []);
+    const LAND : string | undefined = process.env.REACT_APP_LAND;
     return (
-        <div className={`footer-nav ${showNav === 0 ? 'hidden-nav' : ''} ${process.env.REACT_APP_AREA == '66' ? 'th-footer' : ''}`}>
+        <div className={`footer-nav ${showNav === 0 ? 'hidden-nav' : ''} ${LAND == '1' && 'th-footer' || LAND == '3' && 'new-footer'}`}>
             <TabBar activeKey={currentNav} onChange={(key: string): void => {
                 changeNav(key)
             }}>
