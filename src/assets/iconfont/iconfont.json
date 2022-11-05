@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "32666165",
+      "name": "yaoqingtuiguang 2",
+      "font_class": "a-yaoqingtuiguang2",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "32666166",
+      "name": "yaoqingtuiguang 2 2",
+      "font_class": "a-yaoqingtuiguang22",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
       "icon_id": "2154945",
       "name": "播放器-播放_44",
       "font_class": "bofangqi-bofang",

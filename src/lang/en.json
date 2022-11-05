@@ -75,7 +75,7 @@
         "detail": "Invitation Rules",
         "inv_link": "Invitation Link",
         "click_login": "Click to login",
-        "welcome": "Welcome to BIBI",
+        "welcome": "Welcome to {{value}}",
         "mine_en": "Commission",
         "safe_set": "Security Setting",
         "people": "People",

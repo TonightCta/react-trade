@@ -3,12 +3,11 @@ import { CloseOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-// import store from "../../store";
 import './index.scss'
 
 const GuideHeader = (props: { closeDialog: (status: boolean) => void, t: any }): ReactElement => {
     return (
-        <div className={`guide-header ${process.env.REACT_APP_AREA == '66' ? 'guide-header-th' : ''}`}>
+        <div className="guide-header">
             <div className="close-icon" onClick={() => {
                 props.closeDialog(false)
             }}><CloseOutline fontSize={16} /></div>
@@ -112,7 +111,7 @@ const GuideContent = (props: { history: any, t: any }): ReactElement<ReactNode> 
     )
 };
 
-const DownIndex = (): ReactElement<ReactNode> => {
+const DownNewIndex = (): ReactElement<ReactNode> => {
     const [guideBox, setGuidebox] = useState<boolean>(false);
     const history = useHistory();
     const { t } = useTranslation();
@@ -128,15 +127,15 @@ const DownIndex = (): ReactElement<ReactNode> => {
         }
     }, [])
     return (
-        <div className="down-index">
-            <img className="back-icon" src={require('../../assets/images/back_icon_th.png')} alt="" onClick={() => {
+        <div className="down-index-new">
+            <img className="back-icon" src={require('../../assets/images/back_icon_new.png')} alt="" onClick={() => {
                 history.goBack();
             }} />
-            <img className="bg-img" src={require(`../../assets/images/down_en_th.png`)} alt="" />
+            <img className="bg-img" src={require(`../../assets/images/down_new.png`)} alt="" />
             {mobileType === 'Android' && <div className="left-android click-box-use-to-rem" onClick={() => {
                 const downImg = document.createElement("a");
-                downImg.download = "BIBI.apk";
-                downImg.href = `${process.env.REACT_APP_SHARE}/BIBI_version_09.apk`;
+                downImg.download = "YD.apk";
+                downImg.href = `${process.env.REACT_APP_SHARE}/yd.apk`;
                 document.body.appendChild(downImg);
                 downImg.click();
                 downImg.remove();
@@ -145,14 +144,6 @@ const DownIndex = (): ReactElement<ReactNode> => {
                 <div className="">
                     <p>Android</p>
                     <p>Download</p>
-                </div>
-            </div>}
-            {mobileType === 'Android' && <div className="left-android click-box-use-to-rem" onClick={() => {
-                window.open('https://play.google.com/store/apps/details?id=plus.H5302CFD1')
-            }}>
-                <p className="iconfont icon-a-googleplay"></p>
-                <div className="">
-                    <p>Google Play</p>
                 </div>
             </div>}
             {mobileType === 'IOS' && <div className="right-ios click-box-use-to-rem" onClick={() => {
@@ -171,4 +162,4 @@ const DownIndex = (): ReactElement<ReactNode> => {
     )
 };
 
-export default DownIndex;
+export default DownNewIndex;

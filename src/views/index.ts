@@ -1,3 +1,4 @@
+import React from "react";
 import HomeIndex from "./home";
 import HomeIndexOutside from "./home_out";
 import QuotesIndex from './quotes';
@@ -34,7 +35,9 @@ import DownIndex from "./down/down";
 import NotFound from "./notfound/not_fount";
 import DownEnIndex from './down_en/index';
 import InviteIndexTh from "./invite_th";
-import HomeIndexNew from './home_new'
+import HomeIndexNew from './home_new';
+import InviteIndexNew from './invite_new/index';
+import DownNewIndex from './down_new/index'
 
 
 export {
@@ -75,4 +78,6 @@ export {
     DownEnIndex,//南非下载页
     InviteIndexTh,//泰国邀请页
     HomeIndexNew,//南非YD首页
+    InviteIndexNew,//南非YD邀请页
+    DownNewIndex,//南非YD下载页
 }

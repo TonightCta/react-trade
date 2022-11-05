@@ -27,12 +27,12 @@ const langList = [
     //     cation: 'ru',
     //     langIcon: require('../../../assets/images/ru.png')
     // },
-    {
-        name: 'Thailand(ไทย)',
-        country:'ไทย',
-        cation: 'th',
-        langIcon: require('../../../assets/images/th.png')
-    }
+    // {
+    //     name: 'Thailand(ไทย)',
+    //     country:'ไทย',
+    //     cation: 'th',
+    //     langIcon: require('../../../assets/images/th.png')
+    // }
 ];
 
 const SetLanguage = (): ReactElement<ReactNode> => {

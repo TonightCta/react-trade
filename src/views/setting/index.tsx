@@ -46,7 +46,12 @@ const SetIndex = (): ReactElement<ReactNode> => {
                         setList.map((el, index): ReactElement => {
                             return (
                                 <List.Item onClick={() => {
-                                    const protocol: string = process.env.REACT_APP_AREA == '63' ? 'https://sites.google.com/view/terms-of-use2privacy-policy' : `${process.env.REACT_APP_SHARE}/PrivacyPolicy.html`;
+                                    const protocol: string =
+                                        process.env.REACT_APP_LAND == '1' &&
+                                        'https://sites.google.com/view/terms-of-use2privacy-policy' ||
+                                        process.env.REACT_APP_LAND == '3' &&
+                                        'https://sites.google.com/view/yd-exchange-privacy-policy' ||
+                                        `${process.env.REACT_APP_SHARE}/PrivacyPolicy.html`;
                                     el.url ? history.push(el.url) : window.open(protocol)
                                 }} key={index}>{el.title}</List.Item>
                             )

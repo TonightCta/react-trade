@@ -1,4 +1,3 @@
-import { SetOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -49,6 +48,10 @@ const MineNav = (): ReactElement<ReactNode> => {
                         history.push('/setting')
                     }} />
                 </span> */}
+                {/* <div className="down-box">
+                    <p className="iconfont icon-xiazai-2"></p>
+                    <p>Download</p>
+                </div> */}
             </div>
             <div className="account-box">
                 <div className="account-left">
@@ -80,7 +83,7 @@ const MineNav = (): ReactElement<ReactNode> => {
                         <p>
                             {/* 欢迎来到80年代 */}
                             {
-                                t('public.welcome')
+                                t('public.welcome',{value:process.env.REACT_APP_LAND == '3' ? 'YD' : 'BIBI'})
                             }
                         </p>
                     </div>

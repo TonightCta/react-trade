@@ -17,11 +17,12 @@ const LoadView: React.FC = (): ReactElement<ReactNode> => {
             }, 1000);
         }
     }, []);
+    const LAND : string | undefined = process.env.REACT_APP_LAND;
     return (
         <div>
             {
                 loadView === 0 && !GetUrlKey('withoutload',window.location.href) ? <div className={`load-view ${showLoad}`}>
-                    <img src={require('../../assets/images/load_view.png')} alt="" />
+                    <img src={require(`../../assets/images/load_view${LAND == '3' ? '_new' : ''}.png`)} alt="" />
                 </div> : null
             }
         </div>

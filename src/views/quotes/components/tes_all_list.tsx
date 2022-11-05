@@ -60,12 +60,6 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                                                     const actiton = upCurrentCoin(el);
                                                     store.dispatch(actiton);
                                                     const viewQu = (): void => {
-                                                        // send({
-                                                        //     e: 'unsubscribe-deal',
-                                                        //     d: {
-                                                        //         symbol: String(props.base),
-                                                        //     }
-                                                        // });
                                                         history.push('/quotes-detail');
                                                     };
                                                     const viewTrade = (): void => {
@@ -88,14 +82,6 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
                                                         store.dispatch(actionFrom);
                                                         store.dispatch(actionTo);
                                                         props.closeDraw!()
-                                                        // console.log(props.base)
-                                                        // sendWs({
-                                                        //     e: 'unsubscribe',
-                                                        //     d: {
-                                                        //         symbol: String(props.base),
-                                                        //         interval: "1m"
-                                                        //     }
-                                                        // });
                                                     }
                                                     props.type === 1 ? viewQu() : viewTrade();
                                                 }}>

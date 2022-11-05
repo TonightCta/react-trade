@@ -11,7 +11,8 @@ interface Props {
     },
     t: any,
     time: number,
-    getMoreKChild?:(time:number) => void;
+    price: number,
+    getMoreKChild?: (time: number) => void;
     // setLineDataMine: (second: number, type: string) => void,
 }
 
@@ -76,14 +77,14 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
         grid: [
             {
                 left: 0,
-                right: 62,
                 top: 10,
+                right: props.price > 10000 && 62 || props.price < 0.1 && 72 || 40,
                 bottom: 30
             },
             {
                 left: 0,
-                right: 62,
                 bottom: "9%",
+                right:62,
                 height: 60,
             }
         ],
@@ -171,10 +172,9 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
                     showMaxLabel: false,
                     color: '#333',
                     formatter: (value: number, index: number): number | string => {
-                        return value.toFixed(2)
+                        return value < 0.1 ? value.toFixed(6) : value.toFixed(2)
                     }
                 },
-
             },
             {
                 gridIndex: 1,
@@ -309,8 +309,10 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
 
         ]
     };
+
     useEffect((): void => {
         if (props.upKMsg.k) {
+            console.log(option)
             const date = props.upKMsg.k!.map((item: any) => {
                 return convet(item.t)
             });
@@ -336,13 +338,13 @@ const TesPriceK = (props: Props): ReactElement<ReactNode> => {
             test.off('dataZoom')
             test.on('dataZoom', (params: any) => {
                 const data = {
-                    start:Math.ceil(params.batch[0].start),
-                    end:Math.ceil(params.batch[0].end)
+                    start: Math.ceil(params.batch[0].start),
+                    end: Math.ceil(params.batch[0].end)
                 }
-                sessionStorage.setItem('dataZoom',JSON.stringify(data));
-                if(params.batch[0].start === 0){
+                sessionStorage.setItem('dataZoom', JSON.stringify(data));
+                if (params.batch[0].start === 0) {
                     // props.getMoreK(props.upKMsg.k[0].t)
-                    const win : any = window;
+                    const win: any = window;
                     win.getMoreK(props.upKMsg.k[0].t)
                 }
             })

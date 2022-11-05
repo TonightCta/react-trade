@@ -56,9 +56,10 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
         //登录成功
         Toast.show(t('message.login_success'))
         history.push('/')
-    }
+    };
+    const LAND : string | undefined = process.env.REACT_APP_LAND;
     return (
-        <div className="login-index">
+        <div className={`login-index ${LAND == '1' && 'login-index-th' || LAND == '3' && 'login-index-new' || '' }`}>
             <div className="int-bg-box"></div>
             <div className="up-bg-box">
                 <div className="close-page">
@@ -71,8 +72,8 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
                     </div>
                 </div>
                 <div className="page-remark">
-                    <img src={require(`../../assets/images/int_logo${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`)} alt="" />
-                    <p>{t('public.welcome')}</p>
+                    <img src={require(`../../assets/images/int_logo${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`)} alt="" />
+                    <p>{t('public.welcome',{value:`${LAND == '3' ? 'YD' : 'BIBI'}`})}</p>
                 </div>
                 <div className="login-box">
                     <div className="box-public">
@@ -89,10 +90,10 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
                         }} placeholder={t('public.enter_email_phone')} />
                         <span><MailOutline color="#999" fontSize={18} /></span>
                     </div>
-                    <div className="box-public">
+                    <div className="box-public need-top">
                         {/* 登录密码 */}
                         <p>{t('public.login_pass')}</p>
-                        <input type="password" value={inpMsg.password} onChange={(e) => {
+                        <input type="password" autoComplete="new-password" value={inpMsg.password} onChange={(e) => {
                             setInpMsg({
                                 ...inpMsg,
                                 password: e.target.value
@@ -104,9 +105,9 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
                         {/* 登录 */}
                         <Button color="primary" loading={loading} disabled={loading} block onClick={() => { loginService() }}>{t('public.login')}</Button>
                     </p>
-                    <p className={`register-btn ${process.env.REACT_APP_AREA == '66' ? 'register-btn-th' : ''}`}>
+                    <p className='register-btn'>
                         <span onClick={() => { history.push('/register') }}>
-                            {/* 立即注册 */}
+                            {/* 立即注册 */} 
                             {t('public.regis_now')}
                         </span>
                         <span onClick={() => { history.push('/forget') }}>{t('public.forget')}?</span>

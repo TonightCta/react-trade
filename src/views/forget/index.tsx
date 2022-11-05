@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import './index.scss';
-import { CheckShieldOutline, CloseOutline, LockOutline, MailOutline, PhonebookOutline, RightOutline } from "antd-mobile-icons";
+import { CheckShieldOutline, CloseOutline, LockOutline, MailFill, MailOutline, PhonebookOutline, PhoneFill, RightOutline } from "antd-mobile-icons";
 import { Button, Popup, Toast } from "antd-mobile";
 import { useTranslation } from "react-i18next";
 import { SendCodeApi, ForgetPassApi, CountryListApi } from '../../request/api';
@@ -147,10 +147,11 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
         };
         Toast.show(t('message.reset_success'));
         history.push('/login')
-    }
+    };
+    const LAND: string | undefined = process.env.REACT_APP_LAND
     return (
-        <div className="forget-pass">
-            <div className={`int-bg-box`}></div>
+        <div className={`forget-pass ${LAND == '1' && 'fotget-pass-th' || LAND == '3' && 'fotget-pass-new' || ''}`}>
+            <div className="int-bg-box"></div>
             <div className="up-bg-box">
                 <div className="close-page">
                     <CloseOutline fontSize={24} color="#333" onClick={() => {
@@ -163,17 +164,23 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
                 </div>
                 {/* 忘记密码 */}
                 <div className="page-remark">
-                    <img src={require(`../../assets/images/int_logo${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`)} alt="" />
+                    <img src={require(`../../assets/images/int_logo${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`)} alt="" />
                     <p>{t('public.forget')}</p>
                 </div>
-                <div className={`register-way ${process.env.REACT_APP_AREA == '66' ? 'register-way-th' : ''}`}>
+                <div className="register-way">
                     <ul>
                         <li className={`${intWay === 1 ? 'active-intway' : ''}`} onClick={() => { setIntWay(1) }}>
+                            <span className="iconfont">
+                                <MailFill />
+                            </span>
                             {/* Mail */}
                             {t('public.mail')}
                         </li>
                         <li></li>
                         <li className={`${intWay === 2 ? 'active-intway' : ''}`} onClick={() => { setIntWay(2) }}>
+                            <span className="iconfont">
+                                <PhoneFill />
+                            </span>
                             {/* Phone */}
                             {t('public.phone')}
                         </li>
@@ -216,7 +223,7 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
                             })
                         }} placeholder={t('public.enter_code')} />
                         <span><CheckShieldOutline color="#999" fontSize={18} /></span>
-                        <p className={`send-code ${process.env.REACT_APP_AREA == '66' ? 'send-code-th' : ''} ${count === 60 ? '' : 'gra-btn'}`} onClick={count === 60 ? () => {
+                        <p className={`send-code ${count === 60 ? '' : 'gra-btn'}`} onClick={count === 60 ? () => {
                             sendCodeService();
                         } : () => { }}>
                             {/* 发送验证码 */}

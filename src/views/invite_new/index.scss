@@ -1,4 +1,4 @@
-.invite-index-th {
+.invite-index-new {
   position: relative;
   padding-bottom: 58px;
   .without-bg-nav {
@@ -12,10 +12,13 @@
   .invite-box {
     width: 100%;
     .top-bg {
-      background: url("../../assets/images/invite_bg_th.png");
-      background-size: 100% 100%;
+      background: linear-gradient(
+        180deg,
+        #d8dbff 0%,
+        rgba(244, 244, 251, 0) 100%
+      );
       width: 100%;
-      height: 726px;
+      height: 390px;
       position: absolute;
       top: 0;
       left: 0;
@@ -26,11 +29,12 @@
       display: flex;
       justify-content: space-between;
       padding-left: 12px;
-      padding-top: 56px;
+      padding-top: 50px;
       .top-inner-left {
         text-align: left;
         p:first-child {
-          font-size: 18px;
+          font-size: 22px;
+          line-height: 28px;
           color: #333;
           font-weight: bold;
           margin-bottom: 8px;
@@ -54,77 +58,69 @@
         align-items: flex-end;
         p {
           margin-top: 7px;
-          text-align: left;
-          width: 150px;
+          text-align: right;
           text-align: center;
-          height: 28px;
-          background: url("../../assets/images/inv_btn_th.png");
-          background-size: 100% 100%;
+          padding: 2px 8px 3px 7px;
+          background-color: #f4f5ff;
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+          border: 1px solid rgba(80, 88, 197, 0.24);
           font-size: 12px;
-          color: rgba(255, 255, 255, 0.8);
-          line-height: 28px;
+          color: #8a91f3;
+          line-height: 22px;
           white-space: nowrap;
-          color: #01996b;
+          .iconfont {
+            font-size: 12px;
+            display: inline-block;
+            transform: translateY(1px);
+          }
         }
       }
     }
     .banner-text {
-      width: 264px;
-      padding: 13px 20px 7px 10px;
-      border-radius: 4px;
-      background: rgba(23, 183, 136, 0.06);
-      margin-left: 22px;
-      margin-top: 92px;
+      width: calc(100% - 24px);
+      margin: 0 auto;
+      margin-top: 20px;
       text-align: left;
       position: relative;
-      .top-text {
-        position: absolute;
-        width: calc(100% - 20px);
-        display: flex;
-        background-color: rgba(0, 173, 121, 0.18);
-        height: 16px;
-        border-radius: 2px;
-        align-items: center;
-        top: -8px;
-        justify-content: flex-start;
-        p {
-          font-size: 12px;
-          transform: scale(0.8) translateX(-18px);
-          margin-bottom: 0 !important;
-        }
-        img {
-          width: 18px;
-          height: 7px;
-          display: inline-block;
-          transform: translateX(-32px);
-        }
-      }
-      p:first-child {
-        font-weight: 500;
-        margin-bottom: 8px;
-      }
-      p {
-        font-weight: 600;
-        color: #7c928b;
-        white-space: nowrap;
+      height: 330px;
+      background: url("../../assets/images/home_new/invite_bg.png");
+      background-size: 100% 100%;
+      padding: 12px;
+      .text-1 {
+        text-align: center;
         font-size: 12px;
-        span {
-          font-size: 22px;
-          color: #00ad79;
-          margin-right: 2px;
-        }
+        color: #333;
+        font-weight: 500;
       }
-      p:last-child {
-        margin-top: 3px;
+      .text-2 {
+        margin-top: 22px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .text-3 {
+        margin-top: 8px;
+        padding: 0 3px;
+        line-height: 28px;
+        display: table;
+        height: 28px;
+        font-size: 24px;
+        color: #00ad79;
+        font-weight: bold;
+        background-color: #ededed;
+      }
+      .text-4 {
+        font-size: 12px;
+        color: rgba(51, 51, 51, 0.6);
+        margin-top: 4px;
       }
     }
     .invite-box-1 {
       width: 100%;
-      margin-top: 126px;
+      margin-top: 80px;
       .box-1-bottom {
         .btn-qr {
           width: 100%;
-          padding: 0 12px;
           display: flex;
           align-items: flex-end;
           button {
@@ -132,13 +128,12 @@
             outline: none;
             border: 0;
             background-color: rgba(0, 0, 0, 0);
-            background-image: url("../../assets/images/box_1_btn_th.png");
+            background-image: url("../../assets/images/home_new/invite_btn.png");
             background-size: 100% 100%;
-            color: #00a070;
-            height: 70px;
+            color: white;
+            height: 54px;
             text-align: left;
-            padding-left: 84px;
-            padding-top: 12px;
+            padding-left: 74px;
             span:first-child {
               font-size: 16px;
               font-weight: 600;
@@ -150,9 +145,10 @@
             }
           }
           .share-qr {
-            width: 56px;
+            width: 59px;
             height: 56px;
-            background: linear-gradient(180deg, #ebfff9 0%, #ecfef9 100%);
+            background: url("../../assets/images/home_new/invite_left.png");
+            background-size: 100% 100%;
             border-radius: 4px;
             margin-left: 12px;
             display: flex;
@@ -167,31 +163,31 @@
         .share-link {
           display: flex;
           width: 100%;
-          padding: 0 12px;
           padding-top: 8px;
           overflow: hidden;
           justify-content: space-between;
           .link-public {
             width: calc(50% - 6px);
-            height: 39px;
-            line-height: 39px;
-            padding-top: 3px;
+            height: 46px;
             font-size: 16px;
-            font-weight: 600;
-            padding-left: 6px;
-          }
-          .link-code {
-            background: url("../../assets/images/copy_code.png");
-            background-size: 100% 100%;
+            padding: 0 8px;
+            font-weight: 500;
+            background-color: #f6f6f6;
             p {
-              color: #007fb5;
-            }
-          }
-          .link-url {
-            background: url("../../assets/images/copy_link.png");
-            background-size: 100% 100%;
-            p {
-              color: #b58400;
+              display: flex;
+              align-items: center;
+              height: 100%;
+              span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 30px;
+                height: 30px;
+                background-color: #e4e3e3;
+                margin-right: 10px;
+                border-radius: 4px;
+                font-weight: 400;
+              }
             }
           }
         }
@@ -199,39 +195,44 @@
     }
     .invite-box-2 {
       width: 100%;
-      margin-top: 20px;
+      margin-top: 14px;
       padding: 0 12px;
       .ranking-mine {
-        text-align: left;
+        text-align: center;
         font-size: 18px;
         font-weight: 500;
         color: #333;
       }
       .ranking-num {
-        width: 95px;
-        height: 20px;
-        background: url("../../assets/images/no_bg.png");
-        background-size: 100% 100%;
-        text-align: left;
+        text-align: center;
         padding-left: 8px;
         margin-top: 6px;
         font-size: 14px;
-        color: white;
+        color: #333;
         font-weight: 500;
         line-height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: 22px;
+        }
+        span {
+          margin: 0 10px;
+        }
       }
       .three-list {
-        margin-top: 40px;
+        margin-top: 52px;
         ul {
           display: flex;
           justify-content: space-between;
           li {
             width: 110px;
-            height: 90px;
-            background-color: red;
+            height: 132px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            border-radius: 4px;
             .three-avatar {
               width: 36px;
               height: 36px;
@@ -241,23 +242,27 @@
               justify-content: center;
               align-items: center;
               margin-bottom: 4px;
-              border: 1px solid #afd9ff;
-              transform: translateY(-6px);
+              border: 1px solid rgba(255, 255, 255, 0.8);
+              transform: translateY(-20px);
               img {
                 height: 100%;
               }
             }
             p:nth-child(2) {
               font-size: 12px;
-              column-rule: #999;
-              transform: scale(0.9) translateY(-8px);
+              column-rule: #666;
+              transform: scale(0.9) translateY(-20px);
             }
-            p:last-child {
+            .reward-amount {
               font-size: 12px;
               color: #1a46aa;
               font-weight: 500;
               margin-top: 2px;
-              transform: translateY(-6px);
+              transform: translateY(-12px);
+            }
+            .rank-icon{
+              width: 24px;
+              height: 33px;
             }
             .p-24 {
               padding-top: 16px;
@@ -268,38 +273,45 @@
             }
           }
           li:first-child {
-            background: url("../../assets/images/invite_2.png");
-            background-size: 100% 100%;
-            p:last-child {
+            background: linear-gradient(
+              180deg,
+              #dde8fb 0%,
+              rgba(247, 246, 251, 0) 100%
+            );
+            .reward-amount {
               color: #9c9c9c;
             }
           }
           li:nth-child(2) {
-            background: url("../../assets/images/invite_1.png");
-            background-size: 100% 100%;
-            transform: translateY(-6px);
-            .three-avatar {
-              transform: translateY(-12px);
-            }
+            background: linear-gradient(
+              180deg,
+              #ffd4a7 0%,
+              rgba(247, 246, 251, 0) 100%
+            );
+            transform: translateY(-20px);
+            height: 142px;
             p:nth-child(2) {
               transform: scale(0.9) translateY(-14px);
             }
-            p:last-child {
+            .reward-amount {
               transform: translateY(-11px);
-              color: #fd7f1f;
+              color: #FD7F1F;
             }
           }
           li:last-child {
-            background: url("../../assets/images/invite_3.png");
-            background-size: 100% 100%;
-            p:last-child {
+            background: linear-gradient(
+              180deg,
+              #fde5de 0%,
+              rgba(247, 246, 251, 0) 100%
+            );
+            .reward-amount {
               color: #e04423;
             }
           }
         }
       }
       .other-list {
-        margin-top: 4px;
+        margin-top: -14px;
         .no-data {
           font-size: 14px;
           color: #999;
@@ -311,9 +323,9 @@
           padding: 12px;
           align-items: center;
           background: white;
-          box-shadow: 0px 2px 8px 0px rgba(6, 158, 168, 0.07);
           margin-bottom: 8px;
-          border-radius: 4px;
+          box-shadow: 0px 2px 8px 0px rgba(6,158,168,0.07);
+          border-radius: 25px;
           .other-left {
             display: flex;
             align-items: center;
@@ -365,7 +377,7 @@
       .invite-qr {
         width: 44px;
         height: 44px;
-        background-color: rgba(132, 248, 220, 0.3);
+        background-color: #f8f8f8;
         border-radius: 4px;
         margin-right: 12px;
         display: flex;
@@ -381,7 +393,7 @@
         button {
           width: 100%;
           height: 100%;
-          background-color: rgba(23, 183, 135, 1);
+          background-color: #5058C5;
           border-radius: 4px;
           border: 0;
           outline: none;

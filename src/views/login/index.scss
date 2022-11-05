@@ -96,9 +96,67 @@
         font-size: 14px;
       }
     }
-    .register-btn-th{
-      span{
-        color: #00D9B5;
+  }
+}
+.login-index-th {
+  .up-bg-box {
+    .login-box {
+      .register-btn {
+        span {
+          color: #00d9b5;
+        }
+      }
+    }
+  }
+}
+.login-index-new {
+  background-color: #F7FCFF;
+  .int-bg-box {
+    height: 474px;
+    background: url("../../assets/images/int_bg_new.png");
+    background-size: 100% 100%;
+  }
+  .up-bg-box {
+    .page-remark {
+      img {
+        width: 110px;
+        height: 70px;
+      }
+    }
+    .login-box {
+      border-radius: 8px;
+      background-color: white;
+      width: calc(100% - 24px);
+      margin: 0 auto;
+      margin-top: 24px;
+      padding: 20px 22px;
+      border: 1px solid #e0e4fc;
+      .box-public{
+        margin-bottom: 0;
+        p{
+          color: #666;
+          margin-bottom: 10px;
+        }
+        input{
+          border-radius: 22px;
+          padding-left: 14px;
+        }
+        span{
+          display: none;
+        }
+      }
+      .need-top{
+        margin-top: 24px;
+      }
+      .login-btn{
+        button{
+          background-color: #5058C5;
+        }
+      }
+      .register-btn{
+        span{
+          color: #1677FF;
+        }
       }
     }
   }

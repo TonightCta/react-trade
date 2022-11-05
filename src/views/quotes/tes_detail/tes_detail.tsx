@@ -297,7 +297,7 @@ const TesDetail = (): ReactElement<ReactNode> => {
             {/* 价格信息 */}
             <TesPriceMsg upMsg={priceMsg} t={t} />
             {/* 价格K线图 */}
-            {<TesPriceK upKMsg={kData} time={stamp} t={t} />}
+            {<TesPriceK price={priceMsg.price} upKMsg={kData} time={stamp} t={t} />}
             {/* 成交信息 */}
             <TesDealMsg dealData={dealData} t={t} />
             {/* 交易按钮 */}

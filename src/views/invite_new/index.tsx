@@ -141,21 +141,21 @@ const SwiperMine = (props: { invInfo: any, lang: string | null }): ReactElement 
     return (
         <>
             <div className="before-create-1" ref={printElementOne}>
-                <img src={require(`../../assets/images/poster_1_th_${props.lang}.png`)} alt="" />
+                <img src={require(`../../assets/images/home_new/poster_1.png`)} alt="" />
                 <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p>
                 <div className="qr-box">
                     <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={30} id="qrCode" />
                 </div>
             </div>
             <div className="before-create-1" ref={printElementTwo}>
-                <img src={require(`../../assets/images/poster_2_th_${props.lang}.png`)} alt="" />
+                <img src={require(`../../assets/images/home_new/poster_2.png`)} alt="" />
                 <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p>
                 <div className="qr-box">
                     <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={30} id="qrCode" />
                 </div>
             </div>
             <div className="before-create-1" ref={printElementThree}>
-                <img src={require(`../../assets/images/poster_3_th_${props.lang}.png`)} alt="" />
+                <img src={require(`../../assets/images/home_new/poster_3.png`)} alt="" />
                 <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p>
                 <div className="qr-box">
                     <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={30} id="qrCode" />
@@ -180,7 +180,7 @@ const SwiperMine = (props: { invInfo: any, lang: string | null }): ReactElement 
     )
 }
 
-const InviteIndexTh = (): ReactElement<ReactNode> => {
+const InviteIndexNew = (): ReactElement<ReactNode> => {
     const [msgModal, setMsgModal] = useState<boolean>(false);
     const history = useHistory();
     const { t } = useTranslation();
@@ -241,7 +241,7 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
         )
     };
     return (
-        <div className={`invite-index-th`}>
+        <div className={`invite-index-new`}>
             <InnerNav withOutBg leftArrow title={t('public.inv_title')} />
             <div className="invite-box">
                 <div className="top-bg"></div>
@@ -270,6 +270,7 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                         }}>
                             {/* Rules */}
                             {t('invite.rules')}
+                            <span className="iconfont icon-right"></span>
                         </p>
                         <p onClick={() => {
                             const action = upInvLevel(4);
@@ -278,31 +279,29 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                         }}>
                             {/* My recommendation */}
                             {t('invite.recom')}
+                            <span className="iconfont icon-right"></span>
                         </p>
                     </div>
                 </div>
                 <div className="banner-text">
-                    <p>
+                    <p className="text-1">
+                        Successfully recommended a friend
+                    </p>
+                    <p className="text-2">
                         {/* After recharging, you will get： */}
                         {t('invite.share_after')}
                     </p>
-                    <p><span>10%~60%</span>
+                    <p className="text-3">
+                        10%~60%
+                    </p>
+                    <p className="text-4">
                         {/* Invitation commission */}
                         {t('invite.commission')}
                     </p>
-                    <div className="top-text">
-                        <p>
-                            {/* Every successful recommendation of a friend */}
-                            {t('invite.share_5')}
-                        </p>
-                        <img src={require('../../assets/images/right_invite_th.png')} alt="" />
-                    </div>
-                    <p>
+                    <p className="text-4">
                         {/* Enjoy multi-level commission return */}
                         {t('invite.share_6')}
                     </p>
-                </div>
-                <div className="p-12">
                     <div className="invite-box-1">
                         <div className="box-1-bottom">
                             <div className="btn-qr">
@@ -325,7 +324,7 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                                     placement='top'
                                 >
                                     <div className="share-qr">
-                                        <img src={require('../../assets/images/qr_2_icon_th.png')} alt="" />
+                                        <img src={require('../../assets/images/qr_2_icon_new.png')} alt="" />
                                     </div>
                                 </Popover>
                             </div>
@@ -334,6 +333,9 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                                     copyLink(invInfo?.code)
                                 }}>
                                     <p>
+                                        <span>
+                                            <i className="iconfont icon-a-yaoqingtuiguang2"></i>
+                                        </span>
                                         {/* Copy Code */}
                                         {t('invite.copy_code')}
                                     </p>
@@ -342,6 +344,9 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                                     copyLink(`${invInfo?.link}?code=${invInfo?.code}`)
                                 }}>
                                     <p>
+                                        <span>
+                                            <i className="iconfont icon-a-yaoqingtuiguang22"></i>
+                                        </span>
                                         {/* Copy Link */}
                                         {t('invite.copy_link')}
                                     </p>
@@ -349,6 +354,8 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="p-12">
                     <div className="invite-box-2">
                         <p className="ranking-mine">
                             {/* Your ranking in the first 24 hours */}
@@ -356,7 +363,9 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                         </p>
                         {/* <p className="">No.{rankMine}{rankMine > 999 ? '+' : ''}</p> */}
                         <p className="ranking-num">
-                            No.{rankMine}{rankMine >= 99 ? '+' : ''}
+                            <img src={require('../../assets/images/home_new/title_before.png')} alt="" />
+                            <span>No.{rankMine}{rankMine >= 99 ? '+' : ''}</span>
+                            <img src={require('../../assets/images/home_new/title_before.png')} alt="" />
                         </p>
                         <div className="three-list">
                             <ul>
@@ -366,7 +375,8 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                                             <img src={rankList[1].avatar ? rankList[1].avatar : require('../../assets/images/default_avatar.png')} alt="" />
                                         </div>
                                         <p>****{rankList[1].email.substring(rankList[1].email.length - 5, rankList[1].email.length)}</p>
-                                        <p>{Number(rankList[1].reward).toFixed(0)}&nbsp;USDT</p>
+                                        <p className="reward-amount">{Number(rankList[1].reward).toFixed(0)}&nbsp;USDT</p>
+                                        <img className="rank-icon" src={require('../../assets/images/home_new/invite_two.png')} alt="" />
                                     </> : <div className="p-24">{rankList.length < 2 ? <p>
                                         {/* Waiting */}
                                         {t('invite.waiting')}
@@ -378,7 +388,8 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                                             <img src={rankList[0].avatar ? rankList[0].avatar : require('../../assets/images/default_avatar.png')} alt="" />
                                         </div>
                                         <p>****{rankList[0].email.substring(rankList[0].email.length - 5, rankList[0].email.length)}</p>
-                                        <p>{Number(rankList[0].reward).toFixed(0)}&nbsp;USDT</p>
+                                        <p className="reward-amount">{Number(rankList[0].reward).toFixed(0)}&nbsp;USDT</p>
+                                        <img className="rank-icon" src={require('../../assets/images/home_new/invite_one.png')} alt="" />
                                     </> : <div className="p-24">{rankList.length === 0 ? <p>
                                         {/* Waiting */}
                                         {t('invite.waiting')}
@@ -390,7 +401,8 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                                             <img src={rankList[2].avatar ? rankList[2].avatar : require('../../assets/images/default_avatar.png')} alt="" />
                                         </div>
                                         <p>****{rankList[2].email.substring(rankList[2].email.length - 5, rankList[2].email.length)}</p>
-                                        <p>{Number(rankList[2].reward).toFixed(0)}&nbsp;USDT</p>
+                                        <p className="reward-amount">{Number(rankList[2].reward).toFixed(0)}&nbsp;USDT</p>
+                                        <img className="rank-icon" src={require('../../assets/images/home_new/invite_three.png')} alt="" />
                                     </> : <div className="p-24">{rankList.length < 3 ? <p>
                                         {/* Waiting */}
                                         {t('invite.waiting')}
@@ -432,7 +444,7 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                         placement='top'
                     >
                         <div className="invite-qr">
-                            <img src={require('../../assets/images/qr_2_icon_th.png')} alt="" />
+                            <img src={require('../../assets/images/qr_2_icon_new.png')} alt="" />
                         </div>
                     </Popover>
                     <div className="invite-btn-inner">
@@ -506,4 +518,4 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
         </div >
     )
 };
-export default InviteIndexTh;
+export default InviteIndexNew;

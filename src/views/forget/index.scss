@@ -68,6 +68,9 @@
         color: #666;
         font-weight: 500;
         transition: 0.3s all;
+        span {
+          display: none;
+        }
       }
       li:nth-child(2) {
         padding: 0;
@@ -126,9 +129,6 @@
         right: 12px;
         top: 37px;
       }
-      .send-code-th{
-        color: #00d9b5;
-      }
       .select-perfix {
         position: absolute;
         left: 34px;
@@ -157,6 +157,93 @@
     }
     .login-btn {
       margin-top: 54px;
+    }
+  }
+}
+.fotget-pass-th {
+  .up-bg-box {
+    .register-way {
+      .active-intway {
+        color: #00d9b5;
+      }
+    }
+    .box-public {
+      .send-code {
+        color: #00d9b5;
+      }
+    }
+  }
+}
+.fotget-pass-new {
+  .int-bg-box {
+    height: 474px;
+    background: url("../../assets/images/int_bg_new.png");
+    background-size: 100% 100%;
+  }
+  .up-bg-box {
+    .page-remark {
+      img {
+        width: 110px;
+        height: 70px;
+      }
+      p {
+        display: none;
+      }
+    }
+    .register-way {
+      ul {
+        li {
+          width: 150px;
+          height: 40px;
+          line-height: 40px;
+          padding: 0;
+          background-color: white;
+          font-size: 14px;
+          color: #9da3c3;
+          span {
+            display: inline-block;
+            font-size: 16px;
+            margin-right: 4px;
+          }
+        }
+        li:first-child {
+          margin-right: 28px;
+        }
+        li:nth-child(2) {
+          display: none;
+        }
+        .active-intway {
+          background-color: #5058c5;
+          color: white;
+        }
+      }
+    }
+    .login-box {
+      width: calc(100% - 24px);
+      margin: 0 auto;
+      margin-top: 30px;
+      background-color: white;
+      border: 1px solid #e0e4fc;
+      padding: 26px 22px;
+      border-radius: 8px;
+      .box-public {
+        p {
+          color: #666;
+        }
+        input {
+          border-radius: 22px;
+        }
+      }
+      .read-protocol {
+        span {
+          color: #1677ff;
+        }
+      }
+      .login-btn {
+        button {
+          background-color: #5058c5;
+        }
+      }
     }
   }
 }

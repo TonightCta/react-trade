@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import './index.scss';
-import { CheckShieldOutline, CloseOutline, DownOutline, LinkOutline, LockOutline, MailOutline, PhonebookOutline, RightOutline, SearchOutline } from "antd-mobile-icons";
+import { CheckShieldOutline, CloseOutline, DownOutline, LinkOutline, LockOutline, MailFill, MailOutline, PhonebookOutline, PhoneFill, RightOutline, SearchOutline } from "antd-mobile-icons";
 import { Button, Checkbox, Popup, Toast } from "antd-mobile";
 import { useTranslation } from 'react-i18next';
 import { SendCodeApi, RegisterApi, CountryListApi, GetSlugApi } from '../../request/api';
@@ -97,7 +97,12 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
         };
     }, [count]);
     // 
-    const protocol: string = process.env.REACT_APP_AREA == '63' ? 'https://sites.google.com/view/terms-of-use2privacy-policy' : `${process.env.REACT_APP_SHARE}/PrivacyPolicy.html`;
+    const protocol: string = 
+        process.env.REACT_APP_LAND == '1' && 
+        'https://sites.google.com/view/terms-of-use2privacy-policy' || 
+        process.env.REACT_APP_LAND == '3' && 
+        'https://sites.google.com/view/yd-exchange-privacy-policy' || 
+        `${process.env.REACT_APP_SHARE}/PrivacyPolicy.html`;
     const [readPrototal, setReadPrototal] = useState<boolean>(true);
     useEffect(() => {
         getSlug();
@@ -130,8 +135,9 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
     const history = useHistory();
 
     const [selectCountryBox, setSelectCountryBox] = useState<boolean>(false);
+    const LAND: string | undefined = process.env.REACT_APP_LAND;
     return (
-        <div className="register-index">
+        <div className={`register-index ${LAND == '1' && 'register-index-th' || LAND == '3' && 'register-index-new' || ''}`}>
             <div className="bg-box"></div>
             <div className="up-bg-box">
                 <div className="close-page">
@@ -144,18 +150,24 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                     </div>
                 </div>
                 <div className="page-remark">
-                    <img src={require(`../../assets/images/int_logo${process.env.REACT_APP_AREA == '66' ? '_th' : ''}.png`)} alt="" />
+                    <img src={require(`../../assets/images/int_logo${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`)} alt="" />
                     <p>{t('public.regis_now')}</p>
                 </div>
                 {/* 注册方式 */}
-                <div className={`register-way ${process.env.REACT_APP_AREA == '66' ? 'register-way-th' : ''}`}>
+                <div className="register-way">
                     <ul>
                         <li className={`${intWay === 1 ? 'active-intway' : ''}`} onClick={() => { setIntWay(1) }}>
+                            <span className="iconfont">
+                                <MailFill />
+                            </span>
                             {/* Mail */}
                             {t('public.mail')}
                         </li>
                         <li></li>
                         <li className={`${intWay === 2 ? 'active-intway' : ''}`} onClick={() => { setIntWay(2) }}>
+                            <span className="iconfont">
+                                <PhoneFill />
+                            </span>
                             {/* Phone */}
                             {t('public.phone')}
                         </li>
@@ -227,7 +239,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             })
                         }} placeholder={t(`public.${'enter_code'}`)} />
                         <span><CheckShieldOutline color="#999" fontSize={18} /></span>
-                        <p className={`send-code ${process.env.REACT_APP_AREA == '66' ? 'send-code-th' : ''} ${count === 60 ? '' : 'gra-btn'}`} onClick={count === 60 ? async () => {
+                        <p className={`send-code ${count === 60 ? '' : 'gra-btn'}`} onClick={count === 60 ? async () => {
                             if (intWay === 1 && !inpMsg.email) {
                                 Toast.show(t('public.enter_email'));
                                 return;
@@ -271,7 +283,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                         }} placeholder={t('public.enter_pass')} />
                         <span><LockOutline color="#999" fontSize={18} /></span>
                     </div>
-                    <p className={`read-protocol ${process.env.REACT_APP_AREA == '66' ? 'read-protocol-th' : ''}`}>
+                    <p className="read-protocol">
                         <Checkbox defaultChecked onChange={(e) => {
                             setReadPrototal(e);
                         }} style={{
@@ -346,10 +358,9 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             {t('public.regis_now')}
                         </Button>
                     </p>
-
-                    <div className="register-remark">
-                        <div style={{ lineHeight: '24px' }} dangerouslySetInnerHTML={{ __html: slug }}></div>
-                    </div>
+                </div>
+                <div className="register-remark">
+                    <div style={{ lineHeight: '24px' }} dangerouslySetInnerHTML={{ __html: slug }}></div>
                 </div>
             </div>
             {/* 选择国家地区 */}
