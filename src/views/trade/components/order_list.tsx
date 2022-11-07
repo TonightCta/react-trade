@@ -131,6 +131,8 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
                                                                 Toast.show(result.message);
                                                                 return;
                                                             };
+                                                            const win:any = window;
+                                                            win.winRetsetBalance(result.data);
                                                             //取消委托成功
                                                             Toast.show(props.t('message.cancel_entrust'));
                                                             getOrderList();
@@ -145,7 +147,7 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
                                                     <p>{el.created_at}</p>
                                                 </div>
                                                 <div className="trade-detail">
-                                                    <p>
+                                                    <p> 
                                                         {/* 委托总量 */}
                                                         {props.t('public.mission_total')}
                                                         &nbsp;{el.order_amount.toFixed(4)}&nbsp;{el.order_amount_symbol}</p>

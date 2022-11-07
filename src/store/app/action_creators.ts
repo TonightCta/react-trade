@@ -152,6 +152,10 @@ export const setDownApp = (down:number) => ({
 export const setWSSToken = (token:string) => ({
     type:Type.WSS_TOKEN,
     token
+});
+export const setOrderType = (_type:number) => ({
+    type:Type.SET_ORDER_TYPE,
+    _type
 })
 
 

@@ -29,7 +29,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
     const [state, setState] = useState<Store>(store.getState());
     //队列可用余额
     const [formBalance, setFormBalance] = useState<number>(0);
-    const LAND : string | undefined = process.env.REACT_APP_LAND
+    const LAND: string | undefined = process.env.REACT_APP_LAND
     const [toBalance, setToBalance] = useState<number>(0);
     const getBalance = async () => {
         setFormBalance(await QuireBalance(sessionStorage.getItem('tradeFromCoin') || ''))
@@ -102,6 +102,8 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
     const [tradeWay, setTradeWay] = useState<number>(1);
     //选择子类型Popup
     const [selectWayBox, setSelectWayBox] = useState<boolean>(false);
+    //交易等待
+    const [waitResult,setWaitResult] = useState<boolean>(false);
     //限价金额
     const [limitPrice, setLimitPrice] = useState<number>(0);
     //切换交易方式置空默认数据
@@ -125,6 +127,17 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
             }
         }
     }, [tradeAmount, props.coinPrice, limitPrice, tradeWay]);
+    //Bus更新余额
+    const winRetsetBalance = (_bal:any) => {
+        if(Object.keys(_bal.balance)[0] === state.tradeFromCoin){
+            setFormBalance(Number(Object.values(_bal.balance)[0]))
+        }
+        if(Object.keys(_bal.balance)[0] === state.tradeToCoin){
+            setToBalance(Number(Object.values(_bal.balance)[0]))
+        }
+    };
+    const win:any = window;
+    win.winRetsetBalance = winRetsetBalance;
     //下单交易
     const submitPlaceOrder = async () => {
         if (tradeAmount == 0) {
@@ -143,6 +156,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
                 return;
             }
         };
+        setWaitResult(true);
         const type =
             tradeType === 1 && tradeWay === 1 && 'BUY' ||
             tradeType === 1 && tradeWay === 2 && 'BUY_LIMIT' ||
@@ -155,24 +169,31 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
             amount: tradeAmount
         };
         const result = await PlaceCoinOrderApi(params);
-        const { code } = result;
+        const { code, data } = result;
         if (code !== 200) {
             Toast.show(result.message);
             return;
         };
+        setWaitResult(false);
         //交易成功
         Toast.show(props.t('message.trade_success'));
         // const action = setReloadOrder(new Date().getTime());
         // store.dispatch(action);
         const win: any = window;
-        win.getOrderList()
+        if (tradeWay === 1 && state.orderType === 2) {
+            win.getOrderList()
+        }
+        if (tradeWay === 2 && state.orderType === 1) {
+            win.getOrderList()
+        };
         setTradeAmount(0);
         setPersent(0);
-        getBalance();
+        setFormBalance(Number(data.balance[state.tradeFromCoin]))
+        setToBalance(Number(data.balance[state.tradeToCoin]))
     }
     const storeChange = () => {
         store.subscribe(() => {
-            setState(store.getState())
+            setState(store.getState());
         });
     };
     useEffect(() => {
@@ -299,7 +320,7 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
                 <div className={`turn-btn ${tradeType === 2 ? 'sell-btn' : ''} ${LAND == '3' && tradeType === 2 && 'sell-btn-new'}`} onClick={() => {
                     submitPlaceOrder();
                 }}>
-                    <Button color='primary'>
+                    <Button color='primary' loading={waitResult} disabled={waitResult}>
                         {tradeType === 1 ? props.t('public.buy_in') : props.t('public.sell_out')}
                     </Button>
                 </div>

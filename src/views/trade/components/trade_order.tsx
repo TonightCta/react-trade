@@ -5,23 +5,27 @@ import OrderList from "./order_list";
 import { withRouter, useHistory } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
 import React from "react";
+import store from "../../../store";
+import { setOrderType } from "../../../store/app/action_creators";
 
 interface Props extends RouteComponentProps {
     t: any
 }
 
-const TradeOrder = React.forwardRef((props: Props,ref:any) => {
-    const [orderType, setOrderType] = useState<number>(1);
+const TradeOrder = React.forwardRef((props: Props, ref: any) => {
+    const [orderType, setOrderTypeInner] = useState<number>(1);
     const order_list: any = useRef(null);
     const history = useHistory();
-    useImperativeHandle(ref,() => ({
-        test:123
+    useImperativeHandle(ref, () => ({
+        test: 123
     }));
     return (
         <div className="trade_order">
             <div className="order-oper">
                 <Tabs style={{ '--title-font-size': '14px' }} onChange={(e) => {
-                    setOrderType(Number(e))
+                    setOrderTypeInner(Number(e));
+                    const action = setOrderType(Number(e));
+                    store.dispatch(action);
                     order_list.current.uploadOrder(e)
                 }}>
                     {/* 当前委托 */}

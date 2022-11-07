@@ -61,7 +61,7 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
                     });
                 }
             })
-        },1000)
+        }, 1000)
         send({
             e: 'subscribe-depth',
             d: {
@@ -108,6 +108,13 @@ const TradeIndex = React.forwardRef((props: any, ref: any) => {
                             toBalance: data.d.balance
                         })
                     }
+                }
+                if (data.e === 'limitOrder') {
+                    const win: any = window;
+                    win.winRetsetBalance(data.data);
+                    if(store.getState().orderType === 1){
+                        win.getOrderList();
+                    };
                 }
             } catch (err) {
                 console.log(err)

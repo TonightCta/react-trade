@@ -35,7 +35,7 @@ const App = (): React.ReactElement<ReactNode> => {
       store.dispatch(action);
     }
     if (!sessionStorage.getItem('tradeFromCoin')) {
-      const current = JSON.parse(localStorage.getItem('currentCoin') || '{}')
+      const current = JSON.parse(localStorage.getItem('currentCoin') || '{}');
       const actionFromCoin = setTradeFrom(current.target)
       const actionToCoin = setTradeTo(current.base)
       store.dispatch(actionFromCoin);
@@ -73,7 +73,7 @@ const App = (): React.ReactElement<ReactNode> => {
   };
   useEffect(() => {
     wsStatus === 1 && sendWSApp();
-  }, [wsStatus, sourceQ.length])
+  }, [wsStatus, sourceQ.length]);
   useEffect(() => {
     if (token && wsStatus === 1) {
       send({
@@ -86,7 +86,7 @@ const App = (): React.ReactElement<ReactNode> => {
   }, [token, wsStatus])
   useEffect(() => {
     storeChange();
-    if (store.getState().quList.length < 1) {
+    if (store.getState().quList.length < 1 || !sessionStorage.getItem('tradeFromCoin')) {
       setQUH();
     };
     if (GetUrlKey('innerApp', window.location.href)) {

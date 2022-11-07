@@ -57,6 +57,7 @@ export interface Store {
     country: string,//国家
     downApp: number,//下载状态
     tokenWSS: string,//ws登录
+    orderType:number,//订单类型
 }
 const defaultState: Store = {
     account: JSON.parse(localStorage.getItem('account') || '{}'),
@@ -90,6 +91,7 @@ const defaultState: Store = {
     country: localStorage.getItem('country') || 'Philippines',
     downApp: Number(sessionStorage.getItem('downApp')) || 1,
     tokenWSS: localStorage.getItem('tokenWSS') || '',
+    orderType:Number(sessionStorage.getItem('orderType')) || 1,
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
@@ -184,6 +186,9 @@ export default (state = defaultState, action: any) => {
         case Type.WSS_TOKEN:
             localStorage.setItem('tokenWSS', action.token);
             return { ...state, tokenWSS: action.token }
+        case Type.SET_ORDER_TYPE:
+            sessionStorage.setItem('orderType',action._type);
+            return { ...state,orderType:action._type }
         default:
             return state;
     };
