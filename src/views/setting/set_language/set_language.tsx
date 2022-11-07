@@ -9,31 +9,40 @@ import { CheckOutline } from "antd-mobile-icons";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
-const langList = [
-    // {
-    //     name: '中國香港',
-    //     cation: 'zh_TW',
-    //     langIcon: require('../../../assets/images/hongkong.png')
-    // },
+
+
+// {
+//     name: '中國香港',
+//     cation: 'zh_TW',
+//     langIcon: require('../../../assets/images/hongkong.png')
+// }
+// {
+//     name: 'Русский',
+//     country:'Россия',
+//     cation: 'ru',
+//     langIcon: require('../../../assets/images/ru.png')
+// }
+const langList = process.env.REACT_APP_LAND == '1' ? [
     {
         name: 'Philippines(English)',
-        country:'Philippines',
+        country: 'Philippines',
         cation: 'en',
         langIcon: require('../../../assets/images/en.png')
     },
-    // {
-    //     name: 'Русский',
-    //     country:'Россия',
-    //     cation: 'ru',
-    //     langIcon: require('../../../assets/images/ru.png')
-    // },
-    // {
-    //     name: 'Thailand(ไทย)',
-    //     country:'ไทย',
-    //     cation: 'th',
-    //     langIcon: require('../../../assets/images/th.png')
-    // }
-];
+    {
+        name: 'Thailand(ไทย)',
+        country: 'ไทย',
+        cation: 'th',
+        langIcon: require('../../../assets/images/th.png')
+    }
+] : [
+    {
+        name: 'Philippines(English)',
+        country: 'Philippines',
+        cation: 'en',
+        langIcon: require('../../../assets/images/en.png')
+    },
+]
 
 const SetLanguage = (): ReactElement<ReactNode> => {
     const [lang, setLang] = useState<string>(localStorage.getItem('language') || 'zh-TW');
@@ -64,7 +73,7 @@ const SetLanguage = (): ReactElement<ReactNode> => {
                                     const action = setLanguage(el.cation);
                                     store.dispatch(action)
                                     i18n.changeLanguage(el.cation);
-                                    localStorage.setItem('country',el.country);
+                                    localStorage.setItem('country', el.country);
                                     history.goBack();
                                     // window.location.reload();
                                 }}>

@@ -170,11 +170,11 @@ const TradeOper = (props: Props): ReactElement<ReactNode> => {
         };
         const result = await PlaceCoinOrderApi(params);
         const { code, data } = result;
+        setWaitResult(false);
         if (code !== 200) {
             Toast.show(result.message);
             return;
         };
-        setWaitResult(false);
         //交易成功
         Toast.show(props.t('message.trade_success'));
         // const action = setReloadOrder(new Date().getTime());

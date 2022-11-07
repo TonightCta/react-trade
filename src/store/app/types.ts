@@ -30,3 +30,4 @@ export const UP_COUNTRY = 'up_country';
 export const DOWN_APP = 'down_app';
 export const WSS_TOKEN = 'wss_token';
 export const SET_ORDER_TYPE = 'set_order_type';
+export const SET_GAP_TIME = 'set_gap_time';

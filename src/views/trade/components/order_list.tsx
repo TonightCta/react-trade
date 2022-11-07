@@ -40,7 +40,7 @@ const OrderList = React.forwardRef((props: OrderMsg, ref: any) => {
             page: page,
             limit: props.limit ? props.limit : 8,
             search: {
-                group_status: _type ? _type : dataType,
+                group_status: store.getState().orderType,
                 symbol: props.tradeQu?.replace('/', ''),
                 direction: order_type,
                 trade_type: trade_type,

@@ -2,7 +2,7 @@ import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { Tabs } from "antd-mobile";
 import TesAllList from "./tes_all_list";
 import { QUList } from '../../../request/api'
-import { setQU } from "../../../store/app/action_creators";
+import { setGapTime, setQU } from "../../../store/app/action_creators";
 import store from "../../../store";
 
 interface Props {
@@ -47,15 +47,27 @@ const TesTabs = (props: Props): ReactElement<ReactNode> => {
     const [TesListTwo, setTesListTwo] = useState<TesMsg[]>([]);
     const [dataTotal, setDataTotal] = useState<number>(1);
     const DataList = async (_val?: string) => {
-        const result = await QUList(_val ? _val : currentTab);
-        const arr = [];
-        for (let i in result.data.list) {
-            if (result.data.list[i].status === 1) {
-                arr.push(result.data.list[i])
+        const gap = Date.now() - store.getState().gapTime;
+        if (store.getState().gapTime === 0 || gap > 60000) {
+            const action = setGapTime(new Date().getTime());
+            store.dispatch(action)
+        };
+        const result = (gap > 60000 || _val !== 'USDT') ? await QUList(_val ? _val : currentTab) : {
+            data: {
+                list: store.getState().quList
             }
         };
-        const actionQU = setQU(arr);
-        store.dispatch(actionQU)
+        const arr = [];
+        const backResult: any[] = result.data.list;
+        for (let i in backResult) {
+            if (backResult[i].status === 1) {
+                arr.push(backResult[i])
+            }
+        };
+        if (gap > 60000) {
+            const actionQU = setQU(arr);
+            store.dispatch(actionQU);
+        }
         setDataTotal(arr.length);
         // arr = [...arr,...arr]
         setTesListTwo(arr.map(item => {
@@ -70,7 +82,11 @@ const TesTabs = (props: Props): ReactElement<ReactNode> => {
         }));
     };
     useEffect(() => {
-        DataList()
+        DataList('USDT');
+        return () => {
+            setDataTotal(0);
+            setTesListTwo([]);
+        }
     }, [])
     return (
         <div className="tes-tabs">

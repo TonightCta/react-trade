@@ -153,10 +153,14 @@ export const setWSSToken = (token:string) => ({
     type:Type.WSS_TOKEN,
     token
 });
+//设置订单类型
 export const setOrderType = (_type:number) => ({
     type:Type.SET_ORDER_TYPE,
     _type
+});
+export const setGapTime = (time:number) => ({
+    type:Type.SET_GAP_TIME,
+    time
 })
-
 
 

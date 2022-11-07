@@ -58,6 +58,7 @@ export interface Store {
     downApp: number,//下载状态
     tokenWSS: string,//ws登录
     orderType:number,//订单类型
+    gapTime:number,//行情刷新间隔
 }
 const defaultState: Store = {
     account: JSON.parse(localStorage.getItem('account') || '{}'),
@@ -92,6 +93,7 @@ const defaultState: Store = {
     downApp: Number(sessionStorage.getItem('downApp')) || 1,
     tokenWSS: localStorage.getItem('tokenWSS') || '',
     orderType:Number(sessionStorage.getItem('orderType')) || 1,
+    gapTime:Number(sessionStorage.getItem('gapTime')) || 0,
 };
 export default (state = defaultState, action: any) => {
     switch (action.type) {
@@ -189,6 +191,9 @@ export default (state = defaultState, action: any) => {
         case Type.SET_ORDER_TYPE:
             sessionStorage.setItem('orderType',action._type);
             return { ...state,orderType:action._type }
+        case Type.SET_GAP_TIME:
+            sessionStorage.setItem('gapTime',action.time);
+            return { ...state,gapTime:action.time }
         default:
             return state;
     };
