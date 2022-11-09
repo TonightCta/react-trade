@@ -1,4 +1,4 @@
-.down-index-en {
+.down-index {
   width: 100%;
   height: 100vh;
   position: fixed;
@@ -6,35 +6,32 @@
   left: 0;
   overflow: auto;
   display: flex;
-  align-items: flex-start;
-  padding-left: 28px;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  padding-bottom: 100px;
   img {
     width: 100%;
   }
   .click-box-use-to-rem {
-    position: absolute;
-    left: 28px;
-    bottom: 308px;
     z-index: 200;
     text-align: left;
     padding: 8px 14px;
-    background: rgba(255, 255, 255, 0.21);
-    display: flex;
+    background: rgba(122, 234, 206, 0.2);
     margin-top: 16px;
     align-items: center;
-    border-radius: 27px;
     padding-right: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 7px;
+    backdrop-filter: blur(1px);
+    display: flex;
+    margin-left: 16px;
     .iconfont {
       font-size: 22px;
-      color: white;
+      color: #00a573;
       margin-right: 8px;
     }
     div {
       p {
-        color: white;
+        color: #00a573;
       }
       p:first-child {
         font-size: 12px;
@@ -88,6 +85,13 @@
         color: #333;
         font-weight: 600;
       }
+    }
+  }
+  .guide-header-th {
+    background: url("../../assets/images/guide_bg_th.png");
+    background-size: 100% 100%;
+    .close-icon {
+      color: #19A76B;
     }
   }
   .guide-box {
@@ -162,6 +166,6 @@
     padding: 0;
   }
 }
-.down-index-en::-webkit-scrollbar {
+.down-index::-webkit-scrollbar {
   display: none;
 }

@@ -1,3 +1,4 @@
+//泰国邀请页
 import { DotLoading, Modal, Popover, Popup, Toast } from "antd-mobile";
 import { CloseOutline } from "antd-mobile-icons";
 import React, { ReactElement, ReactNode, useCallback, useEffect, useState, useRef } from "react";

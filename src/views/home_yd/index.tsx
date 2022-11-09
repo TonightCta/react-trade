@@ -1,7 +1,13 @@
+//南非首页
+
+
 import React, { ReactNode, useEffect, useReducer, useState } from "react";
 // import { useTranslation } from "react-i18next";
-import HomeBanner from "./components/banner";
+// import HomeBanner from "./components/banner";
+// import HomeAdv from "./components/adv";
 import './index.scss'
+import HomeAssets from "./components/my_wallet";
+// import HomeHelp from "./components/help";
 import HomeTexCard from "./components/tes_card";
 import HomeTeslist from "./components/tes_list";
 import { setHomeData } from "../../store/app/action_creators";
@@ -9,29 +15,19 @@ import store from "../../store";
 import { upUserAssets } from '../../store/app/action_fn'
 import { WSDataType } from "../../utils/state";
 import { useHistory } from 'react-router-dom'
+import HomeCard from "./components/card";
 import { addListener, removeListener } from "../../utils/hooks";
 import { initWsSubscribe, subscribeReducer } from '../../redurce/set_subscribe'
-import OutsideCard from "./components/card";
+import NavLogo from "./components/nav_log";
+
+interface Props {
+    type?: string
+}
 
 
-// Logo
-const NavLogo = (props: { history: any, downIcon: number }): React.ReactElement<ReactNode> => {
-    const [showDown, setShowdown] = useState<number>(props.downIcon);
-    useEffect(() => {
-        setShowdown(props.downIcon)
-    }, [props.downIcon])
-    return (
-        <div className="nav-logo">
-            <img className="bibi-logo" src={require('../../assets/images/logo.png')} alt="" />
-            {showDown === 2 && <img className="down-icon" src={require('../../assets/images/down_icon.png')} alt="" onClick={() => {
-                props.history.push('/download')
-            }} />}
-        </div>
-    )
-};
 
 
-const HomeIndexOutside = (): React.ReactElement<ReactNode> => {
+const HomeIndexNew = (): React.ReactElement<ReactNode> => {
     const [state, dispatch] = useReducer(subscribeReducer, [], initWsSubscribe);
     const [localQU, setLocalQU] = useState<any[]>(store.getState().quList);
     const [downIcon, setDownIcon] = useState<number>(store.getState().downApp)
@@ -103,20 +99,26 @@ const HomeIndexOutside = (): React.ReactElement<ReactNode> => {
         }
     }, []);
     return (
-        <div className="home-index-outside">
+        <div className="home-index-new">
             <NavLogo history={history} downIcon={downIcon} />
             {/* 轮播广告 */}
-            <HomeBanner history={history}/>
+            {/* <HomeBanner /> */}
+            {/* 广告中心 */}
+            {/* <HomeAdv /> */}
             {/* 行情卡片 */}
             <HomeTexCard wsData={state.wsSubscribe} />
-            {/* 卡片 */}
-            <OutsideCard history={history} />
+            {/* 操作卡片 */}
+            <HomeCard history={history} />
+            {/* 我的资产 */}
+            <HomeAssets />
+            {/* 帮助 & 公告 */}
+            {/* <HomeHelp /> */}
             {/* 涨幅榜 */}
             <HomeTeslist wsData={state.wsSubscribe} />
         </div>
     )
 };
 
-export default HomeIndexOutside;
+export default HomeIndexNew;
 
 

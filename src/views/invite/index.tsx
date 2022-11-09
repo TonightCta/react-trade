@@ -1,3 +1,4 @@
+//南非邀请页
 import { DotLoading, Modal, Popover, Popup, Toast } from "antd-mobile";
 import { CloseOutline, RightOutline } from "antd-mobile-icons";
 import React, { ReactElement, ReactNode, useCallback, useEffect, useState, useRef } from "react";
@@ -11,7 +12,7 @@ import printPage from 'html2canvas'
 import copy from 'copy-to-clipboard';
 import QRCode from 'qrcode.react';
 import Swiper from 'swiper';
-import { RankInviteApi } from '../../request/api'
+import { RankInviteApi } from '../../request/api';
 import 'swiper/css'
 import './index.scss'
 
@@ -273,6 +274,7 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                                 }}>
                                     {/* Share and get rewarded */}
                                     {t('invite.share')}
+                                    <img src={require('../../assets/images/invite_right.png')} alt="" />
                                 </button>
                                 <Popover
                                     content={<QrImg />}
@@ -283,7 +285,6 @@ const InviteIndex = (): ReactElement<ReactNode> => {
                                         <img src={require('../../assets/images/qr_icon.png')} alt="" />
                                     </div>
                                 </Popover>
-
                             </div>
                             <div className="share-link">
                                 <div className="link-code link-public">

@@ -1,6 +1,6 @@
 import React from "react";
-import HomeIndex from "./home";
-import HomeIndexOutside from "./home_out";
+import HomeIndex from './home_th'
+import HomeIndexOutside from "./home";
 import QuotesIndex from './quotes';
 import TradeIndex from "./trade";
 import MineIndex from "./mine";
@@ -31,13 +31,13 @@ import AddressManage from "./mine/mine_assets/address_manage/address_mange";
 import InviteIndex from "./invite";
 import RechargeFaitIndex from "./mine/mine_assets/rechange_fait/recharge_fait";
 import WithdrawFait from "./mine/mine_assets/withdraw_fait/withdraw_fait";
-import DownIndex from "./down/down";
+import DownIndex from './down_th/down'
 import NotFound from "./notfound/not_fount";
-import DownEnIndex from './down_en/index';
+import DownEnIndex from './down';
 import InviteIndexTh from "./invite_th";
-import HomeIndexNew from './home_new';
-import InviteIndexNew from './invite_new/index';
-import DownNewIndex from './down_new/index'
+import HomeIndexNew from './home_yd';
+import InviteIndexNew from './invite_yd'
+import DownNewIndex from './down_yd'
 
 
 export {

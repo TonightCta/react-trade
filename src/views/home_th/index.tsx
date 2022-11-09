@@ -1,3 +1,6 @@
+//泰国首页
+
+
 import React, { ReactNode, useEffect, useReducer, useState } from "react";
 // import { useTranslation } from "react-i18next";
 // import HomeBanner from "./components/banner";
@@ -24,7 +27,7 @@ interface Props {
 
 
 
-const HomeIndexNew = (): React.ReactElement<ReactNode> => {
+const HomeIndex = (): React.ReactElement<ReactNode> => {
     const [state, dispatch] = useReducer(subscribeReducer, [], initWsSubscribe);
     const [localQU, setLocalQU] = useState<any[]>(store.getState().quList);
     const [downIcon, setDownIcon] = useState<number>(store.getState().downApp)
@@ -96,7 +99,7 @@ const HomeIndexNew = (): React.ReactElement<ReactNode> => {
         }
     }, []);
     return (
-        <div className="home-index-new">
+        <div className="home-index">
             <NavLogo history={history} downIcon={downIcon} />
             {/* 轮播广告 */}
             {/* <HomeBanner /> */}
@@ -116,6 +119,6 @@ const HomeIndexNew = (): React.ReactElement<ReactNode> => {
     )
 };
 
-export default HomeIndexNew;
+export default HomeIndex;
 
 

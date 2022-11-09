@@ -280,7 +280,8 @@
         "need_read":"I have read and agree to the ",
         "protocol":"Privacy Policy",
         "experience":"Experience Gold",
-        "experience_order":"Experience Gold Order"
+        "experience_order":"Experience Gold Order",
+        "select_cs":"Select customer service"
     },
     "message": {
         "regis_success": "Registration is successful, it will be automatically go to login for you",

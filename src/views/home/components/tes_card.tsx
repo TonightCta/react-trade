@@ -63,6 +63,7 @@ const HomeTexCard = (props: { wsData: any }): ReactElement<ReactNode> => {
                                     <p className="coin-qu">{msg.coin}</p>
                                     <p className="coin-price">{Number(msg.price).toFixed(msg.precision)}</p>
                                     <p className="coin-rate">
+                                        <img src={require(`../../../assets/images/out/out_${msg.type === 1 ? 'up' : 'down'}.png`)} alt="" />
                                         {msg.type === 1 ? '+' : ''}
                                         {Number(msg.rate).toFixed(2)}%
                                     </p>

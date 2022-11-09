@@ -13,10 +13,7 @@ interface TesMsg {
     yesterday_volume: number,
     symbol: string,
     status: number,
-    precision: number,
-    target: string,
-    base: string,
-    logo:string
+    precision: number
 }
 
 const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
@@ -61,9 +58,7 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
         <div className="home-tes-list">
             {/* 涨幅榜 */}
             <p className="list-title">
-                <span>{t('public.up_list')}</span>
-                <span></span>
-            </p>
+                <img src={require('../../../assets/images/out/out_one.png')} alt="" />Daftar pemenang</p>
             {TesListTwo.length > 0 ? <ul>
                 {
                     TesListTwo.map((el: TesMsg, index: number): ReactElement => {
@@ -80,17 +75,8 @@ const HomeTeslist = (props: { wsData: any }): ReactElement<ReactNode> => {
                                         <div className="list-public">
                                             {/* <p className="list-sort">{index + 1}</p> */}
                                             <div className="coin-msg-hour">
-                                                <div className="coin-icon">
-                                                    {
-                                                        el.logo 
-                                                            ? <img src={el.logo} alt="" />
-                                                            : <img src={require('../../../assets/images/default_avatar.png')} alt="" />
-                                                    }
-                                                </div>
-                                                <div className="coin-msg">
-                                                    <p>{el.base}<span>/{el.target}</span></p>
-                                                    <p>24H {t('public.vol')}&nbsp;{Number(el.yesterday_volume).toFixed(2)}</p>
-                                                </div>
+                                                <p>{el.coin}</p>
+                                                <p>24H{t('public.vol')}&nbsp;{Number(el.yesterday_volume).toFixed(2)}</p>
                                             </div>
                                         </div>
                                         <div className="list-public">

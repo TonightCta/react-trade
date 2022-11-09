@@ -1,79 +1,117 @@
-import { ReactElement, ReactNode, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import store from "../../../store";
 
-interface CardMsg {
-    title: string,
+import { ReactElement, ReactNode, useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import store from '../../../store';
+import { UMsg } from '../../../store/app/reducer';
+
+export declare interface Oper {
     icon: string,
+    title: string,
     url: string,
     outSide: boolean,
     inner: boolean
 }
 
-const HomeCard = (props: { history: any }): ReactElement<ReactNode> => {
-    const { t } = useTranslation();
-    const [account, setAccount] = useState<any>(store.getState().account);
-    const getAcc = () => {
-        store.subscribe(() => {
-            setAccount(store.getState().account)
-        })
+
+
+const OutsideCard = (props: { history: any }): ReactElement<ReactNode> => {
+    const [account, setAccount] = useState<UMsg>(store.getState().account);
+    const getAccount = () => {
+        setAccount(store.getState().account);
     };
-    useEffect(() => {
-        getAcc();
-        return () => {
-            setAccount({});
-        }
-    }, [])
-    const list: Array<CardMsg> = [
+    const { t } = useTranslation();
+    const list: Oper[] = [
         {
             title: t('public.inv'),
-            icon: require('../../../assets/images/home_icon_1_th.png'),
-            url: '/invite-th',
+            icon: require('../../../assets/images/home_icon_1.png'),
+            url: '/invite',
             outSide: false,
             inner: false,
         },
         {
             title: t('public.quotes'),
-            icon: require('../../../assets/images/home_icon_2_th.png'),
+            icon: require('../../../assets/images/home_icon_2.png'),
             url: '/quotes',
             outSide: false,
             inner: false,
         },
         {
             title: t('public.customer'),
-            icon: require('../../../assets/images/home_icon_3_th.png'),
+            icon: require('../../../assets/images/home_icon_3.png'),
             url: String(account.supportUrl),
             outSide: true,
             inner: false,
         },
         {
             title: t('public.set'),
-            icon: require('../../../assets/images/home_icon_4_th.png'),
+            icon: require('../../../assets/images/setting_icon.png'),
             url: '/setting',
             outSide: false,
             inner: false,
         }
     ]
+    useEffect(() => {
+        getAccount();
+        return () => {
+            setAccount(store.getState().account);
+            getAccount();
+        }
+    }, []);
+    const mineAssets: number = store.getState().assets;
+
     return (
-        <div className={`home-card-list ${localStorage.getItem('language') == 'ru' ? 'f-12-list' : ''}`}>
-            <ul>
-                {
-                    list.map((el, index): ReactElement => {
-                        return (
-                            <li key={index} onClick={() => {
-                                el.outSide ? window.open(el.url) : props.history.push(el.url)
-                            }}>
-                                <div className="img-box">
-                                    <img src={el.icon} alt="" />
-                                </div>
-                                <p>{el.title}</p>
-                            </li>
-                        )
-                    })
-                }
-            </ul>
+        <div className='outside-card'>
+            <div className='oper-assets'>
+                <div className='left-card'>
+                    <ul>
+                        {
+                            list.map((item: Oper, index: number): ReactElement => {
+                                return (
+                                    <li key={index} onClick={() => {
+                                        item.outSide ? window.open(item.url) : props.history.push(item.url)
+                                    }}>
+                                        <img src={item.icon} alt="" />
+                                        <p>{item.title}</p>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                </div>
+                <div className='right-card card-public' onClick={() => {
+                    props.history.push('/mine-assets')
+                }}>
+                    <p>{t('public.assets')}</p>
+                    <p>{t('public.assets_total_un')}({t('public.for_u')}USDT)</p>
+                    <p>{mineAssets}</p>
+                </div>
+            </div>
+            <div className='help-ann'>
+                <div className='left-card'>
+                    <ul>
+                        <li onClick={() => {
+                            props.history.push('/help')
+                        }}>
+                            <img src={require('../../../assets/images/out/out_1.png')} alt="" />
+                            <div className='text-content'>
+                                <p>HELP</p>
+                                <p>Pertanyaan/<br />Pedoman/Informasi</p>
+                            </div>
+                        </li>
+                        <li onClick={() => {
+                            props.history.push('/ann')
+                        }}>
+                            <img src={require('../../../assets/images/out/out_2.png')} alt="" />
+                            <div className='text-content'>
+                                <p>ANNCMNT</p>
+                                <p>Berita/Acara/<br />Informasi</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     )
 };
 
-export default HomeCard;
+export default OutsideCard;
