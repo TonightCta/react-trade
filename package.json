@@ -94,7 +94,8 @@
     "start": "node -r dotenv/config scripts/start.js dotenv_config_path=.env.development",
     "start:test": "node -r dotenv/config scripts/start.js dotenv_config_path=.env.test",
     "build:th": "node -r dotenv/config scripts/build.js dotenv_config_path=.env.test",
-    "build:th-new": "node -r dotenv/config scripts/build.js dotenv_config_path=.env.th",
+    "build:yd": "node -r dotenv/config scripts/build.js dotenv_config_path=.env.th",
+    "build:asx": "node -r dotenv/config scripts/build.js dotenv_config_path=.env.asx",
     "build:source": "node -r dotenv/config scripts/build.js dotenv_config_path=.env.master",
     "test": "node scripts/test.js"
   },

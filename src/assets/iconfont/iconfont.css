@@ -1,9 +1,9 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3604085 */
-  src: url('iconfont.woff2?t=1667543867805') format('woff2'),
-       url('iconfont.woff?t=1667543867805') format('woff'),
-       url('iconfont.ttf?t=1667543867805') format('truetype'),
-       url('iconfont.svg?t=1667543867805#iconfont') format('svg');
+  src: url('iconfont.woff2?t=1668062824737') format('woff2'),
+       url('iconfont.woff?t=1668062824737') format('woff'),
+       url('iconfont.ttf?t=1668062824737') format('truetype'),
+       url('iconfont.svg?t=1668062824737#iconfont') format('svg');
 }
 
 .iconfont {
@@ -12,6 +12,34 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-closefill:before {
+  content: "\e6a6";
+}
+
+.icon-a-bianzu5beifen2:before {
+  content: "\e64e";
+}
+
+.icon-cangpeitubiao_xiazaipandiandanxiazaidayinmoban:before {
+  content: "\e631";
+}
+
+.icon-a-bianzu42:before {
+  content: "\e649";
+}
+
+.icon-a-bianzu311:before {
+  content: "\e64a";
+}
+
+.icon-a-bianzu21:before {
+  content: "\e64b";
+}
+
+.icon-bianzu21:before {
+  content: "\e64c";
 }
 
 .icon-a-yaoqingtuiguang2:before {

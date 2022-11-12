@@ -22,7 +22,8 @@ import { useHistory } from "react-router-dom";
 //     cation: 'ru',
 //     langIcon: require('../../../assets/images/ru.png')
 // }
-const langList = process.env.REACT_APP_LAND == '1' ? [
+const LAND: string | undefined = process.env.REACT_APP_LAND
+const langList = LAND == '1' && [
     {
         name: 'Philippines(English)',
         country: 'Philippines',
@@ -35,14 +36,33 @@ const langList = process.env.REACT_APP_LAND == '1' ? [
         cation: 'th',
         langIcon: require('../../../assets/images/th.png')
     }
-] : [
+] || LAND == '3' && [
+    {
+        name: 'Vietnam(Việt Nam)',
+        country: 'Vietnam',
+        cation: 'vie',
+        langIcon: require('../../../assets/images/vie.png')
+    },
     {
         name: 'Philippines(English)',
         country: 'Philippines',
         cation: 'en',
         langIcon: require('../../../assets/images/en.png')
     },
-]
+    {
+        name: 'Thailand(ไทย)',
+        country: 'ไทย',
+        cation: 'th',
+        langIcon: require('../../../assets/images/th.png')
+    }
+] || [
+        {
+            name: 'Philippines(English)',
+            country: 'Philippines',
+            cation: 'en',
+            langIcon: require('../../../assets/images/en.png')
+        },
+    ]
 
 const SetLanguage = (): ReactElement<ReactNode> => {
     const [lang, setLang] = useState<string>(localStorage.getItem('language') || 'zh-TW');

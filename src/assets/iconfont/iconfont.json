@@ -6,6 +6,55 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "257405",
+      "name": "close_fill",
+      "font_class": "closefill",
+      "unicode": "e6a6",
+      "unicode_decimal": 59046
+    },
+    {
+      "icon_id": "32768628",
+      "name": "编组 5备份 2",
+      "font_class": "a-bianzu5beifen2",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "31836670",
+      "name": "cangpeitubiao_xiazaipandiandanxiazaidayinmoban",
+      "font_class": "cangpeitubiao_xiazaipandiandanxiazaidayinmoban",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "32755554",
+      "name": "编组 4",
+      "font_class": "a-bianzu42",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "32755555",
+      "name": "编组 3",
+      "font_class": "a-bianzu311",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "32755556",
+      "name": "编组 2",
+      "font_class": "a-bianzu21",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "32755558",
+      "name": "编组",
+      "font_class": "bianzu21",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
       "icon_id": "32666165",
       "name": "yaoqingtuiguang 2",
       "font_class": "a-yaoqingtuiguang2",

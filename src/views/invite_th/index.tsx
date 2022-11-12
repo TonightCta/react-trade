@@ -176,8 +176,6 @@ const SwiperMine = (props: { invInfo: any, lang: string | null }): ReactElement 
                 </div>
             </div>
         </>
-
-
     )
 }
 
@@ -283,14 +281,6 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                     </div>
                 </div>
                 <div className="banner-text">
-                    <p>
-                        {/* After recharging, you will get： */}
-                        {t('invite.share_after')}
-                    </p>
-                    <p><span>10%~60%</span>
-                        {/* Invitation commission */}
-                        {t('invite.commission')}
-                    </p>
                     <div className="top-text">
                         <p>
                             {/* Every successful recommendation of a friend */}
@@ -298,10 +288,33 @@ const InviteIndexTh = (): ReactElement<ReactNode> => {
                         </p>
                         <img src={require('../../assets/images/right_invite_th.png')} alt="" />
                     </div>
-                    <p>
-                        {/* Enjoy multi-level commission return */}
-                        {t('invite.share_6')}
-                    </p>
+                    <div className="table-name">
+                        <p>
+                            {/* Recharge successfully */}
+                            {t('invite.share_table_title')}
+                        </p>
+                        <p>
+                            {/* Trading Commission */}
+                            {t('invite.share_table_title_2')}
+                        </p>
+                    </div>
+                    <ul>
+                        <li>
+                            <p>{t('message.level')} 1</p>
+                            <p className="flex-1">{Number(invInfo?.levels[0].deposit_reward).toFixed(0)}USDT ({t('public.reward')})</p>
+                            <p className="flex-1">{invInfo?.levels[0].reward}% ({t('public.commission')})</p>
+                        </li>
+                        <li>
+                            <p>{t('message.level')} 2</p>
+                            <p className="flex-1">{Number(invInfo?.levels[1].deposit_reward).toFixed(0)}USDT ({t('public.reward')})</p>
+                            <p className="flex-1">{invInfo?.levels[1].reward}% ({t('public.commission')})</p>
+                        </li>
+                        <li>
+                            <p>{t('message.level')} 3</p>
+                            <p className="flex-1">{Number(invInfo?.levels[2].deposit_reward).toFixed(0)}USDT ({t('public.reward')})</p>
+                            <p className="flex-1">{invInfo?.levels[2].reward}% ({t('public.commission')})</p>
+                        </li>
+                    </ul>
                 </div>
                 <div className="p-12">
                     <div className="invite-box-1">

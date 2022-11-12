@@ -37,9 +37,10 @@ const TesAllList = (props: Props): ReactElement<ReactNode> => {
         canRelease: t('public.freed_down'),//释放刷新
         refreshing: <DotLoading color='primary' />,
         complete: t('public.down_over'),//刷新完成
-    }
+    };
+    const LAND : string | undefined = process.env.REACT_APP_LAND;
     return (
-        <div className={`tes-all-list ${process.env.REACT_APP_LAND == '1' && 'tes-all-list-th' || process.env.REACT_APP_LAND == '3' && 'tes-all-list-new' || ''}`}>
+        <div className={`tes-all-list ${LAND == '1' && 'tes-all-list-th' || LAND == '3' && 'tes-all-list-new' || LAND == '4' && 'tes-all-list-asx' || ''}`}>
             {
                 props.total === 0
                     ? <Empty description={t('public.has_no_data')} />

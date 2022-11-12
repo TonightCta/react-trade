@@ -120,4 +120,26 @@
       }
     }
   }
+  .tes-all-list-asx {
+    ul {
+      .up-color {
+        .list-price {
+          color: #00A573;
+        }
+        .list-rate {
+          background-color: #E5F1F3;
+          color: #00A573;
+        }
+      }
+      .down-color {
+        .list-price {
+          color: #F9554F;
+        }
+        .list-rate {
+          background-color: #F9ECE3;
+          color: #F9554F;
+        }
+      }
+    }
+  }
 }

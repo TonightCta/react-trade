@@ -4,6 +4,7 @@ import en from "./en.json";
 import ru from './ru.json'
 import zhTW from "./zh-TW.json";
 import th from './th.json'
+import vie from './vie.json'
 import store from "../store";
 
 const resources = {
@@ -18,6 +19,9 @@ const resources = {
     },
     th: {
         translation: th
+    },
+    vie:{
+        translation:vie
     }
 };
 i18n.use(initReactI18next).init({

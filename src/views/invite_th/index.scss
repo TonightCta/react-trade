@@ -69,53 +69,84 @@
       }
     }
     .banner-text {
-      width: 264px;
-      padding: 13px 20px 7px 10px;
+      width: 275px;
+      padding: 16px 7px 9px 4px;
       border-radius: 4px;
       background: rgba(23, 183, 136, 0.06);
       margin-left: 22px;
       margin-top: 92px;
       text-align: left;
       position: relative;
+      border: 1px solid rgba(0, 173, 121, 0.16);
       .top-text {
         position: absolute;
-        width: calc(100% - 20px);
+        width: 144px;
+        top: -8px;
+        left: 50%;
+        margin-left: -72px;
         display: flex;
         background-color: rgba(0, 173, 121, 0.18);
         height: 16px;
-        border-radius: 2px;
+        border-radius: 3px;
         align-items: center;
-        top: -8px;
-        justify-content: flex-start;
+        justify-content: center;
         p {
           font-size: 12px;
-          transform: scale(0.8) translateX(-18px);
+          transform: scale(0.9);
+          color: #00ad79;
           margin-bottom: 0 !important;
+          font-weight: 500;
         }
         img {
           width: 18px;
           height: 7px;
           display: inline-block;
-          transform: translateX(-32px);
         }
       }
-      p:first-child {
-        font-weight: 500;
-        margin-bottom: 8px;
-      }
-      p {
-        font-weight: 600;
-        color: #7c928b;
-        white-space: nowrap;
-        font-size: 12px;
-        span {
-          font-size: 22px;
-          color: #00ad79;
-          margin-right: 2px;
+      .table-name {
+        display: flex;
+        width: 100%;
+        padding-left: 34px;
+        align-items: center;
+        p {
+          width: 50%;
+          text-align: center;
+          font-size: 12px;
+          transform: scale(0.82);
+          font-weight: 500;
+          color: #02835c;
+          white-space: nowrap;
+        }
+        p:last-child {
+          text-align: right;
         }
       }
-      p:last-child {
-        margin-top: 3px;
+      ul {
+        border-top: 1px solid rgba(2, 131, 92, 0.04);
+        margin-top: 4px;
+        padding-top: 6px;
+        li {
+          display: flex;
+          margin-bottom: 10px;
+          p {
+            font-size: 12px;
+            transform: scale(0.82);
+            text-align: center;
+            white-space: nowrap;
+            color: #02835c;
+          }
+          p:first-child {
+            width: 34px;
+            text-align: left;
+            font-weight: 500;
+          }
+          .flex-1 {
+            flex: 1;
+          }
+        }
+        li:last-child {
+          margin-bottom: 0;
+        }
       }
     }
     .invite-box-1 {

@@ -47,7 +47,8 @@ const RouteConfig = (): ReactElement<ReactNode> => {
         window.scrollTo(0, 0);
       });
     })
-  }, [])
+  }, []);
+  const LAND : string | undefined = process.env.REACT_APP_LAND;
   return (
     <Router history={createHashHistory()}>
       <TransitionGroup>
@@ -58,10 +59,11 @@ const RouteConfig = (): ReactElement<ReactNode> => {
              * 1 ---> 泰国
              * 2 ---> 南非
              * 3 ---> 南非 YD
+             * 4 ---> 越南 ASX
             */}
             <Route path="/" exact render={() => <Redirect to="/home" />}></Route>
             <Route path="/login" key="login" component={View.LoginIndex}></Route>
-            <Route path={`/home`} key="home" component={process.env.REACT_APP_LAND == '1' && View.HomeIndex || process.env.REACT_APP_LAND == '2' && View.HomeIndexOutside || process.env.REACT_APP_LAND == '3' && View.HomeIndexNew || View.HomeIndex}></Route>
+            <Route path={`/home`} key="home" component={LAND == '1' && View.HomeIndex || LAND == '2' && View.HomeIndexOutside || LAND == '3' && View.HomeIndexNew || LAND == '4' && View.HomeIndexAsx || View.HomeIndex}></Route>
             <Route path="/quotes" key="quotes" component={View.QuotesIndex}></Route>
             <Route path="/quotes-detail" key="quotesDetail" component={View.TesDetail}></Route>
             <Route path="/setting" key="setting" component={View.SetIndex}></Route>
@@ -92,6 +94,7 @@ const RouteConfig = (): ReactElement<ReactNode> => {
             <PrivateRoute children={<View.WithDrawPending />} key="withdrawDetail" path="/withdraw-detail" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.AddressManage />} key="addressManage" path="/address-mange" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.InviteIndex />} key="invite" path="/invite" locationMine={location}></PrivateRoute>
+            <PrivateRoute children={<View.ActivityTH />} key="activity" path="/activity" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.RechargeFaitIndex />} key="rechargeFait" path="/recharge-fait" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.WithdrawFait />} key="withdrawFait" path="/withdraw-fait" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.InviteIndexTh/>} key="inviteTh" path="/invite-th"></PrivateRoute>

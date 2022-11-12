@@ -1,4 +1,3 @@
-import React from "react";
 import HomeIndex from './home_th'
 import HomeIndexOutside from "./home";
 import QuotesIndex from './quotes';
@@ -38,6 +37,8 @@ import InviteIndexTh from "./invite_th";
 import HomeIndexNew from './home_yd';
 import InviteIndexNew from './invite_yd'
 import DownNewIndex from './down_yd'
+import HomeIndexAsx from './home_asx'
+import ActivityTH from './activity_th'
 
 
 export {
@@ -80,4 +81,6 @@ export {
     HomeIndexNew,//南非YD首页
     InviteIndexNew,//南非YD邀请页
     DownNewIndex,//南非YD下载页
+    HomeIndexAsx,//越南首页
+    ActivityTH,//泰国活动页
 }

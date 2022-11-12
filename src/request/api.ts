@@ -56,28 +56,30 @@ export const BannerListApi = () => get<IResponse>('/cms/banner');
 //添加自选
 export const AddOptionalApi = (p: o) => post<IResponse>('/quotation/collect', p);
 //地址列表
-export const AddressListApi = (p:o) => post<IResponse>('/assets/book/list',p);
+export const AddressListApi = (p: o) => post<IResponse>('/assets/book/list', p);
 //新增地址
-export const AddAddressApi = (p:o) => post<IResponse>('/assets/book/create',p);
+export const AddAddressApi = (p: o) => post<IResponse>('/assets/book/create', p);
 //删除地址
-export const RemoveAddressApi = (p:string | number) => get<IResponse>(`/assets/book/delete/${p}`);
+export const RemoveAddressApi = (p: string | number) => get<IResponse>(`/assets/book/delete/${p}`);
 //上传头像
-export const UpAvatarApi = (p:o) => post<IResponse>('/user/avatar',p);
+export const UpAvatarApi = (p: o) => post<IResponse>('/user/avatar', p);
 //获取协议
-export const GetSlugApi = (p:string) => get<IResponse>(`/cms/article/slug/${p}`);
+export const GetSlugApi = (p: string) => get<IResponse>(`/cms/article/slug/${p}`);
 //邀请排行
 export const RankInviteApi = () => get<IResponse>(`/user/inviteRank`);
 //邀请信息
-export const InviteNumberApi = (p:number | string) => get<IResponse>(`/user/inviteUsersByLevel/${p}`);
+export const InviteNumberApi = (p: number | string) => get<IResponse>(`/user/inviteUsersByLevel/${p}`);
 //法币充值渠道
 export const RechargeFaitListApi = () => get<IResponse>('rechargeBegin');
 //法币充值
-export const RechargePayApi = (p:o) => post<IResponse>('/putInInOnlineOrder',p);
+export const RechargePayApi = (p: o) => post<IResponse>('/putInInOnlineOrder', p);
 //提币渠道
 export const WithdrawNetApi = () => get<IResponse>('/withdrawBegin');
 //提币啊
-export const WithdrawApiNew = (p:o) => post<IResponse>('/putInWithdraw',p);
+export const WithdrawApiNew = (p: o) => post<IResponse>('/putInWithdraw', p);
 //查询币种余额
-export const FindbalanceApi = (p:string) => get<IResponse>(`/assets/accountSingle/spot/${p}`);
+export const FindbalanceApi = (p: string) => get<IResponse>(`/assets/accountSingle/spot/${p}`);
 //币种价格
 export const QueryAllCoinPrice = () => get<IResponse>('/quotation/listAll');
+//邀请奖励进度
+export const QueryInviteApi = (p: o) => post<IResponse>('/admin/inviteMatchProgress', p);

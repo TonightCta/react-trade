@@ -13,7 +13,7 @@
     font-size: 21px;
     color: #ccc;
   }
-  .icon-a-bianzu4{
+  .icon-a-bianzu4 {
     display: inline-block;
     transform: translateY(2px);
   }
@@ -32,17 +32,27 @@
 .hidden-nav {
   transform: translateY(100%);
 }
-.th-footer{
+.th-footer {
   .adm-tab-bar-item-active {
     .iconfont {
-      color: #00D9B5;
+      color: #00d9b5;
     }
     .adm-tab-bar-item-title {
-      color: #00D9B5;
+      color: #00d9b5;
     }
   }
 }
-.new-footer{
+.new-footer {
+  .adm-tab-bar-item-active {
+    .iconfont {
+      color: #6b7bff;
+    }
+    .adm-tab-bar-item-title {
+      color: #6b7bff;
+    }
+  }
+}
+.asx-footer {
   .adm-tab-bar-item-active {
     .iconfont {
       color: #6B7BFF;

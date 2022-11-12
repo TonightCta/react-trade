@@ -35,9 +35,10 @@ const MineNav = (): ReactElement<ReactNode> => {
         //上传成功
         Toast.show(t('message.upload_success'));
         upUserInfo();
-    }
+    };
+    const LAND : string | undefined = process.env.REACT_APP_LAND;
     return (
-        <div className={`mine-nav ${process.env.REACT_APP_LAND == '1' && 'mine-nav-th' || process.env.REACT_APP_LAND == '3' && 'mine-nav-new' || ''}`}>
+        <div className={`mine-nav ${LAND == '1' && 'mine-nav-th' || LAND == '3' && 'mine-nav-new' || LAND == '4' && 'mine-nav-asx' || ''}`}>
             <div className="nav-msg">
                 <p>
                     {/* 我的 */}
@@ -83,7 +84,7 @@ const MineNav = (): ReactElement<ReactNode> => {
                         <p>
                             {/* 欢迎来到80年代 */}
                             {
-                                t('public.welcome',{value:process.env.REACT_APP_LAND == '3' ? 'YD' : 'BIBI'})
+                                t('public.welcome',{value:LAND == '3' && 'YD' || LAND == '4' && 'ASX' || 'BIBI'})
                             }
                         </p>
                     </div>
@@ -99,7 +100,7 @@ const MineNav = (): ReactElement<ReactNode> => {
                 </div>
             </div>
             {
-                store.getState().downApp !== 3 && <div className="download-box" onClick={() => {
+                store.getState().downApp !== 3 && LAND != '4' && <div className="download-box" onClick={() => {
                     history.push('/download')
                 }}>
                     <p>

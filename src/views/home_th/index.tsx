@@ -19,6 +19,7 @@ import HomeCard from "./components/card";
 import { addListener, removeListener } from "../../utils/hooks";
 import { initWsSubscribe, subscribeReducer } from '../../redurce/set_subscribe'
 import NavLogo from "./components/nav_log";
+import ActivityBtn from "../../components/activity_btn";
 
 interface Props {
     type?: string
@@ -100,6 +101,7 @@ const HomeIndex = (): React.ReactElement<ReactNode> => {
     }, []);
     return (
         <div className="home-index">
+            <ActivityBtn/>
             <NavLogo history={history} downIcon={downIcon} />
             {/* 轮播广告 */}
             {/* <HomeBanner /> */}

@@ -1,0 +1,515 @@
+.home-index-asx {
+  .nav-logo {
+    box-sizing: border-box;
+    width: 100%;
+    background: linear-gradient(
+      146deg,
+      rgba(149, 210, 237, 1) 0%,
+      rgba(155, 204, 237, 0.1) 50%,
+      rgba(155, 204, 237, 0) 100%
+    );
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    height: 310px;
+    box-shadow: 0px 2px 30px 0px rgba(8, 79, 167, 0.12),
+      inset 0px 1px 6px 0px rgba(255, 255, 255, 0.5);
+    position: relative;
+    .bibi-logo {
+      height: 20px;
+      margin-top: 20px;
+      transform: translateX(12px);
+    }
+    .play-video-btn {
+      position: absolute;
+      width: 58px;
+      height: 50px;
+      background: url("../../assets/images/home_new/video_btn.png");
+      background-size: 100% 100%;
+      right: 0;
+      top: 84px;
+      display: flex;
+      padding-left: 10px;
+      align-items: center;
+      .btn-inner {
+        width: 34px;
+        height: 34px;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .iconfont {
+          font-size: 14px;
+          color: #5b6cff;
+        }
+      }
+    }
+    .down-icon {
+      position: absolute;
+      height: 20px;
+      display: flex;
+      background: rgba(255, 255, 255, 0.11);
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(1px);
+      right: 12px;
+      top: 20px;
+      border-radius: 8px;
+      width: 74px;
+      box-shadow: 0px 2px 7px 0px rgba(15, 140, 138, 0.11);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      span {
+        font-size: 12px;
+        font-weight: bold;
+        transform: scale(0.8);
+        color: #2761c8;
+      }
+      p {
+        width: 20px;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.49);
+        border: 1px solid white;
+        box-sizing: border-box;
+        border-radius: 8px;
+      }
+    }
+    .logo-down {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      position: relative;
+      z-index: 200;
+    }
+    .text-box {
+      width: 100%;
+      height: 200px;
+      background: url("../../assets/images/home_asx/banner_bg.png");
+      background-size: 100% 100%;
+      margin-top: 12px;
+      display: flex;
+      padding: 20px 14px 0 22px;
+      text-align: left;
+      .text-box-left {
+        flex: 1;
+        p:first-child {
+          font-size: 26px;
+          color: #333;
+          font-weight: 500;
+          line-height: 30px;
+        }
+        p:last-child {
+          margin-top: 8px;
+          font-size: 12px;
+          line-height: 16px;
+          color: #666;
+        }
+      }
+      .left-small {
+        p:first-child {
+          font-size: 24px;
+          line-height: 24px;
+        }
+      }
+      .assets-box {
+        width: 155px;
+        margin-left: 26px;
+        height: 90px;
+        border: 1px solid rgba(255, 255, 255, 1);
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: 0px 2px 30px 0px rgba(8, 79, 167, 0.02),
+          inset 0px 1px 6px 0px rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(1px);
+        background: rgba(255, 255, 255, 0.11);
+        position: relative;
+        padding: 25px 8px;
+        .mask-uint {
+          font-size: 34px;
+          color: rgba(90, 190, 163, 0.1);
+          font-weight: bold;
+          transform: rotate(90deg);
+          position: absolute;
+          right: -33px;
+          top: 27px;
+        }
+        p:first-child {
+          font-size: 16px;
+          font-weight: 500;
+          color: #2761c8;
+          img {
+            width: 14px;
+            height: 14px;
+            margin-right: 3px;
+            transform: translateY(1px);
+          }
+        }
+        p:nth-child(2) {
+          font-size: 18px;
+          color: #333;
+          font-weight: bold;
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+  .home-banner {
+    width: 100%;
+    background-color: #f8f8f8;
+    .banner-items {
+      height: 160px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+      p {
+        line-height: 180px;
+      }
+    }
+  }
+  .home-adv-card {
+    background: white;
+    .home-adv {
+      padding: 12px;
+      width: 100%;
+      box-sizing: border-box;
+      align-items: center;
+      display: flex;
+      .adv-banner {
+        border-bottom: 1px solid #eee;
+        height: 34px;
+        flex: 1;
+        margin-left: 8px;
+        overflow: hidden;
+        .adv-item {
+          height: 34px;
+          font-size: 13px;
+          display: flex;
+          padding-right: 12px;
+          align-items: center;
+          justify-content: flex-start;
+          p {
+            text-align: left;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+  .home-card-list {
+    ul {
+      display: flex;
+      padding: 16px 8px;
+      padding-top: 12px;
+      justify-content: space-around;
+      li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: 36px;
+          height: 36px;
+        }
+        p {
+          margin-top: 4px;
+          font-size: 14px;
+          color: #666;
+        }
+      }
+    }
+  }
+  .f-12-list {
+    font-size: 12px;
+    ul {
+      li {
+        width: 25%;
+        p {
+          white-space: wrap;
+        }
+      }
+    }
+  }
+  .home-assets {
+    background-color: white;
+    padding: 0 12px;
+    padding-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    .ann-help {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      .inner-public {
+        width: calc(50% - 3px);
+        height: 75px;
+        text-align: left;
+        padding-left: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        p:first-child {
+          font-size: 14px;
+          font-weight: 500;
+          color: #45332a;
+        }
+        p:last-child {
+          font-size: 12px;
+          margin-top: 4px;
+          color: rgba(69, 51, 42, 0.6);
+        }
+      }
+      .help-inner {
+        background: url("../../assets/images/home_asx/assets_1.png");
+        background-size: 100% 100%;
+      }
+      .ann-inner {
+        background: url("../../assets/images/home_asx/assets_2.png");
+        background-size: 100% 100%;
+      }
+    }
+  }
+  .home-help {
+    display: flex;
+    padding: 26px 20px;
+    background-color: white;
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .help-public {
+      display: flex;
+      align-items: center;
+      .public-title {
+        text-align: left;
+        margin-left: 12px;
+        p:first-child {
+          font-size: 15px;
+          color: #333;
+          font-weight: 500;
+          margin-bottom: 4px;
+        }
+        p:last-child {
+          font-size: 13px;
+          color: #c5c5c6;
+        }
+      }
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+    .label-line {
+      width: 1px;
+      height: 36px;
+      background-color: #ccc;
+    }
+  }
+  .home-tex-card {
+    width: 100%;
+    margin: 0 auto;
+    padding: 12px 24px;
+    margin-top: -82px;
+    position: relative;
+    z-index: 2;
+    .adm-page-indicator-dot-active {
+      background-color: #6b7bff;
+      border-radius: 2px;
+    }
+    .adm-swiper-track {
+      padding-bottom: 16px;
+    }
+    ul {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      li {
+        width: 32%;
+        text-align: left;
+        padding-left: 16px;
+        .coin-qu {
+          font-size: 12px;
+          color: #666;
+        }
+        .coin-price {
+          font-size: 15px;
+          font-weight: bold;
+          margin: 4px 0;
+          color: #333;
+        }
+        .coin-rate {
+          font-size: 12px;
+          padding: 2px 0;
+          border-radius: 4px;
+          font-weight: 500;
+          display: inline-block;
+          img {
+            width: 10px;
+            height: 10px;
+            margin-left: 3px;
+          }
+        }
+      }
+      .up-color {
+        .coin-rate {
+          color: #01c087;
+        }
+      }
+      .down-color {
+        .coin-rate {
+          color: #fd5656;
+        }
+      }
+    }
+  }
+  .home-tes-list {
+    background-color: white;
+    padding: 12px;
+    padding-top: 4px;
+    text-align: left;
+    .list-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #333;
+      text-align: center;
+      position: relative;
+      img {
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+        transform: translateY(2px);
+        position: absolute;
+        z-index: 10;
+        top: -8px;
+        left: 35%;
+      }
+      span {
+        position: relative;
+        z-index: 30;
+      }
+      margin-bottom: 16px;
+    }
+    ul {
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 56px;
+        padding: 0 12px;
+        box-shadow: 0px 2px 6px 0px #ebeef9;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        .list-public {
+          display: flex;
+          align-items: center;
+        }
+        .coin-msg-hour {
+          display: flex;
+          align-items: center;
+          .coin-icon {
+            width: 32px;
+            min-width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            img {
+              height: 100%;
+            }
+          }
+          .coin-msg {
+            text-align: left;
+            font-size: 14px;
+            color: #333;
+            p {
+              font-weight: 500;
+              span {
+                font-size: 12px;
+                color: #999;
+                font-weight: 400;
+              }
+            }
+            p:last-child {
+              margin-top: 4px;
+              color: #c5c5c6;
+            }
+          }
+        }
+        .list-price {
+          font-size: 14px;
+          color: #333;
+          margin-right: 14px;
+          font-weight: 500;
+        }
+        .list-rate {
+          font-size: 13px;
+          font-weight: 500;
+          padding: 5px 8px;
+          min-width: 60px;
+          border-radius: 4px;
+          border-radius: 14px;
+        }
+      }
+      .up-color {
+        background-color: #e5f1f3;
+        .list-rate {
+          color: #00a573;
+        }
+      }
+      .down-color {
+        background-color: #f9ece3;
+        .list-rate {
+          color: #f9554f;
+        }
+      }
+    }
+  }
+}
+.load-tes {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.video-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 7000;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  .video-mask {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    width: 100%;
+    height: 100%;
+  }
+  video {
+    width: 100%;
+    position: relative;
+    z-index: 300;
+  }
+  .iconfont {
+    color: white;
+    font-size: 44px;
+    position: relative;
+    z-index: 310;
+    margin-top: 86px;
+  }
+}
