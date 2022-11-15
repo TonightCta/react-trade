@@ -150,7 +150,7 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
     };
     const LAND: string | undefined = process.env.REACT_APP_LAND
     return (
-        <div className={`forget-pass ${LAND == '1' && 'fotget-pass-th' || LAND == '3' && 'fotget-pass-new' || ''}`}>
+        <div className={`forget-pass ${LAND == '1' && 'fotget-pass-th' || LAND == '3' && 'fotget-pass-new' || LAND == '4' && 'forget-pass-asx' || ''}`}>
             <div className="int-bg-box"></div>
             <div className="up-bg-box">
                 <div className="close-page">
@@ -164,7 +164,7 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
                 </div>
                 {/* 忘记密码 */}
                 <div className="page-remark">
-                    <img src={require(`../../assets/images/int_logo${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`)} alt="" />
+                    <img src={require(`../../assets/images/int_logo${LAND == '1' && '_th' || LAND == '3' && '_new' || LAND == '4' && '_asx' || ''}.png`)} alt="" />
                     <p>{t('public.forget')}</p>
                 </div>
                 <div className="register-way">
@@ -175,6 +175,7 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
                             </span>
                             {/* Mail */}
                             {t('public.mail')}
+                            {LAND == '4' && <p className="active-line"></p>}
                         </li>
                         <li></li>
                         <li className={`${intWay === 2 ? 'active-intway' : ''}`} onClick={() => { setIntWay(2) }}>
@@ -183,6 +184,7 @@ const ForgetIndex = (props: Props): ReactElement<ReactNode> => {
                             </span>
                             {/* Phone */}
                             {t('public.phone')}
+                            {LAND == '4' && <p className="active-line"></p>}
                         </li>
                     </ul>
                 </div>

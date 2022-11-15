@@ -11,30 +11,30 @@ const MineOperBar = (): ReactElement<ReactNode> => {
         {
             //资金密码
             title: t('public.assets_pass'),
-            icon: require(`../../../assets/images/assets_lock${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`),
+            icon: require(`../../../assets/images/assets_lock${LAND == '1' && '_th' || LAND == '3' && '_new' || LAND == '4' && '_asx' || ''}.png`),
             url: '/assets-lock'
         },
         {
             //实名认证
             title: t('public.verify_card'),
-            icon: require(`../../../assets/images/auth_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`),
+            icon: require(`../../../assets/images/auth_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || LAND == '4' && '_asx' || ''}.png`),
             url: '/auth-card'
         },
         {
             //登录密码
             title: t('public.edit_login_pass'),
-            icon: require(`../../../assets/images/pass_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`),
+            icon: require(`../../../assets/images/pass_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || LAND == '4' && '_asx' || ''}.png`),
             url: '/set-pass'
         },
         {
             //设置
             title: t('public.set_center'),
-            icon: require(`../../../assets/images/set_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`),
+            icon: require(`../../../assets/images/set_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || LAND == '4' && '_asx' || ''}.png`),
             url: '/setting'
         },
     ]
     return (
-        <div className={`mine-oper-bar mine-assets-manage ${process.env.REACT_APP_LAND == '1' && 'mine-assets-manage-th' || process.env.REACT_APP_LAND == '3' && 'mine-assets-manage-new' || ''}`}>
+        <div className={`mine-oper-bar mine-assets-manage ${LAND == '1' && 'mine-assets-manage-th' || LAND == '3' && 'mine-assets-manage-new' || LAND == '4' && 'mine-assets-manage-asx-reset security-asx' || ''}`}>
             {/* <List style={{ "--font-size": "15px" }}>
                 <List.Item prefix={<img src={require('../../../assets/images/other_1.png')} />} onClick={() => {
                     history.push('/trade-order')

@@ -59,7 +59,7 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
     };
     const LAND : string | undefined = process.env.REACT_APP_LAND;
     return (
-        <div className={`login-index ${LAND == '1' && 'login-index-th' || LAND == '3' && 'login-index-new' || '' }`}>
+        <div className={`login-index ${LAND == '1' && 'login-index-th' || LAND == '3' && 'login-index-new' || LAND == '4' && 'login-index-asx' || '' }`}>
             <div className="int-bg-box"></div>
             <div className="up-bg-box">
                 <div className="close-page">
@@ -72,8 +72,8 @@ const LoginIndex = (props: Props): ReactElement<ReactNode> => {
                     </div>
                 </div>
                 <div className="page-remark">
-                    <img src={require(`../../assets/images/int_logo${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`)} alt="" />
-                    <p>{t('public.welcome',{value:`${LAND == '3' ? 'YD' : 'BIBI'}`})}</p>
+                    <img src={require(`../../assets/images/int_logo${LAND == '1' && '_th' || LAND == '3' && '_new' || LAND == '4' && '_asx' || ''}.png`)} alt="" />
+                    <p>{t('public.welcome',{value:`${LAND == '3' && 'YD' || LAND == '4' && 'ASX' || 'BIBI'}`})}</p>
                 </div>
                 <div className="login-box">
                     <div className="box-public">

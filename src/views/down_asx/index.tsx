@@ -111,7 +111,7 @@ const GuideContent = (props: { history: any, t: any }): ReactElement<ReactNode> 
     )
 };
 
-const DownEnIndex = (): ReactElement<ReactNode> => {
+const DownAsxIndex = (): ReactElement<ReactNode> => {
     const [guideBox, setGuidebox] = useState<boolean>(false);
     const history = useHistory();
     const { t } = useTranslation();
@@ -127,15 +127,19 @@ const DownEnIndex = (): ReactElement<ReactNode> => {
         }
     }, [])
     return (
-        <div className="down-index-en">
-            <img className="back-icon" src={require('../../assets/images/back_icon.png')} alt="" onClick={() => {
+        <div className="down-index-asx">
+            <img className="back-icon" src={require('../../assets/images/back_icon_asx.png')} alt="" onClick={() => {
                 history.goBack();
             }} />
-            <img className="bg-img" src={require(`../../assets/images/down_en_bg.png`)} alt="" />
+            <img className="bg-img" src={require(`../../assets/images/down_bg_asx.png`)} alt="" />
+            <p className="down-remark">
+                For your better experience<br/>
+                it is recommended to download and install.
+            </p>
             {mobileType === 'Android' && <div className="left-android click-box-use-to-rem" onClick={() => {
                 const downImg = document.createElement("a");
-                downImg.download = "BIBI.apk";
-                downImg.href = `${process.env.REACT_APP_SHARE}/BIBI_version_09.apk`;
+                downImg.download = "ASX.apk";
+                downImg.href = `${process.env.REACT_APP_SHARE}/asx.apk`;
                 document.body.appendChild(downImg);
                 downImg.click();
                 downImg.remove();
@@ -144,14 +148,6 @@ const DownEnIndex = (): ReactElement<ReactNode> => {
                 <div className="">
                     <p>Android</p>
                     <p>Download</p>
-                </div>
-            </div>}
-            {mobileType === 'Android' && <div className="left-android google-btn click-box-use-to-rem" onClick={() => {
-                window.open('https://play.google.com/store/apps/details?id=ph.bibi.pro')
-            }}>
-                <p className="iconfont icon-a-googleplay"></p>
-                <div className="">
-                    <p>Google Play</p>
                 </div>
             </div>}
             {mobileType === 'IOS' && <div className="right-ios click-box-use-to-rem" onClick={() => {
@@ -170,4 +166,4 @@ const DownEnIndex = (): ReactElement<ReactNode> => {
     )
 };
 
-export default DownEnIndex;
+export default DownAsxIndex;

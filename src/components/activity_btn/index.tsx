@@ -11,7 +11,7 @@ const ActivityBtn = (): ReactElement<ReactNode> => {
     const status = async () => {
         const result = await QueryInviteApi({});
         const { code } = result;
-        if (code == 200) {
+        if (code == 200 && localStorage.getItem('token_1')) {
             setOpen(true)
         }
     };

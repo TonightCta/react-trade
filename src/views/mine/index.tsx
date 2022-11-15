@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect } from "react";
-import store from "../../store";
 import MineAssetsManage from "./components/assets_manage";
 import MineInvMsg from "./components/inv_msg";
 import MineNav from "./components/nav_mine";

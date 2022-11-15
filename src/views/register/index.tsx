@@ -97,11 +97,11 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
         };
     }, [count]);
     // 
-    const protocol: string = 
-        process.env.REACT_APP_LAND == '1' && 
-        'https://sites.google.com/view/terms-of-use2privacy-policy' || 
-        process.env.REACT_APP_LAND == '3' && 
-        'https://sites.google.com/view/yd-exchange-privacy-policy' || 
+    const protocol: string =
+        process.env.REACT_APP_LAND == '1' &&
+        'https://sites.google.com/view/terms-of-use2privacy-policy' ||
+        process.env.REACT_APP_LAND == '3' &&
+        'https://sites.google.com/view/yd-exchange-privacy-policy' ||
         `${process.env.REACT_APP_SHARE}/PrivacyPolicy.html`;
     const [readPrototal, setReadPrototal] = useState<boolean>(true);
     useEffect(() => {
@@ -137,7 +137,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
     const [selectCountryBox, setSelectCountryBox] = useState<boolean>(false);
     const LAND: string | undefined = process.env.REACT_APP_LAND;
     return (
-        <div className={`register-index ${LAND == '1' && 'register-index-th' || LAND == '3' && 'register-index-new' || ''}`}>
+        <div className={`register-index ${LAND == '1' && 'register-index-th' || LAND == '3' && 'register-index-new' || LAND == '4' && 'register-index-asx' || ''}`}>
             <div className="bg-box"></div>
             <div className="up-bg-box">
                 <div className="close-page">
@@ -150,7 +150,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                     </div>
                 </div>
                 <div className="page-remark">
-                    <img src={require(`../../assets/images/int_logo${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`)} alt="" />
+                    <img src={require(`../../assets/images/int_logo${LAND == '1' && '_th' || LAND == '3' && '_new' || LAND == '4' && '_asx' || ''}.png`)} alt="" />
                     <p>{t('public.regis_now')}</p>
                 </div>
                 {/* 注册方式 */}
@@ -162,6 +162,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             </span>
                             {/* Mail */}
                             {t('public.mail')}
+                            {LAND == '4' && <p className="active-line"></p>}
                         </li>
                         <li></li>
                         <li className={`${intWay === 2 ? 'active-intway' : ''}`} onClick={() => { setIntWay(2) }}>
@@ -170,6 +171,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             </span>
                             {/* Phone */}
                             {t('public.phone')}
+                            {LAND == '4' && <p className="active-line"></p>}
                         </li>
                     </ul>
                 </div>
@@ -232,7 +234,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             {/* 邮箱验证码 */}
                             {t('public.email_code')}
                         </p>
-                        <input type="text" value={inpMsg.code} onChange={(e) => {
+                        <input type="text" autoComplete="new-password" value={inpMsg.code} onChange={(e) => {
                             setInpMsg({
                                 ...inpMsg,
                                 code: e.target.value
@@ -275,7 +277,7 @@ const RegisterIndex = (props: Props): ReactElement<ReactNode> => {
                             {/* 登录密码 */}
                             {t('public.login_pass')}
                         </p>
-                        <input type="password" value={inpMsg.password} onChange={(e) => {
+                        <input type="password"  autoComplete="new-password" value={inpMsg.password} onChange={(e) => {
                             setInpMsg({
                                 ...inpMsg,
                                 password: e.target.value

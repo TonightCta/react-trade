@@ -9,14 +9,14 @@ const DownBtn = (): ReactElement<ReactNode> => {
     const location = useLocation();
     const LAND : string | undefined = process.env.REACT_APP_LAND;
     return (
-        <div>
+        <div className={`${LAND == '4' ? 'asx-down' : ''}`}>
             {(location.pathname === '/home' || location.pathname === '/quotes' || location.pathname === '/trade') && <div className={`down-btn ${LAND == '3' ? 'without-left' : ''}`}>
-                <img src={require(`../../assets/images/close_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`)} alt="" onClick={() => {
+                <img src={require(`../../assets/images/close_icon${LAND == '1' && '_th' || LAND == '3' && '_new' || LAND == '4' && '_asx' || ''}.png`)} alt="" onClick={() => {
                     const action = setDownApp(2);
                     store.dispatch(action)
                 }} />
-                <img src={require(`../../assets/images/down_fixed${LAND == '1' && '_th' || LAND == '3' && '_new' || ''}.png`)} alt="" onClick={() => {
-                    history.push(`/${LAND == '1' && 'download' || LAND == '3' && 'download-new' || 'download-en'}`)
+                <img src={require(`../../assets/images/down_fixed${LAND == '1' && '_th' || LAND == '3' && '_new' || LAND == '4' && '_asx' || ''}.png`)} alt="" onClick={() => {
+                    history.push(`/${LAND == '1' && 'download' || LAND == '3' && 'download-new' || LAND == '4' && 'download-asx' || 'download-en'}`)
                 }} />
             </div>}
         </div>

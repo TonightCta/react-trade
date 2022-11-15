@@ -39,6 +39,8 @@ import InviteIndexNew from './invite_yd'
 import DownNewIndex from './down_yd'
 import HomeIndexAsx from './home_asx'
 import ActivityTH from './activity_th'
+import DownAsxIndex from './down_asx';
+import InviteIndexASX from './invite_asx';
 
 
 export {
@@ -83,4 +85,6 @@ export {
     DownNewIndex,//南非YD下载页
     HomeIndexAsx,//越南首页
     ActivityTH,//泰国活动页
+    DownAsxIndex,//ASX下载页
+    InviteIndexASX,//ASX邀请页
 }

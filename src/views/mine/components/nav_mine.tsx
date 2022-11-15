@@ -36,7 +36,7 @@ const MineNav = (): ReactElement<ReactNode> => {
         Toast.show(t('message.upload_success'));
         upUserInfo();
     };
-    const LAND : string | undefined = process.env.REACT_APP_LAND;
+    const LAND: string | undefined = process.env.REACT_APP_LAND;
     return (
         <div className={`mine-nav ${LAND == '1' && 'mine-nav-th' || LAND == '3' && 'mine-nav-new' || LAND == '4' && 'mine-nav-asx' || ''}`}>
             <div className="nav-msg">
@@ -84,12 +84,19 @@ const MineNav = (): ReactElement<ReactNode> => {
                         <p>
                             {/* 欢迎来到80年代 */}
                             {
-                                t('public.welcome',{value:LAND == '3' && 'YD' || LAND == '4' && 'ASX' || 'BIBI'})
+                                LAND != '4'
+                                    ? <span>{
+                                        t('public.welcome', { value: LAND == '3' && 'YD' || LAND == '4' && 'ASX' || 'BIBI' })
+                                    }</span>
+                                    : <span className="auth-card">
+                                        <img src={require('../.././../assets/images/card_icon_asx.png')} alt="" />
+                                        {account?.security?.kyc === 0 && t('public.un_auth') || account?.security?.kyc === 1 && t('public.had_auth') || account?.security?.kyc === 2 && t('public.auth_processing') || account?.security?.kyc === 3 && t('public.reject')}
+                                    </span>
                             }
                         </p>
                     </div>
                 </div>
-                <div className="account-right" onClick={() => {
+                {LAND != '4' ? <div className="account-right" onClick={() => {
                     (account?.security?.kyc === 0 || account?.security?.kyc === 3) && history.push('/auth-card')
                 }}>
                     <img src={require(`../../../assets/images/card_icon${process.env.REACT_APP_LAND == '1' ? '_th' : ''}.png`)} alt="" />
@@ -97,7 +104,14 @@ const MineNav = (): ReactElement<ReactNode> => {
                         {account?.security?.kyc === 0 && t('public.un_auth') || account?.security?.kyc === 1 && t('public.had_auth') || account?.security?.kyc === 2 && t('public.auth_processing') || account?.security?.kyc === 3 && t('public.reject')}
                     </p>
                     <img src={require(`../../../assets/images/right_dou${process.env.REACT_APP_LAND == '1' ? '_th' : ''}.png`)} alt="" />
-                </div>
+                </div> : <div className="account-right right-download" onClick={() => {
+                    history.push('/download-asx')
+                }}>
+                    <p className="icon">
+                        <span className="iconfont icon-cangpeitubiao_xiazaipandiandanxiazaidayinmoban"></span>
+                    </p>
+                    <p>Download</p>
+                </div>}
             </div>
             {
                 store.getState().downApp !== 3 && LAND != '4' && <div className="download-box" onClick={() => {

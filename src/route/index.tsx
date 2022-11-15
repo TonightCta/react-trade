@@ -77,8 +77,9 @@ const RouteConfig = (): ReactElement<ReactNode> => {
             <Route path="/register" key="register" component={View.RegisterIndex}></Route>
             <Route path="/forget" key="forget" component={View.ForgetIndex}></Route>
             <Route path="/download" key="download" component={View.DownIndex}></Route>
-            <Route path="/download-en" key="download" component={View.DownEnIndex}></Route>
-            <Route path="/download-new" key="download" component={View.DownNewIndex}></Route>
+            <Route path="/download-en" key="downloadEn" component={View.DownEnIndex}></Route>
+            <Route path="/download-new" key="downloadYD" component={View.DownNewIndex}></Route>
+            <Route path="/download-asx" key="downloadASX" component={View.DownAsxIndex}></Route>
             <PrivateRoute children={<View.TradeIndex />} key="trade" path="/trade" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.MineIndex />} key="mine" path="/mine" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.TradeOrder />} key="tradeOrder" path="/trade-order" locationMine={location}></PrivateRoute>
@@ -99,6 +100,7 @@ const RouteConfig = (): ReactElement<ReactNode> => {
             <PrivateRoute children={<View.WithdrawFait />} key="withdrawFait" path="/withdraw-fait" locationMine={location}></PrivateRoute>
             <PrivateRoute children={<View.InviteIndexTh/>} key="inviteTh" path="/invite-th"></PrivateRoute>
             <PrivateRoute children={<View.InviteIndexNew/>} key="inviteNew" path="/invite-new"></PrivateRoute>
+            <PrivateRoute children={<View.InviteIndexASX/>} key="inviteASX" path="/invite-asx"></PrivateRoute>
             <Route path="*" key="unknow" component={View.NotFound}></Route>
           </Switch>
         </CSSTransition>

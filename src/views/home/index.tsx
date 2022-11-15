@@ -27,7 +27,7 @@ const NavLogo = (props: { history: any, downIcon: number }): React.ReactElement<
         <div className="nav-logo">
             <img className="bibi-logo" src={require('../../assets/images/logo.png')} alt="" />
             {showDown === 2 && <img className="down-icon" src={require('../../assets/images/down_icon.png')} alt="" onClick={() => {
-                props.history.push('/download')
+                props.history.push('/download-en')
             }} />}
         </div>
     )
