@@ -1,4 +1,4 @@
-import { Button, Dialog } from "antd-mobile";
+import { Dialog } from "antd-mobile";
 import { CloseOutline } from "antd-mobile-icons";
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";

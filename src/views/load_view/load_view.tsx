@@ -22,7 +22,7 @@ const LoadView: React.FC = (): ReactElement<ReactNode> => {
         <div>
             {
                 loadView === 0 && !GetUrlKey('withoutload',window.location.href) ? <div className={`load-view ${showLoad}`}>
-                    <img src={require(`../../assets/images/load_view${LAND == '3' ? '_new' : ''}.png`)} alt="" />
+                    <img src={require(`../../assets/images/load_view${LAND == '3' && '_new' || LAND == '4' && '_asx' || ''}.png`)} alt="" />
                 </div> : null
             }
         </div>

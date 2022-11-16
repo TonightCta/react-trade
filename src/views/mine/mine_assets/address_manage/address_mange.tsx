@@ -121,13 +121,13 @@ const AddressManage = (): ReactElement<ReactNode> => {
                         <p className="inp-title">
                             {/* 可用网络 */}
                             {t('public.use_network')}
-                            <Popover
+                            {/* <Popover
                                 content='Hello World'
                                 trigger='click'
                                 placement='top'
                             >
                                 <span><QuestionCircleOutline /></span>
-                            </Popover>
+                            </Popover> */}
                         </p>
                         <div className="net-list">
                             <ul>

@@ -25,28 +25,24 @@ const Footer = (props: Props): React.ReactElement<ReactNode> => {
             key: 'home',
             title: t('public.page'),
             icon: <span className={`iconfont ${AREA == '1' && 'icon-bianzu11' || AREA == '2' && 'icon-a-bianzu1' || AREA == '3' && 'icon-bianzu3' || AREA == '4' && 'icon-bianzu21'}`}></span>,
-            // icon:<AppOutline/>,
             url: '/'
         },
         {
             key: 'quotes',
             title: t('public.quotes'),
             icon: <span className={`iconfont ${AREA == '1' && 'icon-a-bianzu31' || AREA == '2' && 'icon-bianzu' || AREA == '3' && 'icon-a-bianzu11' || AREA == '4' && 'icon-a-bianzu21'}`}></span>,
-            // icon:<HistogramOutline/>,
             url: '/quotes'
         },
         {
             key: 'trade',
             title: t('public.trade'),
             icon: <span className={`iconfont ${AREA == '1' && 'icon-a-bianzu41' || AREA == '2' && 'icon-a-bianzu3' || AREA == '3' && 'icon-a-bianzu2' || AREA == '4' && 'icon-a-bianzu42'}`}></span>,
-            // icon:<UnorderedListOutline/>,
             url: '/trade'
         },
         {
             key: 'mine',
             title: t('public.mine'),
             icon: <span className={`iconfont ${AREA == '1' && 'icon-bianzu2' || AREA == '2' && 'icon-a-bianzu4' || AREA == '3' && 'icon-a-bianzu32' || AREA == '4' && 'icon-a-bianzu311'}`}></span>,
-            // icon:<UserOutline/>,
             url: '/mine'
         },
     ];

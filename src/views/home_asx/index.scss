@@ -83,6 +83,7 @@
       width: 100%;
       position: relative;
       z-index: 200;
+      transform: translateY(20px);
     }
     .text-box {
       width: 100%;
@@ -90,7 +91,7 @@
       background: url("../../assets/images/home_asx/banner_bg.png");
       background-size: 100% 100%;
       display: flex;
-      padding: 20px 14px 0 22px;
+      padding: 30px 14px 0 22px;
       text-align: left;
       .text-box-left {
         flex: 1;

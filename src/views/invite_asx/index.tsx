@@ -142,22 +142,22 @@ const SwiperMine = (props: { invInfo: any, lang: string | null }): ReactElement 
     return (
         <>
             <div className="before-create-1" ref={printElementOne}>
-                <img src={require(`../../assets/images/poster_1_th_${props.lang}.png`)} alt="" />
-                <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p>
+                <img src={require(`../../assets/images/poster_1_asx.png`)} alt="" />
+                {/* <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p> */}
                 <div className="qr-box">
                     <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={30} id="qrCode" />
                 </div>
             </div>
             <div className="before-create-1" ref={printElementTwo}>
-                <img src={require(`../../assets/images/poster_2_th_${props.lang}.png`)} alt="" />
-                <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p>
+                <img src={require(`../../assets/images/poster_2_asx.png`)} alt="" />
+                {/* <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p> */}
                 <div className="qr-box">
                     <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={30} id="qrCode" />
                 </div>
             </div>
             <div className="before-create-1" ref={printElementThree}>
-                <img src={require(`../../assets/images/poster_3_th_${props.lang}.png`)} alt="" />
-                <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p>
+                <img src={require(`../../assets/images/poster_3_asx.png`)} alt="" />
+                {/* <p>{`${invInfo?.link}?code=${invInfo?.code}`}</p> */}
                 <div className="qr-box">
                     <QRCode value={`${invInfo?.link}?code=${invInfo?.code}`} size={30} id="qrCode" />
                 </div>
