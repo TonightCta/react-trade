@@ -43,7 +43,7 @@ const RechargeIndex = (props: any): ReactElement<ReactNode> => {
 
     const getAddress = async () => {
         const result = await RechargeAddressApi({
-            coin: selectCoin,
+            coin: selectCoin as string,
             protocol: defaultNet
         });
         setSelectMsg({
@@ -125,7 +125,7 @@ const RechargeIndex = (props: any): ReactElement<ReactNode> => {
                         <CloseOutline />
                     </p>
                     <PickerView columns={coinList} value={[selectCoin]} onChange={(e) => {
-                        setSelectCoin(e[0]);
+                        // setSelectCoin(e[0]);
                     }} />
                     <div className="coin-select">
                         <Button color="primary" block onClick={() => {
@@ -151,7 +151,7 @@ const RechargeIndex = (props: any): ReactElement<ReactNode> => {
                         <CloseOutline />
                     </p>
                     <PickerView columns={protocolList} value={[defaultNet]} onChange={(e) => {
-                        setDefaultNet(e[0]);
+                        // setDefaultNet(e[0]);
                     }} />
                     <div className="coin-select">
                         <Button color="primary" block onClick={() => {

@@ -1,16 +1,16 @@
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import * as View from "../views/index";
 import { ReactElement, ReactNode, useEffect } from "react";
-import { withRouter, Route, Switch, Redirect, useLocation, Router } from "react-router-dom";
+import { withRouter, Route, Switch, Redirect, useLocation, Router,useHistory } from "react-router-dom";
 import PrivateRoute from "./private";
-import { createHashHistory } from "history";
+// import { createHashHistory } from "history";
 import "./index.css";
 import { useSocket } from "../utils/hooks";
 import store from "../store";
 
 const RouteConfig = (): ReactElement<ReactNode> => {
   const location = useLocation();
-  const history = createHashHistory();
+  const history = useHistory();
   const { send } = useSocket();
   useEffect(() => {
     const quList = store.getState().quList;
@@ -19,7 +19,7 @@ const RouteConfig = (): ReactElement<ReactNode> => {
         if (location.action === 'POP') return;
         const win: any = window;
         if (location.pathname === '/home' || location.pathname === '/quotes' || location.pathname === '/trade' || location.pathname === '/mine') {
-          win.setStatus(1)
+          win.setStatus(1);
         } else {
           win.setStatus(0)
         };
@@ -50,7 +50,7 @@ const RouteConfig = (): ReactElement<ReactNode> => {
   }, []);
   const LAND : string | undefined = process.env.REACT_APP_LAND;
   return (
-    <Router history={createHashHistory()}>
+    <Router history={useHistory()}>
       <TransitionGroup>
         <CSSTransition key={location.pathname} timeout={1000} classNames="page">
           <Switch location={location}>

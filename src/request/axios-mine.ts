@@ -5,7 +5,7 @@ import error_ru from './error/ru.json';
 import error_th from './error/th.json'
 
 let axiosInstance: AxiosInstance = axios.create({
-    baseURL: process.env.REACT_APP_BASEURL,
+    baseURL: 'https://39zn795677.yicp.fun/api/v1',
     timeout: 1000 * 60 * 10,
     headers: {
         "Accept": '*/*',

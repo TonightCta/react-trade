@@ -129,7 +129,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
             ...despositMsg,
             fee: Number(despositMsg.amount) * coinNet[0]?.rate_num * (coinNet[0]?.rate / 100),
         });
-        if (despositMsg.amount > currentBalance) {
+        if (+despositMsg.amount > currentBalance) {
             Toast.show(t('message.last_balance'));
             setDespositMsg({
                 ...despositMsg,

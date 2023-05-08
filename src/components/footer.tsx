@@ -66,8 +66,9 @@ const Footer = (props: Props): React.ReactElement<ReactNode> => {
                 setCurrentNav('home');
         }
     }, [location]);
+    //location.pathname === '/home' || location.pathname === '/quotes' || location.pathname === '/trade' || location.pathname === '/mine' ? 1 : 0
     //更新导航显示信息
-    const [showNav, setShowNav] = useState<number>(location.pathname === '/home' || location.pathname === '/quotes' || location.pathname === '/trade' || location.pathname === '/mine' ? 1 : 0);
+    const [showNav, setShowNav] = useState<number>(1);
     // store.subscribe((): void => {
     //     setShowNav(Number(store.getState().footerStatus))
     // });
@@ -96,7 +97,7 @@ const Footer = (props: Props): React.ReactElement<ReactNode> => {
     // }, []);
     const LAND : string | undefined = process.env.REACT_APP_LAND;
     return (
-        <div className={`footer-nav ${showNav === 0 ? 'hidden-nav' : ''} ${LAND == '1' && 'th-footer' || LAND == '3' && 'new-footer' || LAND == '4' && 'asx-footer'}`}>
+        <div className={`footer-nav ${showNav === 0 ? 'hidden-nav' : ''} ${LAND == '1' && 'th-footer' || LAND == '3' && 'new-footer' || LAND == '4' && ''} asx-footer`}>
             <TabBar activeKey={currentNav} onChange={(key: string): void => {
                 changeNav(key)
             }}>

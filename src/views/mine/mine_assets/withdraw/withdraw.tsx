@@ -147,7 +147,7 @@ const WithdrawIndex = (): ReactElement<ReactNode> => {
             ...drawMsg,
             fee: Number(drawMsg.drawNum) * (drawMsg.rate / 100)
         });
-        if (drawMsg.drawNum > currentBalance) {
+        if (+drawMsg.drawNum > currentBalance) {
             Toast.show(t('message.last_balance'))
             setDrawMsg({
                 ...drawMsg,
